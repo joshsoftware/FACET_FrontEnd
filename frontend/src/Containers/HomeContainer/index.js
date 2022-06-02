@@ -17,7 +17,7 @@ const HomeContainer = () => {
 
     useEffect(() => {
         setLoading(true);
-        axios.get(`/api/projects?q=${searchQuery}`)
+        axios.get(`/api/projects/?q=${searchQuery}`)
             .then((res) => {
                 setProjects(res.data.projects);
                 setLoading(false);
