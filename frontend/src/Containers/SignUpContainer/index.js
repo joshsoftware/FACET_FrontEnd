@@ -1,10 +1,19 @@
 import React from 'react'
-import Signup from '../../Components/Signup'
+import Signup from '../../components/Auth/Signup';
+import AuthLayout from '../../Layout/AuthLayout';
+import { Link } from 'react-router-dom';
 
-const SignupContainer = () => {
+const SignUpContainer = () => {
     return (
-        <div><Signup/></div>
+        <>
+            <AuthLayout>
+                <Signup />
+                <div className='d-flex flex-column align-items-center'>
+                    <Link to='/login' className='pt-3 fst-italic'>Already have an account?</Link>
+                </div>
+            </AuthLayout>
+        </>
     )
 }
 
-export default SignupContainer
+export default SignUpContainer;

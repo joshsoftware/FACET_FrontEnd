@@ -1,11 +1,19 @@
 import React from 'react'
-import Login from '../../Components/Login';
+import AuthLayout from '../../Layout/AuthLayout';
+import Login from '../../components/Auth/Login';
+import { Link } from 'react-router-dom';
 
 const LoginContainer = () => {
     return (
-        <div className='d-flex justify-content-center align-items-center' style={{"minHeight": "70vh"}}>
-            <Login/>
-        </div>
+        <>
+            <AuthLayout>
+                <Login />
+                <div className='d-flex flex-column align-items-center'>
+                    <Link to='' className='fst-italic'>Forgot Password?</Link>
+                    <Link to='/signup' className='pt-3 fst-italic'>New User?</Link>
+                </div>
+            </AuthLayout>
+        </>
     )
 }
 
