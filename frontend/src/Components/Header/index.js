@@ -7,9 +7,17 @@ import {
     NavDropdown 
 } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+
+const mapState = ({ user }) => ({
+    isLoggedIn: user.isLoggedIn,
+    currentUser: user.currentUser
+})
 
 const Header = () => {
     let navigate = useNavigate();
+
+    const { isLoggedIn, currentUser } = useSelector(mapState);
 
     const handleLogout = () => {
 
@@ -30,9 +38,9 @@ const Header = () => {
                         <Nav.Link onClick={() => navigate('/dashboard')}>Home</Nav.Link>
                     </Nav>
                     <>
-                        {localStorage.getItem('token')?(
+                        {isLoggedIn?(
                             <Nav>
-                                <NavDropdown title={"Welcome, User"}>
+                                <NavDropdown title={`Welcome, ${currentUser.user}`}>
                                     <NavDropdown.Item>
                                         My Profile
                                     </NavDropdown.Item>
@@ -40,7 +48,7 @@ const Header = () => {
                                         My Organizations
                                     </NavDropdown.Item>
                                     <NavDropdown.Divider />
-                                    <NavDropdown.Item color='red' onClick={handleLogout}>
+                                    <NavDropdown.Item style={{color: 'red'}} onClick={handleLogout}>
                                         Logout
                                     </NavDropdown.Item>
                                 </NavDropdown>

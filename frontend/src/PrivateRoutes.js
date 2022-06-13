@@ -1,8 +1,13 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Navigate, Outlet } from 'react-router-dom';
 
+const mapState = (state) => ({
+    isLoggedIn: state.user.isLoggedIn
+});
+
 const PrivateRoutes = () => {
-    const isLoggedIn = localStorage.getItem('token')?true:false;
+    const { isLoggedIn } = useSelector(mapState);
 
     return isLoggedIn?(
         <div>

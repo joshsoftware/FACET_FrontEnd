@@ -1,9 +1,19 @@
 import React from 'react'
 import AuthLayout from '../../Layout/AuthLayout';
 import Login from '../../components/Auth/Login';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+
+const mapState = (state) => ({
+    isLoggedIn: state.user.isLoggedIn
+})
 
 const LoginContainer = () => {
+    const { isLoggedIn } = useSelector(mapState);
+    
+    if(isLoggedIn){
+        return <Navigate to='/' /> 
+    }
     return (
         <>
             <AuthLayout>

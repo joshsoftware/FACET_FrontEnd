@@ -1,7 +1,8 @@
-import userConstants from "./userConstants";
+import userConstants from "./constants";
 
 const INITIAL_STATE = {
-    currentUser: null,
+    isLoggedIn: JSON.parse(localStorage.getItem('user'))?.hasOwnProperty('token'),
+    currentUser: JSON.parse(localStorage.getItem('user')),
     userErr: []
 }
 
@@ -11,9 +12,10 @@ const userReducer = (state=INITIAL_STATE, action) => {
             return {
                 ...state,
                 currentUser: action.payload,
-                userErr: []
+                userErr: [],
+                isLoggedIn: true
             }
-    
+
         default:
             return state;
     }

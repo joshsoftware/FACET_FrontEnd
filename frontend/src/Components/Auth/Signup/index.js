@@ -10,7 +10,8 @@ const Signup = () => {
         {
             "name": "",
             "email": "", 
-            "password": ""
+            "password": "",
+            "cpassword": "",
         }
     );
 
@@ -51,6 +52,15 @@ const Signup = () => {
                 type='password'
                 name='password'
                 value={formData.password}
+                handlechange={onchange}
+                placeholder='Enter Password'
+            />
+            <FormInput 
+                label='Confirm Password'
+                isRequired
+                type='password'
+                name='cpassword'
+                value={formData.cpassword}
                 handlechange={onchange}
                 placeholder='Enter Password'
             />
