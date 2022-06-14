@@ -6,6 +6,8 @@ import LoginContainer from './containers/LoginContainer';
 import SignUpContainer from './containers/SignUpContainer';
 import { ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
+import DashBoard from './containers/DashBoard';
+import ProjectContainer from './containers/ProjectContainer';
 
 function App() {
   return (
@@ -14,7 +16,8 @@ function App() {
       <Header />
       <Routes>
         <Route path='/' element={<PrivateRoutes />}>
-
+          <Route path='/dashboard' element={<DashBoard />} />
+          <Route path='/project/:projectName' element={<ProjectContainer />} />
         </Route>
         <Route path='/login' element={<LoginContainer />} />
         <Route path='/signup' element={<SignUpContainer />} />

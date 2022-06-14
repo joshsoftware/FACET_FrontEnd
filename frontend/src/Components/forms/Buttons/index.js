@@ -1,5 +1,20 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
+import { Check2 } from 'react-bootstrap-icons';
+
+const CloseButton = ({ handleClick, disabled, size, label, ...props }) => {
+    return (
+        <Button
+            type='button'
+            onClick={handleClick}
+            variant='secondary'
+            size={size}
+            {...props}
+        >
+            {label?label:'Close'}
+        </Button>
+    )
+}
 
 const SubmitButton = ({ handleClick, disabled, size, label, ...props }) => {
     return (
@@ -19,13 +34,27 @@ const SubmitButton = ({ handleClick, disabled, size, label, ...props }) => {
     )
 }
 
-const SaveButton = () => {
+const SaveButton = ({ handleClick, disabled, size, label, ...props }) => {
     return (
-        <div>Save</div>
+        <Button
+            type='submit'
+            onClick={handleClick}
+            variant='success'
+            disabled={disabled}
+            size={size}
+            className='d-flex align-items-center'
+            {...props}
+        >
+            <Check2 />
+            <span className='px-2'>
+                {label?label:"Next"}
+            </span>
+        </Button>
     )
 }
 
 export {
+    CloseButton,
     SaveButton,
     SubmitButton,
 };
