@@ -7,7 +7,6 @@ import { toast } from 'react-toastify';
 export function* getEnvironments({payload}) {
     try {
         const response = yield call(getEnvironmentsApi, payload.project)
-        console.log(response);
         yield put(getEnvironmentsSuccess(response.environments))
     } catch (error) {
         toast.error(error.response.data.error)
@@ -17,7 +16,6 @@ export function* getEnvironments({payload}) {
 export function* addEnvironment({payload}){
     try {
         const response = yield call(addEnvironmentApi, payload)
-        console.log(response)
         toast.success("Environment Added Successfully!")
         yield call(getEnvironments, {payload:{project: payload.project}});
     } catch (error) {
