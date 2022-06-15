@@ -22,9 +22,6 @@ const ProjectsComponent = () => {
             {projects.map((e, index) => {
                 return <ProjectBox key={index} data={e} />
             })}
-            {projects.map((e, index) => {
-                return <ProjectBox key={index} data={e} />
-            })}
         </div>
     )
 }

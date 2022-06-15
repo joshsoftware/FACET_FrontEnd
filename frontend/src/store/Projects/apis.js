@@ -1,4 +1,3 @@
-import axiosInstance from "../../axios";
 import { SERVER_URL } from "../../constants/appConstants";
 import { get, post } from "../apiHelper";
 

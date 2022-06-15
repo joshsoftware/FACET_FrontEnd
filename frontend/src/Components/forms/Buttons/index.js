@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
-import { Check2 } from 'react-bootstrap-icons';
+import { Check2, PencilSquare, Trash } from 'react-bootstrap-icons';
 
 const CloseButton = ({ handleClick, disabled, size, label, ...props }) => {
     return (
@@ -47,7 +47,45 @@ const SaveButton = ({ handleClick, disabled, size, label, ...props }) => {
         >
             <Check2 />
             <span className='px-2'>
-                {label?label:"Next"}
+                {label?label:"Save"}
+            </span>
+        </Button>
+    )
+}
+
+const EditButton = ({ handleClick, disabled, size, label, ...props }) => {
+    return (
+        <Button
+            type='button'
+            onClick={handleClick}
+            variant='primary'
+            disabled={disabled}
+            size={size}
+            className='d-flex align-items-center'
+            {...props}
+        >
+            <PencilSquare />
+            <span className='px-2'>
+                Edit
+            </span>
+        </Button>
+    )
+}
+
+const DeleteButton = ({ handleClick, disabled, size, label, ...props }) => {
+    return (
+        <Button
+            type='button'
+            onClick={handleClick}
+            variant='danger'
+            disabled={disabled}
+            size={size}
+            className='d-flex align-items-center'
+            {...props}
+        >
+            <Trash />
+            <span className='px-2'>
+                Delete
             </span>
         </Button>
     )
@@ -55,6 +93,8 @@ const SaveButton = ({ handleClick, disabled, size, label, ...props }) => {
 
 export {
     CloseButton,
+    DeleteButton,
+    EditButton,
     SaveButton,
     SubmitButton,
 };

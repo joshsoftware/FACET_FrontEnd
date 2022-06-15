@@ -1,12 +1,9 @@
-import React from 'react'
-import ProjectLayout from '../../Layout/ProjectLayout'
+import EnvironmentContainer from "./EnvironmentContainer";
+import EndpointContainer from "./EndpointContainer";
+import ProjectOverviewContainer from "./ProjectOverviewContainer";
 
-const ProjectContainer = () => {
-    return (
-        <ProjectLayout>
-            
-        </ProjectLayout>
-    )
+export {
+    EnvironmentContainer,
+    EndpointContainer,
+    ProjectOverviewContainer
 }
-
-export default ProjectContainer;
