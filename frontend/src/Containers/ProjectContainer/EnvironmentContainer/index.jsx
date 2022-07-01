@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { SubComponentsNav } from '../../../components/ProjectsComponent';
-import ProjectLayout from '../../../Layout/ProjectLayout';
 import { getEnvironmentsRequest } from '../../../store/Environments/actions';
 import { useSelector } from 'react-redux';
 import { AddNewEnvironment, EnvironmentViewComponent } from '../../../components/ProjectsComponent/EnvironmentComponents';
@@ -30,7 +29,7 @@ const EnvironmentContainer = (props) => {
 
     
     return (
-        <ProjectLayout>
+        <>
             <SubComponentsNav 
                 title="Environments" 
                 data={environments}
@@ -42,7 +41,7 @@ const EnvironmentContainer = (props) => {
 
             {!isLoading&&selectedItem&&<EnvironmentViewComponent data={selectedItem} />}
 
-        </ProjectLayout>
+        </>
     )
 }
 

@@ -5,7 +5,7 @@ import {
     DashboardSubHeader, 
     ProjectsComponent
 } from '../../components/DashboardComponent';
-import DashboardLayout from '../../Layout/DashboardLayout';
+import { DashboardLayout } from '../../Layout';
 import { fetchProjects } from '../../store/Projects/actions';
 
 const DashBoard = () => {

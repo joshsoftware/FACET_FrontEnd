@@ -1,13 +1,12 @@
-import React from 'react'
-import ProjectLayout from '../../../Layout/ProjectLayout'
+import React from 'react';
 
 const ProjectOverviewContainer = () => {
     return (
-        <ProjectLayout>
+        <>
             <div>
                 Hello
             </div>
-        </ProjectLayout>
+        </>
     )
 }
 

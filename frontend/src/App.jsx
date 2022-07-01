@@ -10,7 +10,8 @@ import DashBoard from './containers/DashBoard';
 import {
   ProjectOverviewContainer,
   EnvironmentContainer,
-  EndpointContainer
+  EndpointContainer,
+  ProjectContainer
 } from './containers/ProjectContainer';
 
 function App() {
@@ -21,19 +22,21 @@ function App() {
       <Routes>
         <Route path='/' element={<PrivateRoutes />}>
           <Route path='/dashboard' element={<DashBoard />} />
-          <Route path='/project/:projectName' element={<ProjectOverviewContainer />} />
-          <Route path='/project/:projectName/environments' element={<EnvironmentContainer />} />
-          <Route path='/project/:projectName/endpoints' element={<EndpointContainer />} />
-          <Route path='/project/:projectName/headers' element={<ProjectOverviewContainer />} />
-          <Route path='/project/:projectName/payloads' element={<ProjectOverviewContainer />} />
-          <Route path='/project/:projectName/testcases' element={<ProjectOverviewContainer />} />
-          <Route path='/project/:projectName/testsuites' element={<ProjectOverviewContainer />} />
+          <Route path='/project' element={<ProjectContainer />}>
+            <Route path='/project/:projectName' element={<ProjectOverviewContainer />} />
+            <Route path='/project/:projectName/environments' element={<EnvironmentContainer />} />
+            <Route path='/project/:projectName/endpoints' element={<EndpointContainer />} />
+            <Route path='/project/:projectName/headers' element={<ProjectOverviewContainer />} />
+            <Route path='/project/:projectName/payloads' element={<ProjectOverviewContainer />} />
+            <Route path='/project/:projectName/testcases' element={<ProjectOverviewContainer />} />
+            <Route path='/project/:projectName/testsuites' element={<ProjectOverviewContainer />} />
 
-          <Route path='/project/:projectName/environments/:id' element={<EnvironmentContainer />} />
-          <Route path='/project/:projectName/endpoints/:id' element={<EndpointContainer />} />
+            <Route path='/project/:projectName/environments/:id' element={<EnvironmentContainer />} />
+            <Route path='/project/:projectName/endpoints/:id' element={<EndpointContainer />} />
 
-          <Route path='/project/:projectName/environments/new' element={<EnvironmentContainer cat="add" />} />
-          <Route path='/project/:projectName/endpoints/new' element={<EndpointContainer cat="add" />} />
+            <Route path='/project/:projectName/environments/new' element={<EnvironmentContainer cat="add" />} />
+            <Route path='/project/:projectName/endpoints/new' element={<EndpointContainer cat="add" />} />
+          </Route>
 
         </Route>
         <Route path='/login' element={<LoginContainer />} />

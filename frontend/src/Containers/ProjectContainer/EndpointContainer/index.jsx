@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { SubComponentsNav } from '../../../components/ProjectsComponent';
 import { AddNewEndpoint, EndpointViewComponent } from '../../../components/ProjectsComponent/EndpointComponent';
-import ProjectLayout from '../../../Layout/ProjectLayout';
 import { getEndpointsRequest } from '../../../store/Endpoints/actions';
 
 const mapState = ({ endpoints }) => ({
@@ -29,7 +28,7 @@ const EndpointContainer = (props) => {
     
 
     return (
-        <ProjectLayout>
+        <>
             <SubComponentsNav
                 title="Endpoints"
                 data={endpoints}
@@ -40,7 +39,7 @@ const EndpointContainer = (props) => {
             {props.cat==='add'&&<AddNewEndpoint />}
             
             {!isLoading&&selectedItem&&<EndpointViewComponent data={selectedItem} />}
-        </ProjectLayout>
+        </>
     )
 }
 
