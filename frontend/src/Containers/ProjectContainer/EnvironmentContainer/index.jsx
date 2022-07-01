@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { SubComponentsNav } from '../../../components/ProjectsComponent';
 import { getEnvironmentsRequest } from '../../../store/Environments/actions';
-import { useSelector } from 'react-redux';
 import { AddNewEnvironment, EnvironmentViewComponent } from '../../../components/ProjectsComponent/EnvironmentComponents';
 
 const mapState = ({ environments }) => ({
@@ -27,7 +26,6 @@ const EnvironmentContainer = (props) => {
     }, [environments, id])
     
 
-    
     return (
         <>
             <SubComponentsNav 

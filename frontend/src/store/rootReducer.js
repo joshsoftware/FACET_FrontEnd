@@ -15,8 +15,8 @@ const rootReducer = combineReducers({
     endpoints: endpointReducer,
     headers: headerReducer,
     payloads: payloadReducer,
-    testcase: testcaseReducer,
-    testsuite: testsuiteReducer
+    testcases: testcaseReducer,
+    testsuites: testsuiteReducer
 })
 
 export default rootReducer;
