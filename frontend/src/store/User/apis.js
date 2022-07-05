@@ -6,7 +6,7 @@ import { post } from "../apiHelper";
 export const signInApi = async (data) => {
     const res = await post(`${SERVER_URL}/api/auth/login`, data)
     localStorage.setItem('user', JSON.stringify(res));
-    axiosInstance.defaults.headers['Authorization'] = 'Bearer' + res.token;
+    axiosInstance.defaults.headers['Authorization'] = 'Bearer ' + res.token;
     return res;
 }
 
