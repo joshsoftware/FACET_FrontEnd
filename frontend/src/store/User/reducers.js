@@ -15,6 +15,14 @@ const userReducer = (state=INITIAL_STATE, action) => {
                 userErr: [],
                 isLoggedIn: true
             }
+        
+        case userConstants.SIGN_OUT_SUCCESS:
+            return {
+                ...state,
+                isLoggedIn: false,
+                currentUser: null,
+                userErr: []
+            }
 
         default:
             return state;

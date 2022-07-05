@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
 import { takeLatest, call, put } from 'redux-saga/effects';
-import { signInSuccess } from './actions';
+import { signInSuccess, signOutSuccess } from './actions';
 import { signInApi, signUpApi } from './apis';
 import userConstants from "./constants";
 
@@ -28,8 +28,15 @@ export function* signUp({payload: {name, email, password, cpassword}}) {
     }
 }
 
+export function* signOut() {
+    localStorage.removeItem('user');
+    yield put(signOutSuccess());
+    toast.success("Log out successfully!");
+}
+
 
 export default function* userSagas() {
     yield takeLatest(userConstants.SIGN_UP_START, signUp);
     yield takeLatest(userConstants.SIGN_IN_START, signIn);
+    yield takeLatest(userConstants.SIGN_OUT_START, signOut)
 }

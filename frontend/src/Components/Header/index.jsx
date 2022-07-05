@@ -7,7 +7,8 @@ import {
     NavDropdown 
 } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { signOutStart } from '../../store/User/actions';
 
 const mapState = ({ user }) => ({
     isLoggedIn: user.isLoggedIn,
@@ -16,11 +17,12 @@ const mapState = ({ user }) => ({
 
 const Header = () => {
     let navigate = useNavigate();
+    let dispatch = useDispatch();
 
     const { isLoggedIn, currentUser } = useSelector(mapState);
 
     const handleLogout = () => {
-
+        dispatch(signOutStart());
     }
 
     return (
