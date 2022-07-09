@@ -85,7 +85,7 @@ const DeleteButton = ({ handleClick, disabled, size, label, ...props }) => {
         >
             <Trash />
             <span className='px-2'>
-                Delete
+                {label?label:"Delete"}
             </span>
         </Button>
     )

@@ -25,6 +25,7 @@ const SubNavItem = ({ item }) => {
                         return <Link 
                                     className='nav-link'
                                     to={data.path}
+                                    key={index}
                                 >
                                     {data.name}
                                 </Link>

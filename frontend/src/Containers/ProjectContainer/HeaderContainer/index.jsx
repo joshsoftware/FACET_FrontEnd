@@ -39,7 +39,7 @@ const HeaderContainer = (props) => {
             />
             {props.cat==='add'&&<AddNewHeader />}
 
-            {!isLoading&&selectedItem&&<HeaderViewComponent />}
+            {!isLoading&&selectedItem&&<HeaderViewComponent data={selectedItem} />}
         </>
     )
 }
