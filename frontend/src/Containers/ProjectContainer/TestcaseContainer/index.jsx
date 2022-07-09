@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import { SubComponentsNav } from '../../../components/ProjectsComponent';
+import { SubComponentsNav } from '../../../Components/ProjectsComponent';
 import { getTestcasesRequest } from '../../../store/Testcases/actions';
-import { AddNewTestcase, TestcaseViewComponent } from '../../../components/ProjectsComponent/TestcaseComponents';
+import { AddNewTestcase, TestcaseViewComponent } from '../../../Components/ProjectsComponent/TestcaseComponents';
 
 const mapState = ({ testcases }) => ({
     testcases: testcases.testcases,

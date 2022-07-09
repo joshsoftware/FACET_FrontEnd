@@ -1,6 +1,6 @@
 import React from 'react'
 import { AuthLayout } from '../../Layout';
-import Login from '../../components/Auth/Login';
+import Login from '../../Components/Auth/Login';
 import { Link, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 

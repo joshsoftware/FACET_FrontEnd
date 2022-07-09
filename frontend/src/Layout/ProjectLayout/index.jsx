@@ -1,5 +1,5 @@
 import React from 'react';
-import { SubNav } from '../../components/ProjectsComponent';
+import { SubNav } from '../../Components/ProjectsComponent';
 
 const ProjectLayout = ({ children, ...props }) => {
 

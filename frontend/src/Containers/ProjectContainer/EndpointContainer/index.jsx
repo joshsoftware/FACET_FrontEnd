@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import { SubComponentsNav } from '../../../components/ProjectsComponent';
-import { AddNewEndpoint, EndpointViewComponent } from '../../../components/ProjectsComponent/EndpointComponent';
+import { SubComponentsNav } from '../../../Components/ProjectsComponent';
+import { AddNewEndpoint, EndpointViewComponent } from '../../../Components/ProjectsComponent/EndpointComponent';
 import { getEndpointsRequest } from '../../../store/Endpoints/actions';
 
 const mapState = ({ endpoints }) => ({

@@ -1,7 +1,7 @@
 import './App.css';
 import { Route, Routes } from 'react-router-dom';
 import PrivateRoutes from './PrivateRoutes';
-import Header from './components/Header';
+import Header from './Components/Header';
 import LoginContainer from './containers/LoginContainer';
 import SignUpContainer from './containers/SignUpContainer';
 import { ToastContainer } from 'react-toastify';

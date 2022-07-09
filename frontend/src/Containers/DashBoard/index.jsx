@@ -4,7 +4,7 @@ import {
     AddProjectModal, 
     DashboardSubHeader, 
     ProjectsComponent
-} from '../../components/DashboardComponent';
+} from '../../Components/DashboardComponent';
 import { DashboardLayout } from '../../Layout';
 import { fetchProjects } from '../../store/Projects/actions';
 

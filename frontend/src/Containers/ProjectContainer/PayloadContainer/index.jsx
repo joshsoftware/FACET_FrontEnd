@@ -2,9 +2,9 @@ import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import { SubComponentsNav } from '../../../components/ProjectsComponent';
+import { SubComponentsNav } from '../../../Components/ProjectsComponent';
 import { getPayloadsRequest } from '../../../store/Payloads/actions';
-import { AddNewPayload, PayloadViewComponent } from '../../../components/ProjectsComponent/PayloadComponents';
+import { AddNewPayload, PayloadViewComponent } from '../../../Components/ProjectsComponent/PayloadComponents';
 
 const mapState = ({ payloads }) => ({
     payloads: payloads.payloads,

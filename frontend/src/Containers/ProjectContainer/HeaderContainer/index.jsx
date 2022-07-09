@@ -3,9 +3,9 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getHeadersRequest } from '../../../store/Headers/actions';
-import { SubComponentsNav } from '../../../components/ProjectsComponent';
+import { SubComponentsNav } from '../../../Components/ProjectsComponent';
 import { useState } from 'react';
-import { AddNewHeader, HeaderViewComponent } from '../../../components/ProjectsComponent/HeaderComponents';
+import { AddNewHeader, HeaderViewComponent } from '../../../Components/ProjectsComponent/HeaderComponents';
 
 const mapState = ({ headers }) => ({
     headers: headers.headers,
