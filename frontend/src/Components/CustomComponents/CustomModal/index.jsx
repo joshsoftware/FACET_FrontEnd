@@ -5,14 +5,16 @@ const CustomModal = ({
     show, 
     handleClose,
     title,
-    children
+    children,
+    ...props
 }) => {
     return (
         <Modal
             show={show}
             onHide={handleClose}
+            {...props}
         >
-            <Modal.Header closeButton>
+            <Modal.Header className="alert-secondary" closeButton>
                 <Modal.Title>{title}</Modal.Title>
             </Modal.Header>
             {children}
@@ -20,14 +22,14 @@ const CustomModal = ({
     )
 }
 
-CustomModal.Body = ({ children }) => {
-    return <Modal.Body>
+CustomModal.Body = ({ children, ...props }) => {
+    return <Modal.Body {...props}>
         {children}
     </Modal.Body>
 }
 
-CustomModal.Footer = ({ children }) => {
-    return <Modal.Footer>
+CustomModal.Footer = ({ children, ...props }) => {
+    return <Modal.Footer {...props}>
         {children}
     </Modal.Footer>
 }

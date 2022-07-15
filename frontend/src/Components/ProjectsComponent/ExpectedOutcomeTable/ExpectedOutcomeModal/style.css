@@ -1,0 +1,44 @@
+.fieldType {
+    cursor: pointer;
+}
+.fieldType:hover,
+.fieldType.active{
+    background: rgba(127, 127, 255, 0.138);
+    border: 1px solid rgb(86, 86, 255) !important;
+}
+
+.fieldTypeIcon-text {
+    border: 1px solid green !important;
+    background: rgba(93, 186, 93, 0.200);
+    color: green;
+}
+.fieldTypeIcon-email {
+    border: 1px solid red !important;
+    background: rgba(245, 192, 184, 0.200);
+    color: red;
+}
+.fieldTypeIcon-number {
+    border: 1px solid orange !important;
+    background: rgba(255, 217, 147, 0.200);
+    color: orange;
+}
+.fieldTypeIcon-boolean {
+    border: 1px solid violet !important;
+    background: rgba(238, 130, 238, 0.200);
+    color: violet;
+}
+.fieldTypeIcon-dateTime {
+    border: 1px solid blue !important;
+    background: rgba(93, 93, 255, 0.200);
+    color: rgb(93, 93, 255);
+}
+.fieldTypeIcon-array {
+    border: 1px solid rgb(12, 117, 175) !important;
+    background: rgba(12, 118, 175, 0.200);
+    color: rgb(12, 117, 175);
+}
+.fieldTypeIcon-object {
+    border: 1px solid rgb(55, 55, 55) !important;
+    background: rgba(55, 55, 55, 0.200);
+    color: rgb(55, 55, 55);
+}
