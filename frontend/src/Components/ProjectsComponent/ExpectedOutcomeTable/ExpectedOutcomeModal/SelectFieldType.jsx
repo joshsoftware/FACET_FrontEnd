@@ -12,7 +12,7 @@ import {
 import { CustomModal } from '../../../CustomComponents';
 import './style.css';
 
-const SelectFieldType = () => {
+const SelectFieldType = ({ onSuccess }) => {
     const fieldTypes = [
         {
             name: "text",
@@ -54,7 +54,8 @@ const SelectFieldType = () => {
     const [activeField, setActiveField] = useState();
 
     const handleClick = (index) => {
-        setActiveField(index+1)
+        setActiveField(index+1);
+        onSuccess(fieldTypes[index].name)
     }
 
     return (

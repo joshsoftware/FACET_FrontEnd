@@ -14,11 +14,19 @@ const ExpectedOutcomeModal = (
     const [modalStep, setModalStep] = useState("selectField");
     const [modalData, setModalData] = useState(data);
 
+    const onSelectField = (val) => {
+        setModalData({...modalData, type: val})
+        setModalStep("TextField")
+    }
     
-    const currentStep = () => {
+    const modalBody = () => {
         switch (modalStep) {
             case "selectField":
-                return <SelectFieldType />
+                return (
+                    <SelectFieldType 
+                        onSuccess={onSelectField}
+                    />
+                )
             
             case "TextField":
                 return 
@@ -37,7 +45,7 @@ const ExpectedOutcomeModal = (
                 size="lg"
                 title="Add Expected Outcome Field"
             >
-                {currentStep()}
+                {modalBody()}
             </CustomModal>
         </>
     )
