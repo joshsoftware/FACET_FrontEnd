@@ -3,7 +3,7 @@ import { Form } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { ViewComponent } from '../../CustomComponents';
-import FormInput from '../../forms/FormInput';
+import { FormInput } from '../../forms/Inputs';
 import { addHeadersRequest } from '../../../store/Headers/actions';
 import KeyValuePairsFormField from '../../forms/KeyValuePairsFormField';
 

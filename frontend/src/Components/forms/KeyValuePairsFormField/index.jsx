@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from 'react-bootstrap';
 import { Trash } from 'react-bootstrap-icons';
-import FormInput from '../FormInput';
+import { FormInput } from '../Inputs';
 
 const KeyValuePairsFormField = ({ data, setData }) => {
     const [inputFields, setInputFields] = useState([

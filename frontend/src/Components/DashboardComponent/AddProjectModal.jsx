@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { addProject } from '../../store/Projects/actions';
 import { CustomModal } from '../CustomComponents';
 import { CloseButton, SaveButton } from '../forms/Buttons';
-import FormInput from '../forms/FormInput';
+import { FormInput } from '../forms/Inputs';
 
 const AddProjectModal = ({ show, handleClose }) => {
     let dispatch = useDispatch();

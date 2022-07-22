@@ -1,32 +1,52 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Table } from 'react-bootstrap';
 import { PencilSquare, TrashFill } from 'react-bootstrap-icons';
 import ExpectedOutcomeModal from './ExpectedOutcomeModal';
 import './style.css';
 
-const INITIAL_VALUE = {
-    name: "",
-    type: "",
-    isExact: "",
-    value: ""
-}
 
-const ExpectedOutcomeTable = () => {
-    const [expectedOutcomeData, setExpectedOutcomeData] = useState(
-        [
-            {
-                name: "status_code",
-                type: "number",
-                isExact: true,
-                value: 200
-            }
-        ]
-    );
+const ExpectedOutcomeTable = ({ data, onChange }) => {
+    const [showModal, setShowModal] = useState(false);
+    const [editData, setEditData] = useState(null);
+    const [expectedOutcomeData, setExpectedOutcomeData] = useState(data);
+    
+    const onStartEditField = (item, index) => {
+        setEditData({item, index});
+        setShowModal(true);
+    }
 
+    const onSaveNewField = (val) => {
+        setExpectedOutcomeData(expectedOutcomeData.concat(val));
+        setShowModal(false);
+        setEditData(null);
+    }
 
+    const onEditField = (val) => {
+        let currData = expectedOutcomeData;
+        currData[editData.index] = val;
+        setExpectedOutcomeData(currData);
+        setShowModal(false);
+        setEditData(null);
+    }
+
+    const onCloseModal = () => {
+        setShowModal(false);
+        setEditData(null);
+    }
+    
+    useEffect(() => {
+        onChange(expectedOutcomeData)
+    }, [expectedOutcomeData])
+    
     return (
         <>
-        <ExpectedOutcomeModal show={true} data={expectedOutcomeData[0]} onClose={() => { }} />
+            <ExpectedOutcomeModal 
+                show={showModal} 
+                data={editData&&editData.item} 
+                onAddNewField={onSaveNewField}
+                onEditField={onEditField}
+                onClose={onCloseModal} 
+            />
             <Table striped hover className='border mb-0'>
                 <thead>
                     <tr>
@@ -47,6 +67,7 @@ const ExpectedOutcomeTable = () => {
                                     <PencilSquare 
                                         color='#505050' 
                                         className='mx-1 icon'
+                                        onClick={() => onStartEditField(item, index)}
                                     />
                                     {index!==0&&(
                                         <TrashFill 
@@ -61,7 +82,7 @@ const ExpectedOutcomeTable = () => {
                     })}
                 </tbody>
             </Table>
-            <div className='w-100 border border-top-0 px-4 alert-primary rounded-bottom addNewFieldTableButton'>
+            <div className='w-100 border border-top-0 px-4 alert-primary rounded-bottom addNewFieldTableButton' onClick={() => setShowModal(true)}>
                 <span className='plusBtn'>+</span> Add New Field
             </div>
         </>

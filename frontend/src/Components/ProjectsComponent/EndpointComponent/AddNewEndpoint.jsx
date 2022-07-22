@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { addEndpointsRequest } from '../../../store/Endpoints/actions';
 import { ViewComponent } from '../../CustomComponents';
-import FormInput from '../../forms/FormInput';
+import { FormInput } from '../../forms/Inputs';
 
 const AddNewEndpoint = () => {
     let dispatch = useDispatch();

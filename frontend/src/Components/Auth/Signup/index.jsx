@@ -3,7 +3,7 @@ import { Form } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { signUpStart } from '../../../store/User/actions';
 import { SubmitButton } from '../../forms/Buttons';
-import FormInput from '../../forms/FormInput';
+import { FormInput } from '../../forms/Inputs';
 
 const Signup = () => {
     const [formData, setFormData] = useState(

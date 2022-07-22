@@ -10,7 +10,7 @@ import {
     Type 
 } from 'react-bootstrap-icons';
 import { CustomModal } from '../../../CustomComponents';
-import './style.css';
+import FieldBox from './components/FieldBox';
 
 const SelectFieldType = ({ onSuccess }) => {
     const fieldTypes = [
@@ -67,20 +67,11 @@ const SelectFieldType = ({ onSuccess }) => {
                     {fieldTypes.map((item, index) => {
                         return (
                             <Col md={6} key={index}>
-                                <div 
-                                    className={`border rounded my-1 px-4 py-3 d-flex align-items-center fieldType ${activeField===index+1&&'active'}`}
-                                    onClick={() => handleClick(index)}
-                                >
-                                    <div className={`border d-flex px-2 py-1 rounded fieldTypeIcon-${item.name}`}>
-                                        {item.icon}
-                                    </div>
-                                    <div className='ps-3'>
-                                        <strong className='text-capitalize'>{item.name}</strong>
-                                        <div>
-                                            <small>{item.tagline}</small>
-                                        </div>
-                                    </div>
-                                </div>
+                                <FieldBox 
+                                    isActive={activeField===index+1}
+                                    item={item}
+                                    handleClick={() => handleClick(index)}
+                                />
                             </Col>
                         )
                     })}

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
-import { Check2, PencilSquare, Trash } from 'react-bootstrap-icons';
+import { CaretRightFill, Check2, PencilSquare, Trash } from 'react-bootstrap-icons';
 
 const CloseButton = ({ handleClick, disabled, size, label, ...props }) => {
     return (
@@ -30,6 +30,25 @@ const SubmitButton = ({ handleClick, disabled, size, label, ...props }) => {
             <span className='px-2'>
                 {label?label:"Next"}
             </span>
+        </Button>
+    )
+}
+
+const NextButton = ({ handleClick, disabled, size, label, ...props }) => {
+    return (
+        <Button
+            type='button'
+            onClick={handleClick}
+            variant='primary'
+            disabled={disabled}
+            size={size}
+            className='d-flex align-items-center'
+            {...props}
+        >
+            <span className='px-2'>
+                {label?label:"Next"}
+            </span>
+            <CaretRightFill />
         </Button>
     )
 }
@@ -95,6 +114,7 @@ export {
     CloseButton,
     DeleteButton,
     EditButton,
+    NextButton,
     SaveButton,
     SubmitButton,
 };
