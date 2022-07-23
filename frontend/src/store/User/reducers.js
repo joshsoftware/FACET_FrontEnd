@@ -1,7 +1,7 @@
 import userConstants from "./constants";
 
 const INITIAL_STATE = {
-    isLoggedIn: JSON.parse(localStorage.getItem('user'))?.hasOwnProperty('token'),
+    isLoggedIn: JSON.parse(localStorage.getItem('user'))&&JSON.parse(localStorage.getItem('user')).hasOwnProperty('token'),
     currentUser: JSON.parse(localStorage.getItem('user')),
     userErr: []
 }

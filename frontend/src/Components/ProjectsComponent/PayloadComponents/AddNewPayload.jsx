@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState , useCallback} from 'react'
 import { Form } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -7,11 +7,12 @@ import FormInput from '../../forms/Inputs/FormInput';
 import { addPayloadsRequest } from '../../../store/Payloads/actions';
 import Editor from '../../Editor';
 import ExpectedOutcomeTable from '../ExpectedOutcomeTable';
+import IsValidJson from '../../../utils/IsValidJson';
 
 const INITIAL_VALUE = {
     "project": '', 
-    "name": "gh", 
-    "payload": {"":""},
+    "name": "", 
+    "payload": JSON.stringify({"":""}),
     "expected_outcome": [
         {
             name: "status_code",
@@ -31,33 +32,37 @@ const AddNewPayload = () => {
     
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(addPayloadsRequest(formData))
+        dispatch(addPayloadsRequest({...formData, payload: JSON.parse(formData.payload)}))
     }
 
     const onchange = (e) => {
-        e.preventDefault()
-        setFormData({...formData, [e.target.name]:e.target.value})
+        setFormData(p => ({...p, [e.target.name]:e.target.value}))
     }
     
-    const onPayloadFieldsChange = (formData, result) => {
-        console.log(formData)
-        if(JSON.parse(result)){
-            setFormData({...formData});
-        }
-    }
     
+    const onPayloadFieldsChange = (result) => {
+        setFormData(p => ({...p, payload: result}));
+    };
+    
+
     const onExpectedOutcomeFieldsChange = (result) => {
         setFormData({...formData, expected_outcome: result})
     }
 
     useEffect(() => {
-        setFormData({...formData, project: projectName})
+        setFormData(p => ({...p, project: projectName}))
     }, [projectName])
+
+    
     
     return (
         <Form onSubmit={handleSubmit} className='w-100'>
-            {console.log(formData)}
-            <ViewComponent title="Add New" type="save" onSave={handleSubmit}>
+            <ViewComponent 
+                title="Add New" 
+                type="save" 
+                onSave={handleSubmit}
+                onSaveDisabled={formData.name.length===0 || !IsValidJson(formData.payload)}
+            >
                 <FormInput 
                     label='Name'
                     placeholder='Name'
@@ -78,12 +83,15 @@ const AddNewPayload = () => {
                             />
                         </div>
                     }
-                    element={<Editor 
-                                json={formData.payload}
+                    element={
+                        <>
+                            <Editor 
+                                text={formData.payload}
                                 mode={showPayloadInJsonFormat?"code":"tree"}
                                 indentation={4}
-                                onChangeText={(res) => onPayloadFieldsChange(formData, res)}
+                                onChangeText={onPayloadFieldsChange}
                             />
+                        </>
                         }
                 />
                 <FormInput 

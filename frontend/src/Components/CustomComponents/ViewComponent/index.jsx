@@ -10,8 +10,8 @@ const ViewComponent = ({
     type,
     onSave,
     onEdit,
-    onDelete
-
+    onDelete,
+    onSaveDisabled
 }) => {
     let navigate = useNavigate();
 
@@ -36,6 +36,7 @@ const ViewComponent = ({
                     {type==='save'?(
                         <SaveButton 
                             handleClick={onSave}
+                            disabled={onSaveDisabled}
                         />
                     ):(
                         <>
