@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Card } from 'react-bootstrap';
 import { ArrowLeft } from 'react-bootstrap-icons';
 import { useNavigate } from 'react-router-dom';
 import { DeleteButton, EditButton, SaveButton } from '../../forms/Buttons';
+import './style.css';
 
 const ViewComponent = ({
     children,
@@ -14,11 +15,26 @@ const ViewComponent = ({
     onSaveDisabled
 }) => {
     let navigate = useNavigate();
+    const [isSticky, setIsSticky] = useState(false);
 
+    const toggleSticky = () => {
+        if(window.scrollY>=100) {
+            setIsSticky(true);
+        } else {
+            setIsSticky(false);
+        }
+    }
+
+    useEffect(() => {
+        window.addEventListener('scroll', toggleSticky);
+        return () => {
+            window.removeEventListener('scroll', toggleSticky);
+        }
+    }, [])
 
     return (
-        <div className='p-5 w-100'>
-            <div className='mb-4 sticky-top d-flex justify-content-between align-items-center'>
+        <div className='w-100'>
+            <div className={`my-4 px-5 sticky-top d-flex justify-content-between align-items-center ${isSticky&&'sticky-component-header'}`}>
                 <div>
                     <div className='text-primary'>
                         <span 
@@ -50,7 +66,7 @@ const ViewComponent = ({
                 </div>
             </div>
             
-            <div>
+            <div className='px-5'>
                 <Card className='w-100 p-3'>
                     <Card.Body>
                         {children}
