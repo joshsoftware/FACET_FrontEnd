@@ -26,7 +26,7 @@ const Header = () => {
     }
 
     return (
-        <Navbar bg='dark' variant='dark' expand='lg'>
+        <Navbar bg='dark' sticky="top" variant='dark' expand='lg'>
             <Container fluid>
                 <Navbar.Brand>
                     <img 

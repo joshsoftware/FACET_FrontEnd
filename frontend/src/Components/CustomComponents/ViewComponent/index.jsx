@@ -18,7 +18,7 @@ const ViewComponent = ({
     const [isSticky, setIsSticky] = useState(false);
 
     const toggleSticky = () => {
-        if(window.scrollY>=100) {
+        if(window.scrollY>=60) {
             setIsSticky(true);
         } else {
             setIsSticky(false);
@@ -34,7 +34,7 @@ const ViewComponent = ({
 
     return (
         <div className='w-100'>
-            <div className={`my-4 px-5 sticky-top d-flex justify-content-between align-items-center ${isSticky&&'sticky-component-header'}`}>
+            <div className={`my-4 px-5 d-flex justify-content-between align-items-center viewcomponent-header ${isSticky&&'sticky-component-header'}`}>
                 <div>
                     <div className='text-primary'>
                         <span 
