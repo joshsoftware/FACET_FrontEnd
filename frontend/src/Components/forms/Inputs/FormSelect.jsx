@@ -32,7 +32,7 @@ const FormSelect = (
                         name={name} 
                         onChange={handlechange}
                     >
-                        <option value="0" disabled>Select Value</option>
+                        <option value="0" disabled>Select...</option>
                         {options.map((e, index) => {
                             return (
                                 <option key={index} value={e[0]}>{e[1]}</option>

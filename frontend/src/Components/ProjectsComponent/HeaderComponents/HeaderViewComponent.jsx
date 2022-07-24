@@ -23,7 +23,7 @@ const HeaderViewComponent = ({ data }) => {
                             </tr>
                         </thead>
                         <tbody>
-                            {Object.entries(data.header).map(([key, value], index) => {
+                            {Object.entries(data.header || {}).map(([key, value], index) => {
                                 return (
                                     <tr key={index}>
                                         <td>{index + 1}</td>
