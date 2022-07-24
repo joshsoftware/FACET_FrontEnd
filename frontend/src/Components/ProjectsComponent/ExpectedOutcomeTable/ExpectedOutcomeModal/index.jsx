@@ -9,6 +9,7 @@ import AddValidationFields from './AddValidationFields';
 const INITIAL_VALUE = {
     name: "",
     type: "",
+    value: "",
     isExact: ""
 }
 
