@@ -6,6 +6,7 @@ import { DeleteButton, EditButton, SaveButton } from '../../forms/Buttons';
 import './style.css';
 
 const ViewComponent = ({
+    disabledHeader,
     children,
     title,
     type,
@@ -34,39 +35,41 @@ const ViewComponent = ({
 
     return (
         <div className='w-100'>
-            <div className={`my-4 px-5 d-flex justify-content-between align-items-center viewcomponent-header ${isSticky&&'sticky-component-header'}`}>
-                <div>
-                    <div className='text-primary'>
-                        <span 
-                            className='d-flex align-items-center'
-                            style={{cursor: 'pointer', width: 'fit-content'}}
-                            onClick={()  => navigate(-1)}
-                        >
-                            <ArrowLeft />
-                            Back
-                        </span>
+            {!disabledHeader&&(
+                <div className={`mt-4 px-5 d-flex justify-content-between align-items-center viewcomponent-header ${isSticky&&'sticky-component-header'}`}>
+                    <div>
+                        <div className='text-primary'>
+                            <span 
+                                className='d-flex align-items-center'
+                                style={{cursor: 'pointer', width: 'fit-content'}}
+                                onClick={()  => navigate(-1)}
+                            >
+                                <ArrowLeft />
+                                Back
+                            </span>
+                        </div>
+                        <h2>{title}</h2>
                     </div>
-                    <h2>{title}</h2>
-                </div>
-                <div className='d-flex justify-content-between align-items-center'>
-                    {type==='save'?(
-                        <SaveButton 
-                            handleClick={onSave}
-                            disabled={onSaveDisabled}
-                        />
-                    ):(
-                        <>
-                            <EditButton 
-                                className='mx-2'
-                                handleClick={onEdit}
+                    <div className='d-flex justify-content-between align-items-center'>
+                        {type==='save'?(
+                            <SaveButton 
+                                handleClick={onSave}
+                                disabled={onSaveDisabled}
                             />
-                            <DeleteButton handleClick={onDelete} />
-                        </>
-                    )}
+                        ):(
+                            <>
+                                <EditButton 
+                                    className='mx-2'
+                                    handleClick={onEdit}
+                                />
+                                <DeleteButton handleClick={onDelete} />
+                            </>
+                        )}
+                    </div>
                 </div>
-            </div>
+            )}
             
-            <div className='px-5'>
+            <div className='px-5 py-3'>
                 <Card className='w-100 p-3'>
                     <Card.Body>
                         {children}

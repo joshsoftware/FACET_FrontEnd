@@ -2,6 +2,21 @@ import React from 'react';
 import { Button } from 'react-bootstrap';
 import { CaretRightFill, Check2, PencilSquare, Trash } from 'react-bootstrap-icons';
 
+
+const AddButton = ({ handleClick, disabled, size, label, ...props }) => {
+    return (
+        <Button
+            type='button'
+            onClick={handleClick}
+            variant='success'
+            size={size}
+            {...props}
+        >
+            + {label?label:'Add'}
+        </Button>
+    )
+}
+
 const CloseButton = ({ handleClick, disabled, size, label, ...props }) => {
     return (
         <Button
@@ -111,6 +126,7 @@ const DeleteButton = ({ handleClick, disabled, size, label, ...props }) => {
 }
 
 export {
+    AddButton,
     CloseButton,
     DeleteButton,
     EditButton,
