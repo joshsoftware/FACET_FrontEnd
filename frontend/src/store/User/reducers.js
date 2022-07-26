@@ -1,8 +1,10 @@
 import userConstants from "./constants";
 
+const user = JSON.parse(localStorage.getItem('user'))
+
 const INITIAL_STATE = {
-    isLoggedIn: JSON.parse(localStorage.getItem('user'))&&JSON.parse(localStorage.getItem('user')).hasOwnProperty('token'),
-    currentUser: JSON.parse(localStorage.getItem('user')),
+    isLoggedIn: user&&user.hasOwnProperty('token'),
+    currentUser: user&&user.hasOwnProperty('user')&&user.user,
     userErr: []
 }
 
@@ -11,7 +13,7 @@ const userReducer = (state=INITIAL_STATE, action) => {
         case userConstants.SIGN_IN_SUCCESS:
             return {
                 ...state,
-                currentUser: action.payload,
+                currentUser: action.payload.user,
                 userErr: [],
                 isLoggedIn: true
             }

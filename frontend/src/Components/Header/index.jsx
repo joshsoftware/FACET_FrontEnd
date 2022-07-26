@@ -42,7 +42,7 @@ const Header = () => {
                     <>
                         {isLoggedIn?(
                             <Nav>
-                                <NavDropdown title={`Welcome, ${currentUser.user}`}>
+                                <NavDropdown title={`Welcome, ${currentUser.name}`}>
                                     <NavDropdown.Item>
                                         My Profile
                                     </NavDropdown.Item>
