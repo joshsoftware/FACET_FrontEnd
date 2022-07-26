@@ -1,6 +1,7 @@
 import { combineReducers } from "redux";
 import endpointReducer from "./Endpoints/reducers";
 import environmentReducer from "./Environments/reducers";
+import executeReducer from "./Execute/reducers";
 import headerReducer from "./Headers/reducers";
 import payloadReducer from "./Payloads/reducers";
 import projectReducer from "./Projects/reducers";
@@ -18,7 +19,8 @@ const rootReducer = combineReducers({
     payloads: payloadReducer,
     testcases: testcaseReducer,
     testsuites: testsuiteReducer,
-    testdata: testdataReducer
+    testdata: testdataReducer,
+    execute: executeReducer
 })
 
 export default rootReducer;

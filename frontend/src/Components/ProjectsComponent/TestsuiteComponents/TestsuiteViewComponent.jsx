@@ -1,13 +1,12 @@
 import React from 'react'
-import { Accordion, Button, Col, Row } from 'react-bootstrap';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Accordion, Col, Row } from 'react-bootstrap';
 import { ViewComponent } from '../../CustomComponents';
+import ExecuteTestsuiteForm from './ExecuteTestsuiteForm';
 
 const TestsuiteViewComponent = ({ data }) => {
-    let navigate = useNavigate();
-    const { projectName } = useParams();
     return (
         <div className='w-100'>
+            {console.log(data)}
             <ViewComponent title={data.name}>
                 <Row>
                     <Col md={6} className='py-2'>
@@ -75,15 +74,12 @@ const TestsuiteViewComponent = ({ data }) => {
                         <div>{data.modified_by}</div>
                     </Col>
                 </Row>
-                <div className='text-end'>
-                    <Button 
-                        variant='success'
-                        onClick={() => navigate(`/project/${projectName}/execute/${data.id}`)}
-                    >
-                        Execute
-                    </Button>
+                <div className='d-flex'>
                 </div>
             </ViewComponent>
+            <ExecuteTestsuiteForm 
+                data={data}
+            />
         </div>
     )
 }

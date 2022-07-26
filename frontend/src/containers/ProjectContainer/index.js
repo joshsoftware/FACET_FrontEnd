@@ -6,6 +6,7 @@ import PayloadContainer from './PayloadContainer';
 import ProjectOverviewContainer from "./ProjectOverviewContainer";
 import TestcaseContainer from './TestcaseContainer';
 import TestsuiteContainer from './TestsuiteContainer';
+import ExecuteContainer from "./ExecuteContainer";
 import { ProjectLayout } from "../../Layout";
 import { Outlet } from "react-router-dom";
 
@@ -22,6 +23,7 @@ const ProjectContainer = () => {
 export {
     EnvironmentContainer,
     EndpointContainer,
+    ExecuteContainer,
     HeaderContainer,
     PayloadContainer,
     ProjectOverviewContainer,

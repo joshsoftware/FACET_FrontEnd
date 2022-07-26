@@ -13,7 +13,8 @@ const ViewComponent = ({
     onSave,
     onEdit,
     onDelete,
-    onSaveDisabled
+    onSaveDisabled,
+    disabledBtns
 }) => {
     let navigate = useNavigate();
     const [isSticky, setIsSticky] = useState(false);
@@ -50,22 +51,24 @@ const ViewComponent = ({
                         </div>
                         <h2>{title}</h2>
                     </div>
-                    <div className='d-flex justify-content-between align-items-center'>
-                        {type==='save'?(
-                            <SaveButton 
-                                handleClick={onSave}
-                                disabled={onSaveDisabled}
-                            />
-                        ):(
-                            <>
-                                <EditButton 
-                                    className='mx-2'
-                                    handleClick={onEdit}
+                    {!disabledBtns&&(
+                        <div className='d-flex justify-content-between align-items-center'>
+                            {type==='save'?(
+                                <SaveButton 
+                                    handleClick={onSave}
+                                    disabled={onSaveDisabled}
                                 />
-                                <DeleteButton handleClick={onDelete} />
-                            </>
-                        )}
-                    </div>
+                            ):(
+                                <>
+                                    <EditButton 
+                                        className='mx-2'
+                                        handleClick={onEdit}
+                                    />
+                                    <DeleteButton handleClick={onDelete} />
+                                </>
+                            )}
+                        </div>
+                    )}
                 </div>
             )}
             
