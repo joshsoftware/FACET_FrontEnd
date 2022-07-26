@@ -5,6 +5,7 @@ import headerReducer from "./Headers/reducers";
 import payloadReducer from "./Payloads/reducers";
 import projectReducer from "./Projects/reducers";
 import testcaseReducer from "./Testcases/reducers";
+import testdataReducer from "./Testdata/reducers";
 import testsuiteReducer from "./Testsuites/reducers";
 import userReducer from "./User/reducers";
 
@@ -16,7 +17,8 @@ const rootReducer = combineReducers({
     headers: headerReducer,
     payloads: payloadReducer,
     testcases: testcaseReducer,
-    testsuites: testsuiteReducer
+    testsuites: testsuiteReducer,
+    testdata: testdataReducer
 })
 
 export default rootReducer;

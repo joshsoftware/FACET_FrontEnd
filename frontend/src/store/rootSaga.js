@@ -5,6 +5,7 @@ import headerSagas from './Headers/sagas';
 import payloadSagas from './Payloads/sagas';
 import projectSagas from './Projects/sagas';
 import testcaseSagas from './Testcases/sagas';
+import testdataSagas from './Testdata/sagas';
 import testsuiteSagas from './Testsuites/sagas';
 import userSagas from './User/sagas';
 
@@ -17,6 +18,7 @@ export default function* rootSaga() {
         call(headerSagas),
         call(payloadSagas),
         call(testcaseSagas),
-        call(testsuiteSagas)
+        call(testsuiteSagas),
+        call(testdataSagas)
     ])
 }

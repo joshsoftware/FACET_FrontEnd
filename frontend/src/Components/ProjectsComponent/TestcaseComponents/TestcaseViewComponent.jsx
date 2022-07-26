@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Accordion, Col, Row } from 'react-bootstrap';
 import { ViewComponent } from '../../CustomComponents';
 import { AddButton } from '../../forms/Buttons';
+import AddNewTestdata from './AddNewTestdata';
 
 const TestcaseViewComponent = ({ data }) => {
+    const [showAddTestData, setShowAddTestData] = useState(false);
+
     return (
         <div className='w-100'>
             <ViewComponent title={data.name}>
@@ -56,8 +59,8 @@ const TestcaseViewComponent = ({ data }) => {
                 <Accordion>
                     {data.testdata&&data.testdata.map((item, index) => {
                         return (
-                            <Accordion.Item>
-                                <Accordion.Header eventKey={index}>
+                            <Accordion.Item eventKey={index}>
+                                <Accordion.Header>
                                     {item.name}
                                 </Accordion.Header>
                                 <Accordion.Body>
@@ -80,9 +83,19 @@ const TestcaseViewComponent = ({ data }) => {
                         )
                     })}
                 </Accordion>
-                <div className="d-flex justify-content-center py-2">
-                    <AddButton size='sm' />
-                </div>
+                {showAddTestData?(   
+                    <AddNewTestdata 
+                        data={data} 
+                        handleClose={() => setShowAddTestData(false)}
+                    />
+                ):(
+                    <div className="d-flex justify-content-center py-2">
+                        <AddButton 
+                            size='sm' 
+                            handleClick={() => setShowAddTestData(true)}
+                        />
+                    </div>
+                )}
             </ViewComponent>
         </div>
     )
