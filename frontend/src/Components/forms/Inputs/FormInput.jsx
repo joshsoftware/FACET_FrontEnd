@@ -37,6 +37,7 @@ const FormInput = (
                     onChange={handlechange}
                     as={type==='textarea'?type:'input'}
                     rows={5}
+                    {...props}
                 />
             )}
             {text && (
