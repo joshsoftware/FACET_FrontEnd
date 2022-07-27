@@ -9,11 +9,12 @@ import { DashboardLayout } from '../../Layout';
 import { fetchProjects } from '../../store/Projects/actions';
 
 const mapState = ({ user }) => ({
-    currentUser: user.currentUser
+    currentUser: user.currentUser,
+    isLoggedIn: user.isLoggedIn
 })
 
 const DashBoard = () => {
-    const { currentUser } = useSelector(mapState);
+    const { currentUser, isLoggedIn } = useSelector(mapState);
     const [showAddProjectModal, setShowAddProjectModal] = useState(false);
     let dispatch = useDispatch();
 
@@ -31,6 +32,7 @@ const DashBoard = () => {
             <DashboardSubHeader 
                 setShowAddProjectModal={() => setShowAddProjectModal(true)} 
                 user={currentUser}    
+                isLoggedIn={isLoggedIn}
             />
             <ProjectsComponent />
         </DashboardLayout>

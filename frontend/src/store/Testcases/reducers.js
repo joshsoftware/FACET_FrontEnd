@@ -8,6 +8,12 @@ const INITIAL_STATE = {
 
 const testcaseReducer = (state=INITIAL_STATE, action) => {
     switch (action.type) {
+        case testcaseConstants.GET_TESTCASES_REQUEST:
+            return {
+                ...state,
+                isLoading: true
+            }
+            
         case testcaseConstants.GET_TESTCASES_SUCCESS:
             return {
                 ...state,

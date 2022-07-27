@@ -37,7 +37,7 @@ const TestsuiteContainer = (props) => {
             />
             {props.cat==='add'&&<AddNewTestsuite />}
 
-            {!isLoading&&selectedItem&&<TestsuiteViewComponent data={selectedItem} />}
+            {!isLoading&&selectedItem!==undefined&&Object.keys(selectedItem).length&&<TestsuiteViewComponent data={selectedItem} />}
         </>
     )
 }

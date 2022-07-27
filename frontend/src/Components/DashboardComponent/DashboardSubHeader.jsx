@@ -3,7 +3,7 @@ import { Button, Form, InputGroup } from 'react-bootstrap';
 import { PlusLg, Search } from 'react-bootstrap-icons';
 import AddProjectModal from './AddProjectModal';
 
-const DashboardSubHeader = ({ setShowAddProjectModal, user }) => {
+const DashboardSubHeader = ({ setShowAddProjectModal, user, isLoggedIn }) => {
     return (
         <>
             <AddProjectModal />
@@ -20,7 +20,7 @@ const DashboardSubHeader = ({ setShowAddProjectModal, user }) => {
                                 aria-describedby="basic-addon1"
                             />
                         </InputGroup>
-                        {user.is_super_admin&&(
+                        {isLoggedIn&&(user.is_super_admin||user.is_admin)&&(
                             <div className='d-flex flex-wrap col-2'>  
                                 <Button className='w-100' onClick={setShowAddProjectModal}>
                                     <PlusLg />

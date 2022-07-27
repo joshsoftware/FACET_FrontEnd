@@ -8,6 +8,12 @@ const INITIAL_STATE = {
 
 const endpointReducer = (state=INITIAL_STATE, action) => {
     switch (action.type) {
+        case endpointConstants.GET_ENDPOINT_REQUEST:
+            return {
+                ...state,
+                isLoading: true
+            }
+            
         case endpointConstants.GET_ENDPOINT_SUCCESS:
             return {
                 ...state,

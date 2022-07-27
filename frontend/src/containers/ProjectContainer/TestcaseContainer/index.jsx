@@ -37,7 +37,7 @@ const TestcaseContainer = (props) => {
             />
             {props.cat==='add'&&<AddNewTestcase />}
 
-            {!isLoading&&selectedItem&&<TestcaseViewComponent data={selectedItem} />}
+            {!isLoading&&selectedItem!==undefined&&Object.keys(selectedItem).length&&<TestcaseViewComponent data={selectedItem} />}
         </>
     )
 }

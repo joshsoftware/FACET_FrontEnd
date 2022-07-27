@@ -59,7 +59,7 @@ const TestcaseViewComponent = ({ data }) => {
                 <Accordion>
                     {data.testdata&&data.testdata.map((item, index) => {
                         return (
-                            <Accordion.Item eventKey={index}>
+                            <Accordion.Item key={index} eventKey={index}>
                                 <Accordion.Header>
                                     {item.name}
                                 </Accordion.Header>
