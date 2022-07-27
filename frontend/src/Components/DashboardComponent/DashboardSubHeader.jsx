@@ -3,7 +3,7 @@ import { Button, Form, InputGroup } from 'react-bootstrap';
 import { PlusLg, Search } from 'react-bootstrap-icons';
 import AddProjectModal from './AddProjectModal';
 
-const DashboardSubHeader = ({ setShowAddProjectModal }) => {
+const DashboardSubHeader = ({ setShowAddProjectModal, user }) => {
     return (
         <>
             <AddProjectModal />
@@ -15,17 +15,19 @@ const DashboardSubHeader = ({ setShowAddProjectModal }) => {
                                 <Search />
                             </InputGroup.Text>
                             <Form.Control
-                                placeholder="Username"
-                                aria-label="Username"
+                                placeholder="Search Projects..."
+                                aria-label="Search Projects"
                                 aria-describedby="basic-addon1"
                             />
                         </InputGroup>
-                        <div className='d-flex flex-wrap col-2'>  
-                            <Button className='w-100' onClick={setShowAddProjectModal}>
-                                <PlusLg />
-                                New Project
-                            </Button>
-                        </div>
+                        {user.is_super_admin&&(
+                            <div className='d-flex flex-wrap col-2'>  
+                                <Button className='w-100' onClick={setShowAddProjectModal}>
+                                    <PlusLg />
+                                    New Project
+                                </Button>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

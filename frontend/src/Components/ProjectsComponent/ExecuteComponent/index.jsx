@@ -14,7 +14,6 @@ const ExecuteComponent = () => {
     
     return (
         <div className='w-100'>
-            {console.log(data)}
             <ViewComponent
                 title={data.name}
                 disabledBtns

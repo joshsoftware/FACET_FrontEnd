@@ -1,12 +1,18 @@
 import projectConstants from "./constants";
 
-const INITIAL_STATE = {
+const PROJECTS_INITIAL_STATE = {
+    project: '',
+    members: [],
+    isLoading: true
+}
+
+const MEMBERS_INITIAL_STATE = {
     projects: [],
     isLoading: true
 }
 
 
-const projectReducer = (state=INITIAL_STATE, action) => {
+const projectReducer = (state=PROJECTS_INITIAL_STATE, action) => {
     switch (action.type) {
         case projectConstants.SET_PROJECTS:
             return {
@@ -20,5 +26,22 @@ const projectReducer = (state=INITIAL_STATE, action) => {
     }
 }
 
+const projectMemberReducer = (state=MEMBERS_INITIAL_STATE, action) => {
+    switch (action.type) {
+        case projectConstants.GET_PROJECT_MEMBERS_SUCCESS:
+            return {
+                ...state,
+                members: action.payload.members,
+                project: action.payload.project,
+                isLoading: false
+            }
+    
+        default:
+            return state;
+    }
+}
 
-export default projectReducer;
+export {
+    projectReducer,
+    projectMemberReducer
+};

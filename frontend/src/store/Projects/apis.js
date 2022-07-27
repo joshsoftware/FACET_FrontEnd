@@ -9,3 +9,7 @@ export const getProjectsApi = () => {
 export const addNewProjectApi = (data) => {
     return post(`${SERVER_URL}/api/projects/new`, data)
 }
+
+export const getProjectMembersApi = (project) => {
+    return get(`${SERVER_URL}/api/projects/members?project=${project}`)
+}

@@ -1,8 +1,8 @@
 import { call, put, takeLatest } from "redux-saga/effects";
-import { addNewProjectApi, getProjectsApi } from "./apis";
+import { addNewProjectApi, getProjectMembersApi, getProjectsApi } from "./apis";
 import projectConstants from "./constants";
 import { toast } from 'react-toastify';
-import { setProjects } from "./actions";
+import { getProjectMembersSuccess, setProjects } from "./actions";
 
 
 export function* fetchProjects() {
@@ -23,7 +23,18 @@ export function* addNewProject({ payload }) {
     }
 }
 
+export function* getProjectMembers({ payload }) {
+    try {
+        console.log(payload)
+        const response = yield call(getProjectMembersApi, payload);
+        yield put(getProjectMembersSuccess(response));
+    } catch (error) {
+        toast.error("Something Wnt Wrong!")
+    }
+}
+
 export default function* projectSagas() {
     yield takeLatest(projectConstants.FETCH_PROJECTS, fetchProjects);
     yield takeLatest(projectConstants.ADD_NEW_PROJECT, addNewProject);
+    yield takeLatest(projectConstants.GET_PROJECT_MEMBERS_REQUEST, getProjectMembers);
 }

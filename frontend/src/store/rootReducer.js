@@ -4,7 +4,7 @@ import environmentReducer from "./Environments/reducers";
 import executeReducer from "./Execute/reducers";
 import headerReducer from "./Headers/reducers";
 import payloadReducer from "./Payloads/reducers";
-import projectReducer from "./Projects/reducers";
+import { projectReducer, projectMemberReducer } from "./Projects/reducers";
 import testcaseReducer from "./Testcases/reducers";
 import testdataReducer from "./Testdata/reducers";
 import testsuiteReducer from "./Testsuites/reducers";
@@ -20,7 +20,8 @@ const rootReducer = combineReducers({
     testcases: testcaseReducer,
     testsuites: testsuiteReducer,
     testdata: testdataReducer,
-    execute: executeReducer
+    execute: executeReducer,
+    projectMembers: projectMemberReducer
 })
 
 export default rootReducer;

@@ -19,6 +19,7 @@ import {
   TestsuiteContainer,
   ExecuteContainer
 } from './containers/ProjectContainer';
+import MemberContainer from './containers/ProjectContainer/MemberContainer';
 
 function App() {
   return (
@@ -52,6 +53,7 @@ function App() {
             <Route path='/project/:projectName/testsuites/new' element={<TestsuiteContainer cat="add" />} />
     
             <Route path='/project/:projectName/execute/:id' element={<ExecuteContainer />} />
+            <Route path='/project/:projectName/members' element={<MemberContainer />} />
           </Route>
 
         </Route>

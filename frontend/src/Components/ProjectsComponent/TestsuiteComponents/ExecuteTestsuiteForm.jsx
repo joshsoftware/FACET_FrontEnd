@@ -48,6 +48,7 @@ const ExecuteTestsuiteForm = ({ data }) => {
             <div className='d-flex align-items-center'>
                 <Col md={6}>
                     <Select
+                        placeholder="Select Environment..."
                         options={options}
                         onChange={e => setSelectedItem(e.value)}
                     />
