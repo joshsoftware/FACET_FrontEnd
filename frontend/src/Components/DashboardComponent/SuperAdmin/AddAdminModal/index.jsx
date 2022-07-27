@@ -1,18 +1,48 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import Select from 'react-select';
+import { addAdminsRequest, getAllUsersRequest } from '../../../../store/SuperAdmin/actions';
 import { CustomModal } from '../../../CustomComponents';
 import { SaveButton } from '../../../forms/Buttons';
 
-const AddAdminModal = ({ show }) => {
+const mapState = ({ superAdmin }) => ({
+    allUsers: superAdmin.users
+})
+
+const AddAdminModal = ({ show, handleClose }) => {
+    let dispatch = useDispatch();
+    const { allUsers } = useSelector(mapState);
+    const [options, setOptions] = useState([]);
+    const [formData, setFormData] = useState({admin: []})
+    useEffect(() => {
+        dispatch(getAllUsersRequest())
+    }, [])
+
+    useEffect(() => {
+        let options_data = [];
+        allUsers.forEach(ele => {
+            options_data.push({value: ele.id, label: ele.name})
+        })
+        setOptions(options_data);
+    }, [allUsers])
+    
+    const onSave = () => {
+        dispatch(addAdminsRequest(formData));
+        handleClose();
+    }    
+
     return (
-        <CustomModal show={show} title="Add Admins">
+        <CustomModal show={show} handleClose={handleClose} title="Add Admins">
             <CustomModal.Body>
                 <Select 
-                    options={[]} 
+                    options={options} 
+                    onChange={(e) => setFormData({...formData, admin: e.map(data => data.value)})}
                     className="py-2"
                     isMulti
                 />
-                <SaveButton />
+                <SaveButton 
+                    handleClick={onSave}
+                />
             </CustomModal.Body>
         </CustomModal>
     )

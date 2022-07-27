@@ -6,5 +6,5 @@ export const getAllUsersApi = () => {
 }
 
 export const addAdminsApi = (data) => {
-    return post(`${SERVER_URL}/api/auth/add_admin`, data)
+    return post(`${SERVER_URL}/api/auth/add_admins`, data)
 }

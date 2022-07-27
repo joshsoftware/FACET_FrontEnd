@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import logo from '../../assets/images/logo.png';
 import { 
     Container,
@@ -19,6 +19,7 @@ const mapState = ({ user }) => ({
 const Header = () => {
     let navigate = useNavigate();
     let dispatch = useDispatch();
+    const [showAddAdminModal, setShowAddAdminModal] = useState(false);
 
     const { isLoggedIn, currentUser } = useSelector(mapState);
 
@@ -28,7 +29,7 @@ const Header = () => {
 
     return (
         <Navbar bg='dark' sticky="top" variant='dark' expand='lg'>
-            <AddAdminModal show={true} />
+            <AddAdminModal show={showAddAdminModal} handleClose={() => setShowAddAdminModal(false)} />
             <Container fluid>
                 <Navbar.Brand>
                     <img 
@@ -41,7 +42,7 @@ const Header = () => {
                     <Nav className='me-auto'>
                         <Nav.Link onClick={() => navigate('/dashboard')}>Home</Nav.Link>
                         {currentUser.is_super_admin&&(
-                            <Nav.Link onClick={() => navigate('/dashboard')}>Add Admin</Nav.Link>
+                            <Nav.Link onClick={() => setShowAddAdminModal(true)}>Add Admin</Nav.Link>
                         )}
                     </Nav>
                     <>
