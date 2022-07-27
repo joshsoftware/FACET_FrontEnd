@@ -9,6 +9,7 @@ import {
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { signOutStart } from '../../store/User/actions';
+import AddAdminModal from '../DashboardComponent/SuperAdmin/AddAdminModal';
 
 const mapState = ({ user }) => ({
     isLoggedIn: user.isLoggedIn,
@@ -27,6 +28,7 @@ const Header = () => {
 
     return (
         <Navbar bg='dark' sticky="top" variant='dark' expand='lg'>
+            <AddAdminModal show={true} />
             <Container fluid>
                 <Navbar.Brand>
                     <img 
@@ -38,6 +40,9 @@ const Header = () => {
                 <Navbar.Collapse id='facet-navbar-nav'>
                     <Nav className='me-auto'>
                         <Nav.Link onClick={() => navigate('/dashboard')}>Home</Nav.Link>
+                        {currentUser.is_super_admin&&(
+                            <Nav.Link onClick={() => navigate('/dashboard')}>Add Admin</Nav.Link>
+                        )}
                     </Nav>
                     <>
                         {isLoggedIn?(

@@ -5,16 +5,17 @@ import { useParams } from 'react-router-dom';
 import { ViewComponent } from '../../../Components/CustomComponents';
 import { getProjectMembersRequest } from '../../../store/Projects/actions';
 
-const mapState = ({ projectMembers }) => ({
+const mapState = ({ projectMembers, user }) => ({
     members: projectMembers.members,
     project: projectMembers.project,
-    isLoading: projectMembers.isLoading
+    isLoading: projectMembers.isLoading,
+    user: user.user
 })
 
 const MemberContainer = () => {
     const { projectName } = useParams();
     let dispatch = useDispatch();
-    const { members, project, isLoading } = useSelector(mapState);
+    const { members, project, isLoading, user } = useSelector(mapState);
 
     useEffect(() => {
         dispatch(getProjectMembersRequest(projectName))
@@ -45,7 +46,7 @@ const MemberContainer = () => {
                                         <td>{item.name}</td>
                                         <td>Member</td>
                                         <td>
-                                            <NavDropdown title="More" className='text-dark'>
+                                            <NavDropdown title="More">
                                                 <NavDropdown.Item onClick={() => console.log("To be Done")}>Remove from Project</NavDropdown.Item>
                                             </NavDropdown>
                                         </td>

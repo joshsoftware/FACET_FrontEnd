@@ -12,7 +12,7 @@ const LoginContainer = () => {
     const { isLoggedIn } = useSelector(mapState);
     
     if(isLoggedIn){
-        return <Navigate to='/' /> 
+        return <Navigate to='/dashboard' /> 
     }
     return (
         <>
