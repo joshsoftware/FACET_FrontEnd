@@ -64,7 +64,7 @@ const AddNewTestcase = () => {
         headers.forEach(ele => {
             headers_data.push({value: ele.id, label: ele.name})
         })
-        endpoints.forEach(ele => {
+        payloads.forEach(ele => {
             payloads_data.push({value: ele.id, label: ele.name})
         })
         setOptions({...options, endpoints: endpoints_data, headers: headers_data, payloads: payloads_data})
