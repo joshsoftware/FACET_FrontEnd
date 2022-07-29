@@ -36,9 +36,13 @@ const PayloadContainer = (props) => {
                 onAddBtnClick={() => navigate(`/project/${projectName}/payloads/new`)}
                 onSelectItemUrl={`/project/${projectName}/payloads`}
             />
-            {props.cat==='add'&&<AddNewPayload />}
+            {props.cat==='add'&&<AddNewPayload cat="add" />}
 
-            {!isLoading&&selectedItem&&<PayloadViewComponent data={selectedItem} />}
+            {props.cat==='edit'?(
+                !isLoading&&selectedItem&&<AddNewPayload cat="edit" data={selectedItem} />
+            ):(
+                !isLoading&&selectedItem&&<PayloadViewComponent data={selectedItem} />
+            )}
         </>
     )
 }

@@ -11,7 +11,7 @@ const ViewComponent = ({
     title,
     type,
     onSave,
-    onEdit,
+    onEditLink,
     onDelete,
     onSaveDisabled,
     disabledBtns
@@ -62,7 +62,7 @@ const ViewComponent = ({
                                 <>
                                     <EditButton 
                                         className='mx-2'
-                                        handleClick={onEdit}
+                                        handleClick={() => navigate(onEditLink)}
                                     />
                                     <DeleteButton handleClick={onDelete} />
                                 </>

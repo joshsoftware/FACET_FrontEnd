@@ -11,18 +11,23 @@ const KeyValuePairsFormField = ({ data, setData }) => {
         }
     ]);
 
-    useEffect(() => {
-        let properties = {};
-        inputFields.map(e => {
-            properties[e.key] = e.value
-        });
-        setData(properties);
-    }, [inputFields]);
+    // useEffect(() => {
+    //     let properties = {};
+    //     inputFields.map(e => {
+    //         properties[e.key] = e.value
+    //     });
+    //     setData(properties);
+    // }, [inputFields]);
     
     const onchange = (e, index) => {
         const values = [...inputFields]
         values[index][e.target.name] = e.target.value;
-        setInputFields(values);
+
+        let properties = {};
+        values.map(e => {
+            properties[e.key] = e.value
+        });
+        setData(properties);
     }
 
     const onAddField = () => {
@@ -34,6 +39,18 @@ const KeyValuePairsFormField = ({ data, setData }) => {
         values.splice(index, 1);
         setInputFields(values);
     }
+
+    useEffect(() => {
+        let values = [];
+        Object.entries(data).map(([key, val], index) => {
+            let properties = {};
+            properties["key"] = key;
+            properties["value"] = val;
+            values.push(properties);
+        });
+        setInputFields(values);
+    }, [data])
+    
 
     return (
         <div>

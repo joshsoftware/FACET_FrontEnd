@@ -38,7 +38,11 @@ const EndpointContainer = (props) => {
             />
             {props.cat==='add'&&<AddNewEndpoint />}
             
-            {!isLoading&&selectedItem&&<EndpointViewComponent data={selectedItem} />}
+            {props.cat==='edit'?(
+                !isLoading&&selectedItem&&<AddNewEndpoint cat="edit" data={selectedItem} />
+            ):(
+                !isLoading&&selectedItem&&<EndpointViewComponent data={selectedItem} />
+            )}
         </>
     )
 }

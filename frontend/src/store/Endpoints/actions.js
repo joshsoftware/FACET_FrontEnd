@@ -29,3 +29,33 @@ export const addEndpointsFailure = (data) => ({
     type: endpointConstants.ADD_ENDPOINT_FAILURE,
     payload: data
 })
+
+export const editEndpointsRequest = (data) => ({
+    type: endpointConstants.EDIT_ENDPOINT_REQUEST,
+    payload: data
+})
+
+export const editEndpointsSuccess = (data) => ({
+    type: endpointConstants.EDIT_ENDPOINT_SUCCESS,
+    payload: data
+})
+
+export const editEndpointsFailure = (data) => ({
+    type: endpointConstants.EDIT_ENDPOINT_FAILURE,
+    payload: data
+})
+
+export const deleteEndpointsRequest = (data) => ({
+    type: endpointConstants.DELETE_ENDPOINT_REQUEST,
+    payload: data
+})
+
+export const deleteEndpointsSuccess = (data) => ({
+    type: endpointConstants.DELETE_ENDPOINT_SUCCESS,
+    payload: data
+})
+
+export const deleteEndpointsFailure = (data) => ({
+    type: endpointConstants.DELETE_ENDPOINT_FAILURE,
+    payload: data
+})

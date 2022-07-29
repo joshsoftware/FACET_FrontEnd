@@ -1,6 +1,6 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { getPayloadsSuccess } from './actions';
-import { addPayloadApi, getPayloadsApi } from './apis';
+import { addPayloadApi, editPayloadApi, getPayloadsApi } from './apis';
 import payloadConstants from './constants';
 import { toast } from 'react-toastify';
 
@@ -24,7 +24,18 @@ export function* addPayload({ payload }) {
     }
 }
 
+export function* editPayload({ payload }) {
+    try {
+        const response = yield call(editPayloadApi, payload);
+        toast.success("Payload Updated Successfully!")
+        yield call(getPayloads, {payload: { project: payload.project }});
+    } catch (error) {
+        toast.error(error.response.data.errors)
+    }
+}
+
 export default function* payloadSagas() {
     yield takeLatest(payloadConstants.GET_PAYLOADS_REQUEST, getPayloads);
     yield takeLatest(payloadConstants.ADD_PAYLOADS_REQUEST, addPayload);
+    yield takeLatest(payloadConstants.EDIT_PAYLOADS_REQUEST, editPayload);
 }

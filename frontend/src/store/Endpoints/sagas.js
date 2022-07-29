@@ -1,6 +1,6 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { getEndpointsSuccess } from './actions';
-import { addEndpointApi, getEndpointsApi } from './apis';
+import { addEndpointApi, editEndpointApi, getEndpointsApi } from './apis';
 import endpointConstants from './constants';
 import { toast } from 'react-toastify';
 
@@ -23,8 +23,19 @@ export function* addEndpoint({payload}){
     }
 }
 
+export function* editEndpoint({payload}){
+    try {
+        const response = yield call(editEndpointApi, payload);
+        toast.success("Endpoint Updated Successfully!");
+        yield call(getEndpoits, {payload:{project: payload.project}})
+    } catch (error) {
+        toast.error(error.response.data.error)
+    }
+}
+
 
 export default function* endpointSagas() {
     yield takeLatest(endpointConstants.GET_ENDPOINT_REQUEST, getEndpoits);
     yield takeLatest(endpointConstants.ADD_ENDPOINT_REQUEST, addEndpoint);
+    yield takeLatest(endpointConstants.EDIT_ENDPOINT_REQUEST, editEndpoint);
 }

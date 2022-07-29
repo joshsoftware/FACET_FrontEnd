@@ -21,11 +21,41 @@ export const addHeadersRequest = (data) => ({
 })
 
 export const addHeadersSuccess = (data) => ({
-    type: headerConstants.GET_HEADERS_SUCCESS,
+    type: headerConstants.ADD_HEADERS_SUCCESS,
     payload: data
 })
 
 export const addHeadersFailure = (data) => ({
-    type: headerConstants.GET_HEADERS_FAILURE,
+    type: headerConstants.ADD_HEADERS_FAILURE,
+    payload: data
+})
+
+export const editHeadersRequest = (data) => ({
+    type: headerConstants.EDIT_HEADERS_REQUEST,
+    payload: data
+})
+
+export const editHeadersSuccess = (data) => ({
+    type: headerConstants.EDIT_HEADERS_SUCCESS,
+    payload: data
+})
+
+export const editHeadersFailure = (data) => ({
+    type: headerConstants.EDIT_HEADERS_FAILURE,
+    payload: data
+})
+
+export const deleteHeadersRequest = (data) => ({
+    type: headerConstants.DELETE_HEADERS_REQUEST,
+    payload: data
+})
+
+export const deleteHeadersSuccess = (data) => ({
+    type: headerConstants.DELETE_HEADERS_SUCCESS,
+    payload: data
+})
+
+export const deleteHeadersFailure = (data) => ({
+    type: headerConstants.DELETE_HEADERS_FAILURE,
     payload: data
 })
