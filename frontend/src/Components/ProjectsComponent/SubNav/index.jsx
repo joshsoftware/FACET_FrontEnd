@@ -1,6 +1,6 @@
 import React from 'react'
 import { Nav } from 'react-bootstrap';
-import { Box, Gear, House, People } from 'react-bootstrap-icons';
+import { Box, CardChecklist, Gear, House, People, Stickies } from 'react-bootstrap-icons';
 import { useLocation, useParams } from 'react-router-dom';
 import SubNavItem from './SubNavItem';
 import './style.css';
@@ -16,7 +16,7 @@ const SubNav = () => {
             icon: <House />
         },
         {
-            name: "Components",
+            name: "Templates",
             path: location.pathname,
             icon: <Box />,
             childrens: [
@@ -35,19 +35,21 @@ const SubNav = () => {
                 {
                     name: "Payloads",
                     path: `/project/${projectName}/payloads`
-                },
-                {
-                    name: "Testcases",
-                    path: `/project/${projectName}/testcases`
-                },
-                {
-                    name: "Testsuites",
-                    path: `/project/${projectName}/testsuites`
                 }
             ]
         },
         {
-            name: "Members",
+            name: "Testcases",
+            path: `/project/${projectName}/testcases`,
+            icon: <CardChecklist />
+        },
+        {
+            name: "Testsuites",
+            path: `/project/${projectName}/testsuites`,
+            icon: <Stickies />
+        },
+        {
+            name: "Team Members",
             path: `/project/${projectName}/members`,
             icon: <People />
         },

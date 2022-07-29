@@ -39,16 +39,16 @@ const SelectFieldType = ({ onSuccess }) => {
             icon: <Calendar />,
             tagline: "Date, Time or DateTime validations"
         },
-        {
-            name: "array",
-            icon: <List />,
-            tagline: "List of data items"
-        },
-        {
-            name: "object",
-            icon: <Braces />,
-            tagline: "Data in object or JSON format"
-        }
+        // {
+        //     name: "array",
+        //     icon: <List />,
+        //     tagline: "List of data items"
+        // },
+        // {
+        //     name: "object",
+        //     icon: <Braces />,
+        //     tagline: "Data in object or JSON format"
+        // }
     ]
 
     const [activeField, setActiveField] = useState();
