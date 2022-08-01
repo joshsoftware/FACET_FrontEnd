@@ -16,7 +16,7 @@ export function* getPayloads({ payload }) {
 
 export function* addPayload({ payload }) {
     try {
-        const response = yield call(addPayloadApi, payload);
+        yield call(addPayloadApi, payload);
         toast.success("Payload Added Successfully!")
         yield call(getPayloads, {payload: { project: payload.project }});
     } catch (error) {
@@ -26,7 +26,7 @@ export function* addPayload({ payload }) {
 
 export function* editPayload({ payload }) {
     try {
-        const response = yield call(editPayloadApi, payload);
+        yield call(editPayloadApi, payload);
         toast.success("Payload Updated Successfully!")
         yield call(getPayloads, {payload: { project: payload.project }});
     } catch (error) {

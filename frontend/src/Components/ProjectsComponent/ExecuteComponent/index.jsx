@@ -1,5 +1,5 @@
 import React from 'react'
-import { Accordion } from 'react-bootstrap';
+import { Accordion, Badge } from 'react-bootstrap';
 import { useSelector } from 'react-redux'
 import { ViewComponent } from '../../CustomComponents';
 
@@ -10,7 +10,7 @@ const mapState = ({ execute }) => ({
 })
 
 const ExecuteComponent = () => {
-    const { results, data, isLoading } = useSelector(mapState);
+    const { results, data } = useSelector(mapState);
     
     return (
         <div className='w-100'>
@@ -30,7 +30,11 @@ const ExecuteComponent = () => {
                                 ) : ''
                             )}`
                             } eventKey={e.name}>
-                                <Accordion.Header variant="danger" className="text-danger" style={{color: "red !important"}} >{e.name}</Accordion.Header>
+                                <Accordion.Header >
+                                    {e.name}
+                                    <Badge bg="success" className='mx-1'>{resultInstance.no_of_passed_testcases} Pass</Badge>
+                                    <Badge bg="danger">{resultInstance.no_of_failed_testcases} Fail</Badge>
+                                </Accordion.Header>
                                 <Accordion.Body>
                                     <div>
                                         {resultInstance.status ?

@@ -25,7 +25,7 @@ const AddKeyField = ({ data, onSuccess }) => {
     }
 
     const onSave = () => {
-        if (formData.name.length===0 || formData.type!=="exact" && formData.type!=="dynamic") {
+        if (formData.name.length===0 || (formData.type!=="exact" && formData.type!=="dynamic")) {
             toast.error("Fill All the Fields!");
         } else {
             onSuccess({name: formData.name, isExact: formData.type==='exact'});
@@ -96,7 +96,7 @@ const AddKeyField = ({ data, onSuccess }) => {
             </CustomModal.Body>
             <CustomModal.Footer>
                 <NextButton 
-                    disabled={formData.name.length===0 || formData.type!=="exact" && formData.type!=="dynamic"}
+                    disabled={formData.name.length===0 || (formData.type!=="exact" && formData.type!=="dynamic")}
                     handleClick={onSave}
                 />
             </CustomModal.Footer>

@@ -6,7 +6,6 @@ import Select from 'react-select';
 import { getEnvironmentsRequest } from '../../../store/Environments/actions';
 import { addExecuteRequest } from '../../../store/Execute/actions';
 import { ViewComponent } from '../../CustomComponents';
-import { FormSelect } from '../../forms/Inputs';
 
 const mapState = ({ environments }) => ({
     environments: environments.environments,
@@ -40,7 +39,7 @@ const ExecuteTestsuiteForm = ({ data }) => {
     
     
 
-    return (
+    return !isLoading && (
         <ViewComponent
             disabledHeader
         >

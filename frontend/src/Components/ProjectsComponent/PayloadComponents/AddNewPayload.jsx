@@ -1,4 +1,4 @@
-import React, { useEffect, useState , useCallback} from 'react'
+import React, { useEffect, useState } from 'react';
 import { Form } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -8,10 +8,12 @@ import { addPayloadsRequest, editPayloadsRequest } from '../../../store/Payloads
 import Editor from '../../Editor';
 import ExpectedOutcomeTable from '../ExpectedOutcomeTable';
 import IsValidJson from '../../../utils/IsValidJson';
+import KeyValuePairsFormField from '../../forms/KeyValuePairsFormField';
 
 const INITIAL_VALUE = {
     "project": '', 
     "name": "", 
+    "parameters": {"": ""},
     "payload": JSON.stringify({"":""}),
     "expected_outcome": [
         {
@@ -51,13 +53,17 @@ const AddNewPayload = ({ cat, data }) => {
         setFormData({...formData, expected_outcome: result})
     }
 
+    const onParameterFieldsChange = (result) => {
+        setFormData((p) => ({...p, parameters: result}))
+    } 
+
     useEffect(() => {
         setFormData(p => ({...p, project: projectName}))
     }, [projectName])
 
     useEffect(() => {
         if(cat==='edit') {
-            setFormData({...formData, project: projectName, name: data.name, payload: JSON.stringify(data.payload), expected_outcome: data.expected_outcome, id: data.id})
+            setFormData({...formData, project: projectName, parameters: data.parameters || {"":""}, name: data.name, payload: JSON.stringify(data.payload), expected_outcome: data.expected_outcome, id: data.id})
         }
     }, [data])
     
@@ -76,12 +82,22 @@ const AddNewPayload = ({ cat, data }) => {
                     name='name'
                     value={formData.name}
                     handlechange={onchange}
+                    disabled={cat==='edit'}
                     isRequired
+                />
+                <FormInput 
+                    name='parameters'
+                    label='Parameters'
+                    element={
+                        <KeyValuePairsFormField 
+                            data={formData.parameters} 
+                            setData={onParameterFieldsChange} 
+                        />}
                 />
                 <FormInput 
                     label={
                         <div className='d-flex justify-content-between align-items-center'>
-                            <span>Payload<span className='text-danger'>*</span></span>
+                            <span>Payload</span>
                             <Form.Check 
                                 type="switch"
                                 label="Json Format"

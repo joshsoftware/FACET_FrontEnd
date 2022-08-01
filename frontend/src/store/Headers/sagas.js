@@ -16,7 +16,7 @@ export function* getHeaders({ payload }) {
 
 export function* addHeader({ payload }) {
     try {
-        const response = yield call(addHeaderApi, payload);
+        yield call(addHeaderApi, payload);
         toast.success("Header Added Successfully!")
         yield call(getHeaders, {payload: { project: payload.project }});
     } catch (error) {
@@ -26,7 +26,7 @@ export function* addHeader({ payload }) {
 
 export function* editHeader({ payload }) {
     try {
-        const response = yield call(editHeaderApi, payload);
+        yield call(editHeaderApi, payload);
         toast.success("Header Updated Successfully!")
         yield call(getHeaders, {payload: { project: payload.project }});
     } catch (error) {

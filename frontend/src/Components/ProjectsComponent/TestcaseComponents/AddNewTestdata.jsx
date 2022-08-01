@@ -7,6 +7,7 @@ import { FormInput } from '../../forms/Inputs';
 import ExpectedOutcomeTable from '../ExpectedOutcomeTable';
 import { addTestdataRequest } from '../../../store/Testdata/actions';
 import { toast } from 'react-toastify';
+import KeyValuePairsFormField from '../../forms/KeyValuePairsFormField';
 
 const AddNewTestdata = ({ data, handleClose }) => {
     const [formData, setFormData] = useState(
@@ -14,6 +15,7 @@ const AddNewTestdata = ({ data, handleClose }) => {
             testcase: data.id,
             name: '',
             payload: JSON.stringify(data.payload.payload),
+            parameters: {"":""},
             expected_outcome: data.payload.expected_outcome
         } 
     )
@@ -29,6 +31,10 @@ const AddNewTestdata = ({ data, handleClose }) => {
             setFormData(p => ({...p, payload: res}))
         }
     }
+    
+    const onParameterFieldsChange = (result) => {
+        setFormData((p) => ({...p, parameters: result}))
+    } 
 
     const onExpectedOutcomeFieldsChange = (result) => {
         setFormData({...formData, expected_outcome: result})
@@ -55,7 +61,15 @@ const AddNewTestdata = ({ data, handleClose }) => {
                     handlechange={onchange}
                     isRequired
                 />
-                {console.log(formData)}
+                <FormInput 
+                    name='parameters'
+                    label='Parameters'
+                    element={
+                        <KeyValuePairsFormField 
+                            data={formData.parameters} 
+                            setData={onParameterFieldsChange} 
+                        />}
+                />
                 <FormInput 
                     label={
                         <div className='d-flex justify-content-between align-items-center'>

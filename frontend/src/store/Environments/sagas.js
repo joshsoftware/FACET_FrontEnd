@@ -15,7 +15,7 @@ export function* getEnvironments({payload}) {
 
 export function* addEnvironment({payload}){
     try {
-        const response = yield call(addEnvironmentApi, payload)
+        yield call(addEnvironmentApi, payload)
         toast.success("Environment Added Successfully!")
         yield call(getEnvironments, {payload:{project: payload.project}});
     } catch (error) {
@@ -25,7 +25,7 @@ export function* addEnvironment({payload}){
 
 export function* editEnvironment({payload}){
     try {
-        const response = yield call(editEnvironmentApi, payload)
+        yield call(editEnvironmentApi, payload)
         toast.success("Environment Updated Successfully!")
         yield call(getEnvironments, {payload:{project: payload.project}});
     } catch (error) {

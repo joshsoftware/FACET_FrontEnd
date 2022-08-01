@@ -37,6 +37,7 @@ const Header = () => {
                     <img 
                         src={logo}
                         width={100}
+                        alt="Facet"
                     />
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls='facet-navbar-nav' />
