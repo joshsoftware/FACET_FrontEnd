@@ -27,7 +27,7 @@ const SubComponentsNav = ({
                     + New
                 </Button>
             </div>
-            {data.map((e, index) => {
+            {data&&data.map((e, index) => {
                 return <Nav.Item 
                             className={`sidebar-item ${e.id.toString()===id&&'active'}`} 
                             key={index}

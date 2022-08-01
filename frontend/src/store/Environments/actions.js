@@ -29,3 +29,33 @@ export const addEnvironmentsFailure = (data) => ({
     type: environmentConstants.ADD_ENVIRONMENTS_FAILURE,
     payload: data
 })
+
+export const editEnvironmentsRequest = (data) => ({
+    type: environmentConstants.EDIT_ENVIRONMENTS_REQUEST,
+    payload: data
+})
+
+export const editEnvironmentsSuccess = (data) => ({
+    type: environmentConstants.EDIT_ENVIRONMENTS_SUCCESS,
+    payload: data
+})
+
+export const editEnvironmentsFailure = (data) => ({
+    type: environmentConstants.EDIT_ENVIRONMENTS_FAILURE,
+    payload: data
+})
+
+export const deleteEnvironmentsRequest = (data) => ({
+    type: environmentConstants.DELETE_ENVIRONMENTS_REQUEST,
+    payload: data
+})
+
+export const deleteEnvironmentsSuccess = (data) => ({
+    type: environmentConstants.DELETE_ENVIRONMENTS_SUCCESS,
+    payload: data
+})
+
+export const deleteEnvironmentsFailure = (data) => ({
+    type: environmentConstants.DELETE_ENVIRONMENTS_FAILURE,
+    payload: data
+})

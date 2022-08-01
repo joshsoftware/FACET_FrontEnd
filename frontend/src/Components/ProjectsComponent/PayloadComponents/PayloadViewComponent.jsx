@@ -1,10 +1,15 @@
 import React from 'react'
 import { Col, Row } from 'react-bootstrap';
+import { useParams } from 'react-router-dom';
 import { ViewComponent } from '../../CustomComponents';
 
 const PayloadViewComponent = ({ data }) => {
+    const { projectName } = useParams();
     return (
-        <ViewComponent title={data.name}>
+        <ViewComponent 
+            title={data.name}
+            onEditLink={`/project/${projectName}/payloads/edit/${data.id}`}
+        >
             <Row>
                 <Col md={6} className='pb-4'>
                     <small><b>Name</b></small>

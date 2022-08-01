@@ -1,13 +1,13 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Form } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { ViewComponent } from '../../CustomComponents';
 import { FormInput } from '../../forms/Inputs';
-import { addHeadersRequest } from '../../../store/Headers/actions';
+import { addHeadersRequest, editHeadersRequest } from '../../../store/Headers/actions';
 import KeyValuePairsFormField from '../../forms/KeyValuePairsFormField';
 
-const AddNewHeader = () => {
+const AddNewHeader = ({ cat, data }) => {
     const { projectName } = useParams();
     const [formData, setFormData] = useState({"project": projectName, "name": "", "header": {}});
     let dispatch = useDispatch();
@@ -18,12 +18,22 @@ const AddNewHeader = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(addHeadersRequest(formData))
+        if(cat==='add') {
+            dispatch(addHeadersRequest(formData))
+        } else {
+            dispatch(editHeadersRequest(formData))
+        }
     }
     
     const onHeaderFieldsChange = (result) => {
         setFormData({...formData, "header": result});
     }
+
+    useEffect(() => {
+        if(cat==='edit'){
+            setFormData({...formData, "name": data.name, "header": data.header, "id": data.id})
+        }
+    }, [data])
 
     return (
         <Form onSubmit={handleSubmit} className='w-100'>
@@ -35,10 +45,15 @@ const AddNewHeader = () => {
                     value={formData.name}
                     handlechange={onchange}
                     isRequired
+                    disabled={cat==='edit'}
                 />
                 <FormInput 
                     label='Header'
-                    element={<KeyValuePairsFormField data={formData.header} setData={onHeaderFieldsChange} />}
+                    element={
+                        <KeyValuePairsFormField 
+                            data={formData.header} 
+                            setData={onHeaderFieldsChange} 
+                        />}
                     isRequired
                 />
             </ViewComponent>

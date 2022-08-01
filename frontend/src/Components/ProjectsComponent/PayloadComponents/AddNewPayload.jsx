@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { ViewComponent } from '../../CustomComponents';
 import FormInput from '../../forms/Inputs/FormInput';
-import { addPayloadsRequest } from '../../../store/Payloads/actions';
+import { addPayloadsRequest, editPayloadsRequest } from '../../../store/Payloads/actions';
 import Editor from '../../Editor';
 import ExpectedOutcomeTable from '../ExpectedOutcomeTable';
 import IsValidJson from '../../../utils/IsValidJson';
@@ -23,7 +23,7 @@ const INITIAL_VALUE = {
     ]
 }
 
-const AddNewPayload = () => {
+const AddNewPayload = ({ cat, data }) => {
     const { projectName } = useParams();
     const [formData, setFormData] = useState(INITIAL_VALUE);
     const [showPayloadInJsonFormat, setShowPayloadInJsonFormat] = useState(false);
@@ -32,19 +32,21 @@ const AddNewPayload = () => {
     
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(addPayloadsRequest({...formData, payload: JSON.parse(formData.payload)}))
+        if(cat==='add') {
+            dispatch(addPayloadsRequest({...formData, payload: JSON.parse(formData.payload)}))
+        } else if(cat==='edit') {
+            dispatch(editPayloadsRequest({...formData, payload: JSON.parse(formData.payload)}))
+        }
     }
 
     const onchange = (e) => {
         setFormData(p => ({...p, [e.target.name]:e.target.value}))
     }
     
-    
     const onPayloadFieldsChange = (result) => {
         setFormData(p => ({...p, payload: result}));
     };
     
-
     const onExpectedOutcomeFieldsChange = (result) => {
         setFormData({...formData, expected_outcome: result})
     }
@@ -53,6 +55,11 @@ const AddNewPayload = () => {
         setFormData(p => ({...p, project: projectName}))
     }, [projectName])
 
+    useEffect(() => {
+        if(cat==='edit') {
+            setFormData({...formData, project: projectName, name: data.name, payload: JSON.stringify(data.payload), expected_outcome: data.expected_outcome, id: data.id})
+        }
+    }, [data])
     
     
     return (

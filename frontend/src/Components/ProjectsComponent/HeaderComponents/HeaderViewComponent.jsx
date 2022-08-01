@@ -1,10 +1,16 @@
 import React from 'react'
 import { Col, Row, Table } from 'react-bootstrap';
+import { useParams } from 'react-router-dom';
 import { ViewComponent } from '../../CustomComponents';
 
 const HeaderViewComponent = ({ data }) => {
+    const { projectName } = useParams();
+
     return (
-        <ViewComponent title={data.name}>
+        <ViewComponent 
+            title={data.name}
+            onEditLink={`/project/${projectName}/headers/edit/${data.id}`}
+        >
             <Row>
                 <Col className='pb-4'>
                     <small><b>Name</b></small>

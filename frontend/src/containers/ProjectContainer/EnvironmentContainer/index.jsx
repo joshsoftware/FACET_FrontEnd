@@ -35,9 +35,14 @@ const EnvironmentContainer = (props) => {
                 onAddBtnClick={() => navigate(`/project/${projectName}/environments/new`)}
                 onSelectItemUrl={`/project/${projectName}/environments`}
             />
-            {props.cat==='add'&&<AddNewEnvironment />}
+            {props.cat==='add'&&<AddNewEnvironment cat="add" />}
 
-            {!isLoading&&selectedItem&&<EnvironmentViewComponent data={selectedItem} />}
+            {props.cat==='edit'?(
+                !isLoading&&selectedItem&&<AddNewEnvironment cat="edit" data={selectedItem} />
+            ):(
+                !isLoading&&selectedItem&&<EnvironmentViewComponent data={selectedItem} />
+            )}
+
 
         </>
     )
