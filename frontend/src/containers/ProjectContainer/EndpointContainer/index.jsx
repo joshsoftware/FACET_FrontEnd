@@ -36,7 +36,7 @@ const EndpointContainer = (props) => {
                 onAddBtnClick={() => navigate(`/project/${projectName}/endpoints/new`)}
                 onSelectItemUrl={`/project/${projectName}/endpoints`}
             />
-            {props.cat==='add'&&<AddNewEndpoint />}
+            {props.cat==='add'&&<AddNewEndpoint cat="add" />}
             
             {props.cat==='edit'?(
                 !isLoading&&selectedItem&&<AddNewEndpoint cat="edit" data={selectedItem} />
