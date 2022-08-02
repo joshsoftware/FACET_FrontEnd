@@ -37,7 +37,7 @@ const HeaderContainer = (props) => {
                 onAddBtnClick={() => navigate(`/project/${projectName}/headers/new`)}
                 onSelectItemUrl={`/project/${projectName}/headers`}
             />
-            {props.cat==='add'&&<AddNewHeader />}
+            {props.cat==='add'&&<AddNewHeader cat="add"/>}
 
             {props.cat==='edit'?(
                 !isLoading&&selectedItem&&<AddNewHeader cat="edit" data={selectedItem} />
