@@ -17,7 +17,7 @@ export function* getAllUsers(payload) {
 export function* addAdmins({ payload }) {
     try {
         console.log(payload)
-        const response = yield call(addAdminsApi, payload);
+        yield call(addAdminsApi, payload);
         toast.success("Admins Added Successfully!")
     } catch (error) {
         toast.error(error.response.data.errors)

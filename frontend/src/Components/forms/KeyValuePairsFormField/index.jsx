@@ -24,9 +24,7 @@ const KeyValuePairsFormField = ({ data, setData }) => {
         values[index][e.target.name] = e.target.value;
 
         let properties = {};
-        values.map(e => {
-            properties[e.key] = e.value
-        });
+        values.map(e => properties[e.key] = e.value);
         setData(properties);
     }
 
@@ -47,6 +45,7 @@ const KeyValuePairsFormField = ({ data, setData }) => {
             properties["key"] = key;
             properties["value"] = val;
             values.push(properties);
+            return null
         });
         setInputFields(values);
     }, [data])

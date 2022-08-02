@@ -15,7 +15,7 @@ const mapState = ({ projectMembers, user }) => ({
 const MemberContainer = () => {
     const { projectName } = useParams();
     let dispatch = useDispatch();
-    const { members, project, isLoading, user } = useSelector(mapState);
+    const { members, isLoading } = useSelector(mapState);
 
     useEffect(() => {
         dispatch(getProjectMembersRequest(projectName))

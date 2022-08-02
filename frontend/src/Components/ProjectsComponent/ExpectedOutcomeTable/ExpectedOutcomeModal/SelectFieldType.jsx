@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { 
     At, 
-    Braces, 
+    // Braces, 
     Calendar, 
     Icon123, 
-    List, 
+    // List, 
     ToggleOn, 
     Type 
 } from 'react-bootstrap-icons';

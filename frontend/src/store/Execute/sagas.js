@@ -1,5 +1,5 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { addExecuteSuccess, getExecuteSuccess } from './actions';
+import { getExecuteSuccess } from './actions';
 import { executeTestsuiteApi } from './apis';
 import executeConstants from './constants';
 import { toast } from 'react-toastify';

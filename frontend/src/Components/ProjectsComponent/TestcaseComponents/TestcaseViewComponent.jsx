@@ -66,10 +66,18 @@ const TestcaseViewComponent = ({ data }) => {
                                 <Accordion.Body>
                                     <Row>
                                         <Col md={6}>
-                                            <div><small>Payload</small></div>
-                                            <pre>
-                                                {JSON.stringify(item.payload, null, 2)}
-                                            </pre>
+                                            <Col md={12}>
+                                                <div><small>Parameters</small></div>
+                                                <pre>
+                                                    {JSON.stringify(item.parameters, null, 2)}
+                                                </pre>
+                                            </Col>
+                                            <Col md={12}>
+                                                <div><small>Payload</small></div>
+                                                <pre>
+                                                    {JSON.stringify(item.payload, null, 2)}
+                                                </pre>
+                                            </Col>
                                         </Col>
                                         <Col md={6}>
                                             <div><small>Expected Outcome</small></div>

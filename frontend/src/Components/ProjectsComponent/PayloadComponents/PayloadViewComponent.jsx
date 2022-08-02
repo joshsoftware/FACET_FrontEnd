@@ -17,6 +17,10 @@ const PayloadViewComponent = ({ data }) => {
                 </Col>
                 <Col md={12} className='pb-4'>
                     <small><b>Payload</b></small>
+                    <pre>{JSON.stringify(data.parameters, null, 4)}</pre>
+                </Col>
+                <Col md={12} className='pb-4'>
+                    <small><b>Payload</b></small>
                     <pre>{JSON.stringify(data.payload, null, 4)}</pre>
                 </Col>
                 <Col md={12} className='pb-4'>

@@ -15,7 +15,7 @@ export function* getEndpoits({payload}) {
 
 export function* addEndpoint({payload}){
     try {
-        const response = yield call(addEndpointApi, payload);
+        yield call(addEndpointApi, payload);
         toast.success("Endpoint Added Successfully!");
         yield call(getEndpoits, {payload:{project: payload.project}})
     } catch (error) {
@@ -25,7 +25,7 @@ export function* addEndpoint({payload}){
 
 export function* editEndpoint({payload}){
     try {
-        const response = yield call(editEndpointApi, payload);
+        yield call(editEndpointApi, payload);
         toast.success("Endpoint Updated Successfully!");
         yield call(getEndpoits, {payload:{project: payload.project}})
     } catch (error) {

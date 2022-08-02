@@ -11,7 +11,7 @@ const SubComponentsNav = ({
     onAddBtnClick ,
     onSelectItemUrl
 }) => {
-    const { projectName, id } = useParams();
+    const { id } = useParams();
     return (
         <Nav className='sidebar subnav col-md-12 bg-light d-flex flex-column justify-content-start'>
             <div className='d-flex justify-content-between align-items-center border border-bottom pt-4 pb-1 px-2'>

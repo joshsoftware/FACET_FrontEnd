@@ -16,7 +16,7 @@ export function* getTestdatas({ payload }) {
 
 export function* addTestdata({ payload }) {
     try {
-        const response = yield call(addTestdataApi, payload);
+        yield call(addTestdataApi, payload);
         toast.success("Testdata Added Successfully!")
         console.log("q")
         yield call(getTestdatas, {payload: { testcase: payload.testcase }});

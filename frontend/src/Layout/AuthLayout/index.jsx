@@ -9,6 +9,7 @@ const AuthLayout = ({ children }) => {
                 <img 
                     src={logo}
                     width={180}
+                    alt="Facet"
                 />
                 <h1>Welcome to Facet!</h1>
                 <p className='text-muted'>

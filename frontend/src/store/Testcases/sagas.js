@@ -16,7 +16,7 @@ export function* getTestcases({ payload }) {
 
 export function* addTestcase({ payload }) {
     try {
-        const response = yield call(addTestcaseApi, payload);
+        yield call(addTestcaseApi, payload);
         toast.success("Testcase Added Successfully!")
         yield call(getTestcases, {payload: { project: payload.project }});
     } catch (error) {

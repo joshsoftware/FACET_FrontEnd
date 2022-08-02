@@ -21,7 +21,7 @@ export function* signUp({payload: {name, email, password, cpassword}}) {
     }
 
     try {
-        const response = yield call(signUpApi, {name, email, password});
+        yield call(signUpApi, {name, email, password});
         toast.success("SignUp Successfully!");
     } catch (error) {
         toast.error(error.response.data.error)
