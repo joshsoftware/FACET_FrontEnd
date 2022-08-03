@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import Select from 'react-select';
-import { addAdminsRequest, getAllUsersRequest } from '../../../../store/SuperAdmin/actions';
+import { addAdminsRequest } from '../../../../store/SuperAdmin/actions';
+import { getAllUsersRequest } from '../../../../store/User/actions';
 import { CustomModal } from '../../../CustomComponents';
 import { SaveButton } from '../../../forms/Buttons';
 
-const mapState = ({ superAdmin }) => ({
-    allUsers: superAdmin.users
+const mapState = ({ getUsers }) => ({
+    allUsers: getUsers.users
 })
 
 const AddAdminModal = ({ show, handleClose }) => {
@@ -15,7 +16,7 @@ const AddAdminModal = ({ show, handleClose }) => {
     const [options, setOptions] = useState([]);
     const [formData, setFormData] = useState({admin: []})
     useEffect(() => {
-        dispatch(getAllUsersRequest())
+        dispatch(getAllUsersRequest({exclude: "admins"}))
     }, [])
 
     useEffect(() => {

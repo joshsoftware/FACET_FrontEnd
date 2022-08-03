@@ -13,3 +13,8 @@ export const addNewProjectApi = (data) => {
 export const getProjectMembersApi = (project) => {
     return get(`${SERVER_URL}/api/projects/members?project=${project}`)
 }
+
+export const addMembersInProjectApi = (data) => {
+    console.log(data)
+    return post(`${SERVER_URL}/api/projects/members/add`, data)
+}

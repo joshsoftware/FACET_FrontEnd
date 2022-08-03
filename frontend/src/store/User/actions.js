@@ -25,3 +25,18 @@ export const signOutSuccess = (data) => ({
     type: userConstants.SIGN_OUT_SUCCESS,
     payload: data
 });
+
+export const getAllUsersRequest = (data) => ({
+    type: userConstants.GET_ALL_USERS_REQUEST,
+    payload: data
+})
+
+export const getAllUsersSuccess = (data) => ({
+    type: userConstants.GET_ALL_USERS_SUCCESS,
+    payload: data
+})
+
+export const getAllUsersFailure = (data) => ({
+    type: userConstants.GET_ALL_USERS_FAILURE,
+    payload: data
+})

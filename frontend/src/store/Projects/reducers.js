@@ -1,12 +1,13 @@
 import projectConstants from "./constants";
 
-const PROJECTS_INITIAL_STATE = {
+const MEMBERS_INITIAL_STATE = {
     project: '',
     members: [],
+    project_admin: null,
     isLoading: true
 }
 
-const MEMBERS_INITIAL_STATE = {
+const PROJECTS_INITIAL_STATE = {
     projects: [],
     isLoading: true
 }
@@ -33,6 +34,7 @@ const projectMemberReducer = (state=MEMBERS_INITIAL_STATE, action) => {
                 ...state,
                 members: action.payload.members,
                 project: action.payload.project,
+                project_admin: action.payload.project_admin,
                 isLoading: false
             }
     
