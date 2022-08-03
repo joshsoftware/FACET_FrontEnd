@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { CustomModal } from '../../CustomComponents';
 import Select from 'react-select';
 import { getAllUsersRequest } from '../../../store/User/actions';
-import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { SaveButton } from '../../forms/Buttons';
 import { addMembersInProjectRequest } from '../../../store/Projects/actions';
@@ -25,9 +24,11 @@ function AddMembersInProject({ show, handleClose, project }) {
 
     useEffect(() => {
         let options_data = [];
-        allUsers.forEach(ele => {
-            options_data.push({value: ele.id, label: ele.name})
-        })
+        if(allUsers){
+            allUsers.forEach(ele => {
+                options_data.push({value: ele.id, label: ele.name})
+            })
+        }
         setOptions(options_data);
     }, [allUsers])
 

@@ -24,7 +24,9 @@ const HeaderContainer = (props) => {
     }, [projectName])
     
     useEffect(() => {
-        setSelectedItem(headers.filter(e => e.id==id)[0]);
+        if(headers){
+            setSelectedItem(headers.filter(e => e.id==id)[0]);
+        }
     }, [headers, id])
     
 

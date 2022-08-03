@@ -28,11 +28,13 @@ const MemberContainer = () => {
     
     return (
         <>
-            <AddMembersInProject 
-                project={projectName} 
-                show={show}
-                handleClose={() => setShow(false)}
-            />
+            {show&&(
+                <AddMembersInProject 
+                    project={projectName} 
+                    show={show}
+                    handleClose={() => setShow(false)}
+                />
+            )}
             <div className='py-5 w-100'>
                 <div className='d-flex justify-content-between align-items-center px-5'>
                     <h3>Team Members</h3>

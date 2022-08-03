@@ -17,6 +17,7 @@ export function* fetchProjects() {
 export function* addNewProject({ payload }) {
     try {
         const response = yield call(addNewProjectApi, payload)
+        yield call(fetchProjects);
         toast.success(response.success);
     } catch (error) {
         toast.error("Something Wnt Wrong!")
