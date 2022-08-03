@@ -2,6 +2,7 @@ import React from 'react';
 import { Spinner } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import ProjectBox from './ProjectBox';
+import ProjectBoxSkeleton from './ProjectBoxSkeleton';
 import './style.css'
 
 
@@ -19,9 +20,18 @@ const ProjectsComponent = () => {
 
     return (
         <div className='project-container py-4'>
-            {projects.map((e, index) => {
-                return <ProjectBox key={index} data={e} />
-            })}
+            {isLoading?(
+                <>
+                    <ProjectBoxSkeleton />
+                    <ProjectBoxSkeleton />
+                    <ProjectBoxSkeleton />
+                    <ProjectBoxSkeleton />
+                </>
+            ):(
+                projects.map((e, index) => {
+                    return <ProjectBox key={index} data={e} />
+                })
+            )}
         </div>
     )
 }

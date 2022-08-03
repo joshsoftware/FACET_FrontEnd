@@ -1,8 +1,10 @@
 import React from 'react'
 import { Button, Nav } from 'react-bootstrap';
+import Skeleton from 'react-loading-skeleton';
 import { Link, useParams } from 'react-router-dom';
+import noRecordsFound from '../../../assets/images/noRecordsFound.png';
 import './style.css';
- 
+
 const SubComponentsNav = ({ 
     children, 
     title, 
@@ -28,16 +30,41 @@ const SubComponentsNav = ({
                 </Button>
             </div>
             <div className='subnav-child'>
-                {data&&data.map((e, index) => {
-                    return <Nav.Item 
-                                className={`sidebar-item ${e.id.toString()===id&&'active'}`} 
-                                key={index}
+                {isLoading?(
+                    <div className='p-2'>
+                        <Skeleton count={5} className='py-2 my-1' />
+                    </div>
+                ):(
+                    <>
+                    {data&&data.map((e, index) => {
+                        return <Nav.Item 
+                                    className={`sidebar-item ${e.id.toString()===id&&'active'}`} 
+                                    key={index}
+                                >
+                                    <Link to={`${onSelectItemUrl}/${e.id}`} className='nav-link sidebar-link'>
+                                        {e.name}
+                                    </Link>
+                                </Nav.Item>
+                    })}
+                    {data&&data.length===0&&(
+                        <div className='my-5 text-center'>
+                            <img 
+                                src={noRecordsFound} 
+                                alt="No Results Found" 
+                            />
+                            <h5>No Results Found!</h5>
+                            <Button
+                                size='sm'
+                                variant='success'
+                                className='mb-2'
+                                onClick={onAddBtnClick}
                             >
-                                <Link to={`${onSelectItemUrl}/${e.id}`} className='nav-link sidebar-link'>
-                                    {e.name}
-                                </Link>
-                            </Nav.Item>
-                })}
+                                + Add New
+                            </Button>
+                        </div>
+                    )}
+                    </>
+                )}
             </div>
         </Nav>
     )
