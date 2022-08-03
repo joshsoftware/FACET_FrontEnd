@@ -8,6 +8,12 @@ const INITIAL_STATE = {
     userErr: []
 }
 
+const GET_USERS_INITIAL_STATE = {
+    isLoading: true,
+    users: [],
+    errors: []
+}
+
 const userReducer = (state=INITIAL_STATE, action) => {
     switch (action.type) {
         case userConstants.SIGN_IN_SUCCESS:
@@ -31,4 +37,23 @@ const userReducer = (state=INITIAL_STATE, action) => {
     }
 }
 
-export default userReducer;
+const getUsersReducer = (state=GET_USERS_INITIAL_STATE, action) => {
+    switch (action.type) {
+        case userConstants.GET_ALL_USERS_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                users: action.payload,
+                errors: []
+            }
+            
+    
+        default:
+            return state;
+    }
+}
+
+export {
+    getUsersReducer,
+    userReducer
+};

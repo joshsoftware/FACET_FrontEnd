@@ -9,7 +9,7 @@ import superAdminReducer from "./SuperAdmin/reducers";
 import testcaseReducer from "./Testcases/reducers";
 import testdataReducer from "./Testdata/reducers";
 import testsuiteReducer from "./Testsuites/reducers";
-import userReducer from "./User/reducers";
+import { getUsersReducer, userReducer } from "./User/reducers";
 
 const rootReducer = combineReducers({
     user: userReducer,
@@ -23,7 +23,8 @@ const rootReducer = combineReducers({
     testdata: testdataReducer,
     execute: executeReducer,
     projectMembers: projectMemberReducer,
-    superAdmin: superAdminReducer
+    superAdmin: superAdminReducer,
+    getUsers: getUsersReducer
 })
 
 export default rootReducer;

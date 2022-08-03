@@ -22,7 +22,9 @@ const EnvironmentContainer = (props) => {
     }, [projectName])
 
     useEffect(() => {
-        setSelectedItem(environments.filter(e => e.id==id)[0]);
+        if(environments){
+            setSelectedItem(environments.filter(e => e.id==id)[0]);
+        }
     }, [environments, id])
     
 

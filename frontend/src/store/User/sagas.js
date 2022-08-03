@@ -1,7 +1,7 @@
 import { toast } from 'react-toastify';
 import { takeLatest, call, put } from 'redux-saga/effects';
-import { signInSuccess, signOutSuccess } from './actions';
-import { signInApi, signUpApi } from './apis';
+import { getAllUsersSuccess, signInSuccess, signOutSuccess } from './actions';
+import { signInApi, signUpApi, getAllUsersApi } from './apis';
 import userConstants from "./constants";
 
 export function* signIn({payload}) {
@@ -34,9 +34,19 @@ export function* signOut() {
     toast.success("Log out successfully!");
 }
 
+export function* getAllUsers({payload}) {
+    try {
+        const response = yield call(getAllUsersApi, payload);
+        yield put(getAllUsersSuccess(response.users));
+    } catch (error) {
+        toast.error(error.response.data.errors)
+    }
+}
+
 
 export default function* userSagas() {
     yield takeLatest(userConstants.SIGN_UP_START, signUp);
     yield takeLatest(userConstants.SIGN_IN_START, signIn);
-    yield takeLatest(userConstants.SIGN_OUT_START, signOut)
+    yield takeLatest(userConstants.SIGN_OUT_START, signOut);
+    yield takeLatest(userConstants.GET_ALL_USERS_REQUEST, getAllUsers);
 }

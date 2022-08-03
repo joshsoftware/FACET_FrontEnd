@@ -24,7 +24,9 @@ const HeaderContainer = (props) => {
     }, [projectName])
     
     useEffect(() => {
-        setSelectedItem(headers.filter(e => e.id==id)[0]);
+        if(headers){
+            setSelectedItem(headers.filter(e => e.id==id)[0]);
+        }
     }, [headers, id])
     
 
@@ -37,7 +39,7 @@ const HeaderContainer = (props) => {
                 onAddBtnClick={() => navigate(`/project/${projectName}/headers/new`)}
                 onSelectItemUrl={`/project/${projectName}/headers`}
             />
-            {props.cat==='add'&&<AddNewHeader cat="add"/>}
+            {props.cat==='add'&&<AddNewHeader cat="add" />}
 
             {props.cat==='edit'?(
                 !isLoading&&selectedItem&&<AddNewHeader cat="edit" data={selectedItem} />

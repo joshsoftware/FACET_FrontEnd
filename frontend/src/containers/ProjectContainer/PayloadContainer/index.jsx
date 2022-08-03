@@ -16,14 +16,16 @@ const PayloadContainer = (props) => {
     const { projectName, id } = useParams();
     let navigate = useNavigate();
     const { payloads, isLoading } = useSelector(mapState);
-    const [selectedItem, setSelectedItem] = useState({});
+    const [selectedItem, setSelectedItem] = useState(null);
 
     useEffect(() => {
         dispatch(getPayloadsRequest({project: projectName}))
     }, [projectName])
 
     useEffect(() => {
-        setSelectedItem(payloads.filter(e => e.id==id)[0]);
+        if(payloads){
+            setSelectedItem(payloads.filter(e => e.id==id)[0]);
+        }
     }, [payloads, id])
     
     

@@ -27,16 +27,18 @@ const SubComponentsNav = ({
                     + New
                 </Button>
             </div>
-            {data&&data.map((e, index) => {
-                return <Nav.Item 
-                            className={`sidebar-item ${e.id.toString()===id&&'active'}`} 
-                            key={index}
-                        >
-                            <Link to={`${onSelectItemUrl}/${e.id}`} className='nav-link sidebar-link'>
-                                {e.name}
-                            </Link>
-                        </Nav.Item>
-            })}
+            <div className='subnav-child'>
+                {data&&data.map((e, index) => {
+                    return <Nav.Item 
+                                className={`sidebar-item ${e.id.toString()===id&&'active'}`} 
+                                key={index}
+                            >
+                                <Link to={`${onSelectItemUrl}/${e.id}`} className='nav-link sidebar-link'>
+                                    {e.name}
+                                </Link>
+                            </Nav.Item>
+                })}
+            </div>
         </Nav>
     )
 }

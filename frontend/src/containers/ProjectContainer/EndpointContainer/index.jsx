@@ -22,7 +22,9 @@ const EndpointContainer = (props) => {
     }, [projectName])
 
     useEffect(() => {
-        setSelectedItem(endpoints.filter(e => e.id==id)[0]);
+        if(endpoints){
+            setSelectedItem(endpoints.filter(e => e.id==id)[0]);
+        }
     }, [endpoints, id])
     
     
