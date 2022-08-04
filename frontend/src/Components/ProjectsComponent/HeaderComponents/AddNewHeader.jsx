@@ -6,6 +6,7 @@ import { ViewComponent } from '../../CustomComponents';
 import { FormInput } from '../../forms/Inputs';
 import { addHeadersRequest, editHeadersRequest } from '../../../store/Headers/actions';
 import KeyValuePairsFormField from '../../forms/KeyValuePairsFormField';
+import { ConvertToSlug } from '../../../utils';
 
 const AddNewHeader = ({ cat, data }) => {
     const { projectName } = useParams();
@@ -46,6 +47,7 @@ const AddNewHeader = ({ cat, data }) => {
                     handlechange={onchange}
                     isRequired
                     disabled={cat==='edit'}
+                    text={formData.name.length!==0&&`Your header will created as ${ConvertToSlug(formData.name)}`}
                 />
                 <FormInput 
                     label='Header'

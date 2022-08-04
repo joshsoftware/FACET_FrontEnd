@@ -64,7 +64,7 @@ const ViewComponent = ({
                                         className='mx-2'
                                         handleClick={() => navigate(onEditLink)}
                                     />
-                                    <DeleteButton handleClick={onDelete} />
+                                    <DeleteButton handleClick={onDelete} disabled />
                                 </>
                             )}
                         </div>

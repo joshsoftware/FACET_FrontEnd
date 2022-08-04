@@ -5,6 +5,8 @@ import { useDispatch } from 'react-redux';
 import { ViewComponent } from '../../CustomComponents';
 import { FormInput } from '../../forms/Inputs';
 import { addEnvironmentsRequest, editEnvironmentsRequest } from '../../../store/Environments/actions';
+import { ConvertToSlug } from '../../../utils';
+
 
 const AddNewEnvironment = ({ cat, data }) => {
     const { projectName } = useParams();
@@ -46,6 +48,7 @@ const AddNewEnvironment = ({ cat, data }) => {
                     handlechange={onchange}
                     isRequired
                     disabled={cat==='edit'}
+                    text={formData.name.length!==0&&`Your environment will created as ${ConvertToSlug(formData.name)}`}
                 />
                 <FormInput 
                     label='URL'

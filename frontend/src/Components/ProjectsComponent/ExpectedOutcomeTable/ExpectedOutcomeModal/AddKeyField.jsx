@@ -57,6 +57,7 @@ const AddKeyField = ({ data, onSuccess }) => {
                     handlechange={onchange}
                     value={formData.name}
                     isRequired
+                    text="No space allowed for the key field."
                 />
                 <FormInput 
                     label="Type"

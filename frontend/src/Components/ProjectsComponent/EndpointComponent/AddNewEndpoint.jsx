@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import { addEndpointsRequest, editEndpointsRequest } from '../../../store/Endpoints/actions';
 import { ViewComponent } from '../../CustomComponents';
 import { FormInput } from '../../forms/Inputs';
+import { ConvertToSlug } from '../../../utils';
 
 const AddNewEndpoint = ({ cat, data }) => {
     let dispatch = useDispatch();
@@ -46,6 +47,7 @@ const AddNewEndpoint = ({ cat, data }) => {
                     handlechange={onchange}
                     isRequired
                     disabled={cat==='edit'}
+                    text={formData.name.length!==0&&`Your endpoint will created as ${ConvertToSlug(formData.name)}`}
                 />
                 <FormInput
                     label='Endpoint'

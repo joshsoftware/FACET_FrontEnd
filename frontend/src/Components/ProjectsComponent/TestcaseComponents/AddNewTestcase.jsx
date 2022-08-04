@@ -8,6 +8,7 @@ import { getEndpointsRequest } from '../../../store/Endpoints/actions';
 import { getHeadersRequest } from '../../../store/Headers/actions';
 import { getPayloadsRequest } from '../../../store/Payloads/actions';
 import { addTestcasesRequest } from '../../../store/Testcases/actions';
+import { ConvertToSlug } from '../../../utils';
 import Select from 'react-select';
 
 const mapState = ({ endpoints, headers, payloads }) => ({
@@ -85,6 +86,7 @@ const AddNewTestcase = () => {
                     value={formData.name}
                     handlechange={onchange}
                     isRequired
+                    text={formData.name.length!==0&&`Your testcase will created as ${ConvertToSlug(formData.name)}`}
                 />
                 <FormSelect 
                     label="Method"

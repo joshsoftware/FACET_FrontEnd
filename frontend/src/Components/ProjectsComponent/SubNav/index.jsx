@@ -61,7 +61,9 @@ const SubNav = () => {
     ]
 
     return (
-        <Nav className="col-md-12 d-none d-md-block sidebar bg-dark">
+        <Nav className="col-md-12 d-none d-md-block sidebar bg-dark text-light">
+            <h3 className='sidebar-item text-uppercase text-break'>{projectName}</h3>
+            <hr className='mx-2' />
             {SubNavItems.map((item, index) => {
                 return <SubNavItem key={index} item={item} />
             })}

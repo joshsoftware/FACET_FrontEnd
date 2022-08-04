@@ -9,6 +9,7 @@ import Editor from '../../Editor';
 import ExpectedOutcomeTable from '../ExpectedOutcomeTable';
 import IsValidJson from '../../../utils/IsValidJson';
 import KeyValuePairsFormField from '../../forms/KeyValuePairsFormField';
+import { ConvertToSlug } from '../../../utils';
 
 const INITIAL_VALUE = {
     "project": '', 
@@ -84,6 +85,7 @@ const AddNewPayload = ({ cat, data }) => {
                     handlechange={onchange}
                     disabled={cat==='edit'}
                     isRequired
+                    text={formData.name.length!==0&&`Your payload will created as ${ConvertToSlug(formData.name)}`}
                 />
                 <FormInput 
                     name='parameters'

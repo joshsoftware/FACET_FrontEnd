@@ -7,6 +7,7 @@ import { FormInput } from '../../forms/Inputs';
 import Select from 'react-select';
 import { getTestcasesRequest } from '../../../store/Testcases/actions';
 import { addTestsuitesRequest } from '../../../store/Testsuites/actions';
+import { ConvertToSlug } from '../../../utils';
 
 const mapState = ({ testcases }) => ({
     testcases: testcases.testcases
@@ -64,6 +65,7 @@ const AddNewTestsuite = () => {
                     value={formData.name}
                     handlechange={onchange}
                     isRequired
+                    text={formData.name.length!==0&&`Your testsuite will created as ${ConvertToSlug(formData.name)}`}
                 />
                 <FormInput 
                     type="textarea"

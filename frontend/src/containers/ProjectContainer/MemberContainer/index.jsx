@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { NavDropdown, Table } from 'react-bootstrap';
+import { PersonCircle } from 'react-bootstrap-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { ViewComponent } from '../../../Components/CustomComponents';
@@ -63,11 +64,26 @@ const MemberContainer = () => {
                                     return (
                                         <tr key={index}>
                                             <td>{index+1}</td>
-                                            <td>{item.name}</td>
+                                            <td>
+                                                <PersonCircle 
+                                                    size={24}
+                                                    className="mx-2"
+                                                />
+                                                {item.name}
+                                            </td>
                                             <td>{item.is_project_admin?"Admin":"Member"}</td>
                                             <td>
-                                                <NavDropdown title="More" disabled={project_admin!==user.id}>
-                                                    <NavDropdown.Item onClick={() => console.log("To be Done")}>Remove from Project</NavDropdown.Item>
+                                                <NavDropdown 
+                                                    title="More" 
+                                                    disabled={project_admin!==user.id}
+                                                    style={{lineHeight: "10px"}}
+                                                >
+                                                    <NavDropdown.Item 
+                                                        onClick={() => console.log("To be Done")}
+                                                        style={{lineHeight: 'initial'}}
+                                                    >
+                                                        Remove from Project
+                                                    </NavDropdown.Item>
                                                 </NavDropdown>
                                             </td>
                                         </tr>

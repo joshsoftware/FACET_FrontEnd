@@ -8,6 +8,7 @@ import ExpectedOutcomeTable from '../ExpectedOutcomeTable';
 import { addTestdataRequest } from '../../../store/Testdata/actions';
 import { toast } from 'react-toastify';
 import KeyValuePairsFormField from '../../forms/KeyValuePairsFormField';
+import { ConvertToSlug } from '../../../utils';
 
 const AddNewTestdata = ({ data, handleClose }) => {
     const [formData, setFormData] = useState(
@@ -60,6 +61,7 @@ const AddNewTestdata = ({ data, handleClose }) => {
                     value={formData.name}
                     handlechange={onchange}
                     isRequired
+                    text={formData.name.length!==0&&`Your testdata will created as ${ConvertToSlug(formData.name)}`}
                 />
                 <FormInput 
                     name='parameters'

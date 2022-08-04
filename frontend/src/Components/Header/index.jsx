@@ -34,11 +34,13 @@ const Header = () => {
             )}
             <Container fluid>
                 <Navbar.Brand>
-                    <img 
-                        src={logo}
-                        width={100}
-                        alt="Facet"
-                    />
+                    <Link to="/dashboard">
+                        <img 
+                            src={logo}
+                            width={100}
+                            alt="Facet"
+                        />
+                    </Link>
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls='facet-navbar-nav' />
                 <Navbar.Collapse id='facet-navbar-nav'>
