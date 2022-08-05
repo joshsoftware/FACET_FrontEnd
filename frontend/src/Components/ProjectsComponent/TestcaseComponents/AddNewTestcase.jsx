@@ -17,7 +17,7 @@ const mapState = ({ endpoints, headers, payloads }) => ({
     payloads: payloads.payloads
 })
 
-const AddNewTestcase = () => {
+const AddNewTestcase = ({ cat, data }) => {
     const { projectName } = useParams();
     let dispatch = useDispatch();
     const { endpoints, headers, payloads } = useSelector(mapState);
@@ -70,6 +70,20 @@ const AddNewTestcase = () => {
         })
         setOptions({...options, endpoints: endpoints_data, headers: headers_data, payloads: payloads_data})
     }, [endpoints, headers, payloads])
+
+    useEffect(() => {
+        if(cat==='edit') {
+            setFormData(p => ({
+                ...p,
+                name: data.name,
+                method: data.method,
+                endpoint_id: data.endpoint_id,
+                header_id: data.header_id,
+                payload_id: data.payload_id
+            }))
+        }
+    }, [data])
+    
     
 
     return (
@@ -85,8 +99,9 @@ const AddNewTestcase = () => {
                     name="name"
                     value={formData.name}
                     handlechange={onchange}
-                    isRequired
                     text={formData.name.length!==0&&`Your testcase will created as ${ConvertToSlug(formData.name)}`}
+                    disabled={cat==='edit'}
+                    isRequired
                 />
                 <FormSelect 
                     label="Method"
@@ -100,6 +115,7 @@ const AddNewTestcase = () => {
                     label="Endpoint"
                     element={
                         <Select 
+                            defaultValue={formData.endpoint_id}
                             options={options.endpoints}
                             onChange={e => setFormData({...formData, endpoint_id: e.value})}
                         />

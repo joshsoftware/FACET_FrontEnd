@@ -35,9 +35,13 @@ const TestcaseContainer = (props) => {
                 onAddBtnClick={() => navigate(`/project/${projectName}/testcases/new`)}
                 onSelectItemUrl={`/project/${projectName}/testcases`}
             />
-            {props.cat==='add'&&<AddNewTestcase />}
+            {props.cat==='add'&&<AddNewTestcase cat='add' />}
 
-            {!isLoading&&selectedItem!==undefined&&Object.keys(selectedItem).length&&<TestcaseViewComponent data={selectedItem} />}
+            {props.cat==='edit'?(
+                !isLoading&&selectedItem&&<AddNewTestcase cat="edit" data={selectedItem} />
+            ):(
+                !isLoading&&selectedItem!==undefined&&Object.keys(selectedItem).length&&<TestcaseViewComponent data={selectedItem} />
+            )}
         </>
     )
 }

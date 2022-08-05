@@ -1,15 +1,20 @@
 import React, { useState } from 'react'
 import { Accordion, Col, Row } from 'react-bootstrap';
+import { useParams } from 'react-router-dom';
 import { ViewComponent } from '../../CustomComponents';
 import { AddButton } from '../../forms/Buttons';
 import AddNewTestdata from './AddNewTestdata';
 
 const TestcaseViewComponent = ({ data }) => {
+    const { projectName } = useParams();
     const [showAddTestData, setShowAddTestData] = useState(false);
 
     return (
         <div className='w-100'>
-            <ViewComponent title={data.name}>
+            <ViewComponent 
+                title={data.name}
+                onEditLink={`/project/${projectName}/testcases/edit/${data.id}`}
+            >
                 <Row>
                     <Col md={6} className='pb-4'>
                         <small><b>Name</b></small>
