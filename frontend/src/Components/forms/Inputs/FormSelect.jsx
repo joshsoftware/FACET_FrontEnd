@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Form } from 'react-bootstrap';
+import Select from 'react-select';
 
 const FormSelect = (
     {
@@ -14,10 +15,27 @@ const FormSelect = (
         style,
         isRequired,
         options,
+        isMulti,
         ...props
     }
 ) => {
+    const [defaultValue, setDefaultValue] = useState();
+    
+    useEffect(() => {
+        if(isMulti) {
+            let vals = value.map(e => e.id);
+            let res = options.filter(function(item) {
+                return vals.indexOf(item.value) != -1;
+            })
+            setDefaultValue(res);
+        } else {
+            setDefaultValue(options.find(val => val.value===value))
+        }
+    }, [value, options])
+    
+
     return (
+
         <>
             <Form.Group className={`${className} mb-3`} style={style}>
                 {label&&(
@@ -26,20 +44,13 @@ const FormSelect = (
                         {isRequired&&<span className='text-danger'>*</span>}
                     </Form.Label>
                 )}
-                {element?element:(
-                    <Form.Select 
-                        defaultValue={value?value:"0"} 
-                        name={name} 
-                        onChange={handlechange}
-                    >
-                        <option value="0" disabled>Select...</option>
-                        {options.map((e, index) => {
-                            return (
-                                <option key={index} value={e[0]}>{e[1]}</option>
-                            )
-                        })}
-                    </Form.Select>
-                )}
+                <Select 
+                    value={defaultValue}
+                    options={options}
+                    onChange={e => handlechange(name, e.value)}
+                    isMulti={isMulti}
+                    {...props}
+                />
                 {text && (
                     <Form.Text className='text-muted'>
                         {text}

@@ -35,9 +35,13 @@ const TestsuiteContainer = (props) => {
                 onAddBtnClick={() => navigate(`/project/${projectName}/testsuites/new`)}
                 onSelectItemUrl={`/project/${projectName}/testsuites`}
             />
-            {props.cat==='add'&&<AddNewTestsuite />}
+            {props.cat==='add'&&<AddNewTestsuite cat="add" />}
 
-            {!isLoading&&selectedItem!==undefined&&Object.keys(selectedItem).length&&<TestsuiteViewComponent data={selectedItem} />}
+            {props.cat==='edit'?(
+                !isLoading&&selectedItem&&<AddNewTestsuite cat="edit" data={selectedItem} />
+            ):(
+                !isLoading&&selectedItem!==undefined&&Object.keys(selectedItem).length&&<TestsuiteViewComponent data={selectedItem} />
+            )}
         </>
     )
 }

@@ -3,17 +3,16 @@ import { Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { ViewComponent } from '../../CustomComponents';
-import { FormInput } from '../../forms/Inputs';
-import Select from 'react-select';
+import { FormInput, FormSelect } from '../../forms/Inputs';
 import { getTestcasesRequest } from '../../../store/Testcases/actions';
-import { addTestsuitesRequest } from '../../../store/Testsuites/actions';
+import { addTestsuitesRequest, editTestsuitesRequest } from '../../../store/Testsuites/actions';
 import { ConvertToSlug } from '../../../utils';
 
 const mapState = ({ testcases }) => ({
     testcases: testcases.testcases
 })
 
-const AddNewTestsuite = () => {
+const AddNewTestsuite = ({ cat, data }) => {
     const { projectName } = useParams();
     let dispatch = useDispatch();
     const { testcases } = useSelector(mapState);
@@ -46,10 +45,38 @@ const AddNewTestsuite = () => {
         setFormData({...formData, [e.target.name]: e.target.value})
     }
 
+    const onSelectChange = (name, value) => {
+        console.log(value)
+        setFormData(p => (
+            {
+                ...p,
+                [name]: value
+            }
+        ))
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(addTestsuitesRequest(formData))
+        if(cat==='add'){
+            dispatch(addTestsuitesRequest(formData))
+        } else {
+            dispatch(editTestsuitesRequest(formData))
+        }
     }
+
+    useEffect(() => {
+        if(cat==='edit') {
+            setFormData(p => (
+                {
+                    ...p,
+                    name: data.name,
+                    id: data.id,
+                    description: data.description,
+                    array_of_testcases: data.testcases
+                }
+            ))
+        }
+    }, [data])
 
     return (
         <Form className='w-100' onSubmit={handleSubmit}>
@@ -64,8 +91,8 @@ const AddNewTestsuite = () => {
                     name="name"
                     value={formData.name}
                     handlechange={onchange}
-                    isRequired
                     text={formData.name.length!==0&&`Your testsuite will created as ${ConvertToSlug(formData.name)}`}
+                    isRequired
                 />
                 <FormInput 
                     type="textarea"
@@ -76,18 +103,15 @@ const AddNewTestsuite = () => {
                     value={formData.description}
                     handlechange={onchange}
                 />
-                {console.log(formData)}
-                <FormInput 
+                <FormSelect
                     label="Testcases"
                     text="You may select multiple testcases"
-                    element={
-                        <Select 
-                            isMulti
-                            options={options}
-                            onChange={e => setFormData({...formData, array_of_testcases: e.map(data => data.value)})}
-                        />
-                    }
+                    name="array_of_testcases"
+                    options={options}
+                    handlechange={onSelectChange}
+                    value={formData.array_of_testcases}
                     isRequired
+                    isMulti
                 />
             </ViewComponent>
         </Form>
