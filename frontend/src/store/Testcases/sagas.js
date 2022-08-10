@@ -1,6 +1,6 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { getTestcasesSuccess } from './actions';
-import { addTestcaseApi, getTestcasesApi } from './apis';
+import { addTestcaseApi, editTestcaseApi, getTestcasesApi } from './apis';
 import testcaseConstants from './constants';
 import { toast } from 'react-toastify';
 
@@ -24,7 +24,19 @@ export function* addTestcase({ payload }) {
     }
 }
 
+export function* editTestcase({ payload }) {
+    try {
+        yield call(editTestcaseApi, payload);
+        toast.success("Testcase Updated Successfully!")
+        yield call(getTestcases, {payload: { project: payload.project }});
+    } catch (error) {
+        toast.error(error.response.data.errors)
+    }
+}
+
+
 export default function* testcaseSagas() {
     yield takeLatest(testcaseConstants.GET_TESTCASES_REQUEST, getTestcases);
     yield takeLatest(testcaseConstants.ADD_TESTCASES_REQUEST, addTestcase);
+    yield takeLatest(testcaseConstants.EDIT_TESTCASES_REQUEST, editTestcase);
 }

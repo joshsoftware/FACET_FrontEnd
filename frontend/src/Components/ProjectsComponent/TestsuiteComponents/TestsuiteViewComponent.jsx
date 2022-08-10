@@ -1,13 +1,18 @@
 import React from 'react'
 import { Accordion, Col, Row } from 'react-bootstrap';
+import { useParams } from 'react-router-dom';
 import { ViewComponent } from '../../CustomComponents';
 import ExecuteTestsuiteForm from './ExecuteTestsuiteForm';
 
 const TestsuiteViewComponent = ({ data }) => {
+    const { projectName } = useParams();
+
     return (
         <div className='w-100'>
-            {console.log(data)}
-            <ViewComponent title={data.name}>
+            <ViewComponent 
+                title={data.name}
+                onEditLink={`/project/${projectName}/testsuites/edit/${data.id}`}
+            >
                 <Row>
                     <Col md={6} className='py-2'>
                         <small><b>Name</b></small>

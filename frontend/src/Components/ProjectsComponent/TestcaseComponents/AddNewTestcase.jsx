@@ -7,9 +7,8 @@ import { FormInput, FormSelect } from '../../forms/Inputs';
 import { getEndpointsRequest } from '../../../store/Endpoints/actions';
 import { getHeadersRequest } from '../../../store/Headers/actions';
 import { getPayloadsRequest } from '../../../store/Payloads/actions';
-import { addTestcasesRequest } from '../../../store/Testcases/actions';
+import { addTestcasesRequest, editTestcasesRequest } from '../../../store/Testcases/actions';
 import { ConvertToSlug } from '../../../utils';
-import Select from 'react-select';
 
 const mapState = ({ endpoints, headers, payloads }) => ({
     endpoints: endpoints.endpoints,
@@ -33,6 +32,13 @@ const AddNewTestcase = ({ cat, data }) => {
     )
     const [options, setOptions] = useState(
         {
+            methods: [
+                {value: 'GET', label: 'GET'},
+                {value: 'POST', label: 'POST'},
+                {value: 'PUT', label: 'PUT'},
+                {value: 'PATCH', label: 'PATCH'},
+                {value: 'DELETE', label: 'DELETE'},
+            ],
             endpoints: [],
             headers: [],
             payloads: []
@@ -40,12 +46,25 @@ const AddNewTestcase = ({ cat, data }) => {
     );
 
     const onchange = (e) => {
-        setFormData(p => ({...p, [e.target.name]:e.target.value}))
+        setFormData(p => (
+            {
+                ...p, 
+                [e.target.name]:e.target.value
+            }
+        ))
+    }
+
+    const onSelectChange = (name, value) => {
+        setFormData(p => ({...p, [name]: value}))
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(addTestcasesRequest(formData))
+        if(cat==='add') {
+            dispatch(addTestcasesRequest(formData))
+        } else {
+            dispatch(editTestcasesRequest(formData))
+        }
     }
 
     useEffect(() => {
@@ -76,6 +95,7 @@ const AddNewTestcase = ({ cat, data }) => {
             setFormData(p => ({
                 ...p,
                 name: data.name,
+                id: data.id,
                 method: data.method,
                 endpoint_id: data.endpoint_id,
                 header_id: data.header_id,
@@ -106,40 +126,33 @@ const AddNewTestcase = ({ cat, data }) => {
                 <FormSelect 
                     label="Method"
                     name="method"
-                    options={[['GET', 'GET'], ['POST', 'POST'], ['PUT', 'PUT'], ['PATCH', 'PATCH'], ['DELETE', 'DELETE']]}
+                    options={options.methods}
                     value={formData.method}
-                    handlechange={onchange}
+                    handlechange={onSelectChange}
                     isRequired
                 />
-                <FormInput 
+                <FormSelect 
                     label="Endpoint"
-                    element={
-                        <Select 
-                            defaultValue={formData.endpoint_id}
-                            options={options.endpoints}
-                            onChange={e => setFormData({...formData, endpoint_id: e.value})}
-                        />
-                    }
+                    name="endpoint_id"
+                    options={options.endpoints}
+                    value={formData.endpoint_id}
+                    handlechange={onSelectChange}
                     isRequired
                 />
-                <FormInput 
+                <FormSelect 
                     label="Header"
-                    element={
-                        <Select 
-                            options={options.headers}
-                            onChange={e => setFormData({...formData, header_id: e.value})}
-                        />
-                    }
+                    name="header_id"
+                    options={options.headers}
+                    value={formData.header_id}
+                    handlechange={onSelectChange}
                     isRequired
                 />
-                <FormInput 
+                <FormSelect 
                     label="Payload"
-                    element={
-                        <Select 
-                            options={options.payloads}
-                            onChange={e => setFormData({...formData, payload_id: e.value})}
-                        />
-                    }
+                    name="payload_id"
+                    options={options.payloads}
+                    value={formData.payload_id}
+                    handlechange={onSelectChange}
                     isRequired
                 />
             </ViewComponent>
