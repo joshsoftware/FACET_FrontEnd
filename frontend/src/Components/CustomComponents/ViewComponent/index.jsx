@@ -14,7 +14,8 @@ const ViewComponent = ({
     onEditLink,
     onDelete,
     onSaveDisabled,
-    disabledBtns
+    disabledBtns,
+    rightChildrens
 }) => {
     let navigate = useNavigate();
     const [isSticky, setIsSticky] = useState(false);
@@ -69,6 +70,7 @@ const ViewComponent = ({
                             )}
                         </div>
                     )}
+                    {disabledBtns&&rightChildrens}
                 </div>
             )}
             
