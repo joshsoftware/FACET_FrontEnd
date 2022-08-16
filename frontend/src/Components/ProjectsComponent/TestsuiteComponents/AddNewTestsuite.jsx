@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -6,7 +6,8 @@ import { ViewComponent } from '../../CustomComponents';
 import { FormInput, FormSelect } from '../../forms/Inputs';
 import { getTestcasesRequest } from '../../../store/Testcases/actions';
 import { addTestsuitesRequest, editTestsuitesRequest } from '../../../store/Testsuites/actions';
-import { ConvertToSlug } from '../../../utils';
+import { ConvertToSlug, GetDiffOfArrayOfObjects } from '../../../utils';
+import DragDropComponent from '../../DragDropComponent';
 
 const mapState = ({ testcases }) => ({
     testcases: testcases.testcases
@@ -24,7 +25,13 @@ const AddNewTestsuite = ({ cat, data }) => {
             array_of_testcases: []
         }
     )
-    const [options, setOptions] = useState([]);
+    const [options, setOptions] = useState(
+        {
+            initialOptions: [],
+            updatedOptions: []
+        }
+    );
+    const [selectedTestcases, setSelectedTestcases] = useState([]);
 
     useEffect(() => {
         dispatch(getTestcasesRequest({ project: projectName }))
@@ -37,7 +44,7 @@ const AddNewTestsuite = ({ cat, data }) => {
         testcases.forEach(ele => {
             options_data.push({value: ele.id, label: ele.name})
         })
-        setOptions(options_data);
+        setOptions({initialOptions: options_data, updatedOptions: options_data});
     }, [testcases])
     
 
@@ -46,13 +53,21 @@ const AddNewTestsuite = ({ cat, data }) => {
     }
 
     const onSelectChange = (name, value) => {
-        console.log(value)
-        setFormData(p => (
-            {
-                ...p,
-                [name]: value
-            }
+        setSelectedTestcases((prevState) => (
+            [
+                ...prevState, 
+                value[0]
+            ]
         ))
+    }
+
+    const onRemoveSelectedTestcase = (index) => {
+        setSelectedTestcases(prevState => {
+            let fields = prevState.filter(function(value, ind, arr) {
+                return ind!==index
+            })
+            return fields;
+        })
     }
 
     const handleSubmit = (e) => {
@@ -63,6 +78,23 @@ const AddNewTestsuite = ({ cat, data }) => {
             dispatch(editTestsuitesRequest(formData))
         }
     }
+    
+    useEffect(() => {
+        let diff = GetDiffOfArrayOfObjects(
+            options.initialOptions, 
+            selectedTestcases
+        );
+        setOptions((prevState) => (
+            {
+                ...prevState, 
+                updatedOptions: diff
+            }
+        ));
+        setFormData((prevState) => ({
+            ...prevState,
+            array_of_testcases: selectedTestcases.map(e => e.value)
+        }))
+    }, [selectedTestcases])
 
     useEffect(() => {
         if(cat==='edit') {
@@ -72,9 +104,14 @@ const AddNewTestsuite = ({ cat, data }) => {
                     name: data.name,
                     id: data.id,
                     description: data.description,
-                    array_of_testcases: data.testcases
+                    array_of_testcases: data.testcases.map(e => e.id)
                 }
             ))
+            let selected_testcases = []
+            data.testcases.forEach(ele => {
+                selected_testcases.push({value: ele.id, label: ele.name})
+            })
+            setSelectedTestcases(selected_testcases);
         }
     }, [data])
 
@@ -103,16 +140,31 @@ const AddNewTestsuite = ({ cat, data }) => {
                     value={formData.description}
                     handlechange={onchange}
                 />
-                <FormSelect
-                    label="Testcases"
-                    text="You may select multiple testcases"
-                    name="array_of_testcases"
-                    options={options}
-                    handlechange={onSelectChange}
-                    value={formData.array_of_testcases}
-                    isRequired
-                    isMulti
-                />
+                <div>
+                    <label>Testcases<span className='text-danger'>*</span></label>
+                    <div className='alert-secondary rounded'>
+                        <div className='p-2'>
+                            <DragDropComponent 
+                                data={selectedTestcases}
+                                onChange={setSelectedTestcases}
+                                itemClass="bg-white px-4 py-2 rounded my-2"
+                                dragClass="alert-primary px-4 py-2 rounded"
+                                onDelete={(e) => onRemoveSelectedTestcase(e)}
+                            />
+                        </div>
+                        <FormSelect
+                            name="array_of_testcases"
+                            options={options.updatedOptions}
+                            handlechange={onSelectChange}
+                            value={selectedTestcases}
+                            hideValues
+                            isMulti
+                            isRequired
+                            className="mb-0"
+                        />
+                    </div>
+                </div>
+
             </ViewComponent>
         </Form>
     )
