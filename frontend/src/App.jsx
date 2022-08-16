@@ -17,7 +17,8 @@ import {
   PayloadContainer,
   TestcaseContainer,
   TestsuiteContainer,
-  ExecuteContainer
+  ExecuteContainer,
+  ReportsContainer
 } from './containers/ProjectContainer';
 import MemberContainer from './containers/ProjectContainer/MemberContainer';
 
@@ -37,6 +38,8 @@ function App() {
             <Route path='/project/:projectName/payloads' element={<PayloadContainer />} />
             <Route path='/project/:projectName/testcases' element={<TestcaseContainer />} />
             <Route path='/project/:projectName/testsuites' element={<TestsuiteContainer />} />
+            <Route path='/project/:projectName/reports' element={<ReportsContainer />} />
+            <Route path='/project/:projectName/reports/:reportId' element={<ReportsContainer />} />
 
             <Route path='/project/:projectName/environments/:id' element={<EnvironmentContainer />} />
             <Route path='/project/:projectName/endpoints/:id' element={<EndpointContainer />} />

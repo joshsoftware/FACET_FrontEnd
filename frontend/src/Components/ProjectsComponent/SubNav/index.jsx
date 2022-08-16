@@ -1,6 +1,6 @@
 import React from 'react'
 import { Nav } from 'react-bootstrap';
-import { Box, CardChecklist, Gear, House, People, Stickies } from 'react-bootstrap-icons';
+import { Box, CardChecklist, FileEarmarkText, Gear, House, People, Stickies } from 'react-bootstrap-icons';
 import { useLocation, useParams } from 'react-router-dom';
 import SubNavItem from './SubNavItem';
 import './style.css';
@@ -47,6 +47,11 @@ const SubNav = () => {
             name: "Testsuites",
             path: `/project/${projectName}/testsuites`,
             icon: <Stickies />
+        },
+        {
+            name: "Reports",
+            path: `/project/${projectName}/reports`,
+            icon: <FileEarmarkText />
         },
         {
             name: "Team Members",
