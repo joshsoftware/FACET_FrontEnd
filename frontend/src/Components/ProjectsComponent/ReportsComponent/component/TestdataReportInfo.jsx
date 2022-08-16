@@ -44,9 +44,40 @@ const TestdataReportInfo = ({ item, eventKey }) => {
                         />
                     </Tab>
                     <Tab eventKey="expOutcome" title="Exp. Outcome">
-                        <JSONView 
-                            data={item.testdata.expected_outcome}
-                        />
+                        <Table bordered striped>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Field name</th>
+                                    <th>Field Type</th>
+                                    <th>Exp. Value</th>
+                                    <th>Validations</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {item.testdata.expected_outcome.map((e, ind) => {
+                                    return (
+                                        <tr key={ind}>
+                                            <td>{ind+1}</td>
+                                            <td>{e.name}</td>
+                                            <td>{e.type}</td>
+                                            <td>
+                                                {e.value?(e.value):"-"}
+                                            </td>
+                                            <td>
+                                                {e.validations?(
+                                                    <JSONView 
+                                                        data={e.validations}
+                                                        rows={2}
+                                                    />
+                                                ):("-")}
+                                            </td>
+                                        </tr>
+                                    )
+                                })}
+                                
+                            </tbody>
+                        </Table>
                     </Tab>
                     <Tab eventKey="errors" title="Errors">
                         {item.errors?(
