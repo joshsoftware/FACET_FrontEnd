@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Row } from 'react-bootstrap';
 import { FormInput } from '../../../forms/Inputs';
 
-const SetCustomTimeInput = () => {
+const SetCustomTimeInput = ({ value, handleChange }) => {
     const [formData, setFormData] = useState({
         minutes: 0,
         hours: 0,
@@ -15,6 +15,13 @@ const SetCustomTimeInput = () => {
             [e.target.name]: e.target.value
         }))
     }
+
+    useEffect(() => {
+        let customTimeInput = formData.days+'d,'+formData.hours+'h,'+formData.minutes+'m';
+        console.log(customTimeInput)
+        handleChange(customTimeInput);
+    }, [formData])
+    
     return (
         <Row>
             {['minutes', 'hours', 'days'].map((item, index) => {
@@ -26,6 +33,8 @@ const SetCustomTimeInput = () => {
                         value={formData[item]}
                         name={item}
                         handlechange={onchange}
+                        min={0}
+                        key={index}
                     />
                 )
             })}

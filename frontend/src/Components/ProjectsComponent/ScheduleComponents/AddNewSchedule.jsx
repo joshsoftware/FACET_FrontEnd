@@ -21,7 +21,10 @@ const AddNewSchedule = () => {
         testsuite: "",
         environment: "",
         startDateTime: "",
-        frequency: ""
+        frequency_type: "",
+        frequency_value: "",
+        endDateTime: "",
+        project: projectName
     });
     const [options, setOptions] = useState(
         {
@@ -115,9 +118,9 @@ console.log(formData)
                                         key={index} 
                                         className="mx-1 text-capitalize" 
                                         size='sm' 
-                                        variant={formData.frequency===item?'success':'primary'}
+                                        variant={formData.frequency_type===item?'success':'primary'}
                                         onClick={onchange}
-                                        name='frequency'
+                                        name='frequency_type'
                                         value={item}
                                     >
                                         {item}
@@ -127,28 +130,41 @@ console.log(formData)
                         </div>
                     </div>
 
-                    <div className='col-md-12 alert-secondary rounded py-2'>
-                        <SetCustomTimeInput />
-                    </div>
+                    {formData.frequency_type==='custom'&&(
+                        <div className='col-md-12 alert-secondary rounded py-2 mb-3'>
+                            <SetCustomTimeInput 
+                                value={formData.frequency_value}
+                                handleChange={(value) => onSelectChange('frequency_value', {value})}
+                            />
+                        </div>
+                    )}
+
+                    {formData.frequency_type&&(
+                        <>
+                            <FormInput 
+                                label="Start Date/Time"
+                                type="datetime-local"
+                                className='col-md-6'
+                                value={formData.startDateTime}
+                                name="startDateTime"
+                                handlechange={onchange}
+                                isRequired
+                            />
+                            {formData.frequency_type!=="oneTime"&&(
+                                <FormInput 
+                                    label="End Date/Time"
+                                    type="datetime-local"
+                                    className='col-md-6'
+                                    value={formData.endDateTime}
+                                    name="endDateTime"
+                                    handlechange={onchange}
+                                />
+                            )}
+                        </>
+                    )}
                 </Row>
                 {/* <Row>
-                    <FormInput 
-                        label="Start Date/Time"
-                        type="datetime-local"
-                        className='col-md-6'
-                        value={formData.startDateTime}
-                        name="startDateTime"
-                        handlechange={onchange}
-                        isRequired
-                    />
-                    <FormInput 
-                        label="End Date/Time"
-                        type="datetime-local"
-                        className='col-md-6'
-                        value={formData.endDateTime}
-                        name="endDateTime"
-                        handlechange={onchange}
-                    />
+                    
                 </Row> */}
             </ViewComponent>
         </Form>
