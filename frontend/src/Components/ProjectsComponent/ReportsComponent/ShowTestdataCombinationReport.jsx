@@ -1,29 +1,21 @@
 import React from 'react';
 import { Accordion, Col, Row } from 'react-bootstrap';
 import BadgeComponent from '../../BadgeComponent';
-import { CustomModal } from '../../CustomComponents';
-import { CloseButton } from '../../forms/Buttons';
+import { ViewComponent } from '../../CustomComponents';
 import JSONView from '../../JSONView';
-import TestdataReportInfo from './component/TestdataReportInfo';
+import TestdataReportInfo from './components/TestdataReportInfo';
 
-const ShowTestdataCombinationReport = ({ show, data, handleClose }) => {
-    return (
-        <CustomModal
-            show={show}
-            handleClose={handleClose}
-            title="Testcase Report"
-            size="lg"
-        >
-            <CustomModal.Body>
-                <div className='d-flex justify-content-between align-items-center border-bottom pb-2'>
-                    <div className='d-flex align-items-center'>
-                        <h4>{data.name}</h4>
-                        <BadgeComponent 
-                            bg="secondary"
-                            className="ms-2"
-                            label={data.method}
-                        />
+const ShowTestdataCombinationReport = ({ data, isLoading }) => {
+    return !isLoading&&(
+        <>
+            <ViewComponent
+                disabledBtns
+                title={
+                    <div>
+                        {data.name}
                     </div>
+                }
+                rightChildrens={
                     <div>
                         <BadgeComponent 
                             bg="success"
@@ -36,8 +28,8 @@ const ShowTestdataCombinationReport = ({ show, data, handleClose }) => {
                             label={`${data.no_of_failed_testdata_combinations} Failed`}
                         />
                     </div>
-                </div>
-
+                }
+            >
                 <div className='my-2 mx-1'>
                     <Row>
                         <Col md={6}>
@@ -77,13 +69,8 @@ const ShowTestdataCombinationReport = ({ show, data, handleClose }) => {
                         </Accordion>
                     </div>
                 </div>
-            </CustomModal.Body>
-            <CustomModal.Footer>
-                <CloseButton 
-                    handleClick={handleClose}
-                />
-            </CustomModal.Footer>
-        </CustomModal>
+            </ViewComponent>
+        </>
     )
 }
 
