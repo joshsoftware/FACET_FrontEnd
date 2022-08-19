@@ -6,6 +6,7 @@ import BadgeComponent from '../../BadgeComponent';
 import { ViewComponent } from '../../CustomComponents';
 
 const AllReports = ({ data, isLoading }) => {
+    console.log(data)
     return (
         <ViewComponent
             disabledBtns

@@ -41,7 +41,7 @@ const SingleTestsuiteReport = ({ data, isLoading }) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {data.testcases.map((item, index) => {
+                        {data.testcases.testcases.map((item, index) => {
                             return (
                                 <tr key={index}>
                                     <td>{index+1}</td>
