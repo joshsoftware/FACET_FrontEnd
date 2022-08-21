@@ -31,7 +31,7 @@ export function* getSingleTestsuiteReport({ payload }) {
 
 export function* getTestcaseOfSingleTestsuiteReport({ payload }) {
     try {
-        const singleSuiteReport = yield select(state => state.reports.singleReport.testcases.testcases);
+        const singleSuiteReport = yield select(state => state.reports.singleReport.testcases);
         const testcaseReport = singleSuiteReport.find(x => String(x.name)===String(payload.testcaseName));
         if (testcaseReport) {
             yield put(getSingleTestcaseOfTestsuiteReportSuccess(testcaseReport));

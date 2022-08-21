@@ -47,7 +47,12 @@ const TestdataOutcomeTable = ({ testdata, data }) => {
                                 <td>
                                     <BadgeComponent 
                                         label={e.status}
-                                        bg={e.status==="passed"?"success":"danger"}
+                                        bg={e.status==="passed"
+                                            ?"success"
+                                            :e.status==="failed"
+                                                ?"danger"
+                                                :"warning"
+                                        }
                                     />
                                 </td>
                                 <td>

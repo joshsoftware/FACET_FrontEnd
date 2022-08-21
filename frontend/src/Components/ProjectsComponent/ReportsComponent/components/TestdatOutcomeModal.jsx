@@ -85,18 +85,19 @@ const TestdatOutcomeModal = ({ show, handleClose, data }) => {
                     isRequired
                 />
 
+                <FormInput 
+                    label="Comment"
+                    type="textarea"
+                    rows={2}
+                    placeholder="Write the testdata here..."
+                    name="comment"
+                    value={formData.comment}
+                    handlechange={(e) => onchange(e.target.name, e.target.value)}
+                    disabled={!isChanged}
+                    isRequired
+                />
                 {isChanged&&(
                     <>
-                        <FormInput 
-                            label="Comment"
-                            type="textarea"
-                            rows={2}
-                            placeholder="Write the testdata here..."
-                            name="comment"
-                            value={formData.comment}
-                            handlechange={(e) => onchange(e.target.name, e.target.value)}
-                            isRequired
-                        />
                         <SaveButton 
                             handleClick={handleSubmit}
                             disabled={!isChanged || formData.comment.length===0}
