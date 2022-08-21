@@ -9,7 +9,7 @@ import { useDispatch } from 'react-redux';
 import { addCommentRequest } from '../../../../store/Reports/actions';
 
 const TestdatOutcomeModal = ({ show, handleClose, data }) => {
-    const { reportId, tname } = useParams();
+    const { projectName, reportId, tname } = useParams();
     let dispatch = useDispatch();
 
     const [formData, setFormData] = useState(
@@ -19,14 +19,16 @@ const TestdatOutcomeModal = ({ show, handleClose, data }) => {
             comment: "",
             reportId: reportId,
             testcase: tname,
-            testdata: data.testdata_name
+            testdata: data.testdata_name,
+            project: projectName
         }   
     )
+    const [previousData, setPreviousData] = useState(data);
     const [isChanged, setIsChanged] = useState(false);
 
     const onchange = (name, value) => {
         if(name==="status"){
-            if(value!==data.status){
+            if(value!==previousData.status){
                 setIsChanged(true)
             } else {
                 setIsChanged(false)
@@ -45,9 +47,14 @@ const TestdatOutcomeModal = ({ show, handleClose, data }) => {
     }
 
     useEffect(() => {
+        let prevStatus = data.status==="mpassed"?"passed":data.status==="mfailed"?"failed":data.status;
+        setPreviousData(prevState => ({
+            ...prevState,
+            status: prevStatus
+        }))
         setFormData(prevState => ({
             ...prevState,
-            status: data.status,
+            status: prevStatus,
             comment: data.comment || ""
         }))
     }, [data])

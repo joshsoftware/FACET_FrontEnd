@@ -46,8 +46,9 @@ export function* getTestcaseOfSingleTestsuiteReport({ payload }) {
 
 export function* addComment({ payload }) {
     try {
-        const response = yield call(addCommentApi, payload);
+        yield call(addCommentApi, payload);
         yield put(addCommentSuccess());
+        yield call(getReports, { payload: { project: payload.project } })
         toast.success("Comment Added Successfully!")
     } catch (error) {
         yield put(addCommentFailure(error));
