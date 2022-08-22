@@ -3,23 +3,28 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import AllReports from '../../../Components/ProjectsComponent/ReportsComponent/AllReports';
 import SingleTestsuiteReport from '../../../Components/ProjectsComponent/ReportsComponent/SingleTestsuiteReport';
-import { getReportsRequest, getSingleTestsuiteReportRequest } from '../../../store/Reports/actions';
+import ShowTestdataCombinationReport from '../../../Components/ProjectsComponent/ReportsComponent/ShowTestdataCombinationReport';
+import { getReportsRequest, getSingleTestcaseOfTestsuiteReportRequest, getSingleTestsuiteReportRequest } from '../../../store/Reports/actions';
 
 const mapState = ({ reports }) => ({
     reports: reports.reports,
     isReportsLoading: reports.isReportsLoading,
     isOneReportLoading: reports.isOneReportLoading,
-    singleReport: reports.singleReport
+    singleReport: reports.singleReport,
+    isOneTestcaseReportLoading: reports.isOneTestcaseReportLoading,
+    SingleTestcaseReport: reports.SingleTestcaseReport
 })
 
 const ReportsContainer = () => {
     let dispatch = useDispatch();
-    const { projectName, reportId } = useParams();
+    const { projectName, reportId, tname } = useParams();
     const { 
         isReportsLoading, 
         isOneReportLoading, 
+        isOneTestcaseReportLoading,
         reports, 
-        singleReport 
+        singleReport,
+        SingleTestcaseReport
     } = useSelector(mapState);
 
     useEffect(() => {
@@ -31,18 +36,32 @@ const ReportsContainer = () => {
             dispatch(getSingleTestsuiteReportRequest({reportId}))
         }
     }, [reports, reportId])
+
+    useEffect(() => {
+        if(!isOneReportLoading && tname) {
+            dispatch(getSingleTestcaseOfTestsuiteReportRequest({testcaseName: tname}))
+        }
+    }, [singleReport, tname])
+    
     
     return (
-        reportId?(
-            <SingleTestsuiteReport 
-                data={singleReport}
-                isLoading={isOneReportLoading}
+        tname?(
+            <ShowTestdataCombinationReport
+                data={SingleTestcaseReport}
+                isLoading={isOneTestcaseReportLoading}
             />
         ):(
-            <AllReports 
-                data={reports}
-                isLoading={isReportsLoading}
-            />
+            reportId?(
+                <SingleTestsuiteReport 
+                    data={singleReport}
+                    isLoading={isOneReportLoading}
+                />
+            ):(
+                <AllReports 
+                    data={reports}
+                    isLoading={isReportsLoading}
+                />
+            )
         )
     )
 }

@@ -6,13 +6,17 @@ export const get = async (url) => {
             .get(url);
         return res.data;
     } catch (err) {
-        return err.response;
+        throw err.response;
     }
 }
 
 export const post = async (url, data) => {
-    return axiosInstance.post(url, data)
-        .then(res => res.data)
+    try {
+        const res = await axiosInstance.post(url, data);
+        return res.data
+    } catch (err) {
+        throw err.response
+    }
 }
 
 export const put = async (url, data) => {
@@ -21,7 +25,7 @@ export const put = async (url, data) => {
             .put(url, data);
         return res.data;
     } catch (err) {
-        return err.response;
+        throw err.response;
     }
 }
 
@@ -31,7 +35,7 @@ export const patch = async (url, data) => {
             .patch(url, data);
         return res.data;
     } catch (err) {
-        return err.response;
+        throw err.response;
     }
 }
 
@@ -41,6 +45,6 @@ export const del = async (url, data) => {
             .delete(url, data);
         return res.data;
     } catch (err) {
-        return err.response;
+        throw err.response;
     }
 }

@@ -35,6 +35,8 @@ const executeReducer = (state=INITIAL_STATE, action) => {
             return {
                 ...state,
                 isLoading: false,
+                data: {},
+                results: [],
                 errors: action.payload
             }
             
