@@ -32,6 +32,14 @@ const FormSelect = (
             setDefaultValue(options.find(val => val.value===value))
         }
     }, [value, options])
+
+    const onChange = (e) => {
+        if(isMulti) {
+            handlechange(name, e)
+        } else {
+            handlechange(name, e.value)
+        }
+    }
     
 
     return (
@@ -47,7 +55,7 @@ const FormSelect = (
                 <Select 
                     value={defaultValue}
                     options={options}
-                    onChange={e => handlechange(name, e.value)}
+                    onChange={onChange}
                     isMulti={isMulti}
                     {...props}
                 />
