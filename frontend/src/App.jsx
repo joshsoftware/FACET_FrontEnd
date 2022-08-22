@@ -40,6 +40,7 @@ function App() {
             <Route path='/project/:projectName/testsuites' element={<TestsuiteContainer />} />
             <Route path='/project/:projectName/reports' element={<ReportsContainer />} />
             <Route path='/project/:projectName/reports/:reportId' element={<ReportsContainer />} />
+            <Route path='/project/:projectName/reports/:reportId/:tname' element={<ReportsContainer />} />
 
             <Route path='/project/:projectName/environments/:id' element={<EnvironmentContainer />} />
             <Route path='/project/:projectName/endpoints/:id' element={<EndpointContainer />} />
