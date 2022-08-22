@@ -25,13 +25,25 @@ const ScheduleViewComponent = ({ data }) => {
                         <th>Testsuite</th>
                         <th>Environment</th>
                         <th>Frequency</th>
-                        <th>Scheduled On</th>
+                        <th>Created On</th>
                         <th>Status</th>
                         <th>Scheduled By</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {/* To be Done */}
+                    {data.map((item, index) => {
+                        return (
+                            <tr key={index}>
+                                <td>{index + 1}</td>
+                                <td>{item.testsuite}</td>
+                                <td>{item.environment}</td>
+                                <td className='text-capitalize'>{item.frequency_type}</td>
+                                <td>{item.created_at}</td>
+                                <td>{"-"}</td>
+                                <td>{item.scheduled_by}</td>
+                            </tr>
+                        )
+                    })}
                 </tbody>
             </Table>
         </ViewComponent>

@@ -30,6 +30,21 @@ export const getSingleTestsuiteReportFailure = (data) => ({
     payload: data
 })
 
+export const getSingleTestcaseOfTestsuiteReportRequest = (data) => ({
+    type: reportsConstants.GET_TESTCASE_OF_SINGLE_REPORT_REQUEST,
+    payload: data
+})
+
+export const getSingleTestcaseOfTestsuiteReportSuccess = (data) => ({
+    type: reportsConstants.GET_TESTCASE_OF_SINGLE_REPORT_SUCCESS,
+    payload: data
+})
+
+export const getSingleTestcaseOfTestsuiteReportFailure = (data) => ({
+    type: reportsConstants.GET_TESTCASE_OF_SINGLE_REPORT_FAILURE,
+    payload: data
+})
+
 export const addReportsRequest = (data) => ({
     type: reportsConstants.ADD_REPORTS_REQUEST,
     payload: data
@@ -72,5 +87,20 @@ export const deleteReportsSuccess = (data) => ({
 
 export const deleteReportsFailure = (data) => ({
     type: reportsConstants.DELETE_REPORTS_FAILURE,
+    payload: data
+})
+
+export const addCommentRequest = (data) => ({
+    type: reportsConstants.ADD_COMMENT_REQUEST,
+    payload: data
+})
+
+export const addCommentSuccess = (data) => ({
+    type: reportsConstants.ADD_COMMENT_SUCCESS,
+    payload: data
+})
+
+export const addCommentFailure = (data) => ({
+    type: reportsConstants.ADD_COMMENT_FAILURE,
     payload: data
 })

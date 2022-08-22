@@ -16,7 +16,6 @@ const FormSelect = (
         isRequired,
         options,
         isMulti,
-        hideValues,
         ...props
     }
 ) => {
@@ -24,7 +23,7 @@ const FormSelect = (
     
     useEffect(() => {
         if(isMulti) {
-            let vals = value.map(e => e.value);
+            let vals = value.map(e => e.id);
             let res = options.filter(function(item) {
                 return vals.indexOf(item.value) != -1;
             })
@@ -33,6 +32,14 @@ const FormSelect = (
             setDefaultValue(options.find(val => val.value===value))
         }
     }, [value, options])
+
+    const onChange = (e) => {
+        if(isMulti) {
+            handlechange(name, e)
+        } else {
+            handlechange(name, e.value)
+        }
+    }
     
 
     return (
@@ -46,9 +53,9 @@ const FormSelect = (
                     </Form.Label>
                 )}
                 <Select 
-                    value={hideValues?[]:defaultValue}
+                    value={defaultValue}
                     options={options}
-                    onChange={e => handlechange(name, e)}
+                    onChange={onChange}
                     isMulti={isMulti}
                     {...props}
                 />

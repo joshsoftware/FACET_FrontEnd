@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getEnvironmentsRequest } from '../../../store/Environments/actions';
+import { addScheduleRequest } from '../../../store/Schedule/actions';
 import { getTestsuitesRequest } from '../../../store/Testsuites/actions';
 import { ViewComponent } from '../../CustomComponents';
 import { FormInput, FormSelect } from '../../forms/Inputs';
@@ -40,7 +41,13 @@ const AddNewSchedule = () => {
     // on form submit
     const handleSubmit = (e) => {
         e.preventDefault();
-        // TODO
+        const { frequency_value, ...otherFormData } = formData;
+        dispatch(addScheduleRequest({
+            ...otherFormData,
+            startDateTime: new Date(otherFormData.startDateTime).getTime()/1000,
+            endDateTime: new Date(otherFormData.endDateTime).getTime()/1000,
+            frequency: frequency_value
+        }))
     }
 
     // on change input
@@ -54,7 +61,7 @@ const AddNewSchedule = () => {
     const onSelectChange = (name, value) => {
         setFormData(prevState => ({
             ...prevState,
-            [name]: value.value
+            [name]: value
         }))
     }
 
@@ -80,15 +87,13 @@ const AddNewSchedule = () => {
         setOptions(p => ({...p, testsuites: testsuite_options, environments: environment_options}));
     }, [testsuites, environments])
     
-    
-console.log(formData)
     return (
         <Form onSubmit={handleSubmit}>
             <ViewComponent
                 title="Schedule New Testsuite"
                 type="save"
                 onSave={handleSubmit}
-                onSaveDisabled
+                onSaveDisabled={!formData.testsuite || !formData.environment || formData.frequency_type.length===0 || formData.startDateTime.length===0}
             >
                 <Row>
                     <FormSelect 
@@ -163,9 +168,6 @@ console.log(formData)
                         </>
                     )}
                 </Row>
-                {/* <Row>
-                    
-                </Row> */}
             </ViewComponent>
         </Form>
     )

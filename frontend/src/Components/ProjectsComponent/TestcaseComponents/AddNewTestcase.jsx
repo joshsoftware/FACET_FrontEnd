@@ -54,8 +54,8 @@ const AddNewTestcase = ({ cat, data }) => {
         ))
     }
 
-    const onSelectChange = (name, e) => {
-        setFormData(p => ({...p, [name]: e.value}))
+    const onSelectChange = (name, value) => {
+        setFormData(p => ({...p, [name]: value}))
     }
 
     const handleSubmit = (e) => {

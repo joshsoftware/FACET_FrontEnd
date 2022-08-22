@@ -1,30 +1,15 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Button, Table } from 'react-bootstrap';
 import { EyeFill } from 'react-bootstrap-icons';
+import { useNavigate } from 'react-router-dom';
 import BadgeComponent from '../../BadgeComponent';
 import { ViewComponent } from '../../CustomComponents';
-import ShowTestdataCombinationReport from './ShowTestdataCombinationReport';
 
 const SingleTestsuiteReport = ({ data, isLoading }) => {
-    const [showTestdataReportCombinationReportModal, setShowTestdataReportCombinationReportModal] = useState(false);
-    const [selectedTestcaseReport, setSelectedTestcaseReport] = useState({});
-
-    const handleOpenModal = (item) => {
-        setShowTestdataReportCombinationReportModal(true);
-        setSelectedTestcaseReport(item);
-    }
-
-    const handleCloseModal = () => {
-        setShowTestdataReportCombinationReportModal(false);
-    }
+    let navigate = useNavigate()
 
     return !isLoading&&(
         <>
-            <ShowTestdataCombinationReport
-                show={showTestdataReportCombinationReportModal}
-                data={selectedTestcaseReport}
-                handleClose={handleCloseModal}
-            />
             <ViewComponent
                 disabledBtns
                 title={data.testsuite.name}
@@ -82,7 +67,7 @@ const SingleTestsuiteReport = ({ data, isLoading }) => {
                                         <Button
                                             size='sm'
                                             variant='secondary'
-                                            onClick={() => handleOpenModal(item)}
+                                            onClick={() => navigate(item.name)}
                                             className='d-flex justify-content-center align -items-center'
                                         >
                                             <EyeFill />

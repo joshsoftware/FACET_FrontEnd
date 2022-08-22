@@ -18,7 +18,6 @@ const SetCustomTimeInput = ({ value, handleChange }) => {
 
     useEffect(() => {
         let customTimeInput = formData.days+'d,'+formData.hours+'h,'+formData.minutes+'m';
-        console.log(customTimeInput)
         handleChange(customTimeInput);
     }, [formData])
     

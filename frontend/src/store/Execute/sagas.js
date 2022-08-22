@@ -10,7 +10,7 @@ export function* getExecute({ payload }) {
         const response = yield call(executeTestsuiteApi, payload);
         yield put(getExecuteSuccess(response.result));
     } catch (error) {
-        toast.error(error.response.data.errors)
+        toast.error(error.data.error)
     }
 }
 
@@ -19,7 +19,7 @@ export function* addExecute({ payload }) {
         // yield put(addExecuteSuccess, payload);
         yield call(getExecute, {payload: { testsuite: payload.testsuite.id, environment: payload.environment }});
     } catch (error) {
-        toast.error(error.response.data.errors)
+        toast.error(error.data.error)
     }
 }
 
