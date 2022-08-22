@@ -17,6 +17,8 @@ const FormInput = (
         className,
         style,
         isRequired,
+        error,
+        errorMessage,
         ...props
     }
 ) => {
@@ -37,14 +39,13 @@ const FormInput = (
                     onChange={handlechange}
                     as={type==='textarea'?type:'input'}
                     rows={5}
+                    className={error&&'border-danger error'}
                     {...props}
                 />
             )}
-            {text && (
-                <Form.Text className='text-muted'>
-                    {text}
-                </Form.Text>
-            )}
+            <Form.Text className={error?'text-danger':'text-muted'}>
+                {error&&errorMessage?errorMessage:text}
+            </Form.Text>
         </Form.Group>
     )
 }

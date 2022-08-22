@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Col, Row } from 'react-bootstrap';
 import { Check2Circle, Infinity } from 'react-bootstrap-icons';
 import { toast } from 'react-toastify';
+import { hasWhiteSpace } from '../../../../utils';
 import { CustomModal } from '../../../CustomComponents';
 import { NextButton } from '../../../forms/Buttons';
 import FormInput from '../../../forms/Inputs/FormInput';
@@ -58,6 +59,7 @@ const AddKeyField = ({ data, onSuccess }) => {
                     value={formData.name}
                     isRequired
                     text="No space allowed for the key field."
+                    error={hasWhiteSpace(formData.name)}
                 />
                 <FormInput 
                     label="Type"
@@ -97,7 +99,7 @@ const AddKeyField = ({ data, onSuccess }) => {
             </CustomModal.Body>
             <CustomModal.Footer>
                 <NextButton 
-                    disabled={formData.name.length===0 || (formData.type!=="exact" && formData.type!=="dynamic")}
+                    disabled={formData.name.length===0 || hasWhiteSpace(formData.name) || (formData.type!=="exact" && formData.type!=="dynamic")}
                     handleClick={onSave}
                 />
             </CustomModal.Footer>
