@@ -58,11 +58,11 @@ const SubNav = () => {
             path: `/project/${projectName}/members`,
             icon: <People />
         },
-        // {
-        //     name: "Settings",
-        //     path: `/project/${projectName}/settings`,
-        //     icon: <Gear />
-        // }
+        {
+            name: "Settings",
+            path: `/project/${projectName}/settings`,
+            icon: <Gear />
+        }
     ]
 
     return (
