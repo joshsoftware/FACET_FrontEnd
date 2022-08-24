@@ -6,10 +6,10 @@ import { toast } from 'react-toastify';
 
 export function* getEndpoits({payload}) {
     try {
-        const response = yield call(getEndpointsApi, payload.project);
+        const response = yield call(getEndpointsApi, payload);
         yield put(getEndpointsSuccess(response.endpoints))
     } catch (error) {
-        toast.error(error.response.data.error)
+        toast.error(error.data.error)
     }
 }
 
@@ -19,7 +19,7 @@ export function* addEndpoint({payload}){
         toast.success("Endpoint Added Successfully!");
         yield call(getEndpoits, {payload:{project: payload.project}})
     } catch (error) {
-        toast.error(error.response.data.error)
+        toast.error(error.data.error)
     }
 }
 
@@ -29,7 +29,7 @@ export function* editEndpoint({payload}){
         toast.success("Endpoint Updated Successfully!");
         yield call(getEndpoits, {payload:{project: payload.project}})
     } catch (error) {
-        toast.error(error.response.data.error)
+        toast.error(error.data.error)
     }
 }
 

@@ -2,6 +2,7 @@ import { call, put, takeLatest } from "redux-saga/effects";
 import { 
     addMembersInProjectApi, 
     addNewProjectApi, 
+    deleteProjectApi, 
     getOneProjectApi, 
     getProjectMembersApi, 
     getProjectsApi,
@@ -10,9 +11,12 @@ import {
 import projectConstants from "./constants";
 import { toast } from 'react-toastify';
 import { 
+    deleteProjectFailure,
+    deleteProjectSuccess,
     getOneProjectSuccess, 
     getProjectMembersSuccess, 
     setProjects, 
+    updateProjectNameFailure, 
     updateProjectNameSuccess 
 } from "./actions";
 
@@ -22,7 +26,7 @@ export function* fetchProjects() {
         const response = yield call(getProjectsApi);
         yield put(setProjects(response.projects));
     } catch (error) {
-        toast.error(error.response.data.msg)
+        toast.error(error.data.error)
     }
 }
 
@@ -41,28 +45,26 @@ export function* getProjectMembers({ payload }) {
         const response = yield call(getProjectMembersApi, payload);
         yield put(getProjectMembersSuccess(response));
     } catch (error) {
-        toast.error("Something Wnt Wrong!")
+        toast.error(error.data.error)
     }
 }
 
 export function* addMembersInProject({ payload }) {
     try {
-        const response = yield call(addMembersInProjectApi, payload);
-        yield call(getProjectMembers, { payload: payload.project })
+        yield call(addMembersInProjectApi, payload);
+        yield call(getProjectMembers, { payload: {project: payload.project} })
         toast.success("Members Added Successfully!")
     } catch (error) {
-        console.log(error)
-        toast.error("Something Wnt Wrong!")
+        toast.error(error.data.error)
     }
 }
 
 export function* getOneProject({ payload }) {
     try {
-        const response = yield call(getOneProjectApi, payload.project);
+        const response = yield call(getOneProjectApi, payload);
         yield put(getOneProjectSuccess(response));
     } catch (error) {
-        console.log(error);
-        toast.error("Something Went Wrong!");
+        toast.error(error.data.error);
     }
 }
 
@@ -72,7 +74,19 @@ export function* updateProjectName({ payload }) {
         yield put(updateProjectNameSuccess());
         toast.success(response.message);
     } catch (error) {
+        yield put(updateProjectNameFailure(error.data))
         toast.error(error.data.error);
+    }
+}
+
+export function* deleteProject({ payload }) {
+    try {
+        const response = yield call(deleteProjectApi, payload);
+        yield put(deleteProjectSuccess());
+        toast.success(response.message);
+    } catch (error) {
+        yield put(deleteProjectFailure(error.data))
+        toast.error(error.data.error)
     }
 }
 
@@ -83,4 +97,5 @@ export default function* projectSagas() {
     yield takeLatest(projectConstants.ADD_MEMBERS_IN_PROJECT_REQUEST, addMembersInProject);
     yield takeLatest(projectConstants.GET_ONE_PROJECT_REQUEST, getOneProject);
     yield takeLatest(projectConstants.UPDATE_PROJECT_NAME_REQUEST, updateProjectName);
+    yield takeLatest(projectConstants.DELETE_PROJECT_REQUEST, deleteProject);
 }

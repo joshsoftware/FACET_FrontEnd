@@ -3,8 +3,8 @@ import { ArrowLeft } from 'react-bootstrap-icons';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ChangeProjectNameBox } from '../../../Components/ProjectsComponent/SettingsComponent';
-import { getOneProjectRequest, updateProjectNameRequest } from '../../../store/Projects/actions';
+import { ChangeProjectNameBox, DeleteProjectBox } from '../../../Components/ProjectsComponent/SettingsComponent';
+import { deleteProjectRequest, getOneProjectRequest, updateProjectNameRequest } from '../../../store/Projects/actions';
 
 const mapState = ({ user, projects }) => ({
     user: user.currentUser,
@@ -47,13 +47,17 @@ const SettingsContainer = () => {
         dispatch(updateProjectNameRequest(changeNameFormData))
     }
 
+    const handleDelete = () => {
+        dispatch(deleteProjectRequest({project: projectName}))
+        navigate('/dashboard');
+    }
+
     useEffect(() => {
         if(isSuccess && changeNameFormData.newProjName.length!==0) {
             navigate(`/project/${changeNameFormData.newProjName}/settings`);
         }
     }, [isSuccess])
-    
-    console.log(isLoading, currentProject)
+
     
     return (
         <div className='px-5 py-4 w-100'>
@@ -75,13 +79,19 @@ const SettingsContainer = () => {
             </div>
 
             {!isLoading&&(
-                <ChangeProjectNameBox 
-                    user={user}
-                    project={currentProject}
-                    formData={changeNameFormData}
-                    onchange={onChangeName}
-                    handleSubmit={handleSubmitChangeNameForm}
-                />
+                <>
+                    <ChangeProjectNameBox 
+                        user={user}
+                        project={currentProject}
+                        formData={changeNameFormData}
+                        onchange={onChangeName}
+                        handleSubmit={handleSubmitChangeNameForm}
+                    />
+                    <DeleteProjectBox 
+                        project={currentProject}
+                        handleDelete={handleDelete}
+                    />
+                </>
             )}
         </div>
     )

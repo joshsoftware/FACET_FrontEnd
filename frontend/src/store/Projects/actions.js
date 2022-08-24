@@ -73,3 +73,18 @@ export const updateProjectNameFailure = (data) => ({
     type: projectConstants.UPDATE_PROJECT_NAME_FAILURE,
     payload: data
 })
+
+export const deleteProjectRequest = (data) => ({
+    type: projectConstants.DELETE_PROJECT_REQUEST,
+    payload: data
+})
+
+export const deleteProjectSuccess = (data) => ({
+    type: projectConstants.DELETE_PROJECT_SUCCESS,
+    payload: data
+})
+
+export const deleteProjectFailure = (data) => ({
+    type: projectConstants.DELETE_PROJECT_FAILURE,
+    payload: data
+})

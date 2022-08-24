@@ -1,48 +1,13 @@
 import axiosInstance from "../axios";
 
-export const get = async (url) => {
+export const Api = async (url, method, data, params) => {
     try {
-        const res = await axiosInstance
-            .get(url);
-        return res.data;
-    } catch (err) {
-        throw err.response;
-    }
-}
-
-export const post = async (url, data) => {
-    try {
-        const res = await axiosInstance.post(url, data);
-        return res.data
-    } catch (err) {
-        throw err.response
-    }
-}
-
-export const put = async (url, data) => {
-    try {
-        const res = await axiosInstance
-            .put(url, data);
-        return res.data;
-    } catch (err) {
-        throw err.response;
-    }
-}
-
-export const patch = async (url, data) => {
-    try {
-        const res = await axiosInstance
-            .patch(url, data);
-        return res.data;
-    } catch (err) {
-        throw err.response;
-    }
-}
-
-export const del = async (url, data) => {
-    try {
-        const res = await axiosInstance
-            .delete(url, data);
+        const res = await axiosInstance({
+            url: url,
+            method: method,
+            data: data,
+            params: params
+        })
         return res.data;
     } catch (err) {
         throw err.response;

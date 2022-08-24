@@ -7,6 +7,13 @@
     width: 248px !important;
     background: #fff !important;
 }
+.sidebar-items-container {
+    position: sticky;
+    height: calc(100vh - 150px) !important;
+}
+.sidebar-items-container::-webkit-scrollbar{
+    display: none;
+}
 .sidebar-item{ 
     margin: 20px 15px;
 }

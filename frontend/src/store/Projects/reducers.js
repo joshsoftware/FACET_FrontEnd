@@ -42,6 +42,15 @@ const projectReducer = (state=PROJECTS_INITIAL_STATE, action) => {
         case projectConstants.UPDATE_PROJECT_NAME_FAILURE:
             return { ...state, isLoading: false, isSuccess: false, errors: action.payload }
             
+        case projectConstants.DELETE_PROJECT_REQUEST:
+            return { ...state, isLoading: true, isSuccess: false }
+
+        case projectConstants.DELETE_PROJECT_SUCCESS:
+            return { ...state, isLoading: false, isSuccess: true }
+        
+        case projectConstants.DELETE_PROJECT_FAILURE:
+            return { ...state, isLoading: false, isSuccess: false, errors: action.payload }
+            
         default:
             return state;
     }

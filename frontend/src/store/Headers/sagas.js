@@ -7,10 +7,10 @@ import { toast } from 'react-toastify';
 
 export function* getHeaders({ payload }) {
     try {
-        const response = yield call(getHeadersApi, payload.project);
+        const response = yield call(getHeadersApi, payload);
         yield put(getHeadersSuccess(response.headers));
     } catch (error) {
-        toast.error(error.response.data.errors)
+        toast.error(error.data.error)
     }
 }
 
@@ -20,7 +20,7 @@ export function* addHeader({ payload }) {
         toast.success("Header Added Successfully!")
         yield call(getHeaders, {payload: { project: payload.project }});
     } catch (error) {
-        toast.error(error.response.data.errors)
+        toast.error(error.data.error)
     }
 }
 
@@ -30,7 +30,7 @@ export function* editHeader({ payload }) {
         toast.success("Header Updated Successfully!")
         yield call(getHeaders, {payload: { project: payload.project }});
     } catch (error) {
-        toast.error(error.response.data.errors)
+        toast.error(error.data.error)
     }
 }
 
