@@ -8,6 +8,7 @@ import PayloadContainer from './PayloadContainer';
 import ProjectOverviewContainer from "./ProjectOverviewContainer";
 import ReportsContainer from "./ReportsContainer";
 import ScheduleContainer from "./ScheduleContainer";
+import SettingsContainer from './SettingsContainer';
 import TestcaseContainer from './TestcaseContainer';
 import TestsuiteContainer from './TestsuiteContainer';
 import { ProjectLayout } from "../../Layout";
@@ -34,6 +35,7 @@ export {
     ProjectContainer,
     ReportsContainer,
     ScheduleContainer,
+    SettingsContainer,
     TestcaseContainer,
     TestsuiteContainer
 }
