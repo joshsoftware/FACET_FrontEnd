@@ -10,7 +10,7 @@ export function* signIn({payload}) {
         toast.success("Login Successfully!");
         yield put(signInSuccess(response));
     } catch (error) {
-        toast.error(error.response.data.error);
+        toast.error(error.data.error);
     }
 }
 
@@ -24,7 +24,7 @@ export function* signUp({payload: {name, email, password, cpassword}}) {
         yield call(signUpApi, {name, email, password});
         toast.success("SignUp Successfully!");
     } catch (error) {
-        toast.error(error.response.data.error)
+        toast.error(error.data.error)
     }
 }
 
@@ -39,7 +39,7 @@ export function* getAllUsers({payload}) {
         const response = yield call(getAllUsersApi, payload);
         yield put(getAllUsersSuccess(response.users));
     } catch (error) {
-        toast.error(error.response.data.errors)
+        toast.error(error.data.errors)
     }
 }
 

@@ -23,7 +23,7 @@ const MemberContainer = () => {
     const [show, setShow] = useState(false);
 
     useEffect(() => {
-        dispatch(getProjectMembersRequest(projectName))
+        dispatch(getProjectMembersRequest({project: projectName}))
     }, [projectName])
 
     

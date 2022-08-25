@@ -1,14 +1,14 @@
-import { SERVER_URL } from '../../constants/appConstants';
-import { get, post, put } from '../apiHelper';
+import { GET, POST, PUT, SERVER_URL } from '../../constants/appConstants';
+import { Api } from '../apiHelper';
 
-export const getPayloadsApi = (project) => {
-    return get(`${SERVER_URL}/api/payloads/?project=${project}`)
+export const getPayloadsApi = (data) => {
+    return Api(`${SERVER_URL}/api/payloads/`, GET, null, data)
 }
 
 export const addPayloadApi = (data) => {
-    return post(`${SERVER_URL}/api/payloads/new`, data)
+    return Api(`${SERVER_URL}/api/payloads/new`, POST, data)
 }
 
 export const editPayloadApi = (data) => {
-    return put(`${SERVER_URL}/api/payloads/update`, data)
+    return Api(`${SERVER_URL}/api/payloads/update`, PUT, data)
 }

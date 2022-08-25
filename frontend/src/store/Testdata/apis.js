@@ -1,10 +1,10 @@
-import { SERVER_URL } from '../../constants/appConstants';
-import { get, post } from '../apiHelper';
+import { GET, POST, SERVER_URL } from '../../constants/appConstants';
+import { Api } from '../apiHelper';
 
-export const getTestdatasApi = (testcase_id) => {
-    return get(`${SERVER_URL}/api/testdata/?testcase=${testcase_id}`)
+export const getTestdatasApi = (data) => {
+    return Api(`${SERVER_URL}/api/testdata/`, GET, null, data)
 }
 
 export const addTestdataApi = (data) => {
-    return post(`${SERVER_URL}/api/testdata/new`, data)
+    return Api(`${SERVER_URL}/api/testdata/new`, POST, data)
 }
