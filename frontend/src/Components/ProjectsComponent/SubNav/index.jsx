@@ -72,20 +72,22 @@ const SubNav = () => {
             path: `/project/${projectName}/members`,
             icon: <People />
         },
-        // {
-        //     name: "Settings",
-        //     path: `/project/${projectName}/settings`,
-        //     icon: <Gear />
-        // }
+        {
+            name: "Settings",
+            path: `/project/${projectName}/settings`,
+            icon: <Gear />
+        }
     ]
 
     return (
         <Nav className="col-md-12 d-none d-md-block sidebar bg-dark text-light overflow-auto">
             <h3 className='sidebar-item text-uppercase text-break'>{projectName}</h3>
             <hr className='mx-2' />
-            {SubNavItems.map((item, index) => {
-                return <SubNavItem key={index} item={item} />
-            })}
+            <div className='sidebar-items-container overflow-auto'>
+                {SubNavItems.map((item, index) => {
+                    return <SubNavItem key={index} item={item} />
+                })}
+            </div>
         </Nav>
     )
 }

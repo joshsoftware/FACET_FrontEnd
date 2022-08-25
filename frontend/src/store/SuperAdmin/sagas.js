@@ -10,7 +10,7 @@ export function* addAdmins({ payload }) {
         yield call(addAdminsApi, payload);
         toast.success("Admins Added Successfully!")
     } catch (error) {
-        toast.error(error.response.data.errors)
+        toast.error(error.data.error)
     }
 }
 

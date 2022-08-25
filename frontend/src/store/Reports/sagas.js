@@ -7,10 +7,10 @@ import { toast } from 'react-toastify';
 
 export function* getReports({ payload }) {
     try {
-        const response = yield call(getAllReportsApi, payload.project);
+        const response = yield call(getAllReportsApi, payload);
         yield put(getReportsSuccess(response.results));
     } catch (error) {
-        toast.error(error.response.data.errors)
+        toast.error(error.data.error)
     }
 }
 

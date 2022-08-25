@@ -7,10 +7,10 @@ import { toast } from 'react-toastify';
 
 export function* getPayloads({ payload }) {
     try {
-        const response = yield call(getPayloadsApi, payload.project);
+        const response = yield call(getPayloadsApi, payload);
         yield put(getPayloadsSuccess(response.payloads));
     } catch (error) {
-        toast.error(error.response.data.errors)
+        toast.error(error.data.error)
     }
 }
 
@@ -20,7 +20,7 @@ export function* addPayload({ payload }) {
         toast.success("Payload Added Successfully!")
         yield call(getPayloads, {payload: { project: payload.project }});
     } catch (error) {
-        toast.error(error.response.data.errors)
+        toast.error(error.data.error)
     }
 }
 
@@ -30,7 +30,7 @@ export function* editPayload({ payload }) {
         toast.success("Payload Updated Successfully!")
         yield call(getPayloads, {payload: { project: payload.project }});
     } catch (error) {
-        toast.error(error.response.data.errors)
+        toast.error(error.data.error)
     }
 }
 
