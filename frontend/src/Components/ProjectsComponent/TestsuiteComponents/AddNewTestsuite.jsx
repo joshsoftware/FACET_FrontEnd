@@ -53,7 +53,6 @@ const AddNewTestsuite = ({ cat, data }) => {
     }
 
     const onSelectChange = (name, value) => {
-        console.log(value)
         setSelectedTestcases((prevState) => (
             [
                 ...prevState, 

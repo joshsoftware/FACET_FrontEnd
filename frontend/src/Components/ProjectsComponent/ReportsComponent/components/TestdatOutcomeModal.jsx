@@ -42,7 +42,6 @@ const TestdatOutcomeModal = ({ show, handleClose, data }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(formData)
         dispatch(addCommentRequest(formData));
     }
 
@@ -59,7 +58,6 @@ const TestdatOutcomeModal = ({ show, handleClose, data }) => {
         }))
     }, [data])
     
-    console.log(data)
     return (
         <CustomModal
             show={show}

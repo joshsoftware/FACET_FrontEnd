@@ -6,6 +6,7 @@ import headerReducer from "./Headers/reducers";
 import payloadReducer from "./Payloads/reducers";
 import { projectReducer, projectMemberReducer } from "./Projects/reducers";
 import reportsReducer from "./Reports/reducers";
+import scheduleReducer from "./Schedule/reducers";
 import superAdminReducer from "./SuperAdmin/reducers";
 import testcaseReducer from "./Testcases/reducers";
 import testdataReducer from "./Testdata/reducers";
@@ -26,7 +27,8 @@ const rootReducer = combineReducers({
     projectMembers: projectMemberReducer,
     superAdmin: superAdminReducer,
     getUsers: getUsersReducer,
-    reports: reportsReducer
+    reports: reportsReducer,
+    schedules: scheduleReducer
 })
 
 export default rootReducer;
