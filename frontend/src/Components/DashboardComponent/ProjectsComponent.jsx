@@ -1,5 +1,4 @@
 import React from 'react';
-import { Spinner } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import ProjectBox from './ProjectBox';
 import ProjectBoxSkeleton from './ProjectBoxSkeleton';
@@ -13,10 +12,6 @@ const mapState = ({ projects }) => ({
 
 const ProjectsComponent = () => {
     const { projects, isLoading } = useSelector(mapState);
-    
-    if(isLoading){
-        return <Spinner animation='border' />
-    }
 
     return (
         <div className='project-container py-4'>
