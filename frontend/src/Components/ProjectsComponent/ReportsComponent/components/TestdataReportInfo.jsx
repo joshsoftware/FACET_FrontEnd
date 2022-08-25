@@ -5,7 +5,6 @@ import JSONView from '../../../JSONView';
 import TestdataOutcomeTable from './TestdataOutcomeTable';
 
 const TestdataReportInfo = ({ item, eventKey }) => {
-    console.log(item)
     return (
         <Accordion.Item eventKey={eventKey} className={`border-${item.status==='passed'?"success":"danger"}`}>
             <Accordion.Header>
