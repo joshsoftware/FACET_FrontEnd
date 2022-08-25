@@ -13,6 +13,9 @@
     transform: scale(1.02);
 }
 
+.not-found-icon {
+    width: 350px;
+}
 
 @media (min-width: 600px) {
     .project-container { 
