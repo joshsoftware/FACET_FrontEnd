@@ -64,7 +64,15 @@ const AddNewPayload = ({ cat, data }) => {
 
     useEffect(() => {
         if(cat==='edit') {
-            setFormData({...formData, project: projectName, parameters: data.parameters || {"":""}, name: data.name, payload: JSON.stringify(data.payload), expected_outcome: data.expected_outcome, id: data.id})
+            setFormData(prevState => ({
+                ...prevState, 
+                project: projectName, 
+                parameters: data.parameters || {"":""}, 
+                name: data.name, 
+                payload: JSON.stringify(data.payload), 
+                expected_outcome: data.expected_outcome, 
+                id: data.id
+            }))
         }
     }, [data])
     

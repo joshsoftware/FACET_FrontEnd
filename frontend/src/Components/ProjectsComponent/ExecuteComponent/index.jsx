@@ -1,17 +1,10 @@
 import React from 'react'
 import { Accordion, Badge } from 'react-bootstrap';
-import { useSelector } from 'react-redux'
 import { ViewComponent } from '../../CustomComponents';
 
-const mapState = ({ execute }) => ({
-    results: execute.results,
-    data: execute.data,
-    isLoading: execute.isLoading
-})
 
-const ExecuteComponent = () => {
-    const { results, data } = useSelector(mapState);
-    
+const ExecuteComponent = (props) => {
+    const { results, data } = props;
     return (
         <div className='w-100'>
             <ViewComponent
@@ -21,6 +14,7 @@ const ExecuteComponent = () => {
                 <Accordion>
                     {data.testcases&&data.testcases.map((e, index) => {
                         let resultInstance = results.filter(res => res.name === e.name)[0] || {};
+                        console.log(resultInstance)
                         return (
                             <Accordion.Item key={index} className={`my-2 ${resultInstance.status === 'passed' ? (
                                 'border-success text-success'
@@ -32,8 +26,8 @@ const ExecuteComponent = () => {
                             } eventKey={e.name}>
                                 <Accordion.Header >
                                     {e.name}
-                                    <Badge bg="success" className='mx-1'>{resultInstance.no_of_passed_testcases} Pass</Badge>
-                                    <Badge bg="danger">{resultInstance.no_of_failed_testcases} Fail</Badge>
+                                    <Badge bg="success" className='mx-1'>{resultInstance.no_of_passed_testdata_combinations} Pass</Badge>
+                                    <Badge bg="danger">{resultInstance.no_of_failed_testdata_combinations} Fail</Badge>
                                 </Accordion.Header>
                                 <Accordion.Body>
                                     <div>
@@ -45,8 +39,11 @@ const ExecuteComponent = () => {
                                                         {JSON.stringify(resultInstance.response, null, 2)}
                                                     </pre>
                                                     ))
-                                            : (<>status : Yet to be executed
-                                            </>)
+                                            : (
+                                                <>
+                                                    status : Yet to be executed
+                                                </>
+                                            )
                                         }
                                     </div>
                                 </Accordion.Body>

@@ -16,7 +16,7 @@ const AddNewTestdata = ({ data, handleClose }) => {
             testcase: data.id,
             name: '',
             payload: JSON.stringify(data.payload.payload),
-            parameters: {"":""},
+            parameters: data.payload.parameters,
             expected_outcome: data.payload.expected_outcome
         } 
     )
