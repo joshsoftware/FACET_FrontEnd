@@ -1,14 +1,14 @@
-import { SERVER_URL } from "../../constants/appConstants"
-import { get, post, put } from "../apiHelper"
+import { GET, POST, PUT, SERVER_URL } from "../../constants/appConstants"
+import { Api } from "../apiHelper"
 
-export const getEnvironmentsApi = (project) => {
-    return get(`${SERVER_URL}/api/environments?project=${project}`)
+export const getEnvironmentsApi = (data) => {
+    return Api(`${SERVER_URL}/api/environments`, GET, null, data)
 }
 
 export const addEnvironmentApi = (data) => {
-    return post(`${SERVER_URL}/api/environments/new`, data)
+    return Api(`${SERVER_URL}/api/environments/new`, POST, data)
 }
 
 export const editEnvironmentApi = (data) => {
-    return put(`${SERVER_URL}/api/environments/update`, data)
+    return Api(`${SERVER_URL}/api/environments/update`, PUT, data)
 }

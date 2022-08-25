@@ -7,10 +7,10 @@ import { toast } from 'react-toastify';
 
 export function* getTestdatas({ payload }) {
     try {
-        const response = yield call(getTestdatasApi, payload.testcase);
+        const response = yield call(getTestdatasApi, payload);
         yield put(getTestdataSuccess(response.testdata));
     } catch (error) {
-        toast.error(error.response.data.errors)
+        toast.error(error.data.error)
     }
 }
 
@@ -21,7 +21,7 @@ export function* addTestdata({ payload }) {
         console.log("q")
         yield call(getTestdatas, {payload: { testcase: payload.testcase }});
     } catch (error) {
-        toast.error(error.response.data.errors)
+        toast.error(error.data.error)
     }
 }
 

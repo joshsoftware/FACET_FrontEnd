@@ -14,13 +14,15 @@ import {
   EndpointContainer,
   ProjectContainer,
   HeaderContainer,
+  MemberContainer,
   PayloadContainer,
   TestcaseContainer,
   TestsuiteContainer,
   ExecuteContainer,
-  ReportsContainer
+  ReportsContainer,
+  ScheduleContainer,
+  SettingsContainer
 } from './containers/ProjectContainer';
-import MemberContainer from './containers/ProjectContainer/MemberContainer';
 
 function App() {
   return (
@@ -39,8 +41,10 @@ function App() {
             <Route path='/project/:projectName/testcases' element={<TestcaseContainer />} />
             <Route path='/project/:projectName/testsuites' element={<TestsuiteContainer />} />
             <Route path='/project/:projectName/reports' element={<ReportsContainer />} />
+            <Route path='/project/:projectName/settings' element={<SettingsContainer />} />
             <Route path='/project/:projectName/reports/:reportId' element={<ReportsContainer />} />
-            <Route path='/project/:projectName/reports/:reportId/:tname' element={<ReportsContainer />} />
+            <Route path='/project/:projectName/schedule' element={<ScheduleContainer />} />
+            <Route path='/project/:projectName/schedule/new' element={<ScheduleContainer cat="add" />} />
 
             <Route path='/project/:projectName/environments/:id' element={<EnvironmentContainer />} />
             <Route path='/project/:projectName/endpoints/:id' element={<EndpointContainer />} />

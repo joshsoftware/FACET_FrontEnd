@@ -1,14 +1,14 @@
-import { SERVER_URL } from '../../constants/appConstants';
-import { get, post, put } from '../apiHelper';
+import { GET, POST, PUT, SERVER_URL } from '../../constants/appConstants';
+import { Api } from '../apiHelper';
 
-export const getHeadersApi = (project) => {
-    return get(`${SERVER_URL}/api/headers/?project=${project}`)
+export const getHeadersApi = (data) => {
+    return Api(`${SERVER_URL}/api/headers/`, GET, null, data)
 }
 
 export const addHeaderApi = (data) => {
-    return post(`${SERVER_URL}/api/headers/new`, data)
+    return Api(`${SERVER_URL}/api/headers/new`, POST, data)
 }
 
 export const editHeaderApi = (data) => {
-    return put(`${SERVER_URL}/api/headers/update`, data)
+    return Api(`${SERVER_URL}/api/headers/update`, PUT, data)
 }

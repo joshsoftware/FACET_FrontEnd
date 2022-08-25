@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from 'react-bootstrap';
 import { Trash } from 'react-bootstrap-icons';
+import { hasWhiteSpace } from '../../../utils';
 import { FormInput } from '../Inputs';
 
 const KeyValuePairsFormField = ({ data, setData }) => {
@@ -62,6 +63,8 @@ const KeyValuePairsFormField = ({ data, setData }) => {
                             value={e.key}
                             placeholder="Key"
                             style={{width: '45%'}}
+                            error={hasWhiteSpace(e.key)}
+                            errorMessage="No space allowed for the key field."
                         />
                         <FormInput 
                             name="value"

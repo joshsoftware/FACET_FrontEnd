@@ -6,10 +6,10 @@ import { toast } from 'react-toastify';
 
 export function* getEnvironments({payload}) {
     try {
-        const response = yield call(getEnvironmentsApi, payload.project)
+        const response = yield call(getEnvironmentsApi, payload)
         yield put(getEnvironmentsSuccess(response.environments))
     } catch (error) {
-        toast.error(error.response.data.error)
+        toast.error(error.data.error)
     }
 }
 
@@ -19,7 +19,7 @@ export function* addEnvironment({payload}){
         toast.success("Environment Added Successfully!")
         yield call(getEnvironments, {payload:{project: payload.project}});
     } catch (error) {
-        toast.error(error.response.data.error)
+        toast.error(error.data.error)
     }
 }
 
@@ -29,7 +29,7 @@ export function* editEnvironment({payload}){
         toast.success("Environment Updated Successfully!")
         yield call(getEnvironments, {payload:{project: payload.project}});
     } catch (error) {
-        toast.error(error.response.data.error)
+        toast.error(error.data.error)
     }
 }
 

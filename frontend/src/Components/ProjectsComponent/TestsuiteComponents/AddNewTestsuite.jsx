@@ -53,7 +53,6 @@ const AddNewTestsuite = ({ cat, data }) => {
     }
 
     const onSelectChange = (name, value) => {
-        console.log(value)
         setSelectedTestcases((prevState) => (
             [
                 ...prevState, 
@@ -131,6 +130,7 @@ const AddNewTestsuite = ({ cat, data }) => {
                     handlechange={onchange}
                     text={formData.name.length!==0&&`Your testsuite will created as ${ConvertToSlug(formData.name)}`}
                     isRequired
+                    disabled={cat==="edit"}
                 />
                 <FormInput 
                     type="textarea"
