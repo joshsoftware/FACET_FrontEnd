@@ -6,7 +6,7 @@ import { addScheduleSuccess, getAllSchedulesSuccess } from "./actions";
 
 export function* getAllSchedules({ payload }) {
     try {
-        const response = yield call(getAllSchesuledSuitesApi, payload.project);
+        const response = yield call(getAllSchesuledSuitesApi, payload);
         yield put(getAllSchedulesSuccess(response.scheduled_jobs));
     } catch (error) {
         console.log(error);

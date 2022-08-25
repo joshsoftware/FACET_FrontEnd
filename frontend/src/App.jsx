@@ -20,7 +20,8 @@ import {
   TestsuiteContainer,
   ExecuteContainer,
   ReportsContainer,
-  ScheduleContainer
+  ScheduleContainer,
+  SettingsContainer
 } from './containers/ProjectContainer';
 
 function App() {

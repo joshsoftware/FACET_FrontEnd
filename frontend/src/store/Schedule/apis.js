@@ -1,10 +1,10 @@
-import { SERVER_URL } from "../../constants/appConstants";
-import { get, post } from "../apiHelper";
+import { GET, POST, SERVER_URL } from "../../constants/appConstants";
+import { Api } from "../apiHelper";
 
-export const getAllSchesuledSuitesApi = (project) => {
-    return get(`${SERVER_URL}/api/schedule/?project=${project}`)
+export const getAllSchesuledSuitesApi = (data) => {
+    return Api(`${SERVER_URL}/api/schedule/`, GET, null, data)
 }
 
 export const addScheduleSuiteApi = (data) => {
-    return post(`${SERVER_URL}/api/schedule/new`, data)
+    return Api(`${SERVER_URL}/api/schedule/new`, POST, data)
 }
