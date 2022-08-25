@@ -43,6 +43,7 @@ function App() {
             <Route path='/project/:projectName/reports' element={<ReportsContainer />} />
             <Route path='/project/:projectName/settings' element={<SettingsContainer />} />
             <Route path='/project/:projectName/reports/:reportId' element={<ReportsContainer />} />
+            <Route path='/project/:projectName/reports/:reportId/:tname' element={<ReportsContainer />} />
             <Route path='/project/:projectName/schedule' element={<ScheduleContainer />} />
             <Route path='/project/:projectName/schedule/new' element={<ScheduleContainer cat="add" />} />
 

@@ -15,7 +15,7 @@ const ProjectsComponent = () => {
     const { projects, isLoading } = useSelector(mapState);
 
     return (
-        <div className={`${projects.length===0?'w-100':'project-container'} py-4`}>
+        <div className={`${projects.length===0&&!isLoading?'w-100':'project-container'} py-4`}>
             {isLoading?(
                 <>
                     <ProjectBoxSkeleton />
