@@ -5,7 +5,7 @@ import { ViewComponent } from '../../CustomComponents';
 import { AddButton } from '../../forms/Buttons';
 import AddNewTestdata from './AddNewTestdata';
 
-const TestcaseViewComponent = ({ data }) => {
+const TestcaseViewComponent = ({ data, testdata }) => {
     const { projectName } = useParams();
     const [showAddTestData, setShowAddTestData] = useState(false);
 
@@ -62,7 +62,7 @@ const TestcaseViewComponent = ({ data }) => {
             >
                 <small><b>TestData</b></small>
                 <Accordion>
-                    {data.testdata&&data.testdata.map((item, index) => {
+                    {testdata&&testdata.map((item, index) => {
                         return (
                             <Accordion.Item key={index} eventKey={index}>
                                 <Accordion.Header>
