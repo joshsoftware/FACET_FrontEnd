@@ -18,7 +18,6 @@ export function* addTestdata({ payload }) {
     try {
         yield call(addTestdataApi, payload);
         toast.success("Testdata Added Successfully!")
-        console.log("q")
         yield call(getTestdatas, {payload: { testcase: payload.testcase }});
     } catch (error) {
         toast.error(error.data.error)

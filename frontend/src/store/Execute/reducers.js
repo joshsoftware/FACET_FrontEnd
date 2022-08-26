@@ -1,7 +1,7 @@
 import executeConstants from "./constants";
 
 const INITIAL_STATE = {
-    isLoading: true,
+    isLoading: false,
     data: {},
     results: [],
     errors: []
@@ -12,7 +12,7 @@ const executeReducer = (state=INITIAL_STATE, action) => {
         case executeConstants.ADD_EXECUTE_REQUEST:
             return {
                 ...state,
-                isLoading: false,
+                isLoading: true,
                 data: action.payload.testsuite,
                 errors: []
             }

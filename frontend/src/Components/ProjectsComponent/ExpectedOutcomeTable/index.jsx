@@ -37,6 +37,11 @@ const ExpectedOutcomeTable = ({ data, onChange }) => {
     useEffect(() => {
         onChange(expectedOutcomeData)
     }, [expectedOutcomeData])
+
+    useEffect(() => {
+        setExpectedOutcomeData(data)
+    }, [data])
+    
     
     return (
         <>

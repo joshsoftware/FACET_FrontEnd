@@ -15,7 +15,7 @@ const INITIAL_VALUE = {
     "project": '', 
     "name": "", 
     "parameters": {"": ""},
-    "payload": JSON.stringify({"":""}),
+    "payload": JSON.stringify({}),
     "expected_outcome": [
         {
             name: "status_code",
@@ -38,7 +38,7 @@ const AddNewPayload = ({ cat, data }) => {
         if(cat==='add') {
             dispatch(addPayloadsRequest({...formData, payload: JSON.parse(formData.payload)}))
         } else if(cat==='edit') {
-            dispatch(editPayloadsRequest({...formData, payload: JSON.parse(formData.payload)}))
+            dispatch(editPayloadsRequest({...formData, parameters: formData.parameters, payload: JSON.parse(formData.payload)}))
         }
     }
 
@@ -64,10 +64,17 @@ const AddNewPayload = ({ cat, data }) => {
 
     useEffect(() => {
         if(cat==='edit') {
-            setFormData({...formData, project: projectName, parameters: data.parameters || {"":""}, name: data.name, payload: JSON.stringify(data.payload), expected_outcome: data.expected_outcome, id: data.id})
+            setFormData(prevState => ({
+                ...prevState, 
+                project: projectName, 
+                parameters: data.parameters || {"":""}, 
+                name: data.name, 
+                payload: JSON.stringify(data.payload), 
+                expected_outcome: data.expected_outcome, 
+                id: data.id
+            }))
         }
     }, [data])
-    
     
     return (
         <Form onSubmit={handleSubmit} className='w-100'>
