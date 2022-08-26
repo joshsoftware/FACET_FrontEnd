@@ -15,7 +15,7 @@ const INITIAL_VALUE = {
     "project": '', 
     "name": "", 
     "parameters": {"": ""},
-    "payload": JSON.stringify({"":""}),
+    "payload": JSON.stringify({}),
     "expected_outcome": [
         {
             name: "status_code",
@@ -38,7 +38,7 @@ const AddNewPayload = ({ cat, data }) => {
         if(cat==='add') {
             dispatch(addPayloadsRequest({...formData, payload: JSON.parse(formData.payload)}))
         } else if(cat==='edit') {
-            dispatch(editPayloadsRequest({...formData, payload: JSON.parse(formData.payload)}))
+            dispatch(editPayloadsRequest({...formData, parameters: formData.parameters, payload: JSON.parse(formData.payload)}))
         }
     }
 
@@ -75,7 +75,6 @@ const AddNewPayload = ({ cat, data }) => {
             }))
         }
     }, [data])
-    
     
     return (
         <Form onSubmit={handleSubmit} className='w-100'>

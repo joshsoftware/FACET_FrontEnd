@@ -14,9 +14,8 @@ const ExecuteComponent = (props) => {
                 <Accordion>
                     {data.testcases&&data.testcases.map((e, index) => {
                         let resultInstance = results.filter(res => res.name === e.name)[0] || {};
-                        console.log(resultInstance)
                         return (
-                            <Accordion.Item key={index} className={`my-2 ${resultInstance.status === 'passed' ? (
+                            <Accordion.Item key={index} className={`${resultInstance.status === 'passed' ? (
                                 'border-success text-success'
                             ) : (
                                 resultInstance.status === 'failed' ? (

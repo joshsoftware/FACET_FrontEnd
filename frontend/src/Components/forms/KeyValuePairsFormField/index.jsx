@@ -11,19 +11,10 @@ const KeyValuePairsFormField = ({ data, setData }) => {
             value: ""
         }
     ]);
-
-    // useEffect(() => {
-    //     let properties = {};
-    //     inputFields.map(e => {
-    //         properties[e.key] = e.value
-    //     });
-    //     setData(properties);
-    // }, [inputFields]);
     
     const onchange = (e, index) => {
         const values = [...inputFields]
         values[index][e.target.name] = e.target.value;
-
         let properties = {};
         values.map(e => properties[e.key] = e.value);
         setData(properties);
@@ -35,12 +26,20 @@ const KeyValuePairsFormField = ({ data, setData }) => {
 
     const removeField = (index) => {
         let values = [...inputFields];
-        values.splice(index, 1);
+        let removedData = values.splice(index, 1);
         setInputFields(values);
+        
+        let properties = data;
+        delete properties[removedData[0].key]
+        if(properties.length===0){
+            properties[""] = ""
+        }
+        setData({...properties})
     }
 
     useEffect(() => {
         let values = [];
+        console.log(data)
         Object.entries(data).map(([key, val], index) => {
             let properties = {};
             properties["key"] = key;
