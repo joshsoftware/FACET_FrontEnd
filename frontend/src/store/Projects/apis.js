@@ -23,6 +23,10 @@ export const addMembersInProjectApi = (data) => {
     return Api(`${SERVER_URL}/api/projects/members/add`, POST, data)
 }
 
+export const removeMembersInProjectApi = (data) => {
+    return Api(`${SERVER_URL}/api/projects/members/remove`, DELETE, data)
+}
+
 export const getOneProjectApi = (data) => {
     return Api(`${SERVER_URL}/api/projects/`, GET, null, data)
 }
