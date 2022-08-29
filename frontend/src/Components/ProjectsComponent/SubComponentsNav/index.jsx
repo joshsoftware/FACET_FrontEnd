@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, Nav } from 'react-bootstrap';
 import Skeleton from 'react-loading-skeleton';
 import { Link, useParams } from 'react-router-dom';
-import noRecordsFound from '../../../assets/images/noRecordsFound.png';
+import NoResultsFound from '../../NoResultsFound';
 import './style.css';
 
 const SubComponentsNav = ({ 
@@ -47,21 +47,9 @@ const SubComponentsNav = ({
                                 </Nav.Item>
                     })}
                     {data&&data.length===0&&(
-                        <div className='my-5 text-center'>
-                            <img 
-                                src={noRecordsFound} 
-                                alt="No Results Found" 
-                            />
-                            <h5>No Results Found!</h5>
-                            <Button
-                                size='sm'
-                                variant='success'
-                                className='mb-2'
-                                onClick={onAddBtnClick}
-                            >
-                                + Add New
-                            </Button>
-                        </div>
+                        <NoResultsFound 
+                            btnOnclick={onAddBtnClick}
+                        />
                     )}
                     </>
                 )}

@@ -23,7 +23,15 @@ const AddNewSchedule = () => {
         environment: "",
         startDateTime: "",
         frequency_type: "",
-        frequency_value: "",
+        frequency_value: {
+            years : 0,
+            months : 0,
+            weeks : 0,
+            days : 0,
+            hours : 0,
+            minutes : 0,
+            seconds : 0
+        },
         endDateTime: "",
         project: projectName
     });
@@ -139,7 +147,7 @@ const AddNewSchedule = () => {
                         <div className='col-md-12 alert-secondary rounded py-2 mb-3'>
                             <SetCustomTimeInput 
                                 value={formData.frequency_value}
-                                handleChange={(value) => onSelectChange('frequency_value', {value})}
+                                handleChange={(value) => onSelectChange('frequency_value', value)}
                             />
                         </div>
                     )}

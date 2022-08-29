@@ -3,22 +3,17 @@ import { Row } from 'react-bootstrap';
 import { FormInput } from '../../../forms/Inputs';
 
 const SetCustomTimeInput = ({ value, handleChange }) => {
-    const [formData, setFormData] = useState({
-        minutes: 0,
-        hours: 0,
-        days: 0  
-    })
+    const [formData, setFormData] = useState(value)
 
     const onchange = (e) => {
         setFormData(p => ({
             ...p,
-            [e.target.name]: e.target.value
+            [e.target.name]: Number(e.target.value)
         }))
     }
 
     useEffect(() => {
-        let customTimeInput = formData.days+'d,'+formData.hours+'h,'+formData.minutes+'m';
-        handleChange(customTimeInput);
+        handleChange(formData);
     }, [formData])
     
     return (

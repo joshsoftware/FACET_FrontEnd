@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import { Badge } from 'react-bootstrap';
 
 const BadgeComponent = (
@@ -16,3 +17,9 @@ const BadgeComponent = (
 }
 
 export default BadgeComponent;
+
+BadgeComponent.propTypes = {
+    bg: PropTypes.string,
+    label: PropTypes.string,
+    className: PropTypes.string
+}
