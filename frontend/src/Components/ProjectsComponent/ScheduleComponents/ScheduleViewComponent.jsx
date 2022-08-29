@@ -3,9 +3,14 @@ import { Table } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { ViewComponent } from '../../CustomComponents';
 import { AddButton } from '../../forms/Buttons';
+import NoResultsFound from '../../NoResultsFound';
 
 const ScheduleViewComponent = ({ data }) => {
     let navigate = useNavigate();
+
+    const AddNew = () => {
+        navigate('new')
+    }
 
     return (
         <ViewComponent 
@@ -14,38 +19,45 @@ const ScheduleViewComponent = ({ data }) => {
             rightChildrens={
                 <AddButton 
                     label="Schedule Testsuite"
-                    handleClick={() => navigate('new')}
+                    handleClick={AddNew}
                 />
             }
         >
-            <Table striped bordered>
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Testsuite</th>
-                        <th>Environment</th>
-                        <th>Frequency</th>
-                        <th>Created On</th>
-                        <th>Status</th>
-                        <th>Scheduled By</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {data.map((item, index) => {
-                        return (
-                            <tr key={index}>
-                                <td>{index + 1}</td>
-                                <td>{item.testsuite}</td>
-                                <td>{item.environment}</td>
-                                <td className='text-capitalize'>{item.frequency_type}</td>
-                                <td>{item.created_at}</td>
-                                <td>{"-"}</td>
-                                <td>{item.scheduled_by}</td>
-                            </tr>
-                        )
-                    })}
-                </tbody>
-            </Table>
+            {data.length===0?(
+                <NoResultsFound 
+                    btnLabel="Schedule New Suite"
+                    btnOnclick={AddNew}
+                />
+            ):(
+                <Table striped bordered>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Testsuite</th>
+                            <th>Environment</th>
+                            <th>Frequency</th>
+                            <th>Created On</th>
+                            <th>Status</th>
+                            <th>Scheduled By</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {data.map((item, index) => {
+                            return (
+                                <tr key={index}>
+                                    <td>{index + 1}</td>
+                                    <td>{item.testsuite}</td>
+                                    <td>{item.environment}</td>
+                                    <td className='text-capitalize'>{item.frequency_type}</td>
+                                    <td>{item.created_at}</td>
+                                    <td>{"-"}</td>
+                                    <td>{item.scheduled_by}</td>
+                                </tr>
+                            )
+                        })}
+                    </tbody>
+                </Table>
+            )}
         </ViewComponent>
     )
 }

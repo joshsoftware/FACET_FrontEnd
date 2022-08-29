@@ -94,6 +94,7 @@ export function* deleteProject({ payload }) {
     try {
         const response = yield call(deleteProjectApi, payload);
         yield put(deleteProjectSuccess());
+        yield call(fetchProjects);
         toast.success(response.message);
     } catch (error) {
         yield put(deleteProjectFailure(error.data))
