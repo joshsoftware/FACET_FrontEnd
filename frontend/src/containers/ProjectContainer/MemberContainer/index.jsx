@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 import { ViewComponent } from '../../../Components/CustomComponents';
 import AddMembersInProject from '../../../Components/DashboardComponent/ProjectAdmin/AddMembersInProject';
 import { AddButton } from '../../../Components/forms/Buttons';
-import { getProjectMembersRequest } from '../../../store/Projects/actions';
+import { getProjectMembersRequest, removeMembersInProjectRequest } from '../../../store/Projects/actions';
 
 const mapState = ({ projectMembers, user }) => ({
     members: projectMembers.members,
@@ -25,6 +25,10 @@ const MemberContainer = () => {
     useEffect(() => {
         dispatch(getProjectMembersRequest({project: projectName}))
     }, [projectName])
+
+    const removeMember = (id) => {
+        dispatch(removeMembersInProjectRequest({project: projectName, members: [id]}))
+    }
 
     
     return (
@@ -75,11 +79,11 @@ const MemberContainer = () => {
                                             <td>
                                                 <NavDropdown 
                                                     title="More" 
-                                                    disabled={project_admin!==user.id}
+                                                    disabled={project_admin!==user.id || project_admin===item.id}
                                                     style={{lineHeight: "10px"}}
                                                 >
                                                     <NavDropdown.Item 
-                                                        onClick={() => console.log("To be Done")}
+                                                        onClick={() => removeMember(item.id)}
                                                         style={{lineHeight: 'initial'}}
                                                     >
                                                         Remove from Project

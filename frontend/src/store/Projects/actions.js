@@ -44,6 +44,22 @@ export const addMembersInProjectFailure = (data) => ({
     payload: data
 })
 
+export const removeMembersInProjectRequest = (data) => ({
+    type: projectConstants.REMOVE_MEMBERS_IN_PROJECT_REQUEST,
+    payload: data
+})
+
+export const removeMembersInProjectSuccess = (data) => ({
+    type: projectConstants.REMOVE_MEMBERS_IN_PROJECT_SUCCESS,
+    payload: data
+})
+
+export const removeMembersInProjectFailure = (data) => ({
+    type: projectConstants.REMOVE_MEMBERS_IN_PROJECT_FAILURE,
+    payload: data
+})
+
+
 export const getOneProjectRequest = (data) => ({
     type: projectConstants.GET_ONE_PROJECT_REQUEST,
     payload: data

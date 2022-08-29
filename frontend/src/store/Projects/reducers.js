@@ -66,7 +66,16 @@ const projectMemberReducer = (state=MEMBERS_INITIAL_STATE, action) => {
                 project_admin: action.payload.project_admin,
                 isLoading: false
             }
+
+        case projectConstants.REMOVE_MEMBERS_IN_PROJECT_REQUEST:
+            return { ...state, isLoading: true }
     
+        case projectConstants.REMOVE_MEMBERS_IN_PROJECT_SUCCESS:
+            return { ...state, isLoading: false }
+
+        case projectConstants.REMOVE_MEMBERS_IN_PROJECT_FAILURE:
+            return { ...state, isLoading: false }
+
         default:
             return state;
     }
