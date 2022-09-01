@@ -1,12 +1,13 @@
-import React from 'react'
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Col, Row } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
-import { ViewComponent } from '../../CustomComponents';
 
-const EnvironmentViewComponent = ({ data }) => {
-    const { projectName } = useParams();
+import { ViewComponent } from 'Components/CustomComponents';
 
-    return (
+const EnvironmentViewComponent = (props) => {
+    const { data, isLoading, projectName } = props;
+
+    return !isLoading && data && (
         <ViewComponent 
             title={data.name}
             onEditLink={`/project/${projectName}/environments/edit/${data.id}`}
@@ -46,3 +47,9 @@ const EnvironmentViewComponent = ({ data }) => {
 }
 
 export default EnvironmentViewComponent;
+
+EnvironmentViewComponent.propTypes = {
+    data: PropTypes.object,
+    isLoading: PropTypes.bool.isRequired,
+    projectName: PropTypes.string.isRequired
+}

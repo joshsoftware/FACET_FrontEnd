@@ -1,22 +1,26 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { Card } from 'react-bootstrap';
 import { ArrowLeft } from 'react-bootstrap-icons';
 import { useNavigate } from 'react-router-dom';
-import { DeleteButton, EditButton, SaveButton } from '../../forms/Buttons';
+
+import { DeleteButton, EditButton, SaveButton } from 'Components/forms/Buttons';
 import './style.css';
 
-const ViewComponent = ({
-    disabledHeader,
-    children,
-    title,
-    type,
-    onSave,
-    onEditLink,
-    onDelete,
-    onSaveDisabled,
-    disabledBtns,
-    rightChildrens
-}) => {
+const ViewComponent = (props) => {
+    const {
+        children,
+        disabledBtns,
+        disabledHeader,
+        onDelete,
+        onEditLink,
+        onSave,
+        onSaveDisabled,
+        rightChildrens,
+        title,
+        type,
+    } = props;
+
     let navigate = useNavigate();
     const [isSticky, setIsSticky] = useState(false);
 
@@ -65,7 +69,10 @@ const ViewComponent = ({
                                         className='mx-2'
                                         handleClick={() => navigate(onEditLink)}
                                     />
-                                    <DeleteButton handleClick={onDelete} disabled />
+                                    <DeleteButton 
+                                        handleClick={onDelete} 
+                                        disabled 
+                                    />
                                 </>
                             )}
                         </div>
@@ -86,3 +93,19 @@ const ViewComponent = ({
 }
 
 export default ViewComponent;
+
+ViewComponent.propTypes = {
+    children: PropTypes.oneOfType([
+        PropTypes.arrayOf(PropTypes.element),
+        PropTypes.element
+    ]),
+    disabledBtns: PropTypes.bool,
+    disabledHeader: PropTypes.bool,
+    onDelete: PropTypes.func,
+    onEditLink: PropTypes.string,
+    onSave: PropTypes.func,
+    onSaveDisabled: PropTypes.bool,
+    rightChildrens: PropTypes.element,
+    title: PropTypes.string,
+    type: PropTypes.string,
+}

@@ -1,12 +1,13 @@
-import React from 'react'
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Card } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
 
-const ProjectBox = ({ data }) => {
-    let navigate = useNavigate();
+const ProjectBox = (props) => {
+    const { data, onClick } = props;
+
     return (
         <div>
-            <Card className='h-100 project-card' onClick={() => navigate(`/project/${data.name}`)}>
+            <Card className='h-100 project-card' onClick={onClick}>
                 <Card.Body className='d-flex flex-column p-3'>
                     <Card.Title>{data.name}</Card.Title>
                     <Card.Text>{data.description}</Card.Text>
@@ -22,3 +23,8 @@ const ProjectBox = ({ data }) => {
 }
 
 export default ProjectBox;
+
+ProjectBox.propTypes = {
+    data: PropTypes.object,
+    onClick: PropTypes.func
+}

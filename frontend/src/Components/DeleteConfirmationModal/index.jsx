@@ -11,6 +11,7 @@ const DeleteConfirmationModal = (props) => {
         title,
         text
     } = props;
+    
     return (
         <CustomModal
             show={show}

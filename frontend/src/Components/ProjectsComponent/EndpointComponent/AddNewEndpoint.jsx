@@ -1,38 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Form } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import { addEndpointsRequest, editEndpointsRequest } from '../../../store/Endpoints/actions';
-import { ViewComponent } from '../../CustomComponents';
-import { FormInput } from '../../forms/Inputs';
-import { ConvertToSlug } from '../../../utils';
 
-const AddNewEndpoint = ({ cat, data }) => {
-    let dispatch = useDispatch();
-    const { projectName } = useParams();
-    const [formData, setFormData] = useState({project: projectName, name: "", endpoint: ""});
+import { ViewComponent } from 'Components/CustomComponents';
+import { FormInput } from 'Components/forms/Inputs';
+import { ConvertToSlug } from 'utils';
 
+const AddNewEndpoint = (props) => {
+    const { cat, data, isLoading, onchange, handleSubmit } = props;
 
-    const onchange = (e) => {
-        setFormData({...formData, [e.target.name]:e.target.value})
-    }
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if(cat==='add'){
-            dispatch(addEndpointsRequest(formData))
-        } else if(cat==='edit') {
-            dispatch(editEndpointsRequest(formData))
-        }
-    }
-
-    useEffect(() => {
-        if(cat==='edit'){
-            setFormData({...formData, name: data.name, endpoint: data.endpoint, id: data.id})
-        }
-    }, [data])
-
-    return (
+    return !isLoading && data && (
         <Form onSubmit={handleSubmit} className='w-100'>
             <ViewComponent 
                 title="Add New" 
@@ -43,17 +20,17 @@ const AddNewEndpoint = ({ cat, data }) => {
                     label='Name'
                     placeholder='Name'
                     name='name'
-                    value={formData.name}
+                    value={data.name}
                     handlechange={onchange}
                     isRequired
                     disabled={cat==='edit'}
-                    text={formData.name.length!==0&&`Your endpoint will created as ${ConvertToSlug(formData.name)}`}
+                    text={data.name.length!==0&&`Your endpoint will created as ${ConvertToSlug(data.name)}`}
                 />
                 <FormInput
                     label='Endpoint'
                     placeholder='Endpoint'
                     name='endpoint'
-                    value={formData.endpoint}
+                    value={data.endpoint}
                     handlechange={onchange}
                     isRequired
                 />
@@ -63,3 +40,18 @@ const AddNewEndpoint = ({ cat, data }) => {
 }
 
 export default AddNewEndpoint;
+
+AddNewEndpoint.propTypes = {
+    cat: PropTypes.oneOf(['add', 'edit']), 
+    data: PropTypes.object, 
+    isLoading: PropTypes.bool,
+    onchange: PropTypes.func,
+    handleSubmit: PropTypes.func
+}
+
+AddNewEndpoint.defaultProp = {
+    data: {
+        name: "",
+        endpoint: ""
+    }
+}

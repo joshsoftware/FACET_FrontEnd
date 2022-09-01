@@ -48,9 +48,13 @@ const ScheduleViewComponent = ({ data }) => {
                                     <td>{index + 1}</td>
                                     <td>{item.testsuite}</td>
                                     <td>{item.environment}</td>
-                                    <td className='text-capitalize'>{item.frequency_type}</td>
+                                    <td className='text-capitalize'>
+                                        {item.frequency_type==="custom"?(
+                                            item.frequency.days + "d:" + item.frequency.hours + "h:" + item.frequency.minutes + "m"
+                                        ):(item.frequency_type)}
+                                    </td>
                                     <td>{item.created_at}</td>
-                                    <td>{"-"}</td>
+                                    <td className='text-capitalize'>{item.status}</td>
                                     <td>{item.scheduled_by}</td>
                                 </tr>
                             )

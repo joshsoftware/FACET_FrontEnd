@@ -20,7 +20,8 @@ const executeReducer = (state=INITIAL_STATE, action) => {
         case executeConstants.GET_EXECUTE_REQUEST:
             return {
                 ...state,
-                isLoading: true
+                isLoading: true,
+                errors: []
             }
 
         case executeConstants.GET_EXECUTE_SUCCESS:

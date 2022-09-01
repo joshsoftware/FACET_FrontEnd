@@ -1,5 +1,5 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { getExecuteSuccess } from './actions';
+import { getExecuteFailure, getExecuteSuccess } from './actions';
 import { executeTestsuiteApi } from './apis';
 import executeConstants from './constants';
 import { toast } from 'react-toastify';
@@ -10,7 +10,10 @@ export function* getExecute({ payload }) {
         const response = yield call(executeTestsuiteApi, payload);
         yield put(getExecuteSuccess(response.result));
     } catch (error) {
-        toast.error(error.data.error)
+        const err = error.data.error
+        yield put(getExecuteFailure(err))
+        let errMsg = Object.entries(err)[0]
+        toast.error(`${errMsg[1].join(',')} in ${errMsg[0]}`)
     }
 }
 

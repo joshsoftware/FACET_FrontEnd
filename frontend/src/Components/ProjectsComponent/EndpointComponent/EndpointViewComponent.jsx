@@ -1,11 +1,14 @@
-import React from 'react'
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Col, Row } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
-import { ViewComponent } from '../../CustomComponents';
 
-const EndpointViewComponent = ({ data }) => {
-    const { projectName } = useParams();
-    return (
+import { ViewComponent } from 'Components/CustomComponents';
+
+
+const EndpointViewComponent = (props) => {
+    const { isLoading, data, projectName } = props;
+
+    return !isLoading && data && (
         <ViewComponent 
             title={data.name}
             onEditLink={`/project/${projectName}/endpoints/edit/${data.id}`}
@@ -45,3 +48,9 @@ const EndpointViewComponent = ({ data }) => {
 }
 
 export default EndpointViewComponent;
+
+EndpointViewComponent.propTypes = {
+    isLoading: PropTypes.bool.isRequired,
+    data: PropTypes.object,
+    projectName: PropTypes.string.isRequired
+}

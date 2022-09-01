@@ -1,24 +1,21 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { Form } from 'react-bootstrap';
 import Select from 'react-select';
 
-const FormSelect = (
-    {
+const FormSelect = (props) => {
+    const {
         label,
         name,
-        id,
         value,
         handlechange,
-        element,
         text,
         className,
         style,
         isRequired,
         options,
-        isMulti,
-        ...props
-    }
-) => {
+        isMulti
+    } = props;
     const [defaultValue, setDefaultValue] = useState();
     
     useEffect(() => {
@@ -70,3 +67,18 @@ const FormSelect = (
 }
 
 export default FormSelect;
+
+FormSelect.propTypes = {
+    label: PropTypes.string,
+    name: PropTypes.string,
+    id: PropTypes.string,
+    value: PropTypes.any,
+    handlechange: PropTypes.func,
+    element: PropTypes.element,
+    text: PropTypes.string,
+    className: PropTypes.string,
+    style: PropTypes.object,
+    isRequired: PropTypes.bool,
+    options: PropTypes.array,
+    isMulti: PropTypes.bool
+}

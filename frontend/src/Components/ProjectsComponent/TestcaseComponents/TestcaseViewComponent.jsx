@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { ViewComponent } from '../../CustomComponents';
 import { AddButton } from '../../forms/Buttons';
 import AddNewTestdata from './AddNewTestdata';
+import JSONView from 'Components/JSONView';
 
 const TestcaseViewComponent = ({ data, testdata }) => {
     const { projectName } = useParams();
@@ -73,9 +74,9 @@ const TestcaseViewComponent = ({ data, testdata }) => {
                                         <Col md={6}>
                                             <Col md={12}>
                                                 <div><small>Parameters</small></div>
-                                                <pre>
-                                                    {JSON.stringify(item.parameters, null, 2)}
-                                                </pre>
+                                                <JSONView 
+                                                    data={item.parameters}
+                                                />
                                             </Col>
                                             <Col md={12}>
                                                 <div><small>Payload</small></div>

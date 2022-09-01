@@ -1,21 +1,23 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
+
 import ProjectBox from './ProjectBox';
 import ProjectBoxSkeleton from './ProjectBoxSkeleton';
-import './style.css'
 import NotFound from '../../assets/images/notFound.svg';
+import './style.css';
 
 
-const mapState = ({ projects }) => ({
-    projects: projects.projects,
-    isLoading: projects.isLoading
-})
+const ProjectsComponent = (props) => {
+    const { data, isLoading } = props;
+    let navigate = useNavigate();
 
-const ProjectsComponent = () => {
-    const { projects, isLoading } = useSelector(mapState);
+    const onNavigate = (path) => {
+        navigate(path)
+    }
 
     return (
-        <div className={`${projects.length===0&&!isLoading?'w-100':'project-container'} py-4`}>
+        <div className={`${data.length===0 && !isLoading?'w-100':'project-container'} py-4`}>
             {isLoading?(
                 <>
                     <ProjectBoxSkeleton />
@@ -23,7 +25,7 @@ const ProjectsComponent = () => {
                     <ProjectBoxSkeleton />
                     <ProjectBoxSkeleton />
                 </>
-            ):(projects.length===0?(
+            ):(data.length===0?(
                 <div className='d-flex justify-content-center align-items-center'>
                     <div className='text-center'>
                         <img src={NotFound} className="not-found-icon" />
@@ -32,8 +34,14 @@ const ProjectsComponent = () => {
                     </div>
                 </div>
             ):(
-                projects.map((e, index) => {
-                    return <ProjectBox key={index} data={e} />
+                data.map((item, index) => {
+                    return (
+                        <ProjectBox 
+                            key={index} 
+                            data={item} 
+                            onClick={() => onNavigate(`/project/${item.name}`)}
+                        />
+                    )
                 })
             )
             )}
@@ -42,3 +50,8 @@ const ProjectsComponent = () => {
 }
 
 export default ProjectsComponent;
+
+ProjectsComponent.propTypes = {
+    data: PropTypes.arrayOf(PropTypes.object),
+    isLoading: PropTypes.bool
+}
