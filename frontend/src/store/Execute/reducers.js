@@ -14,7 +14,7 @@ const executeReducer = (state=INITIAL_STATE, action) => {
             return {
                 ...state,
                 isLoading: true,
-                data: action.payload.testsuite,
+                data: action.payload.data,
                 errors: []
             }
         

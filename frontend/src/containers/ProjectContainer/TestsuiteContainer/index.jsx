@@ -101,7 +101,7 @@ const TestsuiteContainer = (props) => {
     }, [selectedItem])
 
     const handleExecute = (testsuite, environment) => {
-        dispatch(addExecuteRequest({ testsuite, environment }));
+        dispatch(addExecuteRequest({ testsuite, environment, data: selectedItem }));
         navigate(`/project/${projectName}/execute/${testsuite}`)
     }
 
