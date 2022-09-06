@@ -1,6 +1,6 @@
 import React from 'react'
-import { Card } from 'react-bootstrap';
 import Skeleton from 'react-loading-skeleton';
+import { Card } from 'react-bootstrap';
 
 const ProjectBoxSkeleton = () => {
     return (

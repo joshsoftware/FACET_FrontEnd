@@ -1,39 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types';
 import { Form } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { ViewComponent } from '../../CustomComponents';
-import { FormInput } from '../../forms/Inputs';
-import { addEnvironmentsRequest, editEnvironmentsRequest } from '../../../store/Environments/actions';
-import { ConvertToSlug } from '../../../utils';
+
+import { ViewComponent } from 'Components/CustomComponents';
+import { FormInput } from 'Components/forms/Inputs';
+import { ConvertToSlug } from 'utils';
 
 
-const AddNewEnvironment = ({ cat, data }) => {
-    const { projectName } = useParams();
-    const [formData, setFormData] = useState({"project": projectName, "name": "", "url": ""});
-    let dispatch = useDispatch();
+const AddNewEnvironment = (props) => {
+    const { cat, data, isLoading, onchange, handleSubmit } = props;
 
-    const onchange = (e) => {
-        setFormData({...formData, [e.target.name]:e.target.value})
-    }
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if(cat==='add'){
-            dispatch(addEnvironmentsRequest(formData))
-        } else if(cat==='edit') {
-            dispatch(editEnvironmentsRequest(formData));
-        }
-    }
-
-    useEffect(() => {
-        if(cat==='edit'){
-            setFormData({...formData, "name": data.name, "url": data.url, "id": data.id})
-        }
-    }, [data])
-    
-
-    return (
+    return !isLoading && data && (
         <Form onSubmit={handleSubmit} className='w-100'>
             <ViewComponent 
                 title="Add New" 
@@ -44,17 +21,17 @@ const AddNewEnvironment = ({ cat, data }) => {
                     label='Name'
                     placeholder='Name'
                     name='name'
-                    value={formData.name}
+                    value={data.name}
                     handlechange={onchange}
                     isRequired
                     disabled={cat==='edit'}
-                    text={formData.name.length!==0&&`Your environment will created as ${ConvertToSlug(formData.name)}`}
+                    text={data.name.length!==0&&`Your environment will created as ${ConvertToSlug(data.name)}`}
                 />
                 <FormInput 
                     label='URL'
                     placeholder='Enter URL'
                     name='url'
-                    value={formData.url}
+                    value={data.url}
                     handlechange={onchange}
                     type="url"
                     isRequired
@@ -65,3 +42,18 @@ const AddNewEnvironment = ({ cat, data }) => {
 }
 
 export default AddNewEnvironment;
+
+AddNewEnvironment.propTypes = {
+    cat: PropTypes.oneOf(['add', 'edit']),
+    data: PropTypes.object,
+    isLoading: PropTypes.bool,
+    onchange: PropTypes.func,
+    handleSubmit: PropTypes.func
+}
+
+AddNewEnvironment.defaultProp = {
+    data: {
+        name: "",
+        url: ""
+    }
+}

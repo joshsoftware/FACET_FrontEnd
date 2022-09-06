@@ -1,6 +1,9 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 
-const JSONView = ({ data, ...props }) => {
+const JSONView = (props) => {
+    const { data } = props;
+
     return (
         <textarea 
             rows={5}
@@ -13,3 +16,7 @@ const JSONView = ({ data, ...props }) => {
 }
 
 export default JSONView;
+
+JSONView.propTypes = {
+    data: PropTypes.object
+}

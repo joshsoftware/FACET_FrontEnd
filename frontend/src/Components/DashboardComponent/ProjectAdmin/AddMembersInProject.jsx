@@ -1,42 +1,22 @@
-import React, { useEffect, useState } from 'react'
-import { CustomModal } from '../../CustomComponents';
-import Select from 'react-select';
-import { getAllUsersRequest } from '../../../store/User/actions';
-import { useDispatch, useSelector } from 'react-redux';
-import { SaveButton } from '../../forms/Buttons';
-import { addMembersInProjectRequest } from '../../../store/Projects/actions';
+import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 
-const mapState = ({ getUsers }) => ({
-    allUsers: getUsers.users
-})
+import { CustomModal } from 'Components/CustomComponents';
+import { SaveButton } from 'Components/forms/Buttons';
+import FormSelect from 'Components/forms/Inputs/FormSelect';
 
-function AddMembersInProject({ show, handleClose, project }) {
-    let dispatch = useDispatch();
-    const { allUsers } = useSelector(mapState);
-    const [options, setOptions] = useState([]);
-    const [formData, setFormData] = useState({project: project, members: []})
+
+const AddMembersInProject = (props) => {
+    const { show, handleClose, usersOptions, onchange, handleSubmit, value } = props;
+
+    const [defaultValue, setDefaultValue] = useState([]);
+
+    useEffect(() => {
+        setDefaultValue(usersOptions.filter(function(e) {
+            return value.includes(e.value)
+        }))
+    }, [value])
     
-    useEffect(() => {
-        if(project){
-            dispatch(getAllUsersRequest({exclude: "projectMembers", project: project}))
-        }
-    }, [project])
-
-    useEffect(() => {
-        let options_data = [];
-        if(allUsers){
-            allUsers.forEach(ele => {
-                options_data.push({value: ele.id, label: ele.name})
-            })
-        }
-        setOptions(options_data);
-    }, [allUsers])
-
-    const onSave = () => {
-        dispatch(addMembersInProjectRequest(formData));
-        handleClose();
-    } 
-
     return (
         <CustomModal 
             show={show}
@@ -44,14 +24,15 @@ function AddMembersInProject({ show, handleClose, project }) {
             title="Add Members"
         >
             <CustomModal.Body>
-                <Select 
-                    options={options}
-                    onChange={(e) => setFormData({...formData, members: e.map(data => data.value)})}
+                <FormSelect 
+                    options={usersOptions}
+                    onChange={onchange}
                     className="py-2"
+                    value={defaultValue}
                     isMulti
                 />
                 <SaveButton 
-                    handleClick={onSave}
+                    handleClick={handleSubmit}
                 />
             </CustomModal.Body>
         </CustomModal>
@@ -59,3 +40,12 @@ function AddMembersInProject({ show, handleClose, project }) {
 }
 
 export default AddMembersInProject;
+
+AddMembersInProject.propTypes = {
+    show: PropTypes.bool, 
+    handleClose: PropTypes.func, 
+    usersOptions: PropTypes.array,
+    onchange: PropTypes.func,
+    handleSubmit: PropTypes.func,
+    value: PropTypes.array
+}

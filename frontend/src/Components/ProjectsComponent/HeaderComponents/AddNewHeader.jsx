@@ -1,60 +1,34 @@
-import React, { useEffect, useState } from 'react'
+import PropTypes from 'prop-types';
+import React from 'react'
 import { Form } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { ViewComponent } from '../../CustomComponents';
-import { FormInput } from '../../forms/Inputs';
-import { addHeadersRequest, editHeadersRequest } from '../../../store/Headers/actions';
-import KeyValuePairsFormField from '../../forms/KeyValuePairsFormField';
-import { ConvertToSlug } from '../../../utils';
 
-const AddNewHeader = ({ cat, data }) => {
-    const { projectName } = useParams();
-    const [formData, setFormData] = useState({"project": projectName, "name": "", "header": {}});
-    let dispatch = useDispatch();
+import { ViewComponent } from 'Components/CustomComponents';
+import { FormInput } from 'Components/forms/Inputs';
+import KeyValuePairsFormField from 'Components/forms/KeyValuePairsFormField';
+import { ConvertToSlug } from 'utils';
 
-    const onchange = (e) => {
-        setFormData({...formData, [e.target.name]:e.target.value})
-    }
+const AddNewHeader = (props) => {
+    const { cat, isLoading, data, onchange, onKeyValuePairsChange, handleSubmit } = props;
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if(cat==='add') {
-            dispatch(addHeadersRequest(formData))
-        } else {
-            dispatch(editHeadersRequest(formData))
-        }
-    }
-    
-    const onHeaderFieldsChange = (result) => {
-        setFormData({...formData, "header": result});
-    }
-
-    useEffect(() => {
-        if(cat==='edit'){
-            setFormData({...formData, "name": data.name, "header": data.header, "id": data.id})
-        }
-    }, [data])
-
-    return (
+    return !isLoading && data && (
         <Form onSubmit={handleSubmit} className='w-100'>
             <ViewComponent title="Add New" type="save" onSave={handleSubmit}>
                 <FormInput 
                     label='Name'
                     placeholder='Name'
                     name='name'
-                    value={formData.name}
+                    value={data.name}
                     handlechange={onchange}
                     isRequired
                     disabled={cat==='edit'}
-                    text={formData.name.length!==0&&`Your header will created as ${ConvertToSlug(formData.name)}`}
+                    text={data.name.length!==0&&`Your header will created as ${ConvertToSlug(data.name)}`}
                 />
                 <FormInput 
                     label='Header'
                     element={
                         <KeyValuePairsFormField 
-                            data={formData.header} 
-                            setData={onHeaderFieldsChange} 
+                            data={data.header} 
+                            setData={onKeyValuePairsChange} 
                         />}
                     isRequired
                 />
@@ -64,3 +38,19 @@ const AddNewHeader = ({ cat, data }) => {
 }
 
 export default AddNewHeader;
+
+AddNewHeader.propTypes = {
+    cat: PropTypes.oneOf(['add', 'edit']), 
+    isLoading: PropTypes.bool, 
+    data: PropTypes.object,
+    onchange: PropTypes.func, 
+    onKeyValuePairsChange: PropTypes.func, 
+    handleSubmit: PropTypes.func 
+}
+
+AddNewHeader.defaultProp = {
+    data: {
+        name: "",
+        header: {}
+    }
+}

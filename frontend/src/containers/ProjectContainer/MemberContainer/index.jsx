@@ -1,43 +1,82 @@
 import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom';
 import { NavDropdown, Table } from 'react-bootstrap';
 import { PersonCircle } from 'react-bootstrap-icons';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import { ViewComponent } from '../../../Components/CustomComponents';
-import AddMembersInProject from '../../../Components/DashboardComponent/ProjectAdmin/AddMembersInProject';
-import { AddButton } from '../../../Components/forms/Buttons';
-import { getProjectMembersRequest, removeMembersInProjectRequest } from '../../../store/Projects/actions';
 
-const mapState = ({ projectMembers, user }) => ({
+import { ViewComponent } from 'Components/CustomComponents';
+import AddMembersInProject from 'Components/DashboardComponent/ProjectAdmin/AddMembersInProject';
+import { AddButton } from 'Components/forms/Buttons';
+import { addMembersInProjectRequest, getProjectMembersRequest, removeMembersInProjectRequest } from 'store/Projects/actions';
+import { getAllUsersRequest } from 'store/User/actions';
+
+const mapState = ({ projectMembers, user, getUsers }) => ({
     members: projectMembers.members,
     project: projectMembers.project,
     isLoading: projectMembers.isLoading,
     project_admin: projectMembers.project_admin,
-    user: user.currentUser
+    user: user.currentUser,
+    allUsers: getUsers.users
 })
 
 const MemberContainer = () => {
-    const { projectName } = useParams();
     let dispatch = useDispatch();
-    const { members, isLoading, project_admin, user } = useSelector(mapState);
-    const [show, setShow] = useState(false);
 
+    const { projectName } = useParams();
+    const { members, isLoading, project_admin, user, allUsers } = useSelector(mapState);
+    
+    const [show, setShow] = useState(false);
+    const [addMemberFormData, setAddMemberFormData] = useState({project: projectName, members: []});
+    const [usersOptions, setUsersOptions] = useState([]);
+
+    const toggleModal = () => {
+        setShow(!show);
+    }
     useEffect(() => {
         dispatch(getProjectMembersRequest({project: projectName}))
     }, [projectName])
-
+    
+    useEffect(() => {
+        if (projectName) {
+            dispatch(getAllUsersRequest({exclude: "projectMembers", project: projectName}))
+        }
+    }, [projectName])
+    
+    useEffect(() => {
+        let options_data = [];
+        if(allUsers){
+            allUsers.forEach(ele => {
+                options_data.push({value: ele.id, label: ele.name})
+            })
+        }
+        setUsersOptions(options_data);
+    }, [allUsers])
+    
     const removeMember = (id) => {
         dispatch(removeMembersInProjectRequest({project: projectName, members: [id]}))
     }
 
+    const onchangeForm = (e) => {
+        setAddMemberFormData(p => ({
+            ...p,
+            members: e.map(data => data.value)
+        }))
+    }
+    const onSubmitMemberForm = () => {
+        dispatch(addMembersInProjectRequest(addMemberFormData));
+        toggleModal();
+    }
     
     return (
         <>
             {show&&(
                 <AddMembersInProject 
-                    project={projectName} 
                     show={show}
-                    handleClose={() => setShow(false)}
+                    handleClose={toggleModal}
+                    usersOptions={usersOptions} 
+                    onchange={onchangeForm}
+                    value={addMemberFormData.members}
+                    handleSubmit={onSubmitMemberForm}
                 />
             )}
             <div className='py-5 w-100'>

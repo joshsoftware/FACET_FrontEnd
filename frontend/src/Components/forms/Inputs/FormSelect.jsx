@@ -1,24 +1,22 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { Form } from 'react-bootstrap';
 import Select from 'react-select';
 
-const FormSelect = (
-    {
+const FormSelect = (props) => {
+    const {
         label,
         name,
-        id,
         value,
         handlechange,
-        element,
         text,
         className,
         style,
         isRequired,
         options,
         isMulti,
-        ...props
-    }
-) => {
+        placeholder
+    } = props;
     const [defaultValue, setDefaultValue] = useState();
     
     useEffect(() => {
@@ -29,7 +27,7 @@ const FormSelect = (
             })
             setDefaultValue(res);
         } else {
-            setDefaultValue(options.find(val => val.value===value))
+            setDefaultValue(options.find(val => val.value===value));
         }
     }, [value, options])
 
@@ -40,10 +38,8 @@ const FormSelect = (
             handlechange(name, e.value)
         }
     }
-    
 
     return (
-
         <>
             <Form.Group className={`${className} mb-3`} style={style}>
                 {label&&(
@@ -53,11 +49,11 @@ const FormSelect = (
                     </Form.Label>
                 )}
                 <Select 
-                    value={defaultValue}
                     options={options}
                     onChange={onChange}
+                    value={defaultValue}
                     isMulti={isMulti}
-                    {...props}
+                    placeholder={placeholder}
                 />
                 {text && (
                     <Form.Text className='text-muted'>
@@ -70,3 +66,23 @@ const FormSelect = (
 }
 
 export default FormSelect;
+
+FormSelect.propTypes = {
+    label: PropTypes.string,
+    name: PropTypes.string,
+    id: PropTypes.string,
+    value: PropTypes.any,
+    handlechange: PropTypes.func,
+    element: PropTypes.element,
+    text: PropTypes.string,
+    className: PropTypes.string,
+    style: PropTypes.object,
+    isRequired: PropTypes.bool,
+    options: PropTypes.array,
+    isMulti: PropTypes.bool,
+    placeholder: PropTypes.string
+}
+
+FormSelect.defaultProps = {
+    isMulti: false
+}

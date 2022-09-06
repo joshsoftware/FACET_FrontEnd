@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { Button } from 'react-bootstrap';
 import { Trash } from 'react-bootstrap-icons';
-import { hasWhiteSpace } from '../../../utils';
-import { FormInput } from '../Inputs';
 
-const KeyValuePairsFormField = ({ data, setData }) => {
+import { FormInput } from 'Components/forms/Inputs';
+import { hasWhiteSpace } from 'utils';
+
+const KeyValuePairsFormField = (props) => {
+    const { data, setData } = props;
+
     const [inputFields, setInputFields] = useState([
         {
             key: "", 
@@ -39,8 +43,7 @@ const KeyValuePairsFormField = ({ data, setData }) => {
 
     useEffect(() => {
         let values = [];
-        console.log(data)
-        Object.entries(data).map(([key, val], index) => {
+        Object.entries(data).map(([key, val]) => {
             let properties = {};
             properties["key"] = key;
             properties["value"] = val;
@@ -92,3 +95,8 @@ const KeyValuePairsFormField = ({ data, setData }) => {
 }
 
 export default KeyValuePairsFormField;
+
+KeyValuePairsFormField.propTypes = {
+    data: PropTypes.object,
+    setData: PropTypes.func
+}

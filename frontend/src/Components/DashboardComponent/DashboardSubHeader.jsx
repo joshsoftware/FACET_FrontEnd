@@ -1,12 +1,13 @@
 import React from 'react'
 import { Button, Form, InputGroup } from 'react-bootstrap';
-import { PlusLg, Search } from 'react-bootstrap-icons';
-import AddProjectModal from './AddProjectModal';
+import { Search } from 'react-bootstrap-icons';
+import PropTypes from 'prop-types';
 
-const DashboardSubHeader = ({ setShowAddProjectModal, user, isLoggedIn }) => {
+const DashboardSubHeader = (props) => {
+    const { setShowAddProjectModal, user, isLoggedIn } = props;
+
     return (
         <>
-            <AddProjectModal />
             <div className='d-flex flex-items-start align-items-center pb-2 border-bottom border-dark'>
                 <div className='col-12'>
                     <div className='d-flex flex-column flex-lg-row flex-auto'>
@@ -20,11 +21,10 @@ const DashboardSubHeader = ({ setShowAddProjectModal, user, isLoggedIn }) => {
                                 aria-describedby="basic-addon1"
                             />
                         </InputGroup>
-                        {isLoggedIn&&(user.is_super_admin||user.is_admin)&&(
+                        {isLoggedIn && (user.is_super_admin || user.is_admin) && (
                             <div className='d-flex flex-wrap col-2'>  
-                                <Button className='w-100' onClick={setShowAddProjectModal}>
-                                    <PlusLg />
-                                    New Project
+                                <Button className='w-100 d-flex justify-content-center align-items-center' onClick={setShowAddProjectModal}>
+                                    + New Project
                                 </Button>
                             </div>
                         )}
@@ -36,3 +36,9 @@ const DashboardSubHeader = ({ setShowAddProjectModal, user, isLoggedIn }) => {
 }
 
 export default DashboardSubHeader;
+
+DashboardSubHeader.propTypes = {
+    setShowAddProjectModal: PropTypes.func,
+    user: PropTypes.object,
+    isLoggedIn: PropTypes.bool
+}

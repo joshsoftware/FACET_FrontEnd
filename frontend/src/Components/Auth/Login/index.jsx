@@ -1,22 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Form } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
-import { signInStart } from '../../../store/User/actions';
-import { SubmitButton } from '../../forms/Buttons';
-import { FormInput } from '../../forms/Inputs';
 
-const Login = () => {
-    const [formData, setFormData] = useState({"email": "", "password": ""});
-    let dispatch = useDispatch();
-    
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        dispatch(signInStart(formData))
-    }
+import { SubmitButton } from 'Components/forms/Buttons';
+import { FormInput } from 'Components/forms/Inputs';
 
-    const onchange = (e) => {
-        setFormData({...formData, [e.target.name]:e.target.value})
-    }
+const Login = (props) => {
+    const { data, onchange, handleSubmit } = props;
     
     return (
         <Form className='py-2' onSubmit={handleSubmit}>
@@ -25,7 +15,7 @@ const Login = () => {
                 isRequired
                 type='email'
                 name='email'
-                value={formData.email}
+                value={data.email}
                 handlechange={onchange}
                 placeholder='Enter Email'
             />
@@ -34,17 +24,23 @@ const Login = () => {
                 isRequired
                 type='password'
                 name='password'
-                value={formData.password}
+                value={data.password}
                 handlechange={onchange}
                 placeholder='Enter Password'
             />
             <SubmitButton 
                 label='Login'
                 className='w-100'
-                disabled={formData.email.length===0 || formData.password.length===0}
+                disabled={data.email.length===0 || data.password.length===0}
             />
         </Form>
     )
 }
 
 export default Login;
+
+Login.propTypes = {
+    data: PropTypes.object,
+    onchange: PropTypes.func,
+    handleSubmit: PropTypes.func
+}

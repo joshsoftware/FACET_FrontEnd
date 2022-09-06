@@ -1,134 +1,45 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Form } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import { ViewComponent } from '../../CustomComponents';
-import { FormInput, FormSelect } from '../../forms/Inputs';
-import { getTestcasesRequest } from '../../../store/Testcases/actions';
-import { addTestsuitesRequest, editTestsuitesRequest } from '../../../store/Testsuites/actions';
-import { ConvertToSlug, GetDiffOfArrayOfObjects } from '../../../utils';
-import DragDropComponent from '../../DragDropComponent';
 
-const mapState = ({ testcases }) => ({
-    testcases: testcases.testcases
-})
+import { ViewComponent } from 'Components/CustomComponents';
+import { FormInput, FormSelect } from 'Components/forms/Inputs';
+import DragDropComponent from 'Components/DragDropComponent';
+import { ConvertToSlug } from 'utils';
 
-const AddNewTestsuite = ({ cat, data }) => {
-    const { projectName } = useParams();
-    let dispatch = useDispatch();
-    const { testcases } = useSelector(mapState);
-    const [formData, setFormData] = useState(
-        {
-            project: projectName,
-            name: "",
-            description: "",
-            array_of_testcases: []
-        }
-    )
-    const [options, setOptions] = useState(
-        {
-            initialOptions: [],
-            updatedOptions: []
-        }
-    );
-    const [selectedTestcases, setSelectedTestcases] = useState([]);
 
-    useEffect(() => {
-        dispatch(getTestcasesRequest({ project: projectName }))
-    }, [projectName])
-    
+const AddNewTestsuite = (props) => {
+    const { 
+        cat, 
+        data, 
+        isLoading,
+        selectedTestcases,
+        onchange,
+        onRemoveSelectedTestcase,
+        onSelectedTestcaseOrderChange,
+        onSelectedTestcasesChange,
+        onSubmit,
+        testcasesOptions
+    } = props;
 
-    useEffect(() => {
-        let options_data = []
-
-        testcases.forEach(ele => {
-            options_data.push({value: ele.id, label: ele.name})
-        })
-        setOptions({initialOptions: options_data, updatedOptions: options_data});
-    }, [testcases])
-    
-
-    const onchange = (e) => {
-        setFormData({...formData, [e.target.name]: e.target.value})
+    const handleChange = (e) => {
+        onchange(e.target.name, e.target.value);
     }
 
-    const onSelectChange = (name, value) => {
-        setSelectedTestcases((prevState) => (
-            [
-                ...prevState, 
-                value[0]
-            ]
-        ))
-    }
-
-    const onRemoveSelectedTestcase = (index) => {
-        setSelectedTestcases(prevState => {
-            let fields = prevState.filter(function(value, ind, arr) {
-                return ind!==index
-            })
-            return fields;
-        })
-    }
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if(cat==='add'){
-            dispatch(addTestsuitesRequest(formData))
-        } else {
-            dispatch(editTestsuitesRequest(formData))
-        }
-    }
-    
-    useEffect(() => {
-        let diff = GetDiffOfArrayOfObjects(
-            options.initialOptions, 
-            selectedTestcases
-        );
-        setOptions((prevState) => (
-            {
-                ...prevState, 
-                updatedOptions: diff
-            }
-        ));
-        setFormData((prevState) => ({
-            ...prevState,
-            array_of_testcases: selectedTestcases.map(e => e.value)
-        }))
-    }, [selectedTestcases])
-
-    useEffect(() => {
-        if(cat==='edit') {
-            setFormData(p => (
-                {
-                    ...p,
-                    name: data.name,
-                    id: data.id,
-                    description: data.description,
-                    array_of_testcases: data.testcases.map(e => e.id)
-                }
-            ))
-            let selected_testcases = []
-            data.testcases.forEach(ele => {
-                selected_testcases.push({value: ele.id, label: ele.name})
-            })
-            setSelectedTestcases(selected_testcases);
-        }
-    }, [data])
-
-    return (
-        <Form className='w-100' onSubmit={handleSubmit}>
+    return !isLoading && typeof(data)==='object' && Object.entries(data).length &&(
+        <Form className='w-100' onSubmit={onSubmit}>
             <ViewComponent
                 title="Add New"
                 type="save"
-                onSave={handleSubmit}
+                onSave={onSubmit}
             >
                 <FormInput 
                     label="Name"
                     placeholder="Name"
                     name="name"
-                    value={formData.name}
-                    handlechange={onchange}
-                    text={formData.name.length!==0&&`Your testsuite will created as ${ConvertToSlug(formData.name)}`}
+                    value={data.name}
+                    handlechange={handleChange}
+                    text={data.name.length!==0&&`Your testsuite will created as ${ConvertToSlug(data.name)}`}
                     isRequired
                     disabled={cat==="edit"}
                 />
@@ -138,25 +49,25 @@ const AddNewTestsuite = ({ cat, data }) => {
                     label="Description"
                     placeholder="Write short description here..."
                     name="description"
-                    value={formData.description}
-                    handlechange={onchange}
+                    value={data.description}
+                    handlechange={handleChange}
                 />
                 <div>
                     <label>Testcases<span className='text-danger'>*</span></label>
-                    <div className='alert-secondary rounded'>
+                    <div className=' background-secondary rounded'>
                         <div className='p-2'>
                             <DragDropComponent 
                                 data={selectedTestcases}
-                                onChange={setSelectedTestcases}
-                                itemClass="bg-white px-4 py-2 rounded my-2"
-                                dragClass="alert-primary px-4 py-2 rounded"
-                                onDelete={(e) => onRemoveSelectedTestcase(e)}
+                                onChange={onSelectedTestcaseOrderChange}
+                                itemClass="bg-white px-4 py-2 rounded my-2 border border-primary"
+                                dragClass="background-primary px-4 py-2 rounded border border-primary"
+                                onDelete={onRemoveSelectedTestcase}
                             />
                         </div>
                         <FormSelect
                             name="array_of_testcases"
-                            options={options.updatedOptions}
-                            handlechange={onSelectChange}
+                            options={testcasesOptions.updatedOptions}
+                            handlechange={onSelectedTestcasesChange}
                             value={selectedTestcases}
                             hideValues
                             isMulti
@@ -172,3 +83,18 @@ const AddNewTestsuite = ({ cat, data }) => {
 }
 
 export default AddNewTestsuite;
+
+AddNewTestsuite.propTypes = {
+    cat: PropTypes.string, 
+    data: PropTypes.object, 
+    isLoading: PropTypes.bool,
+    selectedTestcases: PropTypes.array,
+    onchange: PropTypes.func,
+    onRemoveSelectedTestcase: PropTypes.func,
+    onSelectedTestcaseOrderChange: PropTypes.func,
+    onSelectedTestcasesChange: PropTypes.func,
+    onSubmit: PropTypes.func,
+    testcasesOptions: PropTypes.objectOf(
+        PropTypes.array
+    )
+}

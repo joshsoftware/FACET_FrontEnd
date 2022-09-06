@@ -13,3 +13,9 @@
 .form-control.error:focus {
     box-shadow: 0 0 0 0.25rem rgba(253, 13, 13, 0.25);
 }
+.background-primary {
+    background: #cfe2ff;
+}
+.background-secondary {
+    background: #e2e3e5;
+}

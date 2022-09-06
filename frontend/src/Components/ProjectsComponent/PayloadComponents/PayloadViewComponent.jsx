@@ -1,12 +1,14 @@
-import React from 'react'
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Col, Row, Table } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
-import { ViewComponent } from '../../CustomComponents';
-import JSONView from '../../JSONView';
 
-const PayloadViewComponent = ({ data }) => {
-    const { projectName } = useParams();
-    return (
+import { ViewComponent } from 'Components/CustomComponents';
+import JSONView from 'Components/JSONView';
+
+const PayloadViewComponent = (props) => {
+    const { isLoading, data, projectName } = props;
+    
+    return !isLoading && data && (
         <ViewComponent 
             title={data.name}
             onEditLink={`/project/${projectName}/payloads/edit/${data.id}`}
@@ -26,7 +28,7 @@ const PayloadViewComponent = ({ data }) => {
                             </tr>
                         </thead>
                         <tbody>
-                            {Object.entries(data.parameters).map(([key, val], index) => {
+                            {Object.entries(data.parameters || {}).map(([key, val], index) => {
                                 return (
                                     <tr key={index}>
                                         <td>{key}</td>
@@ -55,7 +57,7 @@ const PayloadViewComponent = ({ data }) => {
                             </tr>
                         </thead>
                         <tbody>
-                            {data.expected_outcome.map((item, index) => {
+                            {data.expected_outcome?.map((item, index) => {
                                 return (
                                     <tr key={index}>
                                         <td>{index+1}</td>
@@ -96,3 +98,9 @@ const PayloadViewComponent = ({ data }) => {
 }
 
 export default PayloadViewComponent;
+
+PayloadViewComponent.propTypes = {
+    isLoading: PropTypes.bool,
+    data: PropTypes.object,
+    projectName: PropTypes.string
+}

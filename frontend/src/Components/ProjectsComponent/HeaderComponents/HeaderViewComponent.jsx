@@ -1,12 +1,13 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import { Col, Row, Table } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
-import { ViewComponent } from '../../CustomComponents';
 
-const HeaderViewComponent = ({ data }) => {
-    const { projectName } = useParams();
+import { ViewComponent } from 'Components/CustomComponents';
 
-    return (
+const HeaderViewComponent = (props) => {
+    const { isLoading, data, projectName } = props;
+
+    return !isLoading && data && (
         <ViewComponent 
             title={data.name}
             onEditLink={`/project/${projectName}/headers/edit/${data.id}`}
@@ -67,3 +68,9 @@ const HeaderViewComponent = ({ data }) => {
 }
 
 export default HeaderViewComponent;
+
+HeaderViewComponent.propTypes = {
+    isLoading: PropTypes.bool,
+    data: PropTypes.object,
+    projectName: PropTypes.string
+}

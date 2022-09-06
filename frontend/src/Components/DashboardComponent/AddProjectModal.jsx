@@ -1,26 +1,13 @@
-import React, { useState } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types';
 import { Form } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
-import { addProject } from '../../store/Projects/actions';
+
 import { CustomModal } from '../CustomComponents';
 import { CloseButton, SaveButton } from '../forms/Buttons';
 import { FormInput } from '../forms/Inputs';
 
-const AddProjectModal = ({ show, handleClose }) => {
-    let dispatch = useDispatch();
-    const INITIAL_STATE = {"name": "", "description": ""}
-    const [formData, setFormData] = useState(INITIAL_STATE)
-
-    const onchange = (e) => {
-        setFormData({...formData, [e.target.name]:e.target.value});
-    }
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        dispatch(addProject(formData));
-        handleClose();
-        setFormData(INITIAL_STATE);
-    }
+const AddProjectModal = (props) => {
+    const { data, onChange, onSubmit, show, handleClose } = props;
 
     return (
         <CustomModal 
@@ -28,28 +15,28 @@ const AddProjectModal = ({ show, handleClose }) => {
             handleClose={handleClose}
             title="Add New Project"
         >
-            <Form onSubmit={handleSubmit}>
+            <Form onSubmit={onSubmit}>
                 <CustomModal.Body>
                     <FormInput 
                         label="Name"
                         placeholder="Enter Name"
                         isRequired
                         name="name"
-                        value={formData.name}
-                        handlechange={onchange}
+                        value={data.name}
+                        handlechange={onChange}
                     />
                     <FormInput 
                         label="Description"
                         placeholder="Write Description"
                         name="description"
-                        value={formData.description}
-                        handlechange={onchange}
+                        value={data.description}
+                        handlechange={onChange}
                         type="textarea"
                     />
                 </CustomModal.Body>
                 <CustomModal.Footer>
                     <CloseButton handleClick={handleClose} />
-                    <SaveButton disabled={formData.name.length===0} />
+                    <SaveButton disabled={data.name.length===0} />
                 </CustomModal.Footer>
             </Form>
         </CustomModal>
@@ -57,3 +44,13 @@ const AddProjectModal = ({ show, handleClose }) => {
 }
 
 export default AddProjectModal;
+
+AddProjectModal.propTypes = {
+    data: PropTypes.objectOf(
+        PropTypes.string
+    ),
+    show: PropTypes.bool,
+    handleClose: PropTypes.func,
+    onChange: PropTypes.func,
+    onSubmit: PropTypes.func
+}

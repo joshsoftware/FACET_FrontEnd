@@ -2,6 +2,7 @@ import executeConstants from "./constants";
 
 const INITIAL_STATE = {
     isLoading: false,
+    isError: false,
     data: {},
     results: [],
     errors: []
@@ -20,7 +21,9 @@ const executeReducer = (state=INITIAL_STATE, action) => {
         case executeConstants.GET_EXECUTE_REQUEST:
             return {
                 ...state,
-                isLoading: true
+                isLoading: true,
+                isError: false,
+                errors: []
             }
 
         case executeConstants.GET_EXECUTE_SUCCESS:
@@ -37,7 +40,15 @@ const executeReducer = (state=INITIAL_STATE, action) => {
                 isLoading: false,
                 data: {},
                 results: [],
+                isError: true,
                 errors: action.payload
+            }
+        
+        case executeConstants.CLEAR_EXECUTE_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                isError: false
             }
             
         default:

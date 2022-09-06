@@ -1,31 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Form } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
-import { signUpStart } from '../../../store/User/actions';
-import { SubmitButton } from '../../forms/Buttons';
-import { FormInput } from '../../forms/Inputs';
 
-const Signup = () => {
-    const [formData, setFormData] = useState(
-        {
-            "name": "",
-            "email": "", 
-            "password": "",
-            "cpassword": "",
-        }
-    );
+import { SubmitButton } from 'Components/forms/Buttons';
+import { FormInput } from 'Components/forms/Inputs';
 
-    let dispatch = useDispatch();
-    
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        dispatch(signUpStart(formData))
-    }
+const Signup = (props) => {
+    const { data, onchange, handleSubmit } = props;
 
-    const onchange = (e) => {
-        setFormData({...formData, [e.target.name]:e.target.value})
-    }
-    
     return (
         <Form className='py-2' onSubmit={handleSubmit}>
             <FormInput
@@ -33,7 +15,7 @@ const Signup = () => {
                 isRequired
                 type='text'
                 name='name'
-                value={formData.name}
+                value={data.name}
                 handlechange={onchange}
                 placeholder='Enter Name'
             />
@@ -42,7 +24,7 @@ const Signup = () => {
                 isRequired
                 type='email'
                 name='email'
-                value={formData.email}
+                value={data.email}
                 handlechange={onchange}
                 placeholder='Enter Email'
             />
@@ -51,7 +33,7 @@ const Signup = () => {
                 isRequired
                 type='password'
                 name='password'
-                value={formData.password}
+                value={data.password}
                 handlechange={onchange}
                 placeholder='Enter Password'
             />
@@ -60,17 +42,23 @@ const Signup = () => {
                 isRequired
                 type='password'
                 name='cpassword'
-                value={formData.cpassword}
+                value={data.cpassword}
                 handlechange={onchange}
                 placeholder='Enter Password'
             />
             <SubmitButton
                 label='SignUp'
                 className='w-100'
-                disabled={formData.email.length===0 || formData.password.length===0}
+                disabled={data.email.length===0 || data.password.length===0}
             />
         </Form>
     )
 }
 
 export default Signup;
+
+Signup.propTypes = {
+    data: PropTypes.object,
+    onchange: PropTypes.func,
+    handleSubmit: PropTypes.func
+}
