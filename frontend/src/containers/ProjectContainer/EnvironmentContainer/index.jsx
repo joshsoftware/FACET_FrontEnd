@@ -61,7 +61,7 @@ const EnvironmentContainer = (props) => {
             ...p,
             name: selectedItem?.name || "",
             url: selectedItem?.url || "",
-            id: selectedItem?.id || ""
+            id: selectedItem?.id || INITIAL_FORM_DATA.id
         }))
     }, [selectedItem])
     

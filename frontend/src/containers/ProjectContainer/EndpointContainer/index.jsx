@@ -61,7 +61,7 @@ const EndpointContainer = (props) => {
             ...p,
             name: selectedItem?.name || "",
             endpoint: selectedItem?.endpoint || "",
-            id: selectedItem?.id || ""
+            id: selectedItem?.id || INITIAL_FORM_DATA.id
         }))
     }, [selectedItem])
     
