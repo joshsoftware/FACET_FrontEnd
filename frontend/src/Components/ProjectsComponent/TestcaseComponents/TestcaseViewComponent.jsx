@@ -1,16 +1,26 @@
-import React, { useState } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types';
 import { Accordion, Col, Row } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
-import { ViewComponent } from '../../CustomComponents';
-import { AddButton } from '../../forms/Buttons';
-import AddNewTestdata from './AddNewTestdata';
+
+import { ViewComponent } from 'Components/CustomComponents';
+import { AddButton } from 'Components/forms/Buttons';
 import JSONView from 'Components/JSONView';
+import AddNewTestdata from './AddNewTestdata';
 
-const TestcaseViewComponent = ({ data, testdata }) => {
-    const { projectName } = useParams();
-    const [showAddTestData, setShowAddTestData] = useState(false);
+const TestcaseViewComponent = (props) => {
+    const { 
+        isLoading, 
+        data, 
+        projectName, 
+        testdata, 
+        showAddTestdataForm,
+        toggleAddTestdataForm,
+        testdataFormData, 
+        onTestdataFormChange, 
+        onTestdataFormSubmit 
+    } = props;
 
-    return (
+    return !isLoading && typeof(data)==='object' && Object.entries(data).length &&(
         <div className='w-100'>
             <ViewComponent 
                 title={data.name}
@@ -63,7 +73,7 @@ const TestcaseViewComponent = ({ data, testdata }) => {
             >
                 <small><b>TestData</b></small>
                 <Accordion>
-                    {testdata&&testdata.map((item, index) => {
+                    {testdata?.map((item, index) => {
                         return (
                             <Accordion.Item key={index} eventKey={index}>
                                 <Accordion.Header>
@@ -97,16 +107,18 @@ const TestcaseViewComponent = ({ data, testdata }) => {
                         )
                     })}
                 </Accordion>
-                {showAddTestData?(   
+                {showAddTestdataForm?(   
                     <AddNewTestdata 
-                        data={data} 
-                        handleClose={() => setShowAddTestData(false)}
+                        data={testdataFormData} 
+                        onChange={onTestdataFormChange}
+                        onSubmit={onTestdataFormSubmit}
+                        handleClose={toggleAddTestdataForm}
                     />
                 ):(
                     <div className="d-flex justify-content-center py-2">
                         <AddButton 
                             size='sm' 
-                            handleClick={() => setShowAddTestData(true)}
+                            handleClick={toggleAddTestdataForm}
                         />
                     </div>
                 )}
@@ -116,3 +128,15 @@ const TestcaseViewComponent = ({ data, testdata }) => {
 }
 
 export default TestcaseViewComponent;
+
+TestcaseViewComponent.propTypes = {
+    isLoading: PropTypes.bool,
+    data: PropTypes.object,
+    projectName: PropTypes.string,
+    testdata: PropTypes.array,
+    showAddTestdataForm: PropTypes.bool,
+    toggleAddTestdataForm: PropTypes.func,
+    testdataFormData: PropTypes.object, 
+    onTestdataFormChange: PropTypes.func, 
+    onTestdataFormSubmit: PropTypes.func
+}

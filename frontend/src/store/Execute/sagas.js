@@ -1,8 +1,9 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
+import { toast } from 'react-toastify';
+
 import { getExecuteFailure, getExecuteSuccess } from './actions';
 import { executeTestsuiteApi } from './apis';
 import executeConstants from './constants';
-import { toast } from 'react-toastify';
 
 
 export function* getExecute({ payload }) {
@@ -12,15 +13,19 @@ export function* getExecute({ payload }) {
     } catch (error) {
         const err = error.data.error
         yield put(getExecuteFailure(err))
-        let errMsg = Object.entries(err)[0]
-        toast.error(`${errMsg[1].join(',')} in ${errMsg[0]}`)
+        if(typeof(err)==='object') {
+            let errMsg = Object.entries(err)[0]
+            toast.error(`${errMsg[1].join(',')} in ${errMsg[0]}`)
+        } else {
+            toast.error(err);
+        }
     }
 }
 
 export function* addExecute({ payload }) {
     try {
         // yield put(addExecuteSuccess, payload);
-        yield call(getExecute, {payload: { testsuite: payload.testsuite.id, environment: payload.environment }});
+        yield call(getExecute, {payload: { testsuite: payload.testsuite, environment: payload.environment }});
     } catch (error) {
         toast.error(error.data.error)
     }

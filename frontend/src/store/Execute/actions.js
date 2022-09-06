@@ -29,3 +29,7 @@ export const addExecuteFailure = (data) => ({
     type: executeConstants.ADD_EXECUTE_FAILURE,
     payload: data
 })
+
+export const clearExecutionFailure = () => ({
+    type: executeConstants.CLEAR_EXECUTE_FAILURE
+})

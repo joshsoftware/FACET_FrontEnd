@@ -1,105 +1,60 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Form } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { ViewComponent } from '../../CustomComponents';
-import FormInput from '../../forms/Inputs/FormInput';
-import { addPayloadsRequest, editPayloadsRequest } from '../../../store/Payloads/actions';
-import Editor from '../../Editor';
+
+import Editor from 'Components/Editor';
+import FormInput from 'Components/forms/Inputs/FormInput';
+import KeyValuePairsFormField from 'Components/forms/KeyValuePairsFormField';
+import { ViewComponent } from 'Components/CustomComponents';
+import { ConvertToSlug, IsValidJson } from 'utils';
+
 import ExpectedOutcomeTable from '../ExpectedOutcomeTable';
-import IsValidJson from '../../../utils/IsValidJson';
-import KeyValuePairsFormField from '../../forms/KeyValuePairsFormField';
-import { ConvertToSlug } from '../../../utils';
 
-const INITIAL_VALUE = {
-    "project": '', 
-    "name": "", 
-    "parameters": {"": ""},
-    "payload": JSON.stringify({}),
-    "expected_outcome": [
-        {
-            name: "status_code",
-            type: "number",
-            isExact: true,
-            value: 200
-        }
-    ]
-}
+const AddNewPayload = (props) => {
+    const { cat, data, isLoading, onchange, handleSubmit } = props;
 
-const AddNewPayload = ({ cat, data }) => {
-    const { projectName } = useParams();
-    const [formData, setFormData] = useState(INITIAL_VALUE);
     const [showPayloadInJsonFormat, setShowPayloadInJsonFormat] = useState(false);
-    let dispatch = useDispatch();
 
-    
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if(cat==='add') {
-            dispatch(addPayloadsRequest({...formData, payload: JSON.parse(formData.payload)}))
-        } else if(cat==='edit') {
-            dispatch(editPayloadsRequest({...formData, parameters: formData.parameters, payload: JSON.parse(formData.payload)}))
-        }
+    const onFormDataChange = (e) => {
+        onchange(e.target.name, e.target.value)
     }
 
-    const onchange = (e) => {
-        setFormData(p => ({...p, [e.target.name]:e.target.value}))
-    }
-    
     const onPayloadFieldsChange = (result) => {
-        setFormData(p => ({...p, payload: result}));
+        onchange('payload', result);
     };
-    
+
     const onExpectedOutcomeFieldsChange = (result) => {
-        setFormData({...formData, expected_outcome: result})
+        onchange('expected_outcome', result);
     }
 
     const onParameterFieldsChange = (result) => {
-        setFormData((p) => ({...p, parameters: result}))
+        onchange('parameters', result);
     } 
 
-    useEffect(() => {
-        setFormData(p => ({...p, project: projectName}))
-    }, [projectName])
-
-    useEffect(() => {
-        if(cat==='edit') {
-            setFormData(prevState => ({
-                ...prevState, 
-                project: projectName, 
-                parameters: data.parameters || {"":""}, 
-                name: data.name, 
-                payload: JSON.stringify(data.payload), 
-                expected_outcome: data.expected_outcome, 
-                id: data.id
-            }))
-        }
-    }, [data])
-    
-    return (
+    return !isLoading && data && (
         <Form onSubmit={handleSubmit} className='w-100'>
             <ViewComponent 
                 title="Add New" 
                 type="save" 
                 onSave={handleSubmit}
-                onSaveDisabled={formData.name.length===0 || !IsValidJson(formData.payload)}
+                onSaveDisabled={data.name.length===0 || !IsValidJson(data.payload)}
             >
                 <FormInput 
                     label='Name'
                     placeholder='Name'
                     name='name'
-                    value={formData.name}
-                    handlechange={onchange}
+                    value={data.name}
+                    handlechange={onFormDataChange}
                     disabled={cat==='edit'}
                     isRequired
-                    text={formData.name.length!==0&&`Your payload will created as ${ConvertToSlug(formData.name)}`}
+                    text={data.name.length!==0&&`Your payload will created as ${ConvertToSlug(data.name)}`}
                 />
                 <FormInput 
                     name='parameters'
                     label='Parameters'
                     element={
                         <KeyValuePairsFormField 
-                            data={formData.parameters} 
+                            data={data.parameters} 
                             setData={onParameterFieldsChange} 
                         />}
                 />
@@ -118,20 +73,20 @@ const AddNewPayload = ({ cat, data }) => {
                     element={
                         <>
                             <Editor 
-                                text={formData.payload}
+                                text={data?.payload}
                                 mode={showPayloadInJsonFormat?"code":"tree"}
                                 indentation={4}
                                 onChangeText={onPayloadFieldsChange}
                             />
                         </>
-                        }
+                    }
                 />
                 <FormInput 
                     label="Expected Outcome"
                     element={
                         <ExpectedOutcomeTable 
-                            data={formData.expected_outcome}
-                            onChange={onExpectedOutcomeFieldsChange}
+                            data={data.expected_outcome}
+                            onchange={onExpectedOutcomeFieldsChange}
                         />
                     }
                     isRequired
@@ -142,3 +97,11 @@ const AddNewPayload = ({ cat, data }) => {
 }
 
 export default AddNewPayload;
+
+AddNewPayload.propTypes = {
+    cat: PropTypes.oneOf(['add', 'edit']), 
+    data: PropTypes.object, 
+    isLoading: PropTypes.bool, 
+    onchange: PropTypes.func, 
+    handleSubmit: PropTypes.func
+}

@@ -43,7 +43,6 @@ const KeyValuePairsFormField = (props) => {
 
     useEffect(() => {
         let values = [];
-        console.log(data)
         Object.entries(data).map(([key, val]) => {
             let properties = {};
             properties["key"] = key;

@@ -8,6 +8,12 @@ const INITIAL_STATE = {
 
 const testsuiteReducer = (state=INITIAL_STATE, action) => {
     switch (action.type) {
+        case testsuiteConstants.GET_TESTSUITES_REQUEST:
+            return {
+                ...state,
+                isLoading: true
+            }
+            
         case testsuiteConstants.GET_TESTSUITES_SUCCESS:
             return {
                 ...state,

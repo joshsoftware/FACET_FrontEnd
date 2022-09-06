@@ -14,7 +14,8 @@ const FormSelect = (props) => {
         style,
         isRequired,
         options,
-        isMulti
+        isMulti,
+        placeholder
     } = props;
     const [defaultValue, setDefaultValue] = useState();
     
@@ -26,7 +27,7 @@ const FormSelect = (props) => {
             })
             setDefaultValue(res);
         } else {
-            setDefaultValue(options.find(val => val.value===value))
+            setDefaultValue(options.find(val => val.value===value));
         }
     }, [value, options])
 
@@ -37,10 +38,8 @@ const FormSelect = (props) => {
             handlechange(name, e.value)
         }
     }
-    
 
     return (
-
         <>
             <Form.Group className={`${className} mb-3`} style={style}>
                 {label&&(
@@ -50,11 +49,11 @@ const FormSelect = (props) => {
                     </Form.Label>
                 )}
                 <Select 
-                    value={defaultValue}
                     options={options}
                     onChange={onChange}
+                    value={defaultValue}
                     isMulti={isMulti}
-                    {...props}
+                    placeholder={placeholder}
                 />
                 {text && (
                     <Form.Text className='text-muted'>
@@ -80,5 +79,10 @@ FormSelect.propTypes = {
     style: PropTypes.object,
     isRequired: PropTypes.bool,
     options: PropTypes.array,
-    isMulti: PropTypes.bool
+    isMulti: PropTypes.bool,
+    placeholder: PropTypes.string
+}
+
+FormSelect.defaultProps = {
+    isMulti: false
 }

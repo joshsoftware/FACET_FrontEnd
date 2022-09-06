@@ -1,13 +1,21 @@
-import React from 'react'
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Accordion, Col, Row } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
-import { ViewComponent } from '../../CustomComponents';
+
+import { ViewComponent } from 'Components/CustomComponents';
 import ExecuteTestsuiteForm from './ExecuteTestsuiteForm';
 
-const TestsuiteViewComponent = ({ data }) => {
-    const { projectName } = useParams();
+const TestsuiteViewComponent = (props) => {
+    const { 
+        isLoading, 
+        data, 
+        projectName, 
+        environments, 
+        isEnvironmentsLoading, 
+        handleExecute
+    } = props;
 
-    return (
+    return !isLoading && typeof(data)==='object' && Object.entries(data).length!==0 &&(
         <div className='w-100'>
             <ViewComponent 
                 title={data.name}
@@ -26,7 +34,7 @@ const TestsuiteViewComponent = ({ data }) => {
                         <small><b>Testcases</b></small>
                         <div>
                             <Accordion>
-                                {data.testcases.map((item, index) => {
+                                {data?.testcases?.map((item, index) => {
                                     return (
                                         <Accordion.Item key={index} eventKey={index}>
                                             <Accordion.Header>
@@ -84,9 +92,21 @@ const TestsuiteViewComponent = ({ data }) => {
             </ViewComponent>
             <ExecuteTestsuiteForm 
                 data={data}
+                environments={environments}
+                isEnvironmentsLoading={isEnvironmentsLoading}
+                handleExecute={handleExecute}
             />
         </div>
     )
 }
 
 export default TestsuiteViewComponent;
+
+TestsuiteViewComponent.propTypes = {
+    data: PropTypes.object, 
+    isLoading: PropTypes.bool, 
+    projectName: PropTypes.string,
+    environments: PropTypes.array, 
+    isEnvironmentsLoading: PropTypes.bool,
+    handleExecute: PropTypes.func
+}

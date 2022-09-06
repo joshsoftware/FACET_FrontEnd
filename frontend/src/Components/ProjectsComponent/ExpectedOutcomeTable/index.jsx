@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { Table } from 'react-bootstrap';
 import { PencilSquare, TrashFill } from 'react-bootstrap-icons';
+
 import ExpectedOutcomeModal from './ExpectedOutcomeModal';
 import './style.css';
 
 
-const ExpectedOutcomeTable = ({ data, onChange }) => {
+const ExpectedOutcomeTable = (props) => {
+    const { data, onchange } = props;
+
     const [showModal, setShowModal] = useState(false);
     const [editData, setEditData] = useState(null);
     const [expectedOutcomeData, setExpectedOutcomeData] = useState(data);
@@ -35,7 +39,7 @@ const ExpectedOutcomeTable = ({ data, onChange }) => {
     }
     
     useEffect(() => {
-        onChange(expectedOutcomeData)
+        onchange(expectedOutcomeData)
     }, [expectedOutcomeData])
 
     useEffect(() => {
@@ -95,3 +99,8 @@ const ExpectedOutcomeTable = ({ data, onChange }) => {
 }
 
 export default ExpectedOutcomeTable;
+
+ExpectedOutcomeTable.propTypes = { 
+    data: PropTypes.array, 
+    onchange: PropTypes.func
+}

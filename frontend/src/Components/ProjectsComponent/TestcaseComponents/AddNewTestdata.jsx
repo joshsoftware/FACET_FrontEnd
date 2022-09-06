@@ -1,51 +1,42 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Form } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
-import Editor from '../../Editor';
-import { DeleteButton, SaveButton } from '../../forms/Buttons';
-import { FormInput } from '../../forms/Inputs';
-import ExpectedOutcomeTable from '../ExpectedOutcomeTable';
-import { addTestdataRequest } from '../../../store/Testdata/actions';
 import { toast } from 'react-toastify';
-import KeyValuePairsFormField from '../../forms/KeyValuePairsFormField';
-import { ConvertToSlug } from '../../../utils';
 
-const AddNewTestdata = ({ data, handleClose }) => {
-    const [formData, setFormData] = useState(
-        {
-            testcase: data.id,
-            name: '',
-            payload: JSON.stringify(data.payload.payload),
-            parameters: data.payload.parameters,
-            expected_outcome: data.payload.expected_outcome
-        } 
-    )
+import Editor from 'Components/Editor';
+import { DeleteButton, SaveButton } from 'Components/forms/Buttons';
+import { FormInput } from 'Components/forms/Inputs';
+import ExpectedOutcomeTable from '../ExpectedOutcomeTable';
+import KeyValuePairsFormField from 'Components/forms/KeyValuePairsFormField';
+import { ConvertToSlug } from 'utils';
+
+const AddNewTestdata = (props) => {
+    const { data, onChange, onSubmit, handleClose } = props;
+
     const [showPayloadInJsonFormat, setShowPayloadInJsonFormat] = useState(false);
-    let dispatch = useDispatch();
 
     const onchange = (e) => {
-        setFormData({...formData, [e.target.name]: e.target.value})
+        onChange(e.target.name, e.target.value)
     }
 
     const onPayloadFieldsChange = (res) => {
         if(JSON.parse(res)){
-            setFormData(p => ({...p, payload: res}))
+            onChange('payload', res)
         }
     }
-    
+
     const onParameterFieldsChange = (result) => {
-        setFormData((p) => ({...p, parameters: result}))
+        onChange('parameters', result)
     } 
 
     const onExpectedOutcomeFieldsChange = (result) => {
-        setFormData({...formData, expected_outcome: result})
+        onChange('expected_outcome', result)
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if(formData.name.length){
-            dispatch(addTestdataRequest({...formData, payload: JSON.parse(formData.payload)}));
-            handleClose();
+        if(data.name.length){
+            onSubmit(e);
         } else {
             toast.error("Please Fill All Required Fields.")
         }
@@ -58,17 +49,17 @@ const AddNewTestdata = ({ data, handleClose }) => {
                     label="Name"
                     name="name"
                     placeholder="Name"
-                    value={formData.name}
+                    value={data.name}
                     handlechange={onchange}
                     isRequired
-                    text={formData.name.length!==0&&`Your testdata will created as ${ConvertToSlug(formData.name)}`}
+                    text={data.name.length!==0&&`Your testdata will created as ${ConvertToSlug(data.name)}`}
                 />
                 <FormInput 
                     name='parameters'
                     label='Parameters'
                     element={
                         <KeyValuePairsFormField 
-                            data={formData.parameters} 
+                            data={data.parameters} 
                             setData={onParameterFieldsChange} 
                         />}
                 />
@@ -87,7 +78,7 @@ const AddNewTestdata = ({ data, handleClose }) => {
                     element={
                         <>
                             <Editor 
-                                text={formData.payload}
+                                text={data.payload}
                                 mode={showPayloadInJsonFormat?"code":"tree"}
                                 indentation={4}
                                 onChangeText={onPayloadFieldsChange}
@@ -99,8 +90,8 @@ const AddNewTestdata = ({ data, handleClose }) => {
                     label="Expected Outcome"
                     element={
                         <ExpectedOutcomeTable 
-                            data={formData.expected_outcome}
-                            onChange={onExpectedOutcomeFieldsChange}
+                            data={data.expected_outcome}
+                            onchange={onExpectedOutcomeFieldsChange}
                         />
                     }
                     isRequired
@@ -121,3 +112,10 @@ const AddNewTestdata = ({ data, handleClose }) => {
 }
 
 export default AddNewTestdata;
+
+AddNewTestdata.propTypes = { 
+    data: PropTypes.object, 
+    onChange: PropTypes.func, 
+    onSubmit: PropTypes.func,
+    handleClose: PropTypes.func 
+}
