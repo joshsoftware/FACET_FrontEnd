@@ -78,7 +78,7 @@ const PayloadContainer = (props) => {
             parameters: selectedItem?.parameters || INITIAL_PAYLOAD_FORM_DATA.parameters, 
             payload: JSON.stringify(selectedItem?.payload) || INITIAL_PAYLOAD_FORM_DATA.payload, 
             expected_outcome: selectedItem?.expected_outcome || INITIAL_PAYLOAD_FORM_DATA.expected_outcome,
-            id: selectedItem?.id || ""
+            id: selectedItem?.id || INITIAL_PAYLOAD_FORM_DATA.id
         }))
     }, [selectedItem])
     

@@ -23,7 +23,6 @@ const mapState = ({ testsuites, environments, execute, testcases }) => ({
 const INITIAL_TESTSUITE_FORM_DATA = {
     name: "",
     description: "",
-    id: "",
     array_of_testcases: []
 }
 

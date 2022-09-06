@@ -66,7 +66,7 @@ const HeaderContainer = (props) => {
             ...p,
             name: selectedItem?.name || "",
             header: selectedItem?.header || {},
-            id: selectedItem?.id || ""
+            id: selectedItem?.id || INITIAL_FORM_DATA.id
         }))
     }, [selectedItem])
     
