@@ -1,13 +1,15 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Accordion, Col, Row } from 'react-bootstrap';
-import { Navigate, useParams } from 'react-router-dom';
-import BadgeComponent from '../../BadgeComponent';
-import { ViewComponent } from '../../CustomComponents';
-import JSONView from '../../JSONView';
+import { Navigate } from 'react-router-dom';
+
+import BadgeComponent from 'Components/BadgeComponent';
+import { ViewComponent } from 'Components/CustomComponents';
+import JSONView from 'Components/JSONView';
 import TestdataReportInfo from './components/TestdataReportInfo';
 
-const ShowTestdataCombinationReport = ({ data, isLoading }) => {
-    const { projectName } = useParams();
+const ShowTestdataCombinationReport = (props) => {
+    const { data, isLoading, projectName } = props;
     
     return !isLoading&&(
         Object.keys(data).length===0?(
@@ -16,11 +18,7 @@ const ShowTestdataCombinationReport = ({ data, isLoading }) => {
             <>
                 <ViewComponent
                     disabledBtns
-                    title={
-                        <div>
-                            {data.name}
-                        </div>
-                    }
+                    title={data.name}
                     rightChildrens={
                         <div>
                             <BadgeComponent 
@@ -82,3 +80,9 @@ const ShowTestdataCombinationReport = ({ data, isLoading }) => {
 }
 
 export default ShowTestdataCombinationReport;
+
+ShowTestdataCombinationReport.propTypes = { 
+    data: PropTypes.object, 
+    isLoading: PropTypes.bool,
+    projectName: PropTypes.string
+}

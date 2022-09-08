@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { 
@@ -9,7 +10,8 @@ import {
     ToggleOn, 
     Type 
 } from 'react-bootstrap-icons';
-import { CustomModal } from '../../../CustomComponents';
+
+import { CustomModal } from 'Components/CustomComponents';
 import FieldBox from './components/FieldBox';
 
 const SelectFieldType = ({ onSuccess }) => {
@@ -82,3 +84,8 @@ const SelectFieldType = ({ onSuccess }) => {
 }
 
 export default SelectFieldType;
+
+SelectFieldType.propTypes = {
+    data: PropTypes.object,
+    onSuccess: PropTypes.func
+}

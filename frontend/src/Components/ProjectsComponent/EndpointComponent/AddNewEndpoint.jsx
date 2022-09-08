@@ -21,7 +21,7 @@ const AddNewEndpoint = (props) => {
                     placeholder='Name'
                     name='name'
                     value={data.name}
-                    handlechange={onchange}
+                    onChange={onchange}
                     isRequired
                     disabled={cat==='edit'}
                     text={data.name.length!==0&&`Your endpoint will created as ${ConvertToSlug(data.name)}`}
@@ -31,7 +31,7 @@ const AddNewEndpoint = (props) => {
                     placeholder='Endpoint'
                     name='endpoint'
                     value={data.endpoint}
-                    handlechange={onchange}
+                    onChange={onchange}
                     isRequired
                 />
             </ViewComponent>

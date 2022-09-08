@@ -1,17 +1,20 @@
-import React from 'react'
+/* eslint-disable react/display-name */
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Modal } from 'react-bootstrap';
 
-const CustomModal = ({ 
-    show, 
-    handleClose,
-    title,
-    children,
-    ...props
-}) => {
+const CustomModal = (props) => {
+    const { 
+        show, 
+        onClose,
+        title,
+        children
+    } = props;
+
     return (
         <Modal
             show={show}
-            onHide={handleClose}
+            onHide={onClose}
             {...props}
         >
             <Modal.Header className="alert-secondary" closeButton>
@@ -35,3 +38,27 @@ CustomModal.Footer = ({ children, ...props }) => {
 }
 
 export default CustomModal;
+
+CustomModal.propTypes = {
+    show: PropTypes.bool, 
+    onClose: PropTypes.func,
+    title: PropTypes.string,
+    children: PropTypes.oneOfType([
+        PropTypes.element,
+        PropTypes.arrayOf(PropTypes.element)
+    ])
+}
+
+CustomModal.Body.propTypes = {
+    children: PropTypes.oneOfType([
+        PropTypes.element,
+        PropTypes.arrayOf(PropTypes.element)
+    ])
+}
+
+CustomModal.Footer.propTypes = {
+    children: PropTypes.oneOfType([
+        PropTypes.element,
+        PropTypes.arrayOf(PropTypes.element)
+    ])
+}

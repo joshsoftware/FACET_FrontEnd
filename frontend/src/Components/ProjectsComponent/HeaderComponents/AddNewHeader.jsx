@@ -18,7 +18,7 @@ const AddNewHeader = (props) => {
                     placeholder='Name'
                     name='name'
                     value={data.name}
-                    handlechange={onchange}
+                    onChange={onchange}
                     isRequired
                     disabled={cat==='edit'}
                     text={data.name.length!==0&&`Your header will created as ${ConvertToSlug(data.name)}`}

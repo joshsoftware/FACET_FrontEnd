@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Button } from 'react-bootstrap';
 import { CaretRightFill, Check2, PencilSquare, Trash } from 'react-bootstrap-icons';
 
@@ -10,6 +11,7 @@ const AddButton = ({ handleClick, disabled, size, label, ...props }) => {
             onClick={handleClick}
             variant='success'
             size={size}
+            disabled={disabled}
             {...props}
         >
             + {label?label:'Add'}
@@ -24,6 +26,7 @@ const CloseButton = ({ handleClick, disabled, size, label, ...props }) => {
             onClick={handleClick}
             variant='secondary'
             size={size}
+            disabled={disabled}
             {...props}
         >
             {label?label:'Close'}
@@ -96,6 +99,7 @@ const EditButton = ({ handleClick, disabled, size, label, ...props }) => {
             disabled={disabled}
             size={size}
             className='d-flex align-items-center'
+            label={label}
             {...props}
         >
             <PencilSquare />
@@ -134,3 +138,17 @@ export {
     SaveButton,
     SubmitButton,
 };
+
+AddButton.propTypes = {
+    disabled: PropTypes.bool, 
+    handleClick: PropTypes.func, 
+    size: PropTypes.string, 
+    label: PropTypes.string
+}
+
+CloseButton.propTypes = {...PropTypes.instanceOf(AddButton)}
+DeleteButton.propTypes = {...PropTypes.instanceOf(AddButton)}
+EditButton.propTypes = {...PropTypes.instanceOf(AddButton)}
+NextButton.propTypes = {...PropTypes.instanceOf(AddButton)}
+SaveButton.propTypes = {...PropTypes.instanceOf(AddButton)}
+SubmitButton.propTypes = {...PropTypes.instanceOf(AddButton)}

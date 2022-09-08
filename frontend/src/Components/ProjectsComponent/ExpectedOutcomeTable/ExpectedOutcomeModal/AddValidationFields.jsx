@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from 'react'
+/* eslint-disable no-prototype-builtins */
+import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { CustomModal } from '../../../CustomComponents';
-import { SaveButton } from '../../../forms/Buttons';
-import { FormInput } from '../../../forms/Inputs';
+
+import { CustomModal } from 'Components/CustomComponents';
+import { SaveButton } from 'Components/forms/Buttons';
+import { FormInput } from 'Components/forms/Inputs';
 import CheckBoxWithNumField from './components/CheckBoxWithNumField';
 
 const INITIAL_STRING_FIELDS = {
@@ -79,6 +82,7 @@ const AddValidationFields = ({ data, onSuccess }) => {
         }
     }
 
+    // eslint-disable-next-line no-unused-vars
     const getSettingFields = ([key, val]) => {
         switch (val.type) {
             case 'checkbox-with-number-field':
@@ -86,7 +90,7 @@ const AddValidationFields = ({ data, onSuccess }) => {
                     <CheckBoxWithNumField
                         label={val.label}
                         name={val.name}
-                        value={finalData.hasOwnProperty(val.name)?finalData[val.name]:0}
+                        value={finalData?.hasOwnProperty(val.name)?finalData[val.name]:0}
                         handlechange={onchangeField}
                     />
                 )
@@ -107,7 +111,7 @@ const AddValidationFields = ({ data, onSuccess }) => {
                         label={formData.regex.label}
                         name={formData.regex.name}
                         value={finalData.hasOwnProperty(formData.regex.name)?finalData[formData.regex.name]:""}
-                        handlechange={onchangeRegexField}
+                        onChange={onchangeRegexField}
                     />
                 )}
                 <h6>Settings</h6>
@@ -131,3 +135,8 @@ const AddValidationFields = ({ data, onSuccess }) => {
 }
 
 export default AddValidationFields;
+
+AddValidationFields.propTypes = {
+    data: PropTypes.object,
+    onSuccess: PropTypes.func
+}

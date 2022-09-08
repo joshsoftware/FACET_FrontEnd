@@ -38,7 +38,7 @@ const AddNewTestsuite = (props) => {
                     placeholder="Name"
                     name="name"
                     value={data.name}
-                    handlechange={handleChange}
+                    onChange={handleChange}
                     text={data.name.length!==0&&`Your testsuite will created as ${ConvertToSlug(data.name)}`}
                     isRequired
                     disabled={cat==="edit"}
@@ -50,7 +50,7 @@ const AddNewTestsuite = (props) => {
                     placeholder="Write short description here..."
                     name="description"
                     value={data.description}
-                    handlechange={handleChange}
+                    onChange={handleChange}
                 />
                 <div>
                     <label>Testcases<span className='text-danger'>*</span></label>

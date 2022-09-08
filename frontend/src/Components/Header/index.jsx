@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import logo from '../../assets/images/logo.png';
+import React, { useEffect, useState } from 'react';
 import { 
     Container,
     Nav, 
@@ -8,29 +7,65 @@ import {
 } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { signOutStart } from '../../store/User/actions';
-import AddAdminModal from '../DashboardComponent/SuperAdmin/AddAdminModal';
 
-const mapState = ({ user }) => ({
+import logo from 'assets/images/logo.png';
+import { addAdminsRequest } from 'store/SuperAdmin/actions';
+import { getAllUsersRequest, signOutStart } from 'store/User/actions';
+import AddAdminModal from 'Components/DashboardComponent/SuperAdmin/AddAdminModal';
+
+const mapState = ({ user, getUsers }) => ({
     isLoggedIn: user.isLoggedIn,
-    currentUser: user.currentUser
+    currentUser: user.currentUser,
+    allUsers: getUsers.users
 })
 
 const Header = () => {
     let navigate = useNavigate();
     let dispatch = useDispatch();
-    const [showAddAdminModal, setShowAddAdminModal] = useState(false);
 
-    const { isLoggedIn, currentUser } = useSelector(mapState);
+    const { isLoggedIn, currentUser, allUsers } = useSelector(mapState);
+
+    const [showAddAdminModal, setShowAddAdminModal] = useState(false);
+    const [addAdminFormData, setAddAdminFormData] = useState({ admin: [] });
+
+    useEffect(() => {
+        if(isLoggedIn && currentUser.is_super_admin){
+            dispatch(getAllUsersRequest({ exclude: "admins" }))
+        }
+    }, [])
+    
+
+    const handleToggle = () => {
+        setShowAddAdminModal(!showAddAdminModal);
+    }
 
     const handleLogout = () => {
         dispatch(signOutStart());
     }
 
+    const handleChangeAdminFormData = (val) => {
+        setAddAdminFormData(p => ({
+            ...p,
+            admin: val.map(data => data.value)
+        }))
+    }
+
+    const handleSubmitAdminFormData = () => {
+        dispatch(addAdminsRequest(addAdminFormData));
+        handleToggle();
+    }
+
     return (
         <Navbar bg='dark' sticky="top" variant='dark' expand='lg'>
-            {isLoggedIn&&currentUser.is_super_admin&&(
-                <AddAdminModal show={showAddAdminModal} handleClose={() => setShowAddAdminModal(false)} />
+            {isLoggedIn && currentUser.is_super_admin && (
+                <AddAdminModal 
+                    allUsers={allUsers}
+                    data={addAdminFormData}
+                    onChange={handleChangeAdminFormData}
+                    onClose={handleToggle} 
+                    onSubmit={handleSubmitAdminFormData}
+                    show={showAddAdminModal} 
+                />
             )}
             <Container fluid>
                 <Navbar.Brand>
@@ -47,7 +82,7 @@ const Header = () => {
                     <Nav className='me-auto'>
                         <Nav.Link onClick={() => navigate('/dashboard')}>Home</Nav.Link>
                         {isLoggedIn&&currentUser.is_super_admin&&(
-                            <Nav.Link onClick={() => setShowAddAdminModal(true)}>Add Admin</Nav.Link>
+                            <Nav.Link onClick={handleToggle}>Add Admin</Nav.Link>
                         )}
                     </Nav>
                     <>

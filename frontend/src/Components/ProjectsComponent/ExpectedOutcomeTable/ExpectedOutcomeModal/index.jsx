@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react'
 import { CustomModal } from '../../../CustomComponents';
 import AddKeyField from './AddKeyField';
@@ -124,7 +125,7 @@ const ExpectedOutcomeModal = (
         <>
             <CustomModal 
                 show={show} 
-                handleClose={handleClose} 
+                onClose={handleClose} 
                 centered
                 size="lg"
                 title="Add Expected Outcome Field"
@@ -136,3 +137,11 @@ const ExpectedOutcomeModal = (
 }
 
 export default ExpectedOutcomeModal;
+
+ExpectedOutcomeModal.propTypes = {
+    show: PropTypes.bool,
+    onClose: PropTypes.func,
+    data: PropTypes.object,
+    onAddNewField: PropTypes.func,
+    onEditField: PropTypes.func
+}

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { ArrowLeft } from 'react-bootstrap-icons';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ChangeProjectNameBox, DeleteProjectBox } from '../../../Components/ProjectsComponent/SettingsComponent';
-import { deleteProjectRequest, getOneProjectRequest, updateProjectNameRequest } from '../../../store/Projects/actions';
+
+import { ChangeProjectNameBox, DeleteProjectBox } from 'Components/ProjectsComponent/SettingsComponent';
+import { deleteProjectRequest, getOneProjectRequest, updateProjectNameRequest } from 'store/Projects/actions';
 
 const mapState = ({ user, projects }) => ({
     user: user.currentUser,
@@ -14,9 +14,10 @@ const mapState = ({ user, projects }) => ({
 })
 
 const SettingsContainer = () => {
-    const { projectName } = useParams();
     let navigate = useNavigate();
     let dispatch = useDispatch();
+    
+    const { projectName } = useParams();
     const { user, currentProject, isLoading, isSuccess } = useSelector(mapState);
 
     const [changeNameFormData, setChangeNameFormData] = useState({project: "", newProjName: ""});

@@ -1,10 +1,15 @@
-import React from 'react'
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Accordion, Tab, Table, Tabs } from 'react-bootstrap';
-import BadgeComponent from '../../../BadgeComponent';
-import JSONView from '../../../JSONView';
+
+import BadgeComponent from 'Components/BadgeComponent';
+import JSONView from 'Components/JSONView';
 import TestdataOutcomeTable from './TestdataOutcomeTable';
 
-const TestdataReportInfo = ({ item, eventKey }) => {
+
+const TestdataReportInfo = (props) => {
+    const { item, eventKey } = props;
+
     return (
         <Accordion.Item eventKey={eventKey} className={`border-${item.status==='passed'?"success":"danger"}`}>
             <Accordion.Header>
@@ -47,7 +52,7 @@ const TestdataReportInfo = ({ item, eventKey }) => {
                     <Tab eventKey="outcome" title="Outcome">
                         <TestdataOutcomeTable 
                             data={item.outcome}
-                            testdata={item.name}
+                            testdataName={item.name}
                         />
                     </Tab>
                     <Tab eventKey="response" title="Response">
@@ -62,3 +67,8 @@ const TestdataReportInfo = ({ item, eventKey }) => {
 }
 
 export default TestdataReportInfo;
+
+TestdataReportInfo.propTypes = { 
+    item: PropTypes.object, 
+    eventKey: PropTypes.number 
+}

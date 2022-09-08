@@ -30,7 +30,7 @@ const AddNewTestcase = (props) => {
                     placeholder="Name"
                     name="name"
                     value={data.name}
-                    handlechange={onFieldChange}
+                    onChange={onFieldChange}
                     text={data.name.length!==0&&`Your testcase will created as ${ConvertToSlug(data.name)}`}
                     disabled={cat==='edit'}
                     isRequired

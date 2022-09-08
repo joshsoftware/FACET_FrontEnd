@@ -12,8 +12,8 @@ const mapState = ({ execute }) => ({
 })
 
 const ExecuteContainer = () => {
-    const { results, data, isLoading, isError } = useSelector(mapState);
     const { projectName, id } = useParams();
+    const { results, data, isLoading, isError } = useSelector(mapState);
 
     return !isLoading && (isError || Object.entries(data).length===0 )?(
         <Navigate to={`/project/${projectName}/testsuites/${id}`} />

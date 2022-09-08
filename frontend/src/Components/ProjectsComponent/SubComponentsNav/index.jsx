@@ -1,19 +1,23 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import { Button, Nav } from 'react-bootstrap';
 import Skeleton from 'react-loading-skeleton';
 import { Link, useParams } from 'react-router-dom';
-import NoResultsFound from '../../NoResultsFound';
+
+import NoResultsFound from 'Components/NoResultsFound';
 import './style.css';
 
-const SubComponentsNav = ({ 
-    children, 
-    title, 
-    data, 
-    isLoading,
-    onAddBtnClick ,
-    onSelectItemUrl
-}) => {
+const SubComponentsNav = (props) => {
+    const {
+        title, 
+        data, 
+        isLoading,
+        onAddBtnClick ,
+        onSelectItemUrl
+    } = props;
+
     const { id } = useParams();
+
     return (
         <Nav className='sidebar subnav col-md-12 bg-light d-flex flex-column justify-content-start'>
             <div className='d-flex justify-content-between align-items-center border border-bottom pt-4 pb-1 px-2'>
@@ -59,3 +63,11 @@ const SubComponentsNav = ({
 }
 
 export default SubComponentsNav;
+
+SubComponentsNav.propTypes = {
+    title: PropTypes.string, 
+    data: PropTypes.array, 
+    isLoading: PropTypes.bool,
+    onAddBtnClick: PropTypes.func,
+    onSelectItemUrl: PropTypes.string
+}

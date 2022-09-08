@@ -1,7 +1,9 @@
 import React from 'react';
-import { SubNav } from '../../Components/ProjectsComponent';
+import PropTypes from 'prop-types';
 
-const ProjectLayout = ({ children, ...props }) => {
+import { SubNav } from 'Components/ProjectsComponent';
+
+const ProjectLayout = ({ children }) => {
 
     return (
         <div className='d-flex flex-row'>
@@ -12,3 +14,10 @@ const ProjectLayout = ({ children, ...props }) => {
 }
 
 export default ProjectLayout;
+
+ProjectLayout.propTypes = {
+    children: PropTypes.oneOfType([
+        PropTypes.element,
+        PropTypes.arrayOf(PropTypes.element)
+    ])
+}

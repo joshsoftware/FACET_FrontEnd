@@ -16,7 +16,7 @@ const Login = (props) => {
                 type='email'
                 name='email'
                 value={data.email}
-                handlechange={onchange}
+                onChange={onchange}
                 placeholder='Enter Email'
             />
             <FormInput 
@@ -25,7 +25,7 @@ const Login = (props) => {
                 type='password'
                 name='password'
                 value={data.password}
-                handlechange={onchange}
+                onChange={onchange}
                 placeholder='Enter Password'
             />
             <SubmitButton 

@@ -1,16 +1,20 @@
-import React, { useEffect, useState } from 'react'
+import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { CustomModal } from '../../../CustomComponents';
-import JSONView from '../../../JSONView';
-import { FormInput, FormSelect } from '../../../forms/Inputs';
 import { useParams } from 'react-router-dom';
-import { SaveButton } from '../../../forms/Buttons';
 import { useDispatch } from 'react-redux';
-import { addCommentRequest } from '../../../../store/Reports/actions';
 
-const TestdatOutcomeModal = ({ show, handleClose, data }) => {
-    const { projectName, reportId, tname } = useParams();
+import { CustomModal } from 'Components/CustomComponents';
+import JSONView from 'Components/JSONView';
+import { FormInput, FormSelect } from 'Components/forms/Inputs';
+import { SaveButton } from 'Components/forms/Buttons';
+import { addCommentRequest } from 'store/Reports/actions';
+
+const TestdatOutcomeModal = (props) => {
     let dispatch = useDispatch();
+
+    const { show, handleClose, data } = props;
+    const { projectName, reportId, tname } = useParams();
 
     const [formData, setFormData] = useState(
         {
@@ -62,7 +66,7 @@ const TestdatOutcomeModal = ({ show, handleClose, data }) => {
         <CustomModal
             show={show}
             size="lg"
-            handleClose={handleClose}
+            onClose={handleClose}
             title={data.name}
         >
             <CustomModal.Body>
@@ -97,7 +101,7 @@ const TestdatOutcomeModal = ({ show, handleClose, data }) => {
                     placeholder="Write the testdata here..."
                     name="comment"
                     value={formData.comment}
-                    handlechange={(e) => onchange(e.target.name, e.target.value)}
+                    onChange={(e) => onchange(e.target.name, e.target.value)}
                     disabled={!isChanged}
                     isRequired
                 />
@@ -116,3 +120,9 @@ const TestdatOutcomeModal = ({ show, handleClose, data }) => {
 }
 
 export default TestdatOutcomeModal;
+
+TestdatOutcomeModal.propTypes = { 
+    show: PropTypes.bool, 
+    handleClose: PropTypes.func, 
+    data: PropTypes.object 
+}

@@ -1,10 +1,11 @@
+/* eslint-disable no-prototype-builtins */
 import userConstants from "./constants";
 
 const user = JSON.parse(localStorage.getItem('user'))
 
 const INITIAL_STATE = {
-    isLoggedIn: user&&user.hasOwnProperty('token'),
-    currentUser: user&&user.hasOwnProperty('user')&&user.user,
+    isLoggedIn: user && user?.hasOwnProperty('token'),
+    currentUser: user && user?.hasOwnProperty('user') && user.user,
     userErr: []
 }
 

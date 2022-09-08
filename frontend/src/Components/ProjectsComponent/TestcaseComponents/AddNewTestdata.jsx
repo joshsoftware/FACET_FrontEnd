@@ -50,7 +50,7 @@ const AddNewTestdata = (props) => {
                     name="name"
                     placeholder="Name"
                     value={data.name}
-                    handlechange={onchange}
+                    onChange={onchange}
                     isRequired
                     text={data.name.length!==0&&`Your testdata will created as ${ConvertToSlug(data.name)}`}
                 />

@@ -1,11 +1,13 @@
+import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react'
 import { Col, Row } from 'react-bootstrap';
 import { Check2Circle, Infinity } from 'react-bootstrap-icons';
 import { toast } from 'react-toastify';
-import { hasWhiteSpace } from '../../../../utils';
-import { CustomModal } from '../../../CustomComponents';
-import { NextButton } from '../../../forms/Buttons';
-import FormInput from '../../../forms/Inputs/FormInput';
+
+import { hasWhiteSpace } from 'utils';
+import { CustomModal } from 'Components/CustomComponents';
+import { NextButton } from 'Components/forms/Buttons';
+import FormInput from 'Components/forms/Inputs/FormInput';
 import FieldBox from './components/FieldBox';
 
 
@@ -55,7 +57,7 @@ const AddKeyField = ({ data, onSuccess }) => {
                     label="Name"
                     name="name"
                     type="text"
-                    handlechange={onchange}
+                    onChange={onchange}
                     value={formData.name}
                     isRequired
                     text="No space allowed for the key field."
@@ -108,3 +110,8 @@ const AddKeyField = ({ data, onSuccess }) => {
 }
 
 export default AddKeyField;
+
+AddKeyField.propTypes = {
+    data: PropTypes.object,
+    onSuccess: PropTypes.func
+}

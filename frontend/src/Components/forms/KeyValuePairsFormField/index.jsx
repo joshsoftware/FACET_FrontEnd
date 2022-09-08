@@ -61,7 +61,7 @@ const KeyValuePairsFormField = (props) => {
                     <div className="d-flex justify-content-between align-items-center" key={index}>
                         <FormInput 
                             name="key"
-                            handlechange={(event) => onchange(event, index)}
+                            onChange={(event) => onchange(event, index)}
                             value={e.key}
                             placeholder="Key"
                             style={{width: '45%'}}
@@ -70,7 +70,7 @@ const KeyValuePairsFormField = (props) => {
                         />
                         <FormInput 
                             name="value"
-                            handlechange={(event) => onchange(event, index)}
+                            onChange={(event) => onchange(event, index)}
                             value={e.value}
                             placeholder="Value"
                             style={{width: '45%'}}

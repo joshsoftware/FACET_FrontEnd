@@ -1,5 +1,5 @@
-import React from 'react'
-import { useState } from 'react';
+import PropTypes from 'prop-types';
+import React, { useState } from 'react'
 import { Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
@@ -37,3 +37,7 @@ const SubNavItem = ({ item }) => {
 }
 
 export default SubNavItem;
+
+SubNavItem.propTypes = {
+    item: PropTypes.object
+}

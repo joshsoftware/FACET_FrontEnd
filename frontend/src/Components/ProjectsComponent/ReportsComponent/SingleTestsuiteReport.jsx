@@ -1,12 +1,16 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import { Button, Table } from 'react-bootstrap';
 import { EyeFill } from 'react-bootstrap-icons';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
+
 import BadgeComponent from '../../BadgeComponent';
 import { ViewComponent } from '../../CustomComponents';
 
-const SingleTestsuiteReport = ({ data, isLoading }) => {
+const SingleTestsuiteReport = (props) => {
     let navigate = useNavigate();
+
+    const { data, isLoading } = props;
     const { projectName } = useParams();
 
     return !isLoading&&(
@@ -89,3 +93,8 @@ const SingleTestsuiteReport = ({ data, isLoading }) => {
 }
 
 export default SingleTestsuiteReport;
+
+SingleTestsuiteReport.propTypes = { 
+    data: PropTypes.object, 
+    isLoading: PropTypes.bool 
+}

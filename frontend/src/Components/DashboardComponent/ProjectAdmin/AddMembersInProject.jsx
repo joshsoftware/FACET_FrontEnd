@@ -20,7 +20,7 @@ const AddMembersInProject = (props) => {
     return (
         <CustomModal 
             show={show}
-            handleClose={handleClose}
+            onClose={handleClose}
             title="Add Members"
         >
             <CustomModal.Body>

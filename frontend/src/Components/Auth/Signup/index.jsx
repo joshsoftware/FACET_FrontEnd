@@ -16,7 +16,7 @@ const Signup = (props) => {
                 type='text'
                 name='name'
                 value={data.name}
-                handlechange={onchange}
+                onChange={onchange}
                 placeholder='Enter Name'
             />
             <FormInput
@@ -25,7 +25,7 @@ const Signup = (props) => {
                 type='email'
                 name='email'
                 value={data.email}
-                handlechange={onchange}
+                onChange={onchange}
                 placeholder='Enter Email'
             />
             <FormInput 

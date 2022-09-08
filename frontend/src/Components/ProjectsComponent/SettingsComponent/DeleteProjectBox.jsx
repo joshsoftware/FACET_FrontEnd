@@ -1,7 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Card } from 'react-bootstrap';
-import { DeleteButton } from '../../forms/Buttons';
-import DeleteConfirmationModal from '../../DeleteConfirmationModal';
+
+import { DeleteButton } from 'Components/forms/Buttons';
+import DeleteConfirmationModal from 'Components/DeleteConfirmationModal';
 
 const DeleteProjectBox = (props) => {
     const {
@@ -44,3 +46,8 @@ const DeleteProjectBox = (props) => {
 }
 
 export default DeleteProjectBox;
+
+DeleteProjectBox.propTypes = {
+    project: PropTypes.object.isRequired,
+    handleDelete: PropTypes.func
+}

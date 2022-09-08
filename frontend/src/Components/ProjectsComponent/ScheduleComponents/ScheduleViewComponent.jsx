@@ -1,18 +1,19 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import { Table } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
-import { ViewComponent } from '../../CustomComponents';
-import { AddButton } from '../../forms/Buttons';
-import NoResultsFound from '../../NoResultsFound';
 
-const ScheduleViewComponent = ({ data }) => {
-    let navigate = useNavigate();
+import { ViewComponent } from 'Components/CustomComponents';
+import { AddButton } from 'Components/forms/Buttons';
+import NoResultsFound from 'Components/NoResultsFound';
+
+const ScheduleViewComponent = (props) => {
+    const { data, isLoading, onNavigate } = props;
 
     const AddNew = () => {
-        navigate('new')
+        onNavigate('new')
     }
 
-    return (
+    return !isLoading && (
         <ViewComponent 
             title="Schedule Testsuites"
             disabledBtns
@@ -67,3 +68,9 @@ const ScheduleViewComponent = ({ data }) => {
 }
 
 export default ScheduleViewComponent;
+
+ScheduleViewComponent.propTypes = {
+    data: PropTypes.array,
+    isLoading: PropTypes.bool,
+    onNavigate: PropTypes.func
+}
