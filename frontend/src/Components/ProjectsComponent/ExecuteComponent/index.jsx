@@ -1,10 +1,13 @@
-import React from 'react'
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Accordion, Badge } from 'react-bootstrap';
-import { ViewComponent } from '../../CustomComponents';
+
+import { ViewComponent } from 'Components/CustomComponents';
 
 
 const ExecuteComponent = (props) => {
     const { results, data } = props;
+    
     return (
         <div className='w-100'>
             <ViewComponent
@@ -12,7 +15,7 @@ const ExecuteComponent = (props) => {
                 disabledBtns
             >
                 <Accordion>
-                    {data.testcases&&data.testcases.map((e, index) => {
+                    {data.testcases && data.testcases.map((e, index) => {
                         let resultInstance = results.filter(res => res.name === e.name)[0] || {};
                         return (
                             <Accordion.Item key={index} className={`${resultInstance.status === 'passed' ? (
@@ -56,3 +59,8 @@ const ExecuteComponent = (props) => {
 }
 
 export default ExecuteComponent;
+
+ExecuteComponent.propTypes = {
+    results: PropTypes.array,
+    data: PropTypes.object
+}

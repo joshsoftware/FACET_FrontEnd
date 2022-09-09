@@ -18,5 +18,5 @@ const JSONView = (props) => {
 export default JSONView;
 
 JSONView.propTypes = {
-    data: PropTypes.object
+    data: PropTypes.any
 }

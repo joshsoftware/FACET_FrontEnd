@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Container } from 'react-bootstrap';
 
 const DashboardLayout = ({ children }) => {
@@ -10,3 +11,10 @@ const DashboardLayout = ({ children }) => {
 }
 
 export default DashboardLayout;
+
+DashboardLayout.propTypes = {
+    children: PropTypes.oneOfType([
+        PropTypes.element,
+        PropTypes.arrayOf(PropTypes.element)
+    ])
+}

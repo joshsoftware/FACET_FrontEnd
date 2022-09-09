@@ -20,6 +20,9 @@ export default BadgeComponent;
 
 BadgeComponent.propTypes = {
     bg: PropTypes.string,
-    label: PropTypes.string,
+    label: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number
+    ]),
     className: PropTypes.string
 }

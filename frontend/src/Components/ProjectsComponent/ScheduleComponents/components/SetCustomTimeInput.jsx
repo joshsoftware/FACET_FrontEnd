@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { Row } from 'react-bootstrap';
-import { FormInput } from '../../../forms/Inputs';
+import { FormInput } from 'Components/forms/Inputs';
 
-const SetCustomTimeInput = ({ value, handleChange }) => {
+const SetCustomTimeInput = (props) => {
+    const { value, handleChange } = props;
+
     const [formData, setFormData] = useState(value)
 
     const onchange = (e) => {
@@ -26,7 +29,7 @@ const SetCustomTimeInput = ({ value, handleChange }) => {
                         className='col-md-3'
                         value={formData[item]}
                         name={item}
-                        handlechange={onchange}
+                        onChange={onchange}
                         min={0}
                         key={index}
                     />
@@ -37,3 +40,8 @@ const SetCustomTimeInput = ({ value, handleChange }) => {
 }
 
 export default SetCustomTimeInput;
+
+SetCustomTimeInput.propTypes = { 
+    value: PropTypes.object, 
+    handleChange: PropTypes.func 
+}

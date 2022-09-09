@@ -1,13 +1,15 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import './style.css';
 
-const FieldBox = (
-    {
+const FieldBox = (props) => {
+    const {
         item,
         isActive,
         handleClick
-    }
-) => {
+    } = props;
+
     return (
         <div 
             className={`border rounded my-1 px-4 py-3 d-flex align-items-center fieldType ${isActive&&'active'}`}
@@ -27,3 +29,9 @@ const FieldBox = (
 }
 
 export default FieldBox;
+
+FieldBox.propTypes = {
+    item: PropTypes.object,
+    isActive: PropTypes.bool,
+    handleClick: PropTypes.func
+}

@@ -1,6 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import './style.css';
-import logo from '../../assets/images/logo.png';
+import logo from 'assets/images/logo.png';
 
 const AuthLayout = ({ children }) => {
     return (
@@ -24,3 +26,10 @@ const AuthLayout = ({ children }) => {
 }
 
 export default AuthLayout;
+
+AuthLayout.propTypes = {
+    children: PropTypes.oneOfType([
+        PropTypes.element,
+        PropTypes.arrayOf(PropTypes.element)
+    ])
+}

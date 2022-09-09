@@ -1,16 +1,16 @@
-import React from 'react'
+import React from 'react';
+import PropTypes from 'prop-types';
 import {
     Form
 } from 'react-bootstrap';
 
-const FormInput = (
-    {
+const FormInput = (props) => {
+    const {
         label,
         placeholder,
         name,
-        id,
         value,
-        handlechange,
+        onChange,
         type,
         element,
         text,
@@ -18,10 +18,8 @@ const FormInput = (
         style,
         isRequired,
         error,
-        errorMessage,
-        ...props
-    }
-) => {
+        errorMessage
+    } = props;
     return (
         <Form.Group className={`${className} mb-3`} style={style}>
             {label && (
@@ -36,7 +34,7 @@ const FormInput = (
                     placeholder={placeholder}
                     name={name}
                     value={value}
-                    onChange={handlechange}
+                    onChange={onChange}
                     as={type==='textarea'?type:'input'}
                     rows={5}
                     className={error&&'border-danger error'}
@@ -51,3 +49,23 @@ const FormInput = (
 }
 
 export default FormInput;
+
+FormInput.propTypes = {
+    label: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.element
+    ]),
+    placeholder: PropTypes.string,
+    name: PropTypes.string,
+    id: PropTypes.any,
+    value: PropTypes.any,
+    onChange: PropTypes.func,
+    type: PropTypes.string,
+    element: PropTypes.element,
+    text: PropTypes.string,
+    className: PropTypes.string,
+    style: PropTypes.object,
+    isRequired: PropTypes.bool,
+    error: PropTypes.bool,
+    errorMessage: PropTypes.string
+}

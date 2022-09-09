@@ -6,13 +6,12 @@ import { SaveButton } from '../../forms/Buttons';
 
 const ChangeProjectNameBox = (props) => {
     const { 
-        user, 
         project,
         formData,
         onchange,
         handleSubmit
     } = props;
-    console.log(props);
+
     return (
         <Card>
             <Form onSubmit={handleSubmit}>
@@ -24,7 +23,7 @@ const ChangeProjectNameBox = (props) => {
                     <FormInput 
                         name="newProjName"
                         value={formData.newProjName}
-                        handlechange={onchange}
+                        onChange={onchange}
                         text={`Project name will updated as ${formData.newProjName}`}
                         disabled={!project.is_project_admin}
                     />

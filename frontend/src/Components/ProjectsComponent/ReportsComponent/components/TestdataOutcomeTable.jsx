@@ -1,10 +1,14 @@
-import React, { useState } from 'react'
+import PropTypes from 'prop-types';
+import React, { useState } from 'react';
 import { Button, Table } from 'react-bootstrap';
 import { EyeFill } from 'react-bootstrap-icons';
-import BadgeComponent from '../../../BadgeComponent';
+
+import BadgeComponent from 'Components/BadgeComponent';
 import TestdatOutcomeModal from './TestdatOutcomeModal';
 
-const TestdataOutcomeTable = ({ testdata, data }) => {
+const TestdataOutcomeTable = (props) => {
+    const { testdataName, data } = props;
+
     const [showModal, setShowModal] = useState(false);
     const [selectedData, setSelectedData] = useState({});
 
@@ -23,7 +27,7 @@ const TestdataOutcomeTable = ({ testdata, data }) => {
                 <TestdatOutcomeModal 
                     show={showModal}
                     handleClose={toggleModal}
-                    data={{...selectedData, testdata_name:testdata}}
+                    data={{...selectedData, testdata_name: testdataName}}
                 />
             )}
             <Table bordered striped>
@@ -79,3 +83,10 @@ const TestdataOutcomeTable = ({ testdata, data }) => {
 }
 
 export default TestdataOutcomeTable;
+
+TestdataOutcomeTable.propTypes = { 
+    testdataName: PropTypes.string, 
+    data: PropTypes.arrayOf(
+        PropTypes.object
+    ) 
+}

@@ -1,14 +1,16 @@
-import React from 'react'
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Button, Table } from 'react-bootstrap';
 import { EyeFill } from 'react-bootstrap-icons';
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import { ViewComponent } from '../../CustomComponents';
-import BadgeComponent from '../../BadgeComponent';
-import NoResultsFound from '../../../Components/NoResultsFound';
+import { Link } from 'react-router-dom';
 
-const AllReports = ({ data, isLoading }) => {
-    let navigate = useNavigate();
-    const { projectName } = useParams();
+import { ViewComponent } from 'Components/CustomComponents';
+import BadgeComponent from 'Components/BadgeComponent';
+import NoResultsFound from 'Components/NoResultsFound';
+
+const AllReports = (props) => {
+    const { data, isLoading, projectName, onNavigate } = props;
+
     return (
         <ViewComponent
             disabledBtns
@@ -17,7 +19,7 @@ const AllReports = ({ data, isLoading }) => {
             {!isLoading && data.length===0?(
                 <NoResultsFound
                     btnLabel="Run New Suite"
-                    btnOnclick={() => navigate(`/project/${projectName}/testsuites`)}
+                    btnOnclick={() => onNavigate(`/project/${projectName}/testsuites`)}
                 />
             ):(
                 <Table striped bordered>
@@ -84,3 +86,10 @@ const AllReports = ({ data, isLoading }) => {
 }
 
 export default AllReports;
+
+AllReports.propTypes = { 
+    data: PropTypes.array, 
+    isLoading: PropTypes.bool, 
+    projectName: PropTypes.string,
+    onNavigate: PropTypes.func
+}

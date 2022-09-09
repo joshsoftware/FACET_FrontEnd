@@ -22,7 +22,7 @@ const AddNewEnvironment = (props) => {
                     placeholder='Name'
                     name='name'
                     value={data.name}
-                    handlechange={onchange}
+                    onChange={onchange}
                     isRequired
                     disabled={cat==='edit'}
                     text={data.name.length!==0&&`Your environment will created as ${ConvertToSlug(data.name)}`}
@@ -32,7 +32,7 @@ const AddNewEnvironment = (props) => {
                     placeholder='Enter URL'
                     name='url'
                     value={data.url}
-                    handlechange={onchange}
+                    onChange={onchange}
                     type="url"
                     isRequired
                 />

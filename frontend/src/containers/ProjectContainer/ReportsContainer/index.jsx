@@ -1,10 +1,15 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import AllReports from '../../../Components/ProjectsComponent/ReportsComponent/AllReports';
-import SingleTestsuiteReport from '../../../Components/ProjectsComponent/ReportsComponent/SingleTestsuiteReport';
-import ShowTestdataCombinationReport from '../../../Components/ProjectsComponent/ReportsComponent/ShowTestdataCombinationReport';
-import { getReportsRequest, getSingleTestcaseOfTestsuiteReportRequest, getSingleTestsuiteReportRequest } from '../../../store/Reports/actions';
+import { useNavigate, useParams } from 'react-router-dom';
+
+import AllReports from 'Components/ProjectsComponent/ReportsComponent/AllReports';
+import SingleTestsuiteReport from 'Components/ProjectsComponent/ReportsComponent/SingleTestsuiteReport';
+import ShowTestdataCombinationReport from 'Components/ProjectsComponent/ReportsComponent/ShowTestdataCombinationReport';
+import { 
+    getReportsRequest, 
+    getSingleTestcaseOfTestsuiteReportRequest, 
+    getSingleTestsuiteReportRequest 
+} from 'store/Reports/actions';
 
 const mapState = ({ reports }) => ({
     reports: reports.reports,
@@ -17,6 +22,8 @@ const mapState = ({ reports }) => ({
 
 const ReportsContainer = () => {
     let dispatch = useDispatch();
+    let navigate = useNavigate();
+
     const { projectName, reportId, tname } = useParams();
     const { 
         isReportsLoading, 
@@ -60,6 +67,8 @@ const ReportsContainer = () => {
                 <AllReports 
                     data={reports}
                     isLoading={isReportsLoading}
+                    projectName={projectName}
+                    onNavigate={navigate}
                 />
             )
         )

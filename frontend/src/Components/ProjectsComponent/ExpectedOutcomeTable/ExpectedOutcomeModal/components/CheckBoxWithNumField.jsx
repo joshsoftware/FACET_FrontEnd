@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from 'react'
-import { FormCheckBox, FormInput } from '../../../../forms/Inputs';
+import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
 
-const CheckBoxWithNumField = (
-    {
+import { FormCheckBox, FormInput } from 'Components/forms/Inputs';
+
+const CheckBoxWithNumField = (props) => {
+    const {
         label,
         value,
         name,
-        handlechange,
-        ...props
-    }
-) => {
+        handlechange
+    } = props;
+
     const [isChecked, setIsChecked] = useState(false);
 
     const onchange = (e) => {
@@ -42,7 +43,7 @@ const CheckBoxWithNumField = (
                     type="number"
                     name={name}
                     value={value}
-                    handlechange={onchange}
+                    onChange={onchange}
                 />
             )}
         </>
@@ -50,3 +51,10 @@ const CheckBoxWithNumField = (
 }
 
 export default CheckBoxWithNumField;
+
+CheckBoxWithNumField.propTypes = {
+    label: PropTypes.string,
+    value: PropTypes.number,
+    name: PropTypes.string,
+    handlechange: PropTypes.func
+}

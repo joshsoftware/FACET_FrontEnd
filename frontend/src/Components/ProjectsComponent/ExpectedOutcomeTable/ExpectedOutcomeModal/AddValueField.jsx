@@ -1,10 +1,12 @@
+import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
-import { CustomModal } from '../../../CustomComponents';
-import { SaveButton } from '../../../forms/Buttons';
+
+import { CustomModal } from 'Components/CustomComponents';
+import { SaveButton } from 'Components/forms/Buttons';
 import {
     FormInput,
     FormSelect
-} from '../../../forms/Inputs';
+} from 'Components/forms/Inputs';
 
 const AddValueField = ({ data, onSuccess }) => {
     const [formData, setFormData] = useState({value: ""});
@@ -40,7 +42,7 @@ const AddValueField = ({ data, onSuccess }) => {
                         type={data.type}
                         name="value"
                         value={formData.value}
-                        handlechange={onchange}
+                        onChange={onchange}
                         isRequired
                     />
                 )}
@@ -56,3 +58,8 @@ const AddValueField = ({ data, onSuccess }) => {
 }
 
 export default AddValueField;
+
+AddValueField.propTypes = {
+    data: PropTypes.object,
+    onSuccess: PropTypes.func
+}

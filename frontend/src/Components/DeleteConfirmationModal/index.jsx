@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { CustomModal } from '../CustomComponents';
-import { CloseButton, DeleteButton } from '../forms/Buttons';
+
+import { CustomModal } from 'Components/CustomComponents';
+import { CloseButton, DeleteButton } from 'Components/forms/Buttons';
 
 const DeleteConfirmationModal = (props) => {
     const {
@@ -16,7 +17,7 @@ const DeleteConfirmationModal = (props) => {
         <CustomModal
             show={show}
             title={title?title:"Are You Sure?"}
-            handleClose={handleClose}
+            onClose={handleClose}
         >
             <CustomModal.Body>
                 {text?text:"Are you sure you want to DELETE this item?"}

@@ -12,7 +12,7 @@ const AddProjectModal = (props) => {
     return (
         <CustomModal 
             show={show}
-            handleClose={handleClose}
+            onClose={handleClose}
             title="Add New Project"
         >
             <Form onSubmit={onSubmit}>
@@ -23,14 +23,14 @@ const AddProjectModal = (props) => {
                         isRequired
                         name="name"
                         value={data.name}
-                        handlechange={onChange}
+                        onChange={onChange}
                     />
                     <FormInput 
                         label="Description"
                         placeholder="Write Description"
                         name="description"
                         value={data.description}
-                        handlechange={onChange}
+                        onChange={onChange}
                         type="textarea"
                     />
                 </CustomModal.Body>
