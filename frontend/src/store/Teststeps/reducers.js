@@ -1,28 +1,28 @@
-import testcaseConstants from "./constants";
+import teststepConstants from "./constants";
 
 const INITIAL_STATE = {
     isLoading: true,
-    testcases: [],
+    teststeps: [],
     errors: []
 }
 
-const testcaseReducer = (state=INITIAL_STATE, action) => {
+const teststepReducer = (state=INITIAL_STATE, action) => {
     switch (action.type) {
-        case testcaseConstants.GET_TESTCASES_REQUEST:
+        case teststepConstants.GET_TESTSTEPS_REQUEST:
             return {
                 ...state,
                 isLoading: true
             }
             
-        case testcaseConstants.GET_TESTCASES_SUCCESS:
+        case teststepConstants.GET_TESTSTEPS_SUCCESS:
             return {
                 ...state,
                 isLoading: false,
-                testcases: action.payload,
+                teststeps: action.payload,
                 errors: []
             }
     
-        case testcaseConstants.GET_TESTCASES_FAILURE:
+        case teststepConstants.GET_TESTSTEPS_FAILURE:
             return {
                 ...state,
                 isLoading: false,
@@ -34,4 +34,4 @@ const testcaseReducer = (state=INITIAL_STATE, action) => {
     }
 }
 
-export default testcaseReducer;
+export default teststepReducer;

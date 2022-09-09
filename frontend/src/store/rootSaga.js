@@ -8,7 +8,7 @@ import projectSagas from './Projects/sagas';
 import reportSagas from './Reports/sagas';
 import scheduleSagas from './Schedule/sagas';
 import superAdminSagas from './SuperAdmin/sagas';
-import testcaseSagas from './Testcases/sagas';
+import teststepSagas from './Teststeps/sagas';
 import testdataSagas from './Testdata/sagas';
 import testsuiteSagas from './Testsuites/sagas';
 import userSagas from './User/sagas';
@@ -21,7 +21,7 @@ export default function* rootSaga() {
         call(endpointSagas),
         call(headerSagas),
         call(payloadSagas),
-        call(testcaseSagas),
+        call(teststepSagas),
         call(testsuiteSagas),
         call(testdataSagas),
         call(executeSagas),

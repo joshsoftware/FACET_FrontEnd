@@ -7,7 +7,7 @@ import { AddButton } from 'Components/forms/Buttons';
 import JSONView from 'Components/JSONView';
 import AddNewTestdata from './AddNewTestdata';
 
-const TestcaseViewComponent = (props) => {
+const TeststepViewComponent = (props) => {
     const { 
         isLoading, 
         data, 
@@ -24,7 +24,7 @@ const TestcaseViewComponent = (props) => {
         <div className='w-100'>
             <ViewComponent 
                 title={data.name}
-                onEditLink={`/project/${projectName}/testcases/edit/${data.id}`}
+                onEditLink={`/project/${projectName}/teststeps/edit/${data.id}`}
             >
                 <Row>
                     <Col md={6} className='pb-4'>
@@ -127,9 +127,9 @@ const TestcaseViewComponent = (props) => {
     )
 }
 
-export default TestcaseViewComponent;
+export default TeststepViewComponent;
 
-TestcaseViewComponent.propTypes = {
+TeststepViewComponent.propTypes = {
     isLoading: PropTypes.bool,
     data: PropTypes.object,
     projectName: PropTypes.string,

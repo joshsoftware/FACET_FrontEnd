@@ -7,7 +7,7 @@ import { FormInput, FormSelect } from 'Components/forms/Inputs';
 import { ConvertToSlug } from 'utils';
 
 
-const AddNewTestcase = (props) => {
+const AddNewTeststep = (props) => {
     const { cat, data, handleSubmit, onchange, options } = props;
 
     const onFieldChange = (e) => {
@@ -31,7 +31,7 @@ const AddNewTestcase = (props) => {
                     name="name"
                     value={data.name}
                     onChange={onFieldChange}
-                    text={data.name.length!==0&&`Your testcase will created as ${ConvertToSlug(data.name)}`}
+                    text={data.name.length!==0&&`Your teststep will created as ${ConvertToSlug(data.name)}`}
                     disabled={cat==='edit'}
                     isRequired
                 />
@@ -72,9 +72,9 @@ const AddNewTestcase = (props) => {
     )
 }
 
-export default AddNewTestcase;
+export default AddNewTeststep;
 
-AddNewTestcase.propTypes = { 
+AddNewTeststep.propTypes = { 
     cat: PropTypes.string, 
     data: PropTypes.object, 
     handleSubmit: PropTypes.func, 
