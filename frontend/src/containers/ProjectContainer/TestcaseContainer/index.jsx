@@ -3,27 +3,27 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { addTestsuitesRequest, editTestsuitesRequest, getTestsuitesRequest } from 'store/Testsuites/actions';
+import { addTestcasesRequest, editTestcasesRequest, getTestcasesRequest } from 'store/Testcases/actions';
 import { SubComponentsNav } from 'Components/ProjectsComponent';
-import { AddNewTestsuite, TestsuiteViewComponent } from 'Components/ProjectsComponent/TestsuiteComponents';
+import { AddNewTestcase, TestcaseViewComponent } from 'Components/ProjectsComponent/TestcaseComponents';
 import { getEnvironmentsRequest } from 'store/Environments/actions';
 import { addExecuteRequest, clearExecutionFailure } from 'store/Execute/actions';
 import { getTeststepsRequest } from 'store/Teststeps/actions';
 import { GetDiffOfArrayOfObjects } from 'utils';
 
-const mapState = ({ testsuites, environments, execute, testcases }) => ({
-    testsuites: testsuites.testsuites,
-    isLoading: testsuites.isLoading,
+const mapState = ({ testcases, environments, execute, teststeps }) => ({
+    testcases: testcases.testcases,
+    isLoading: testcases.isLoading,
     environments: environments.environments,
     isEnvironmentsLoading: environments.isLoading,
     isExecuteFailed: execute.isError,
-    testcases: testcases.testcases
+    teststeps: teststeps.teststeps
 })
 
-const INITIAL_TESTSUITE_FORM_DATA = {
+const INITIAL_TESTCASE_FORM_DATA = {
     name: "",
     description: "",
-    array_of_testcases: []
+    array_of_teststeps: []
 }
 
 const TestcaseContainer = (props) => {
@@ -32,9 +32,9 @@ const TestcaseContainer = (props) => {
     
     const { cat } = props;
     const { projectName, id } = useParams();
-    const { testsuites, isLoading, environments, isEnvironmentsLoading, isExecuteFailed, testcases } = useSelector(mapState);
+    const { testcases, isLoading, environments, isEnvironmentsLoading, isExecuteFailed, teststeps } = useSelector(mapState);
     
-    const [testsuiteFormData, setTestsuiteFormData] = useState({ ...INITIAL_TESTSUITE_FORM_DATA, project: projectName })
+    const [testcaseFormData, setTestcaseFormData] = useState({ ...INITIAL_TESTCASE_FORM_DATA, project: projectName })
     const [selectedItem, setSelectedItem] = useState({});
     const [options, setOptions] = useState(
         {
@@ -42,34 +42,30 @@ const TestcaseContainer = (props) => {
             updatedOptions: []
         }
     );
-    const [selectedTestcases, setSelectedTestcases] = useState([]);
+    const [selectedTeststeps, setSelectedTeststeps] = useState([]);
 
     useEffect(() => {
-        dispatch(getTestsuitesRequest({ project: projectName }));
+        dispatch(getTestcasesRequest({ project: projectName }));
         dispatch(getEnvironmentsRequest({ project: projectName }));
         dispatch(getTeststepsRequest({ project: projectName }))
         dispatch(clearExecutionFailure())
     }, [projectName])
 
     useEffect(() => {
-        setSelectedItem(testsuites.filter(e => e.id==id)[0]);
-    }, [testsuites, id])
+        setSelectedItem(testcases.filter(e => e.id==id)[0]);
+    }, [testcases, id])
 
     useEffect(() => {
-        let options_data = []
-        testcases.forEach(ele => {
-            options_data.push({value: ele.id, label: ele.name})
-        })
         setOptions({
-            initialOptions: options_data, 
-            updatedOptions: options_data
+            initialOptions: teststeps, 
+            updatedOptions: teststeps
         });
-    }, [testcases])
+    }, [teststeps])
 
     useEffect(() => {
         let diff = GetDiffOfArrayOfObjects(
             options.initialOptions, 
-            selectedTestcases
+            selectedTeststeps
         );
         setOptions((prevState) => (
             {
@@ -77,36 +73,33 @@ const TestcaseContainer = (props) => {
                 updatedOptions: diff
             }
         ));
-        setTestsuiteFormData((prevState) => ({
-            ...prevState,
-            array_of_testcases: selectedTestcases.map(e => e.value)
-        }))
-    }, [selectedTestcases])
+    }, [selectedTeststeps])
 
     useEffect(() => {
-        setTestsuiteFormData(p => (
+        setTestcaseFormData(p => (
             {
                 ...p,
-                name: selectedItem?.name || INITIAL_TESTSUITE_FORM_DATA.name,
-                id: selectedItem?.id || INITIAL_TESTSUITE_FORM_DATA.id,
-                description: selectedItem?.description || INITIAL_TESTSUITE_FORM_DATA.description,
-                array_of_testcases: selectedItem?.testcases?.map(e => e.id) || INITIAL_TESTSUITE_FORM_DATA.array_of_testcases
+                name: selectedItem?.name || INITIAL_TESTCASE_FORM_DATA.name,
+                id: selectedItem?.id || INITIAL_TESTCASE_FORM_DATA.id,
+                description: selectedItem?.description || INITIAL_TESTCASE_FORM_DATA.description,
+                array_of_teststeps: selectedItem?.teststeps?.map(e => {
+                    return {
+                        teststep: e.id,
+                        testdata: e.selected_testdata
+                    }
+                }) || INITIAL_TESTCASE_FORM_DATA.array_of_teststeps
             }
         ))
-        let selected_testcases = []
-        selectedItem?.testcases?.forEach(ele => {
-            selected_testcases.push({value: ele.id, label: ele.name})
-        })
-        setSelectedTestcases(selected_testcases);
+        setSelectedTeststeps(selectedItem?.teststeps || []);
     }, [selectedItem])
 
-    const handleExecute = (testsuite, environment) => {
-        dispatch(addExecuteRequest({ testsuite, environment, data: selectedItem }));
-        navigate(`/project/${projectName}/execute/${testsuite}`)
+    const handleExecute = (testcase, environment) => {
+        dispatch(addExecuteRequest({ testcase, environment, data: selectedItem }));
+        navigate(`/project/${projectName}/execute/${testcase}`)
     }
 
-    const onRemoveSelectedTestcase = (index) => {
-        setSelectedTestcases(prevState => {
+    const onRemoveSelectedTeststep = (index) => {
+        setSelectedTeststeps(prevState => {
             let fields = prevState.filter(function(_value, ind) {
                 return ind!==index
             })
@@ -114,56 +107,78 @@ const TestcaseContainer = (props) => {
         })
     }
 
-    const onSelectedTestcasesChange = (_name, value) => {
-        setSelectedTestcases((prevState) => (
+    const onSelectedTeststepsChange = (_name, value) => {
+        setSelectedTeststeps((prevState) => (
             [
                 ...prevState, 
-                value[0]
+                {
+                    ...value,
+                    selected_testdata: value.testdata.map(e => e.id)
+                }
             ]
         ))
     }
 
-    const handleTestsuiteFormDataChange = (key, value) => {
-        setTestsuiteFormData(p => ({
+    const onTestdataChangeInSelectedTeststep = (teststep) => {
+        let updatedTeststeps = [...selectedTeststeps];
+        updatedTeststeps[updatedTeststeps.findIndex(ele => ele.id===teststep.id)] = teststep;
+        setSelectedTeststeps(updatedTeststeps);
+    }
+
+    const onAddTeststepDataSave = () => {
+        setTestcaseFormData((prevState) => ({
+            ...prevState,
+            array_of_teststeps: selectedTeststeps?.map(e => {
+                return ({
+                    teststep: e.id,
+                    testdata: e.selected_testdata
+                })
+            })
+        }))
+    }
+
+    const handleTestcaseFormDataChange = (key, value) => {
+        setTestcaseFormData(p => ({
             ...p,
             [key]: value
         }))
     }
 
-    const handleSubmitTestsuiteFormData = (e) => {
+    const handleSubmitTestcaseFormData = (e) => {
         e.preventDefault();
         if(cat==='add'){
-            dispatch(addTestsuitesRequest(testsuiteFormData))
+            dispatch(addTestcasesRequest(testcaseFormData))
         } else {
-            dispatch(editTestsuitesRequest(testsuiteFormData))
+            dispatch(editTestcasesRequest(testcaseFormData))
         }
     }
-
 
     return !isExecuteFailed && (
         <>
             <SubComponentsNav 
-                title="Testsuites"
-                data={testsuites}
+                title="Testcases"
+                data={testcases}
                 isLoading={isLoading}
-                onAddBtnClick={() => navigate(`/project/${projectName}/testsuites/new`)}
-                onSelectItemUrl={`/project/${projectName}/testsuites`}
+                onAddBtnClick={() => navigate(`/project/${projectName}/testcases/new`)}
+                onSelectItemUrl={`/project/${projectName}/testcases`}
             />
             {cat?(
-                <AddNewTestsuite 
+                <AddNewTestcase 
                     cat={cat}
                     isLoading={isLoading}
-                    data={testsuiteFormData}
-                    testcasesOptions={options}
-                    selectedTestcases={selectedTestcases}
-                    onchange={handleTestsuiteFormDataChange}
-                    onRemoveSelectedTestcase={onRemoveSelectedTestcase}
-                    onSelectedTestcaseOrderChange={setSelectedTestcases}
-                    onSelectedTestcasesChange={onSelectedTestcasesChange}
-                    onSubmit={handleSubmitTestsuiteFormData}
+                    data={testcaseFormData}
+                    teststepsOptions={options}
+                    selectedTeststeps={selectedTeststeps}
+                    onAddTeststepDataSave={onAddTeststepDataSave}
+                    onchange={handleTestcaseFormDataChange}
+                    onRemoveSelectedTeststep={onRemoveSelectedTeststep}
+                    onSelectedTeststepOrderChange={setSelectedTeststeps}
+                    onSelectedTeststepsChange={onSelectedTeststepsChange}
+                    onSubmit={handleSubmitTestcaseFormData}
+                    onTestdataChangeInSelectedTeststep={onTestdataChangeInSelectedTeststep}
                 />
             ):(
-                <TestsuiteViewComponent 
+                <TestcaseViewComponent 
                     isLoading={isLoading}
                     data={selectedItem}
                     projectName={projectName}

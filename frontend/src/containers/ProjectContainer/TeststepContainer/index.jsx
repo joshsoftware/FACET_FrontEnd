@@ -80,7 +80,7 @@ const TeststepContainer = (props) => {
 
     useEffect(() => {
         setSelectedItem(teststeps.filter(e => e.id==id)[0]);
-        dispatch(getTestdataRequest({teststeps: id}));
+        dispatch(getTestdataRequest({teststep: id}));
     }, [teststeps, id])
     
     useEffect(() => {

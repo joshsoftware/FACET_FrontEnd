@@ -58,13 +58,13 @@ const KeyValuePairsFormField = (props) => {
         <div>
             {inputFields.map((e, index) => {
                 return (
-                    <div className="d-flex justify-content-between align-items-center" key={index}>
+                    <div className=" d-flex justify-content-between align-items-center" key={index}>
                         <FormInput 
                             name="key"
                             onChange={(event) => onchange(event, index)}
                             value={e.key}
                             placeholder="Key"
-                            style={{width: '45%'}}
+                            style={{width: '95%'}}
                             error={hasWhiteSpace(e.key)}
                             errorMessage="No space allowed for the key field."
                         />
@@ -73,7 +73,7 @@ const KeyValuePairsFormField = (props) => {
                             onChange={(event) => onchange(event, index)}
                             value={e.value}
                             placeholder="Value"
-                            style={{width: '45%'}}
+                            style={{width: '95%'}}
                         />
                         <Button variant='danger' className='m-0 mb-3 py-2 px-1 d-flex justify-content-between align-items-center' onClick={() => removeField(index)}>
                             <Trash />

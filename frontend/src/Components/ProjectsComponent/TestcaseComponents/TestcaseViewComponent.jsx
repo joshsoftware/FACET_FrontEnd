@@ -5,7 +5,7 @@ import { Accordion, Col, Row } from 'react-bootstrap';
 import { ViewComponent } from 'Components/CustomComponents';
 import ExecuteTestsuiteForm from './ExecuteTestsuiteForm';
 
-const TestsuiteViewComponent = (props) => {
+const TestcaseViewComponent = (props) => {
     const { 
         isLoading, 
         data, 
@@ -19,7 +19,7 @@ const TestsuiteViewComponent = (props) => {
         <div className='w-100'>
             <ViewComponent 
                 title={data.name}
-                onEditLink={`/project/${projectName}/testsuites/edit/${data.id}`}
+                onEditLink={`/project/${projectName}/testcases/edit/${data.id}`}
             >
                 <Row>
                     <Col md={6} className='py-2'>
@@ -31,10 +31,10 @@ const TestsuiteViewComponent = (props) => {
                         <div>{data.description || '-'}</div>
                     </Col>
                     <Col md={12} className='py-2'>
-                        <small><b>Testcases</b></small>
+                        <small><b>Teststeps</b></small>
                         <div>
                             <Accordion>
-                                {data?.testcases?.map((item, index) => {
+                                {data?.teststeps?.map((item, index) => {
                                     return (
                                         <Accordion.Item key={index} eventKey={index}>
                                             <Accordion.Header>
@@ -60,7 +60,7 @@ const TestsuiteViewComponent = (props) => {
                                                     </Col>
                                                     <Col className='py-1'>
                                                         <small><b>No. Of Testdata</b></small>
-                                                        <div>{item.testdata.length}</div>
+                                                        <div>{data?.testdatas?.length}</div>
                                                     </Col>
                                                 </Row>
                                             </Accordion.Body>
@@ -100,9 +100,9 @@ const TestsuiteViewComponent = (props) => {
     )
 }
 
-export default TestsuiteViewComponent;
+export default TestcaseViewComponent;
 
-TestsuiteViewComponent.propTypes = {
+TestcaseViewComponent.propTypes = {
     data: PropTypes.object, 
     isLoading: PropTypes.bool, 
     projectName: PropTypes.string,

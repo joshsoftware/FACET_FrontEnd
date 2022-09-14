@@ -10,7 +10,7 @@ import scheduleSagas from './Schedule/sagas';
 import superAdminSagas from './SuperAdmin/sagas';
 import teststepSagas from './Teststeps/sagas';
 import testdataSagas from './Testdata/sagas';
-import testsuiteSagas from './Testsuites/sagas';
+import testcaseSagas from './Testcases/sagas';
 import userSagas from './User/sagas';
 
 export default function* rootSaga() {
@@ -22,7 +22,7 @@ export default function* rootSaga() {
         call(headerSagas),
         call(payloadSagas),
         call(teststepSagas),
-        call(testsuiteSagas),
+        call(testcaseSagas),
         call(testdataSagas),
         call(executeSagas),
         call(superAdminSagas),

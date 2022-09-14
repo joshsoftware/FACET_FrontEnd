@@ -34,7 +34,7 @@ const Signup = (props) => {
                 type='password'
                 name='password'
                 value={data.password}
-                handlechange={onchange}
+                onChange={onchange}
                 placeholder='Enter Password'
             />
             <FormInput 
@@ -43,7 +43,7 @@ const Signup = (props) => {
                 type='password'
                 name='cpassword'
                 value={data.cpassword}
-                handlechange={onchange}
+                onChange={onchange}
                 placeholder='Enter Password'
             />
             <SubmitButton

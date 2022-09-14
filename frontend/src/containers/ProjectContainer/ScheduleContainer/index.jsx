@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { getTestsuitesRequest } from 'store/Testsuites/actions';
+import { getTestcasesRequest } from 'store/Testcases/actions';
 import { getEnvironmentsRequest } from 'store/Environments/actions';
 import { addScheduleRequest, getAllSchedulesRequest } from 'store/Schedule/actions';
 import { AddNewSchedule, ScheduleViewComponent } from 'Components/ProjectsComponent/ScheduleComponents';
@@ -49,7 +49,7 @@ const ScheduleContainer = (props) => {
 
     useEffect(() => {
         dispatch(getAllSchedulesRequest({ project: projectName }));
-        dispatch(getTestsuitesRequest({project: projectName}));
+        dispatch(getTestcasesRequest({project: projectName}));
         dispatch(getEnvironmentsRequest({project: projectName}));
     }, [projectName])
 
