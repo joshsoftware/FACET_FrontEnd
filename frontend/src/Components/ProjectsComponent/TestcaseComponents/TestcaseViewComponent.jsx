@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Accordion, Col, Row } from 'react-bootstrap';
 
 import { ViewComponent } from 'Components/CustomComponents';
-import ExecuteTestsuiteForm from './ExecuteTestsuiteForm';
+import ExecuteTestsuiteForm from './ExecuteTestcaseForm';
 
 const TestcaseViewComponent = (props) => {
     const { 
@@ -60,7 +60,7 @@ const TestcaseViewComponent = (props) => {
                                                     </Col>
                                                     <Col className='py-1'>
                                                         <small><b>No. Of Testdata</b></small>
-                                                        <div>{data?.testdatas?.length}</div>
+                                                        <div>{item?.selected_testdata?.length}</div>
                                                     </Col>
                                                 </Row>
                                             </Accordion.Body>

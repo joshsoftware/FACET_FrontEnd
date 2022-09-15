@@ -33,7 +33,7 @@ const ExecuteTestsuiteForm = (props) => {
         <ViewComponent
             disabledHeader
         >
-            <small><b>Execute Testsuite</b></small>
+            <small><b>Execute Testcase</b></small>
             <div className='d-flex align-items-center'>
                 <Col md={6}>
                     <FormSelect 

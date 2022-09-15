@@ -7,7 +7,6 @@ import { ViewComponent } from 'Components/CustomComponents';
 
 const ExecuteComponent = (props) => {
     const { results, data } = props;
-    
     return (
         <div className='w-100'>
             <ViewComponent
@@ -15,7 +14,7 @@ const ExecuteComponent = (props) => {
                 disabledBtns
             >
                 <Accordion>
-                    {data.testcases && data.testcases.map((e, index) => {
+                    {data?.teststeps?.map((e, index) => {
                         let resultInstance = results.filter(res => res.name === e.name)[0] || {};
                         return (
                             <Accordion.Item key={index} className={`${resultInstance.status === 'passed' ? (
