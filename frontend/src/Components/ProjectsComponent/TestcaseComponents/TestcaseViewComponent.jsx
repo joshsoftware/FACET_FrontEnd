@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Accordion, Col, Row } from 'react-bootstrap';
 
 import { ViewComponent } from 'Components/CustomComponents';
-import ExecuteTestsuiteForm from './ExecuteTestcaseForm';
+import ExecuteTestcaseForm from './ExecuteTestcaseForm';
 
 const TestcaseViewComponent = (props) => {
     const { 
@@ -90,7 +90,7 @@ const TestcaseViewComponent = (props) => {
                 <div className='d-flex'>
                 </div>
             </ViewComponent>
-            <ExecuteTestsuiteForm 
+            <ExecuteTestcaseForm 
                 data={data}
                 environments={environments}
                 isEnvironmentsLoading={isEnvironmentsLoading}

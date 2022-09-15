@@ -3,12 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import AllReports from 'Components/ProjectsComponent/ReportsComponent/AllReports';
-import SingleTestsuiteReport from 'Components/ProjectsComponent/ReportsComponent/SingleTestsuiteReport';
+import SingleTestcaseReport from 'Components/ProjectsComponent/ReportsComponent/SingleTestcaseReport';
 import ShowTestdataCombinationReport from 'Components/ProjectsComponent/ReportsComponent/ShowTestdataCombinationReport';
 import { 
     getReportsRequest, 
-    getSingleTestcaseOfTestsuiteReportRequest, 
-    getSingleTestsuiteReportRequest 
+    getSingleTeststepOfTestcaseReportRequest, 
+    getSingleTestcaseReportRequest 
 } from 'store/Reports/actions';
 
 const mapState = ({ reports }) => ({
@@ -16,8 +16,8 @@ const mapState = ({ reports }) => ({
     isReportsLoading: reports.isReportsLoading,
     isOneReportLoading: reports.isOneReportLoading,
     singleReport: reports.singleReport,
-    isOneTestcaseReportLoading: reports.isOneTestcaseReportLoading,
-    SingleTestcaseReport: reports.SingleTestcaseReport
+    isOneTeststepReportLoading: reports.isOneTeststepReportLoading,
+    singleTeststepReport: reports.singleTeststepReport
 })
 
 const ReportsContainer = () => {
@@ -28,10 +28,10 @@ const ReportsContainer = () => {
     const { 
         isReportsLoading, 
         isOneReportLoading, 
-        isOneTestcaseReportLoading,
+        isOneTeststepReportLoading,
         reports, 
         singleReport,
-        SingleTestcaseReport
+        singleTeststepReport
     } = useSelector(mapState);
 
     useEffect(() => {
@@ -40,28 +40,30 @@ const ReportsContainer = () => {
     
     useEffect(() => {
         if(!isReportsLoading && reportId) {
-            dispatch(getSingleTestsuiteReportRequest({reportId}))
+            dispatch(getSingleTestcaseReportRequest({reportId}))
         }
     }, [reports, reportId])
 
     useEffect(() => {
         if(!isOneReportLoading && tname) {
-            dispatch(getSingleTestcaseOfTestsuiteReportRequest({testcaseName: tname}))
+            dispatch(getSingleTeststepOfTestcaseReportRequest({testcaseName: tname}))
         }
     }, [singleReport, tname])
-    
-    
+
     return (
         tname?(
             <ShowTestdataCombinationReport
-                data={SingleTestcaseReport}
-                isLoading={isOneTestcaseReportLoading}
+                data={singleTeststepReport}
+                isLoading={isOneTeststepReportLoading}
+                projectName={projectName}
             />
         ):(
             reportId?(
-                <SingleTestsuiteReport 
+                <SingleTestcaseReport 
                     data={singleReport}
                     isLoading={isOneReportLoading}
+                    projectName={projectName}
+                    onNavigate={navigate}
                 />
             ):(
                 <AllReports 

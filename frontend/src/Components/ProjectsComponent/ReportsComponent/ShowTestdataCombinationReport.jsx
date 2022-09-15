@@ -10,7 +10,7 @@ import TestdataReportInfo from './components/TestdataReportInfo';
 
 const ShowTestdataCombinationReport = (props) => {
     const { data, isLoading, projectName } = props;
-    
+
     return !isLoading&&(
         Object.keys(data).length===0?(
             <Navigate to={`/project/${projectName}/reports`} />
@@ -61,7 +61,7 @@ const ShowTestdataCombinationReport = (props) => {
                             </small>
                             
                             <Accordion>
-                                {data.testdata_combinations&&data.testdata_combinations.map((item, index) => {
+                                {data?.testdata_combinations.map((item, index) => {
                                     return (
                                         <TestdataReportInfo 
                                             item={item}

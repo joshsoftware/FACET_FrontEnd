@@ -2,16 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types';
 import { Button, Table } from 'react-bootstrap';
 import { EyeFill } from 'react-bootstrap-icons';
-import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 import BadgeComponent from '../../BadgeComponent';
 import { ViewComponent } from '../../CustomComponents';
 
-const SingleTestsuiteReport = (props) => {
-    let navigate = useNavigate();
-
-    const { data, isLoading } = props;
-    const { projectName } = useParams();
+const SingleTestcaseReport = (props) => {
+    const { data, isLoading, projectName, onNavigate } = props;
 
     return !isLoading&&(
         Object.keys(data).length===0?(
@@ -20,17 +17,17 @@ const SingleTestsuiteReport = (props) => {
             <>
                 <ViewComponent
                     disabledBtns
-                    title={data.testsuite.name}
+                    title={data.testcase.name}
                     rightChildrens={
                         <div>
                             <BadgeComponent 
                                 bg="success"
                                 className="mx-1"
-                                label={`${data.no_of_passed_testcases} Passed`}
+                                label={`${data.no_of_passed_teststeps} Passed`}
                             />
                             <BadgeComponent 
                                 bg="danger"
-                                label={`${data.no_of_failed_testcases} Failed`}
+                                label={`${data.no_of_failed_teststeps} Failed`}
                             />
                         </div>
                     }
@@ -49,7 +46,7 @@ const SingleTestsuiteReport = (props) => {
                             </tr>
                         </thead>
                         <tbody>
-                            {data.testcases.map((item, index) => {
+                            {data.teststeps.map((item, index) => {
                                 return (
                                     <tr key={index}>
                                         <td>{index+1}</td>
@@ -75,7 +72,7 @@ const SingleTestsuiteReport = (props) => {
                                             <Button
                                                 size='sm'
                                                 variant='secondary'
-                                                onClick={() => navigate(item.name)}
+                                                onClick={() => onNavigate(item.name)}
                                                 className='d-flex justify-content-center align -items-center'
                                             >
                                                 <EyeFill />
@@ -92,9 +89,11 @@ const SingleTestsuiteReport = (props) => {
     )
 }
 
-export default SingleTestsuiteReport;
+export default SingleTestcaseReport;
 
-SingleTestsuiteReport.propTypes = { 
+SingleTestcaseReport.propTypes = { 
     data: PropTypes.object, 
-    isLoading: PropTypes.bool 
+    isLoading: PropTypes.bool,
+    projectName: PropTypes.string,
+    onNavigate: PropTypes.func
 }

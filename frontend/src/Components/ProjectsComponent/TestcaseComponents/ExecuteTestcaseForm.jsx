@@ -6,7 +6,7 @@ import { ViewComponent } from 'Components/CustomComponents';
 import { FormSelect } from 'Components/forms/Inputs';
 
 
-const ExecuteTestsuiteForm = (props) => {
+const ExecuteTestcaseForm = (props) => {
     const { data, environments, isEnvironmentsLoading, handleExecute } = props;
 
     const [options, setOptions] = useState([]);
@@ -55,9 +55,9 @@ const ExecuteTestsuiteForm = (props) => {
     )
 }
 
-export default ExecuteTestsuiteForm;
+export default ExecuteTestcaseForm;
 
-ExecuteTestsuiteForm.propTypes = {
+ExecuteTestcaseForm.propTypes = {
     data: PropTypes.object,
     environments: PropTypes.array, 
     isEnvironmentsLoading: PropTypes.bool,
