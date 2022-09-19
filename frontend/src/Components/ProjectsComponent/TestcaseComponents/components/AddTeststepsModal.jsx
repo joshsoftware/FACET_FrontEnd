@@ -30,14 +30,11 @@ const AddTeststepsModal = (props) => {
 
     const handleDragStart = (e, position) => {
         draggingItem.current = position;
-        console.log(e.target.innerHTML);
     };
     
     const handleDragEnter = (e, position) => {
         dragOverItem.current = position;
-        console.log(e.target.innerHTML);
         const listCopy = [...selectedTeststeps];
-        console.log(draggingItem.current, dragOverItem.current);
         const draggingItemContent = listCopy[draggingItem.current];
         listCopy.splice(draggingItem.current, 1);
         listCopy.splice(dragOverItem.current, 0, draggingItemContent);
