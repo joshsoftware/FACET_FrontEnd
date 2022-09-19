@@ -119,6 +119,10 @@ const TestcaseContainer = (props) => {
         ))
     }
 
+    const onReorderSelectedTeststeps = (value) => {
+        setSelectedTeststeps(value);
+    }
+
     const onTestdataChangeInSelectedTeststep = (teststep) => {
         let updatedTeststeps = [...selectedTeststeps];
         updatedTeststeps[updatedTeststeps.findIndex(ele => ele.id===teststep.id)] = teststep;
@@ -172,6 +176,7 @@ const TestcaseContainer = (props) => {
                     onAddTeststepDataSave={onAddTeststepDataSave}
                     onchange={handleTestcaseFormDataChange}
                     onRemoveSelectedTeststep={onRemoveSelectedTeststep}
+                    onReorderSelectedTeststeps={onReorderSelectedTeststeps}
                     onSelectedTeststepOrderChange={setSelectedTeststeps}
                     onSelectedTeststepsChange={onSelectedTeststepsChange}
                     onSubmit={handleSubmitTestcaseFormData}

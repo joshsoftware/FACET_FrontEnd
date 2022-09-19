@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Col, Row } from 'react-bootstrap';
 
@@ -13,15 +13,37 @@ const AddTeststepsModal = (props) => {
         onAddTeststepDataSave,
         onRemoveSelectedTeststep,
         onSelectedTeststepsChange,
+        onSelectedTeststepOrderChange,
         selectedTeststeps,
         teststepsOptions,
         onTestdataChangeInSelectedTeststep
     } = props;
 
+
+    const draggingItem = useRef();
+    const dragOverItem = useRef();
+
     const onSave = () => {
         onAddTeststepDataSave();
         onClose();
     }
+
+    const handleDragStart = (e, position) => {
+        draggingItem.current = position;
+    };
+    
+    const handleDragEnter = (e, position) => {
+        dragOverItem.current = position;
+        const listCopy = [...selectedTeststeps];
+        const draggingItemContent = listCopy[draggingItem.current];
+        listCopy.splice(draggingItem.current, 1);
+        listCopy.splice(dragOverItem.current, 0, draggingItemContent);
+    
+        draggingItem.current = dragOverItem.current;
+        dragOverItem.current = null;
+        onSelectedTeststepOrderChange(listCopy);
+    };
+
 
     return (
         <CustomModal show={show} onClose={onClose} size="lg" title="Edit Teststeps in Testcase">
@@ -48,13 +70,20 @@ const AddTeststepsModal = (props) => {
                         <div className='background-secondary rounded py-2 px-3'>
                             {selectedTeststeps?.map((item, index) => {
                                 return (
-                                    <SelectedTeststepComponent 
+                                    <div 
                                         key={index}
-                                        data={item}
-                                        index={index}
-                                        onRemoveSelectedTeststep={onRemoveSelectedTeststep}
-                                        onTestdataChangeInSelectedTeststep={onTestdataChangeInSelectedTeststep}
-                                    />
+                                        onDragStart={(e) => handleDragStart(e, index)}
+                                        onDragOver={(e) => e.preventDefault()}
+                                        onDragEnter={(e) => handleDragEnter(e, index)}
+                                        draggable
+                                    >
+                                        <SelectedTeststepComponent 
+                                            data={item}
+                                            index={index}
+                                            onRemoveSelectedTeststep={onRemoveSelectedTeststep}
+                                            onTestdataChangeInSelectedTeststep={onTestdataChangeInSelectedTeststep}
+                                        />
+                                    </div>
                                 )
                             })}
                         </div>
@@ -80,5 +109,6 @@ AddTeststepsModal.propTypes = {
     onTestdataChangeInSelectedTeststep: PropTypes.func,
     onAddTeststepDataSave: PropTypes.func,
     show: PropTypes.bool,
-    onClose: PropTypes.func
+    onClose: PropTypes.func,
+    onSelectedTeststepOrderChange: PropTypes.func
 }

@@ -33,7 +33,7 @@ const SelectedTeststepComponent = (props) => {
     }
 
     return (
-        <div className="rounded my-2">
+        <div className="rounded my-2" draggable>
             <div 
                 className="bg-white px-4 py-2 rounded  border border-primary d-flex justify-content-between align-items-center"
                 onClick={() => setOpenCollapse(!openCollapse)}
