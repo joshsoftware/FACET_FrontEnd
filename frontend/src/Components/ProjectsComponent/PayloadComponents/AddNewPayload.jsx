@@ -16,6 +16,7 @@ const AddNewPayload = (props) => {
     const [showPayloadInJsonFormat, setShowPayloadInJsonFormat] = useState(false);
 
     const onFormDataChange = (e) => {
+        console.log(e.target.name, e.target.value)
         onchange(e.target.name, e.target.value)
     }
 
@@ -44,7 +45,7 @@ const AddNewPayload = (props) => {
                     placeholder='Name'
                     name='name'
                     value={data.name}
-                    handlechange={onFormDataChange}
+                    onChange={onFormDataChange}
                     disabled={cat==='edit'}
                     isRequired
                     text={data.name.length!==0&&`Your payload will created as ${ConvertToSlug(data.name)}`}

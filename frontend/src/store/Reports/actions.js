@@ -15,33 +15,33 @@ export const getReportsFailure = (data) => ({
     payload: data
 })
 
-export const getSingleTestsuiteReportRequest = (data) => ({
+export const getSingleTestcaseReportRequest = (data) => ({
     type: reportsConstants.GET_SINGLE_REPORT_REQUEST,
     payload: data
 })
 
-export const getSingleTestsuiteReportSuccess = (data) => ({
+export const getSingleTestcaseReportSuccess = (data) => ({
     type: reportsConstants.GET_SINGLE_REPORT_SUCCESS,
     payload: data
 })
 
-export const getSingleTestsuiteReportFailure = (data) => ({
+export const getSingleTestcaseReportFailure = (data) => ({
     type: reportsConstants.GET_SINGLE_REPORT_FAILURE,
     payload: data
 })
 
-export const getSingleTestcaseOfTestsuiteReportRequest = (data) => ({
-    type: reportsConstants.GET_TESTCASE_OF_SINGLE_REPORT_REQUEST,
+export const getSingleTeststepOfTestcaseReportRequest = (data) => ({
+    type: reportsConstants.GET_TESTSTEP_OF_SINGLE_REPORT_REQUEST,
     payload: data
 })
 
-export const getSingleTestcaseOfTestsuiteReportSuccess = (data) => ({
-    type: reportsConstants.GET_TESTCASE_OF_SINGLE_REPORT_SUCCESS,
+export const getSingleTeststepOfTestcaseReportSuccess = (data) => ({
+    type: reportsConstants.GET_TESTSTEP_OF_SINGLE_REPORT_SUCCESS,
     payload: data
 })
 
-export const getSingleTestcaseOfTestsuiteReportFailure = (data) => ({
-    type: reportsConstants.GET_TESTCASE_OF_SINGLE_REPORT_FAILURE,
+export const getSingleTeststepOfTestcaseReportFailure = (data) => ({
+    type: reportsConstants.GET_TESTSTEP_OF_SINGLE_REPORT_FAILURE,
     payload: data
 })
 

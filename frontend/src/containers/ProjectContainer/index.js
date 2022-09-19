@@ -9,8 +9,8 @@ import ProjectOverviewContainer from "./ProjectOverviewContainer";
 import ReportsContainer from "./ReportsContainer";
 import ScheduleContainer from "./ScheduleContainer";
 import SettingsContainer from './SettingsContainer';
+import TeststepContainer from './TeststepContainer';
 import TestcaseContainer from './TestcaseContainer';
-import TestsuiteContainer from './TestsuiteContainer';
 import { ProjectLayout } from "../../Layout";
 import { Outlet } from "react-router-dom";
 
@@ -36,6 +36,6 @@ export {
     ReportsContainer,
     ScheduleContainer,
     SettingsContainer,
-    TestcaseContainer,
-    TestsuiteContainer
+    TeststepContainer,
+    TestcaseContainer
 }

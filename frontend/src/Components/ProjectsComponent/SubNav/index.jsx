@@ -48,13 +48,13 @@ const SubNav = () => {
             ]
         },
         {
-            name: "Testcases",
-            path: `/project/${projectName}/testcases`,
+            name: "Teststeps",
+            path: `/project/${projectName}/teststeps`,
             icon: <CardChecklist />
         },
         {
-            name: "Testsuites",
-            path: `/project/${projectName}/testsuites`,
+            name: "Testcases",
+            path: `/project/${projectName}/testcases`,
             icon: <Stickies />
         },
         {

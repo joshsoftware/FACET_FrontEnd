@@ -1,28 +1,28 @@
-import testsuiteConstants from "./constants";
+import teststepConstants from "./constants";
 
 const INITIAL_STATE = {
     isLoading: true,
-    testsuites: [],
+    teststeps: [],
     errors: []
 }
 
-const testsuiteReducer = (state=INITIAL_STATE, action) => {
+const teststepReducer = (state=INITIAL_STATE, action) => {
     switch (action.type) {
-        case testsuiteConstants.GET_TESTSUITES_REQUEST:
+        case teststepConstants.GET_TESTSTEPS_REQUEST:
             return {
                 ...state,
                 isLoading: true
             }
             
-        case testsuiteConstants.GET_TESTSUITES_SUCCESS:
+        case teststepConstants.GET_TESTSTEPS_SUCCESS:
             return {
                 ...state,
                 isLoading: false,
-                testsuites: action.payload,
+                teststeps: action.payload,
                 errors: []
             }
     
-        case testsuiteConstants.GET_TESTSUITES_FAILURE:
+        case teststepConstants.GET_TESTSTEPS_FAILURE:
             return {
                 ...state,
                 isLoading: false,
@@ -34,4 +34,4 @@ const testsuiteReducer = (state=INITIAL_STATE, action) => {
     }
 }
 
-export default testsuiteReducer;
+export default teststepReducer;

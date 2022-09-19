@@ -69,3 +69,7 @@ FormInput.propTypes = {
     error: PropTypes.bool,
     errorMessage: PropTypes.string
 }
+
+FormInput.defaultProp = {
+    text: ""
+}

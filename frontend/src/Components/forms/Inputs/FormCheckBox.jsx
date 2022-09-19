@@ -13,6 +13,7 @@ const FormCheckBox = (props) => {
         style,
         disabled
     } = props;
+    
     return (
         <Form.Group className={className} style={style}>
             <Form.Check 

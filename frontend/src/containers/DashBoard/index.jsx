@@ -39,7 +39,8 @@ const DashBoard = () => {
         }))
     }
 
-    const handleSubmitAddProjectForm = () => {
+    const handleSubmitAddProjectForm = (e) => {
+        e.preventDefault();
         dispatch(addProject(addProjectFormData));
         toggleModal();
         setAddProjectFormData(INITIAL_PROJECT_FORM_DATA);

@@ -28,19 +28,19 @@ const AddNewSchedule = (props) => {
     return !isLoading && (
         <Form onSubmit={onSubmit}>
             <ViewComponent
-                title="Schedule New Testsuite"
+                title="Schedule New Testcase"
                 type="save"
                 onSave={onSubmit}
-                onSaveDisabled={!data.testsuite || !data.environment || data.frequency_type.length===0 || data.startDateTime.length===0}
+                onSaveDisabled={!data.testcase || !data.environment || data.frequency_type.length===0 || data.startDateTime.length===0}
             >
                 <Row>
                     <FormSelect 
-                        label='Testsuite'
-                        options={options.testsuites}
+                        label='Testcase'
+                        options={options.testcases}
                         handlechange={onSelectChange}
                         className='col-md-6'
-                        value={data.testsuite}
-                        name="testsuite"
+                        value={data.testcase}
+                        name="testcase"
                         isRequired
                     />
                     <FormSelect 

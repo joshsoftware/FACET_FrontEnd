@@ -2,13 +2,13 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
 
 import { getExecuteFailure, getExecuteSuccess } from './actions';
-import { executeTestsuiteApi } from './apis';
+import { executeTestcaseApi } from './apis';
 import executeConstants from './constants';
 
 
 export function* getExecute({ payload }) {
     try {
-        const response = yield call(executeTestsuiteApi, payload);
+        const response = yield call(executeTestcaseApi, payload);
         yield put(getExecuteSuccess(response.result));
     } catch (error) {
         const err = error.data.error
@@ -25,7 +25,7 @@ export function* getExecute({ payload }) {
 export function* addExecute({ payload }) {
     try {
         // yield put(addExecuteSuccess, payload);
-        yield call(getExecute, {payload: { testsuite: payload.testsuite, environment: payload.environment }});
+        yield call(getExecute, {payload: { testcase: payload.testcase, environment: payload.environment }});
     } catch (error) {
         toast.error(error.data.error)
     }

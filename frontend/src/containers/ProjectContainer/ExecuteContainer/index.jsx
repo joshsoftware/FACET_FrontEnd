@@ -16,7 +16,7 @@ const ExecuteContainer = () => {
     const { results, data, isLoading, isError } = useSelector(mapState);
 
     return !isLoading && (isError || Object.entries(data).length===0 )?(
-        <Navigate to={`/project/${projectName}/testsuites/${id}`} />
+        <Navigate to={`/project/${projectName}/testcases/${id}`} />
     ):(
         <ExecuteComponent 
             results={results}

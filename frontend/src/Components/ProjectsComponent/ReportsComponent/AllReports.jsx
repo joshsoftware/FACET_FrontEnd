@@ -19,7 +19,7 @@ const AllReports = (props) => {
             {!isLoading && data.length===0?(
                 <NoResultsFound
                     btnLabel="Run New Suite"
-                    btnOnclick={() => onNavigate(`/project/${projectName}/testsuites`)}
+                    btnOnclick={() => onNavigate(`/project/${projectName}/testcases`)}
                 />
             ):(
                 <Table striped bordered>
@@ -45,21 +45,22 @@ const AllReports = (props) => {
                                         </td>
                                         <td>
                                             <Link to={`${item.id}`} className="text-dark text-decoration-none">
-                                                {item.testsuite.name}
+                                                {item.testcase.name}
                                             </Link>
                                         </td>
                                         <td>{item.executed_by.name}</td>
-                                        <td>{item.no_of_passed_testcases + item.no_of_failed_testcases}</td>
+                                        {console.log(item)}
+                                        <td>{item.no_of_passed_teststeps + item.no_of_failed_teststeps}</td>
                                         <td className='text-success'>
                                             <BadgeComponent 
                                                 bg="success"
-                                                label={item.no_of_passed_testcases}
+                                                label={item.no_of_passed_teststeps}
                                             />
                                         </td>
                                         <td className='text-danger'>
                                             <BadgeComponent 
                                                 bg="danger"
-                                                label={item.no_of_failed_testcases}
+                                                label={item.no_of_failed_teststeps}
                                             />
                                         </td>
                                         <td>{new Date(item.executed_on).toLocaleString()}</td>

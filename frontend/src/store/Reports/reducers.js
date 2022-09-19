@@ -6,8 +6,8 @@ const INITIAL_STATE = {
     errors: [],
     isOneReportLoading: true,
     singleReport: {},
-    isOneTestcaseReportLoading: true,
-    SingleTestcaseReport: {},
+    isOneTeststepReportLoading: true,
+    singleTeststepReport: {},
     isAddCommentLoading: false
 }
 
@@ -26,7 +26,7 @@ const reportsReducer = (state=INITIAL_STATE, action) => {
                 reports: action.payload,
                 errors: []
             }
-    
+
         case reportsConstants.GET_REPORTS_FAILURE:
             return {
                 ...state,
@@ -46,7 +46,7 @@ const reportsReducer = (state=INITIAL_STATE, action) => {
                 isOneReportLoading: false,
                 singleReport: action.payload
             }
-        
+
         case reportsConstants.GET_SINGLE_REPORT_FAILURE:
             return {
                 ...state,
@@ -54,32 +54,32 @@ const reportsReducer = (state=INITIAL_STATE, action) => {
                 errors: action.payload
             }
 
-        case reportsConstants.GET_TESTCASE_OF_SINGLE_REPORT_REQUEST:
+        case reportsConstants.GET_TESTSTEP_OF_SINGLE_REPORT_REQUEST:
             return {
                 ...state,
-                isOneTestcaseReportLoading: true
+                isOneTeststepReportLoading: true
             }
 
-        case reportsConstants.GET_TESTCASE_OF_SINGLE_REPORT_SUCCESS:
+        case reportsConstants.GET_TESTSTEP_OF_SINGLE_REPORT_SUCCESS:
             return {
                 ...state,
-                isOneTestcaseReportLoading: false,
-                SingleTestcaseReport: action.payload
+                isOneTeststepReportLoading: false,
+                singleTeststepReport: action.payload
             }
-        
-        case reportsConstants.GET_TESTCASE_OF_SINGLE_REPORT_FAILURE:
+
+        case reportsConstants.GET_TESTSTEP_OF_SINGLE_REPORT_FAILURE:
             return {
                 ...state,
-                isOneTestcaseReportLoading: false,
+                isOneTeststepReportLoading: false,
                 errors: action.payload
             }
-        
+
         case reportsConstants.ADD_COMMENT_REQUEST:
             return {
                 ...state,
                 isAddCommentLoading: true
             }
-        
+
         case reportsConstants.ADD_COMMENT_SUCCESS:
             return {
                 ...state,
@@ -92,7 +92,7 @@ const reportsReducer = (state=INITIAL_STATE, action) => {
                 isAddCommentLoading: false,
                 errors: action.payload
             }
-    
+
         default:
             return state;
     }

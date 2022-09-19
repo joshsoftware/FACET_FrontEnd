@@ -22,7 +22,7 @@ const TestdatOutcomeModal = (props) => {
             status: "",
             comment: "",
             reportId: reportId,
-            testcase: tname,
+            teststep: tname,
             testdata: data.testdata_name,
             project: projectName
         }   

@@ -34,7 +34,6 @@ export function* editTestcase({ payload }) {
     }
 }
 
-
 export default function* testcaseSagas() {
     yield takeLatest(testcaseConstants.GET_TESTCASES_REQUEST, getTestcases);
     yield takeLatest(testcaseConstants.ADD_TESTCASES_REQUEST, addTestcase);
