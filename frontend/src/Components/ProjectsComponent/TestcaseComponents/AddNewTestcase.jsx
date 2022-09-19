@@ -22,7 +22,7 @@ const AddNewTestcase = (props) => {
         onAddTeststepDataSave,
         onchange,
         onRemoveSelectedTeststep,
-        // onSelectedTeststepOrderChange,
+        onSelectedTeststepOrderChange,
         onSelectedTeststepsChange,
         onSubmit,
         onTestdataChangeInSelectedTeststep,
@@ -54,6 +54,7 @@ const AddNewTestcase = (props) => {
                     selectedTeststeps={selectedTeststeps}
                     onAddTeststepDataSave={onAddTeststepDataSave}
                     onRemoveSelectedTeststep={onRemoveSelectedTeststep}
+                    onSelectedTeststepOrderChange={onSelectedTeststepOrderChange}
                     onTestdataChangeInSelectedTeststep={onTestdataChangeInSelectedTeststep}
                 />
                 <FormInput 
