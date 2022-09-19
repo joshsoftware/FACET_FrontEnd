@@ -2,26 +2,26 @@ import scheduleConstants from "./constants";
 
 const INITIAL_STATE = {
     isLoading: true,
-    scheduledSuites: [],
+    scheduledCases: [],
     errors: []
 }
 
 const scheduleReducer = (state=INITIAL_STATE, action) => {
     switch (action.type) {
-        case scheduleConstants.GET_SCHEDULE_TESTSUITE_REQUEST:
+        case scheduleConstants.GET_SCHEDULE_TESTCASE_REQUEST:
             return {
                 ...state,
                 isLoading: true
             }
         
-        case scheduleConstants.GET_SCHEDULE_TESTSUITE_SUCCESS:
+        case scheduleConstants.GET_SCHEDULE_TESTCASE_SUCCESS:
             return {
                 ...state,
                 isLoading: false,
-                scheduledSuites: action.payload
+                scheduledCases: action.payload
             }
         
-        case scheduleConstants.GET_SCHEDULE_TESTSUITE_FAILURE:
+        case scheduleConstants.GET_SCHEDULE_TESTCASE_FAILURE:
             return {
                 ...state,
                 isLoading: false,

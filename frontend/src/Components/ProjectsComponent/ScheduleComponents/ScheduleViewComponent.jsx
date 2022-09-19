@@ -15,18 +15,18 @@ const ScheduleViewComponent = (props) => {
 
     return !isLoading && (
         <ViewComponent 
-            title="Schedule Testsuites"
+            title="Schedule Testcases"
             disabledBtns
             rightChildrens={
                 <AddButton 
-                    label="Schedule Testsuite"
+                    label="Schedule Testcase"
                     handleClick={AddNew}
                 />
             }
         >
             {data.length===0?(
                 <NoResultsFound 
-                    btnLabel="Schedule New Suite"
+                    btnLabel="Schedule New Testcase"
                     btnOnclick={AddNew}
                 />
             ):(
@@ -34,7 +34,7 @@ const ScheduleViewComponent = (props) => {
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Testsuite</th>
+                            <th>Testcase</th>
                             <th>Environment</th>
                             <th>Frequency</th>
                             <th>Created On</th>
@@ -47,7 +47,7 @@ const ScheduleViewComponent = (props) => {
                             return (
                                 <tr key={index}>
                                     <td>{index + 1}</td>
-                                    <td>{item.testsuite}</td>
+                                    <td>{item.testcase}</td>
                                     <td>{item.environment}</td>
                                     <td className='text-capitalize'>
                                         {item.frequency_type==="custom"?(
