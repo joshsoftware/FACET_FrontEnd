@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Table } from 'react-bootstrap';
 import { PencilSquare, TrashFill } from 'react-bootstrap-icons';
 
 import ExpectedOutcomeModal from './ExpectedOutcomeModal';
 import './style.css';
+import TableComponent from 'Components/CustomComponents/TableComponent/index';
 
 
 const ExpectedOutcomeTable = (props) => {
@@ -56,41 +56,37 @@ const ExpectedOutcomeTable = (props) => {
                 onEditField={onEditField}
                 onClose={onCloseModal} 
             />
-            <Table striped hover className='border mb-0'>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Type</th>
-                        <th>Value</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {expectedOutcomeData.map((item, index) => {
-                        return (
-                            <tr key={index}>
-                                <td>{item.name}</td>
-                                <td className='text-capitalize'>{item.type}</td>
-                                <td>{item.value}</td>
-                                <td className='tableActions'>
-                                    <PencilSquare 
-                                        color='#505050' 
-                                        className='mx-1 icon'
-                                        onClick={() => onStartEditField(item, index)}
+            <TableComponent
+                striped
+                hover
+                bordered
+                className="mb-0"
+                headings={["Name", "Type", "Value", ""]}
+            >
+                {expectedOutcomeData.map((item, index) => {
+                    return (
+                        <tr key={index}>
+                            <td>{item.name}</td>
+                            <td className='text-capitalize'>{item.type}</td>
+                            <td>{item.value}</td>
+                            <td className='tableActions'>
+                                <PencilSquare 
+                                    color='#505050' 
+                                    className='mx-1 icon'
+                                    onClick={() => onStartEditField(item, index)}
+                                />
+                                {index!==0&&(
+                                    <TrashFill 
+                                        color='#ff3232' 
+                                        className='mx-1 icon'  
                                     />
-                                    {index!==0&&(
-                                        <TrashFill 
-                                            color='#ff3232' 
-                                            className='mx-1 icon'  
-                                        />
-                                    )}
-                                    
-                                </td>
-                            </tr>
-                        )
-                    })}
-                </tbody>
-            </Table>
+                                )}
+                                
+                            </td>
+                        </tr>
+                    )
+                })}
+            </TableComponent>
             <div className='w-100 border border-top-0 px-4 alert-primary rounded-bottom addNewFieldTableButton' onClick={() => setShowModal(true)}>
                 <span className='plusBtn'>+</span> Add New Field
             </div>

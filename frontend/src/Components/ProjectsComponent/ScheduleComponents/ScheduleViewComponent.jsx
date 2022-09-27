@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types';
-import { Table } from 'react-bootstrap';
 
 import { ViewComponent } from 'Components/CustomComponents';
 import { AddButton } from 'Components/forms/Buttons';
 import NoResultsFound from 'Components/NoResultsFound';
+import TableComponent from 'Components/CustomComponents/TableComponent/index';
 
 const ScheduleViewComponent = (props) => {
     const { data, isLoading, onNavigate } = props;
@@ -30,38 +30,37 @@ const ScheduleViewComponent = (props) => {
                     btnOnclick={AddNew}
                 />
             ):(
-                <Table striped bordered>
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Testcase</th>
-                            <th>Environment</th>
-                            <th>Frequency</th>
-                            <th>Created On</th>
-                            <th>Status</th>
-                            <th>Scheduled By</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {data.map((item, index) => {
-                            return (
-                                <tr key={index}>
-                                    <td>{index + 1}</td>
-                                    <td>{item.testcase}</td>
-                                    <td>{item.environment}</td>
-                                    <td className='text-capitalize'>
-                                        {item.frequency_type==="custom"?(
-                                            item.frequency.days + "d:" + item.frequency.hours + "h:" + item.frequency.minutes + "m"
-                                        ):(item.frequency_type)}
-                                    </td>
-                                    <td>{item.created_at}</td>
-                                    <td className='text-capitalize'>{item.status}</td>
-                                    <td>{item.scheduled_by}</td>
-                                </tr>
-                            )
-                        })}
-                    </tbody>
-                </Table>
+                <TableComponent
+                    striped
+                    bordered
+                    headings={[
+                        "#",
+                        "Testcase",
+                        "Environment",
+                        "Frequency",
+                        "Created on",
+                        "Status",
+                        "Scheduled By"
+                    ]}
+                >
+                    {data.map((item, index) => {
+                        return (
+                            <tr key={index}>
+                                <td>{index + 1}</td>
+                                <td>{item.testcase}</td>
+                                <td>{item.environment}</td>
+                                <td className='text-capitalize'>
+                                    {item.frequency_type==="custom"?(
+                                        item.frequency.days + "d:" + item.frequency.hours + "h:" + item.frequency.minutes + "m"
+                                    ):(item.frequency_type)}
+                                </td>
+                                <td>{item.created_at}</td>
+                                <td className='text-capitalize'>{item.status}</td>
+                                <td>{item.scheduled_by}</td>
+                            </tr>
+                        )
+                    })}
+                </TableComponent>
             )}
         </ViewComponent>
     )

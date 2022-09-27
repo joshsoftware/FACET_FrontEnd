@@ -1,11 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types';
-import { Button, Table } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import { EyeFill } from 'react-bootstrap-icons';
 import { Navigate } from 'react-router-dom';
 
 import BadgeComponent from '../../BadgeComponent';
 import { ViewComponent } from '../../CustomComponents';
+import TableComponent from 'Components/CustomComponents/TableComponent/index';
 
 const SingleTestcaseReport = (props) => {
     const { data, isLoading, projectName, onNavigate } = props;
@@ -32,20 +33,20 @@ const SingleTestcaseReport = (props) => {
                         </div>
                     }
                 >
-                    <Table bordered striped>
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Testcase</th>
-                                <th>Method</th>
-                                <th>No. of Testdata</th>
-                                <th>Status</th>
-                                <th>Passed</th>
-                                <th>Failed</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                    <TableComponent
+                        striped
+                        bordered
+                        headings={[
+                            "#", 
+                            "Testcase", 
+                            "Method", 
+                            "No. of Testdata", 
+                            "Status", 
+                            "Passed", 
+                            "Failed", 
+                            ""
+                        ]}
+                        >
                             {data.teststeps.map((item, index) => {
                                 return (
                                     <tr key={index}>
@@ -81,8 +82,7 @@ const SingleTestcaseReport = (props) => {
                                     </tr>
                                 )
                             })}
-                        </tbody>
-                    </Table>
+                    </TableComponent>
                 </ViewComponent>
             </>
         )

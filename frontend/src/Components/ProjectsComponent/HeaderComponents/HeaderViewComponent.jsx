@@ -1,8 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types';
-import { Col, Row, Table } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 
 import { ViewComponent } from 'Components/CustomComponents';
+import TableComponent from 'Components/CustomComponents/TableComponent/index';
 
 const HeaderViewComponent = (props) => {
     const { isLoading, data, projectName } = props;
@@ -21,26 +22,22 @@ const HeaderViewComponent = (props) => {
             <Row>
                 <Col className='pb-4'>
                     <small><b>Header</b></small>
-                    <Table striped bordered hover>
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Property</th>
-                                <th>Value</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {Object.entries(data.header || {}).map(([key, value], index) => {
-                                return (
-                                    <tr key={index}>
-                                        <td>{index + 1}</td>
-                                        <td>{key}</td>
-                                        <td>{value}</td>
-                                    </tr>
-                                )
-                            })}
-                        </tbody>
-                    </Table>
+                    <TableComponent
+                        striped
+                        bordered
+                        hover
+                        headings={["#", "Property", "Value"]}
+                    >
+                        {Object.entries(data.header || {}).map(([key, value], index) => {
+                            return (
+                                <tr key={index}>
+                                    <td>{index + 1}</td>
+                                    <td>{key}</td>
+                                    <td>{value}</td>
+                                </tr>
+                            )
+                        })}
+                    </TableComponent>
                 </Col>
             </Row>
             <Row>
