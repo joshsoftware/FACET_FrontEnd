@@ -16,14 +16,7 @@ const INITIAL_PAYLOAD_FORM_DATA = {
     "name": "", 
     "parameters": {"": ""},
     "payload": JSON.stringify({}),
-    "expected_outcome": [
-        {
-            name: "status_code",
-            type: "number",
-            isExact: true,
-            value: 200
-        }
-    ]
+    "expected_outcomes": []
 }
 
 const PayloadContainer = (props) => {

@@ -11,3 +11,15 @@ export const BOOLEAN_SELECT_OPTION = [
     {value: true, label: 'True'},
     {value: false, label: 'False'},
 ]
+
+export const EXPECTED_OUTCOME_TEMPLATE = {
+    name: "",
+    expected_outcome: [
+        {
+            name: "status_code",
+            type: "number",
+            isExact: true,
+            value: 200
+        }
+    ]
+}

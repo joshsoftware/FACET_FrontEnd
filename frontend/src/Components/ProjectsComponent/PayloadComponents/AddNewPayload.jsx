@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Form } from 'react-bootstrap';
+import { Accordion, Form } from 'react-bootstrap';
 
 import Editor from 'Components/Editor';
 import FormInput from 'Components/forms/Inputs/FormInput';
@@ -8,12 +8,15 @@ import KeyValuePairsFormField from 'Components/forms/KeyValuePairsFormField';
 import { ViewComponent } from 'Components/CustomComponents';
 import { ConvertToSlug, IsValidJson } from 'utils';
 
-import ExpectedOutcomeTable from '../ExpectedOutcomeTable';
+import ExpOutcomeAccordion from './components/ExpOutcomeAccordion';
+import AddExpOutcomeForm from './components/AddExpOutcomeForm';
+import { AddButton } from 'Components/forms/Buttons/index';
 
 const AddNewPayload = (props) => {
     const { cat, data, isLoading, onchange, handleSubmit } = props;
 
     const [showPayloadInJsonFormat, setShowPayloadInJsonFormat] = useState(false);
+    const [showAddExpOutForm, setShowAddExpOutForm] = useState(false);
 
     const onFormDataChange = (e) => {
         console.log(e.target.name, e.target.value)
@@ -24,8 +27,17 @@ const AddNewPayload = (props) => {
         onchange('payload', result);
     };
 
-    const onExpectedOutcomeFieldsChange = (result) => {
-        onchange('expected_outcome', result);
+    const onExpectedOutcomeFieldsChange = (index, result) => {
+        // update according to new functionalities
+        let newResults = [...data.expected_outcomes]
+        newResults[index] = result;
+        onchange('expected_outcomes', newResults);
+    }
+
+    const onAddNewExpOutcomeEntry = (res) => {
+        let newResults = [...data.expected_outcomes];
+        newResults.push(res);
+        onchange('expected_outcomes', newResults);
     }
 
     const onParameterFieldsChange = (result) => {
@@ -82,16 +94,35 @@ const AddNewPayload = (props) => {
                         </>
                     }
                 />
-                <FormInput 
-                    label="Expected Outcome"
-                    element={
-                        <ExpectedOutcomeTable 
-                            data={data.expected_outcome}
-                            onchange={onExpectedOutcomeFieldsChange}
+                <div>
+                    <label>Expected Outcomes<span className='text-danger'>*</span></label>
+                    <Accordion >
+                        {data?.expected_outcomes?.map((item, index) => {
+                            return (
+                                <ExpOutcomeAccordion 
+                                    data={item}
+                                    key={index}
+                                    eventKey={index}
+                                    onChange={res => onExpectedOutcomeFieldsChange(index, res)}
+                                />
+                            )
+                        })}
+                    </Accordion>
+                    {console.log(data?.expected_outcomes?.length===0)}
+                    {showAddExpOutForm || data?.expected_outcomes?.length===0 ?(
+                        <AddExpOutcomeForm
+                            onSave={onAddNewExpOutcomeEntry}
+                            onClose={() => setShowAddExpOutForm(false)}
                         />
-                    }
-                    isRequired
-                />
+                    ):(
+                        <div className='text-center my-1'>
+                            <AddButton 
+                                size='sm'
+                                handleClick={() => setShowAddExpOutForm(true)}
+                            />
+                        </div>
+                    )}
+                    </div>
             </ViewComponent>
         </Form>
     )

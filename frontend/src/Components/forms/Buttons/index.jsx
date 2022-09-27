@@ -71,10 +71,10 @@ const NextButton = ({ handleClick, disabled, size, label, ...props }) => {
     )
 }
 
-const SaveButton = ({ handleClick, disabled, size, label, ...props }) => {
+const SaveButton = ({ handleClick, disabled, size, type, label, ...props }) => {
     return (
         <Button
-            type='submit'
+            type={type?type:'submit'}
             onClick={handleClick}
             variant='success'
             disabled={disabled}
@@ -143,7 +143,8 @@ AddButton.propTypes = {
     disabled: PropTypes.bool, 
     handleClick: PropTypes.func, 
     size: PropTypes.string, 
-    label: PropTypes.string
+    label: PropTypes.string,
+    type: PropTypes.string
 }
 
 CloseButton.propTypes = {...PropTypes.instanceOf(AddButton)}
