@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Table } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import { EyeFill } from 'react-bootstrap-icons';
 import { Link } from 'react-router-dom';
 
 import { ViewComponent } from 'Components/CustomComponents';
 import BadgeComponent from 'Components/BadgeComponent';
 import NoResultsFound from 'Components/NoResultsFound';
+import TableComponent from 'Components/CustomComponents/TableComponent/index';
 
 const AllReports = (props) => {
     const { data, isLoading, projectName, onNavigate } = props;
@@ -22,21 +23,21 @@ const AllReports = (props) => {
                     btnOnclick={() => onNavigate(`/project/${projectName}/testcases`)}
                 />
             ):(
-                <Table striped bordered>
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Test Suite</th>
-                            <th>Executed By</th>
-                            <th>Total Testcaes</th>
-                            <th>Passed</th>
-                            <th>Failed</th>
-                            <th>Executed On</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {!isLoading&&(
+                <TableComponent
+                    striped
+                    bordered
+                    headings={[
+                        "#", 
+                        "Test Suite", 
+                        "Executed By",
+                        "Total Testcases", 
+                        "Passed", 
+                        "Failed", 
+                        "Executed On", 
+                        ""
+                    ]}
+                >
+                    {!isLoading&&(
                             data.map((item, index) => {
                                 return (
                                     <tr key={index}>
@@ -78,8 +79,7 @@ const AllReports = (props) => {
                                 )
                             })
                         )}
-                    </tbody>
-                </Table>
+                </TableComponent>
             )}
         </ViewComponent>
     )

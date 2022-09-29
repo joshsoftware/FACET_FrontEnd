@@ -6,6 +6,7 @@ import { ViewComponent } from 'Components/CustomComponents';
 import { AddButton } from 'Components/forms/Buttons';
 import JSONView from 'Components/JSONView';
 import AddNewTestdata from './AddNewTestdata';
+import TableComponent from 'Components/CustomComponents/TableComponent/index';
 
 const TeststepViewComponent = (props) => {
     const { 
@@ -82,24 +83,61 @@ const TeststepViewComponent = (props) => {
                                 <Accordion.Body>
                                     <Row>
                                         <Col md={6}>
-                                            <Col md={12}>
-                                                <div><small>Parameters</small></div>
-                                                <JSONView 
-                                                    data={item.parameters}
-                                                />
-                                            </Col>
-                                            <Col md={12}>
-                                                <div><small>Payload</small></div>
-                                                <pre>
-                                                    {JSON.stringify(item.payload, null, 2)}
-                                                </pre>
-                                            </Col>
+                                            <div><small>Parameters</small></div>
+                                            <TableComponent 
+                                                striped 
+                                                bordered 
+                                                size='sm' 
+                                                headings={["Key", "Value"]}
+                                            >
+                                                {Object.entries(item?.parameters).map(([key, val], ind) => {
+                                                    return (
+                                                        <tr key={ind}>
+                                                            <td>{key}</td>
+                                                            <td>{val}</td>
+                                                        </tr>
+                                                    )
+                                                })}
+                                            </TableComponent>
                                         </Col>
                                         <Col md={6}>
+                                            <div><small>Payload</small></div>
+                                            <JSONView 
+                                                data={item.payload}
+                                            />
+                                        </Col>
+                                        <Col md={12}>
                                             <div><small>Expected Outcome</small></div>
-                                            <pre>
-                                                {JSON.stringify(item.expected_outcome, null, 2)}
-                                            </pre>
+                                            <TableComponent
+                                                striped
+                                                bordered
+                                                headings={[
+                                                    "#", 
+                                                    "Name", 
+                                                    "Type",
+                                                    "isExact",
+                                                    "Value",
+                                                    "Validations"
+                                                ]}
+                                            >
+                                                {item?.expected_outcome?.map((itemData, index) => {
+                                                    return (
+                                                        <tr key={index}>
+                                                            <td>{index+1}</td>
+                                                            <td>{itemData.name}</td>
+                                                            <td>{itemData.type}</td>
+                                                            <td>{itemData.isExact?"Yes":"No"}</td>
+                                                            <td>{itemData.value || "-"}</td>
+                                                            <td>
+                                                                <pre className='mb-0'>
+                                                                    {JSON.stringify(itemData.validations, null, 2) || "-"}
+                                                                </pre>
+                                                            </td>
+                                                        </tr>
+                                                    )
+                                                })}
+
+                                            </TableComponent>
                                         </Col>
                                     </Row>
                                 </Accordion.Body>

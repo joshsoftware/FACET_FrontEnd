@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
-import { NavDropdown, Table } from 'react-bootstrap';
+import { NavDropdown } from 'react-bootstrap';
 import { PersonCircle } from 'react-bootstrap-icons';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -9,6 +9,7 @@ import AddMembersInProject from 'Components/DashboardComponent/ProjectAdmin/AddM
 import { AddButton } from 'Components/forms/Buttons';
 import { addMembersInProjectRequest, getProjectMembersRequest, removeMembersInProjectRequest } from 'store/Projects/actions';
 import { getAllUsersRequest } from 'store/User/actions';
+import TableComponent from 'Components/CustomComponents/TableComponent/index';
 
 const mapState = ({ projectMembers, user, getUsers }) => ({
     members: projectMembers.members,
@@ -92,50 +93,39 @@ const MemberContainer = () => {
                 <ViewComponent
                     disabledHeader
                 >
-                    <Table striped>
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Member</th>
-                                <th>Role</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {!isLoading&&(
-                                members.map((item, index) => {
-                                    return (
-                                        <tr key={index}>
-                                            <td>{index+1}</td>
-                                            <td>
-                                                <PersonCircle 
-                                                    size={24}
-                                                    className="mx-2"
-                                                />
-                                                {item.name}
-                                            </td>
-                                            <td>{item.is_project_admin?"Admin":"Member"}</td>
-                                            <td>
-                                                <NavDropdown 
-                                                    title="More" 
-                                                    disabled={project_admin!==user.id || project_admin===item.id}
-                                                    style={{lineHeight: "10px"}}
+                    <TableComponent striped headings={["#", "Member", "Role", "Actions"]} >
+                        {!isLoading&&(
+                            members.map((item, index) => {
+                                return (
+                                    <tr key={index}>
+                                        <td>{index+1}</td>
+                                        <td>
+                                            <PersonCircle 
+                                                size={24}
+                                                className="mx-2"
+                                            />
+                                            {item.name}
+                                        </td>
+                                        <td>{item.is_project_admin?"Admin":"Member"}</td>
+                                        <td>
+                                            <NavDropdown 
+                                                title="More" 
+                                                disabled={project_admin!==user.id || project_admin===item.id}
+                                                style={{lineHeight: "10px"}}
+                                            >
+                                                <NavDropdown.Item 
+                                                    onClick={() => removeMember(item.id)}
+                                                    style={{lineHeight: 'initial'}}
                                                 >
-                                                    <NavDropdown.Item 
-                                                        onClick={() => removeMember(item.id)}
-                                                        style={{lineHeight: 'initial'}}
-                                                    >
-                                                        Remove from Project
-                                                    </NavDropdown.Item>
-                                                </NavDropdown>
-                                            </td>
-                                        </tr>
-                                    )
-                                })
-                            )}
-                        </tbody>
-                    </Table>
-
+                                                    Remove from Project
+                                                </NavDropdown.Item>
+                                            </NavDropdown>
+                                        </td>
+                                    </tr>
+                                )
+                            })
+                        )}
+                    </TableComponent>
                 </ViewComponent>
             </div>
         </>

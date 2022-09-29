@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Accordion, Tab, Table, Tabs } from 'react-bootstrap';
+import { Accordion, Tab, Tabs } from 'react-bootstrap';
 
 import BadgeComponent from 'Components/BadgeComponent';
 import JSONView from 'Components/JSONView';
 import TestdataOutcomeTable from './TestdataOutcomeTable';
+import TableComponent from 'Components/CustomComponents/TableComponent/index';
 
 
 const TestdataReportInfo = (props) => {
@@ -25,24 +26,20 @@ const TestdataReportInfo = (props) => {
                     defaultActiveKey="outcome"
                 >
                     <Tab eventKey="parameters" title="Parameters">
-                        <Table striped bordered>
-                            <thead>
-                                <tr>
-                                    <th>Key</th>
-                                    <th>Value</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {Object.entries(item.parameters).map(([key, val], ind) => {
-                                    return (
-                                        <tr key={ind}>
-                                            <td>{key}</td>
-                                            <td>{val}</td>
-                                        </tr>
-                                    )
-                                })}
-                            </tbody>
-                        </Table>
+                        <TableComponent
+                            striped
+                            bordered
+                            headings={["Key", "Value"]}
+                        >
+                            {Object.entries(item.parameters).map(([key, val], ind) => {
+                                return (
+                                    <tr key={ind}>
+                                        <td>{key}</td>
+                                        <td>{val}</td>
+                                    </tr>
+                                )
+                            })}
+                        </TableComponent>
                     </Tab>
                     <Tab eventKey="payload" title="Payload">
                         <JSONView 
