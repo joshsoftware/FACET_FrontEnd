@@ -33,6 +33,11 @@ const ExpectedOutcomeTable = (props) => {
         setEditData(null);
     }
 
+    const onRemoveField = (ind) => {
+        let currData = expectedOutcomeData.splice(ind, 1);
+        setExpectedOutcomeData(currData);
+    }
+
     const onCloseModal = () => {
         setShowModal(false);
         setEditData(null);
@@ -79,9 +84,9 @@ const ExpectedOutcomeTable = (props) => {
                                     <TrashFill 
                                         color='#ff3232' 
                                         className='mx-1 icon'  
+                                        onClick={() => onRemoveField(index)}
                                     />
-                                )}
-                                
+                                    )}
                             </td>
                         </tr>
                     )
