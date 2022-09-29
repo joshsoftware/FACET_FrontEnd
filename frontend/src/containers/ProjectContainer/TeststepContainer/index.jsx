@@ -122,7 +122,6 @@ const TeststepContainer = (props) => {
     }
 
     const handleTestdataFormChange = (key, value) => {
-        console.log(key, value)
         setTestdataFormData(p => ({
             ...p,
             [key]: value

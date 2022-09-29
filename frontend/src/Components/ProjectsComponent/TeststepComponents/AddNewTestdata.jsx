@@ -17,9 +17,7 @@ const AddNewTestdata = (props) => {
     const [showPayloadInJsonFormat, setShowPayloadInJsonFormat] = useState(false);
     const [selectOptions, setSelectOptions] = useState([]);
 
-    console.log("first")
     useEffect(() => {
-        console.log('UseEffect called')
         let options = [];
         data.expected_outcome.forEach(element => {
             options.push({label: element.name, value: element.name});

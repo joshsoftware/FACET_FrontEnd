@@ -44,7 +44,6 @@ const PayloadContainer = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(payloadsFormData)
         if(cat==='add') {
             dispatch(addPayloadsRequest({
                 ...payloadsFormData, 

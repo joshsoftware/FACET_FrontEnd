@@ -19,7 +19,6 @@ const AddNewPayload = (props) => {
     const [showAddExpOutForm, setShowAddExpOutForm] = useState(false);
 
     const onFormDataChange = (e) => {
-        console.log(e.target.name, e.target.value)
         onchange(e.target.name, e.target.value)
     }
 
@@ -108,7 +107,6 @@ const AddNewPayload = (props) => {
                             )
                         })}
                     </Accordion>
-                    {console.log(data?.expected_outcome?.length===0)}
                     {showAddExpOutForm || data?.expected_outcome?.length===0 ?(
                         <AddExpOutcomeForm
                             onSave={onAddNewExpOutcomeEntry}

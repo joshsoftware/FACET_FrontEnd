@@ -49,7 +49,6 @@ const AllReports = (props) => {
                                             </Link>
                                         </td>
                                         <td>{item.executed_by.name}</td>
-                                        {console.log(item)}
                                         <td>{item.no_of_passed_teststeps + item.no_of_failed_teststeps}</td>
                                         <td className='text-success'>
                                             <BadgeComponent 

@@ -23,8 +23,6 @@ const AddValueField = ({ data, onSuccess }) => {
     useEffect(() => {
         setFormData({...formData, value: data.value})
     }, [data])
-    
-    console.log(data.type.toLowerCase())
 
     return (
         <>
