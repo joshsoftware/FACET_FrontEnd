@@ -6,25 +6,12 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { SubComponentsNav } from 'Components/ProjectsComponent';
 import { addPayloadsRequest, editPayloadsRequest, getPayloadsRequest } from 'store/Payloads/actions';
 import { AddNewPayload, PayloadViewComponent } from 'Components/ProjectsComponent/PayloadComponents';
+import { INITIAL_PAYLOAD_FORM_DATA } from 'constants/appConstants';
 
 const mapState = ({ payloads }) => ({
     payloads: payloads.payloads,
     isLoading: payloads.isLoading
 })
-
-const INITIAL_PAYLOAD_FORM_DATA = {
-    "name": "", 
-    "parameters": {"": ""},
-    "payload": JSON.stringify({}),
-    "expected_outcome": [
-        {
-            name: "status_code",
-            type: "number",
-            isExact: true,
-            value: 200
-        }
-    ]
-}
 
 const PayloadContainer = (props) => {
     let dispatch = useDispatch();
@@ -81,8 +68,6 @@ const PayloadContainer = (props) => {
             id: selectedItem?.id || INITIAL_PAYLOAD_FORM_DATA.id
         }))
     }, [selectedItem])
-    
-    
     
     return (
         <>

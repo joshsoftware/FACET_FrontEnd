@@ -7,6 +7,7 @@ import {
     FormInput,
     FormSelect
 } from 'Components/forms/Inputs';
+import { BOOLEAN_SELECT_OPTION } from 'constants/appConstants';
 
 const AddValueField = ({ data, onSuccess }) => {
     const [formData, setFormData] = useState({value: ""});
@@ -22,7 +23,6 @@ const AddValueField = ({ data, onSuccess }) => {
     useEffect(() => {
         setFormData({...formData, value: data.value})
     }, [data])
-    
 
     return (
         <>
@@ -31,7 +31,7 @@ const AddValueField = ({ data, onSuccess }) => {
                     <FormSelect 
                         label="Value"
                         name="value"
-                        options={[['true', 'True'], ['false', 'False']]}
+                        options={BOOLEAN_SELECT_OPTION}
                         value={formData.value}
                         handlechange={onchange}
                         isRequired
@@ -39,7 +39,7 @@ const AddValueField = ({ data, onSuccess }) => {
                 ):(
                     <FormInput 
                         label="Value"
-                        type={data.type}
+                        type={data.type.toLowerCase()==='datetime'?'datetime-local':data.type.toLowerCase()}
                         name="value"
                         value={formData.value}
                         onChange={onchange}
