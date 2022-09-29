@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Form } from 'react-bootstrap';
 import { toast } from 'react-toastify';
@@ -9,11 +9,24 @@ import { FormInput } from 'Components/forms/Inputs';
 import ExpectedOutcomeTable from '../ExpectedOutcomeTable';
 import KeyValuePairsFormField from 'Components/forms/KeyValuePairsFormField';
 import { ConvertToSlug } from 'utils';
+import FormSelect from 'Components/forms/Inputs/FormSelect';
 
 const AddNewTestdata = (props) => {
     const { data, onChange, onSubmit, handleClose } = props;
 
     const [showPayloadInJsonFormat, setShowPayloadInJsonFormat] = useState(false);
+    const [selectOptions, setSelectOptions] = useState([]);
+
+    console.log("first")
+    useEffect(() => {
+        console.log('UseEffect called')
+        let options = [];
+        data.expected_outcome.forEach(element => {
+            options.push({label: element.name, value: element.name});
+        });
+        setSelectOptions(options);
+    }, [])
+    
 
     const onchange = (e) => {
         onChange(e.target.name, e.target.value)
@@ -30,7 +43,9 @@ const AddNewTestdata = (props) => {
     } 
 
     const onExpectedOutcomeFieldsChange = (result) => {
-        onChange('expected_outcome', result)
+        let expOutcome = data?.expected_outcome;
+        expOutcome.find(x => x.name === data.selected_expected_outcome).expected_outcome = result;
+        onChange('expected_outcome', expOutcome)
     }
 
     const handleSubmit = (e) => {
@@ -86,17 +101,21 @@ const AddNewTestdata = (props) => {
                         </>
                         }
                 />
-                <FormInput 
-                    label="Expected Outcome"
-                    element={
-                        <ExpectedOutcomeTable 
-                            data={data.expected_outcome}
-                            onchange={onExpectedOutcomeFieldsChange}
-                        />
-                    }
+                <FormSelect
+                    label='Select Exp. Outcome'
+                    options={selectOptions}
+                    value={data.selected_expected_outcome}
+                    name="selected_expected_outcome"
+                    handlechange={onChange}
                     isRequired
                 />
-                <div className='d-flex justify-content-end'>
+                {data?.selected_expected_outcome && (
+                    <ExpectedOutcomeTable 
+                        data={data?.expected_outcome?.find(x => x.name===data.selected_expected_outcome)?.expected_outcome}
+                        onchange={onExpectedOutcomeFieldsChange}
+                    />
+                )}
+                <div className='d-flex justify-content-end mt-3'>
                     <DeleteButton 
                         size='sm'
                         className="mx-1"

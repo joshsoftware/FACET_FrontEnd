@@ -29,15 +29,15 @@ const AddNewPayload = (props) => {
 
     const onExpectedOutcomeFieldsChange = (index, result) => {
         // update according to new functionalities
-        let newResults = [...data.expected_outcomes]
+        let newResults = [...data.expected_outcome]
         newResults[index] = result;
-        onchange('expected_outcomes', newResults);
+        onchange('expected_outcome', newResults);
     }
 
     const onAddNewExpOutcomeEntry = (res) => {
-        let newResults = [...data.expected_outcomes];
+        let newResults = [...data.expected_outcome];
         newResults.push(res);
-        onchange('expected_outcomes', newResults);
+        onchange('expected_outcome', newResults);
     }
 
     const onParameterFieldsChange = (result) => {
@@ -97,7 +97,7 @@ const AddNewPayload = (props) => {
                 <div>
                     <label>Expected Outcomes<span className='text-danger'>*</span></label>
                     <Accordion >
-                        {data?.expected_outcomes?.map((item, index) => {
+                        {data?.expected_outcome?.map((item, index) => {
                             return (
                                 <ExpOutcomeAccordion 
                                     data={item}
@@ -108,8 +108,8 @@ const AddNewPayload = (props) => {
                             )
                         })}
                     </Accordion>
-                    {console.log(data?.expected_outcomes?.length===0)}
-                    {showAddExpOutForm || data?.expected_outcomes?.length===0 ?(
+                    {console.log(data?.expected_outcome?.length===0)}
+                    {showAddExpOutForm || data?.expected_outcome?.length===0 ?(
                         <AddExpOutcomeForm
                             onSave={onAddNewExpOutcomeEntry}
                             onClose={() => setShowAddExpOutForm(false)}

@@ -5,11 +5,20 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { SubComponentsNav } from 'Components/ProjectsComponent';
 import { AddNewTeststep, TeststepViewComponent } from 'Components/ProjectsComponent/TeststepComponents';
-import { addTeststepsRequest, editTeststepsRequest, getTeststepsRequest } from 'store/Teststeps/actions';
+import { 
+    addTeststepsRequest, 
+    editTeststepsRequest, 
+    getTeststepsRequest 
+} from 'store/Teststeps/actions';
 import { addTestdataRequest, getTestdataRequest } from 'store/Testdata/actions';
 import { getEndpointsRequest } from 'store/Endpoints/actions';
 import { getHeadersRequest } from 'store/Headers/actions';
 import { getPayloadsRequest } from 'store/Payloads/actions';
+import { 
+    INITIAL_TESTSTEP_FORM_DATA,
+    INITIAL_TESTDATA_FORM_DATA, 
+    SELECT_OPTIONS_TESTDATA_FORM 
+} from 'constants/appConstants';
 
 const mapState = ({ endpoints, headers, payloads, teststeps, testdata }) => ({
     teststeps: teststeps.teststeps,
@@ -19,22 +28,6 @@ const mapState = ({ endpoints, headers, payloads, teststeps, testdata }) => ({
     headers: headers.headers,
     payloads: payloads.payloads
 })
-
-const INITIAL_TESTSTEP_FORM_DATA = {
-    name: "",
-    method: "",
-    endpoint_id: "",
-    header_id: "",
-    payload_id: ""
-}
-
-const INITIAL_TESTDATA_FORM_DATA = {
-    teststep: '',
-    name: '',
-    payload: JSON.stringify({}),
-    parameters: {"": ""},
-    expected_outcome: []
-}
 
 const TeststepContainer = (props) => {
     let dispatch = useDispatch();
@@ -55,20 +48,7 @@ const TeststepContainer = (props) => {
     const [teststepFormData, setTeststepFormData] = useState({ ...INITIAL_TESTSTEP_FORM_DATA, project: projectName });
     const [testdataFormData, setTestdataFormData] = useState({ ...INITIAL_TESTDATA_FORM_DATA });
     const [showAddTestdataForm, setShowAddTestdataForm] = useState(false);
-    const [options, setOptions] = useState(
-        {
-            methods: [
-                {value: 'GET', label: 'GET'},
-                {value: 'POST', label: 'POST'},
-                {value: 'PUT', label: 'PUT'},
-                {value: 'PATCH', label: 'PATCH'},
-                {value: 'DELETE', label: 'DELETE'},
-            ],
-            endpoints: [],
-            headers: [],
-            payloads: []
-        }
-    );
+    const [options, setOptions] = useState(SELECT_OPTIONS_TESTDATA_FORM);
 
     useEffect(() => {
         // get all teststeps, endpoints, headers, payloads
@@ -142,6 +122,7 @@ const TeststepContainer = (props) => {
     }
 
     const handleTestdataFormChange = (key, value) => {
+        console.log(key, value)
         setTestdataFormData(p => ({
             ...p,
             [key]: value
@@ -150,7 +131,13 @@ const TeststepContainer = (props) => {
 
     const handleTestdataFormSubmit = (e) => {
         e.preventDefault();
-        dispatch(addTestdataRequest({...testdataFormData, payload: JSON.parse(testdataFormData.payload)}));
+        let submitData = {
+            ...testdataFormData,
+            payload: JSON.parse(testdataFormData.payload),
+            expected_outcome: testdataFormData.expected_outcome.find(x => x.name === testdataFormData.selected_expected_outcome)?.expected_outcome,
+        };
+        delete submitData.selected_expected_outcome;
+        dispatch(addTestdataRequest(submitData));
         toggleAddTestdataForm();
     }
 
