@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Col, Row } from 'react-bootstrap';
+import { Accordion, Col, Row } from 'react-bootstrap';
 
 import { ViewComponent } from 'Components/CustomComponents';
 import JSONView from 'Components/JSONView';
@@ -38,36 +38,46 @@ const PayloadViewComponent = (props) => {
                 </Col>
                 <Col md={12} className='pb-4'>
                     <small><b>Expected Outcome</b></small>
-                    <TableComponent
-                        striped
-                        bordered
-                        headings={[
-                            "#", 
-                            "Name", 
-                            "Type",
-                            "isExact",
-                            "Value",
-                            "Validations"
-                        ]}
-                    >
-                        {data.expected_outcome?.map((item, index) => {
+                    <Accordion>
+                        {data?.expected_outcome?.map((item, ind) => {
                             return (
-                                <tr key={index}>
-                                    <td>{index+1}</td>
-                                    <td>{item.name}</td>
-                                    <td>{item.type}</td>
-                                    <td>{item.isExact?"Yes":"No"}</td>
-                                    <td>{item.value || "-"}</td>
-                                    <td>
-                                        <pre className='mb-0'>
-                                            {JSON.stringify(item.validations, null, 2) || "-"}
-                                        </pre>
-                                    </td>
-                                </tr>
+                                <Accordion.Item key={ind} eventKey={ind}>
+                                    <Accordion.Header>{item.name}</Accordion.Header>
+                                    <Accordion.Body>
+                                        <TableComponent
+                                            striped
+                                            bordered
+                                            headings={[
+                                                "#", 
+                                                "Name", 
+                                                "Type",
+                                                "isExact",
+                                                "Value",
+                                                "Validations"
+                                            ]}
+                                        >
+                                            {item?.expected_outcome?.map((itemData, index) => {
+                                                return (
+                                                    <tr key={index}>
+                                                        <td>{index+1}</td>
+                                                        <td>{itemData.name}</td>
+                                                        <td>{itemData.type}</td>
+                                                        <td>{itemData.isExact?"Yes":"No"}</td>
+                                                        <td>{itemData.value || "-"}</td>
+                                                        <td>
+                                                            <pre className='mb-0'>
+                                                                {JSON.stringify(itemData.validations, null, 2) || "-"}
+                                                            </pre>
+                                                        </td>
+                                                    </tr>
+                                                )
+                                            })}
+                                        </TableComponent>
+                                    </Accordion.Body>
+                                </Accordion.Item>
                             )
                         })}
-
-                    </TableComponent>
+                    </Accordion>
                 </Col>
                 <Col md={6} className='pb-4'>
                     <small><b>Created At</b></small>
