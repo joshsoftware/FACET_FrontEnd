@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Accordion } from 'react-bootstrap';
+import { toast } from 'react-toastify';
 
 import FormInput from 'Components/forms/Inputs/FormInput';
 import ExpectedOutcomeTable from 'Components/ProjectsComponent/ExpectedOutcomeTable/index';
@@ -18,6 +19,7 @@ const ExpOutcomeAccordion = ({ data, onChange, eventKey }) => {
 
     const onSave = () => {
         onChange(formData);
+        toast.success("Expected Outcome Saved Successfully!");
     }
     
 
@@ -39,6 +41,7 @@ const ExpOutcomeAccordion = ({ data, onChange, eventKey }) => {
                     <SaveButton 
                         size={'sm'}
                         handleClick={onSave}
+                        type="button"
                     />
                 </div>
             </Accordion.Body>
