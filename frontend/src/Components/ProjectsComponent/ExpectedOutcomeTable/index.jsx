@@ -34,8 +34,8 @@ const ExpectedOutcomeTable = (props) => {
     }
 
     const onRemoveField = (ind) => {
-        let currData = expectedOutcomeData.splice(ind, 1);
-        setExpectedOutcomeData(currData);
+        expectedOutcomeData.splice(ind, 1);
+        setExpectedOutcomeData([...expectedOutcomeData]);
     }
 
     const onCloseModal = () => {

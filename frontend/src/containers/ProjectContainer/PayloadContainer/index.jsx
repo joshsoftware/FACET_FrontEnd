@@ -29,7 +29,7 @@ const PayloadContainer = (props) => {
     }, [projectName])
 
     useEffect(() => {
-        if(payloads.length){
+        if(payloads){
             setSelectedItem(payloads.filter(e => e.id==id)[0]);
         }
     }, [payloads, id])
