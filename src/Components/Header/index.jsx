@@ -37,16 +37,17 @@ const Header = () => {
 
     const handleToggle = () => {
         setShowAddAdminModal(!showAddAdminModal);
+        setAddAdminFormData({ admin: [] })
     }
 
     const handleLogout = () => {
         dispatch(signOutStart());
     }
 
-    const handleChangeAdminFormData = (val) => {
+    const handleChangeAdminFormData = (_name, val) => {
         setAddAdminFormData(p => ({
             ...p,
-            admin: val.map(data => data.value)
+            admin: val.map(e => e.value)
         }))
     }
 
@@ -60,7 +61,7 @@ const Header = () => {
             {isLoggedIn && currentUser.is_super_admin && (
                 <AddAdminModal 
                     allUsers={allUsers}
-                    data={addAdminFormData}
+                    data={addAdminFormData.admin}
                     onChange={handleChangeAdminFormData}
                     onClose={handleToggle} 
                     onSubmit={handleSubmitAdminFormData}

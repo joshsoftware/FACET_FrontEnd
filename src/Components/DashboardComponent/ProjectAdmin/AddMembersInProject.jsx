@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import { CustomModal } from 'Components/CustomComponents';
@@ -8,14 +8,6 @@ import FormSelect from 'Components/forms/Inputs/FormSelect';
 
 const AddMembersInProject = (props) => {
     const { show, handleClose, usersOptions, onchange, handleSubmit, value } = props;
-
-    const [defaultValue, setDefaultValue] = useState([]);
-
-    useEffect(() => {
-        setDefaultValue(usersOptions.filter(function(e) {
-            return value.includes(e.value)
-        }))
-    }, [value])
     
     return (
         <CustomModal 
@@ -25,10 +17,11 @@ const AddMembersInProject = (props) => {
         >
             <CustomModal.Body>
                 <FormSelect 
+                    name="members"
                     options={usersOptions}
-                    onChange={onchange}
+                    handlechange={onchange}
                     className="py-2"
-                    value={defaultValue}
+                    value={value}
                     isMulti
                 />
                 <SaveButton 

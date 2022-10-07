@@ -21,7 +21,7 @@ const FormSelect = (props) => {
     
     useEffect(() => {
         if(isMulti) {
-            let vals = value.map(e => e.id);
+            let vals = value.map(val => val);
             let res = options.filter(function(item) {
                 return vals.indexOf(item.value) != -1;
             })

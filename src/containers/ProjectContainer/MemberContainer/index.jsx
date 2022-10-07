@@ -57,10 +57,11 @@ const MemberContainer = () => {
         dispatch(removeMembersInProjectRequest({project: projectName, members: [id]}))
     }
 
-    const onchangeForm = (e) => {
+    const onchangeMembers = (_name, val) => {
+        console.log(val)
         setAddMemberFormData(p => ({
             ...p,
-            members: e.map(data => data.value)
+            members: val.map(e => e.value),
         }))
     }
     const onSubmitMemberForm = () => {
@@ -75,7 +76,7 @@ const MemberContainer = () => {
                     show={show}
                     handleClose={toggleModal}
                     usersOptions={usersOptions} 
-                    onchange={onchangeForm}
+                    onchange={onchangeMembers}
                     value={addMemberFormData.members}
                     handleSubmit={onSubmitMemberForm}
                 />
