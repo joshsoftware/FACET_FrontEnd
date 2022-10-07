@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
-import Select from 'react-select';
 
 import { CustomModal } from 'Components/CustomComponents';
 import { SaveButton } from 'Components/forms/Buttons';
+import FormSelect from 'Components/forms/Inputs/FormSelect';
 
 
 const AddAdminModal = (props) => {
@@ -13,6 +13,7 @@ const AddAdminModal = (props) => {
         onClose, 
         onSubmit,
         show, 
+        data,
     } = props;
 
     const [options, setOptions] = useState([]);
@@ -33,10 +34,12 @@ const AddAdminModal = (props) => {
             title="Add Admins"
         >
             <CustomModal.Body>
-                <Select 
+                <FormSelect 
+                    name='members'
                     options={options} 
-                    onChange={onChange}
+                    handlechange={onChange}
                     className="py-2"
+                    value={data}
                     isMulti
                 />
                 <SaveButton 
@@ -51,7 +54,7 @@ export default AddAdminModal;
 
 AddAdminModal.propTypes = {
     allUsers: PropTypes.array,
-    data: PropTypes.object, 
+    data: PropTypes.array, 
     onChange: PropTypes.func,
     onClose: PropTypes.func, 
     onSubmit: PropTypes.func,
