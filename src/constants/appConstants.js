@@ -13,15 +13,10 @@ export const BOOLEAN_SELECT_OPTION = [
 ]
 
 export const EXPECTED_OUTCOME_TEMPLATE = {
-    name: "",
-    expected_outcome: [
-        {
-            name: "status_code",
-            type: "number",
-            isExact: true,
-            value: 200
-        }
-    ]
+    name: "status_code",
+    type: "number",
+    isExact: true,
+    value: 200
 }
 
 export const SELECT_OPTIONS_TESTDATA_FORM = {

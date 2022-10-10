@@ -8,7 +8,7 @@ import ExpectedOutcomeTable from 'Components/ProjectsComponent/ExpectedOutcomeTa
 import { EXPECTED_OUTCOME_TEMPLATE } from 'constants/appConstants';
 
 const AddExpOutcomeForm = ({ onSave, onClose }) => {
-    const [formData, setFormData] = useState(EXPECTED_OUTCOME_TEMPLATE);
+    const [formData, setFormData] = useState({ name: "", expected_outcome: [EXPECTED_OUTCOME_TEMPLATE] });
 
     const handleChange = (name, value) => {
         setFormData(p => ({
@@ -29,7 +29,7 @@ const AddExpOutcomeForm = ({ onSave, onClose }) => {
                 <FormInput 
                     label={'Name'}
                     name='name'
-                    value={formData.title}
+                    value={formData.name}
                     onChange={e => handleChange(e.target.name, e.target.value)}
                     placeholder='Name'
                     isRequired
@@ -53,6 +53,7 @@ const AddExpOutcomeForm = ({ onSave, onClose }) => {
                         size={'sm'}
                         handleClick={handleSubmit}
                         type="button"
+                        disabled={formData.name.length===0}
                     />
                 </div>
             </Form>
