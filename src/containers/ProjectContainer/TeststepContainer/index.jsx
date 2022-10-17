@@ -3,17 +3,14 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { SubComponentsNav } from 'Components/ProjectsComponent';
 import { AddNewTeststep, TeststepViewComponent } from 'Components/ProjectsComponent/TeststepComponents';
-import {
-    addTeststepsRequest,
-    editTeststepsRequest,
-    getTeststepsRequest
-} from 'store/Teststeps/actions';
 import { addTestdataRequest, getTestdataRequest } from 'store/Testdata/actions';
+import { addTeststepsRequest, editTeststepsRequest, getTeststepsRequest } from 'store/Teststeps/actions';
 import { getEndpointsRequest } from 'store/Endpoints/actions';
 import { getHeadersRequest } from 'store/Headers/actions';
 import { getPayloadsRequest } from 'store/Payloads/actions';
+import { SubComponentsNav } from 'Components/ProjectsComponent';
+
 import {
     INITIAL_TESTSTEP_FORM_DATA,
     INITIAL_TESTDATA_FORM_DATA,
@@ -21,13 +18,13 @@ import {
 } from 'constants/appConstants';
 
 const mapState = ({ endpoints, headers, payloads, teststeps, testdata }) => ({
-    teststeps: teststeps.teststeps,
     isLoading: teststeps.isLoading,
-    testdata: testdata.testdata,
     endpoints: endpoints.endpoints,
     headers: headers.headers,
-    payloads: payloads.payloads
-})
+    payloads: payloads.payloads,
+    testdata: testdata.testdata,
+    teststeps: teststeps.teststeps,
+});
 
 const TeststepContainer = (props) => {
     let dispatch = useDispatch();
@@ -53,15 +50,15 @@ const TeststepContainer = (props) => {
     useEffect(() => {
         // get all teststeps, endpoints, headers, payloads
         dispatch(getTeststepsRequest({ project: projectName }));
-        dispatch(getEndpointsRequest({ project: projectName }))
-        dispatch(getHeadersRequest({ project: projectName }))
-        dispatch(getPayloadsRequest({ project: projectName }))
-    }, [projectName])
+        dispatch(getEndpointsRequest({ project: projectName }));
+        dispatch(getHeadersRequest({ project: projectName }));
+        dispatch(getPayloadsRequest({ project: projectName }));
+    }, [projectName]);
 
     useEffect(() => {
         setSelectedItem(teststeps.filter(e => e.id == id)[0]);
         dispatch(getTestdataRequest({ teststep: id }));
-    }, [teststeps, id])
+    }, [teststeps, id]);
 
     useEffect(() => {
         // set options to react-select format {value: "", label: ""}
@@ -70,52 +67,52 @@ const TeststepContainer = (props) => {
         let payloads_data = [];
 
         endpoints.forEach(ele => {
-            endpoints_data.push({ value: ele.id, label: ele.name })
-        })
+            endpoints_data.push({ value: ele.id, label: ele.name });
+        });
         headers.forEach(ele => {
-            headers_data.push({ value: ele.id, label: ele.name })
-        })
+            headers_data.push({ value: ele.id, label: ele.name });
+        });
         payloads.forEach(ele => {
-            payloads_data.push({ value: ele.id, label: ele.name })
-        })
+            payloads_data.push({ value: ele.id, label: ele.name });
+        });
 
         setOptions(p => ({
             ...p,
             endpoints: endpoints_data,
             headers: headers_data,
-            payloads: payloads_data
-        }))
-    }, [endpoints, headers, payloads])
+            payloads: payloads_data,
+        }));
+    }, [endpoints, headers, payloads]);
 
     const handleFormDataChange = (key, value) => {
         // Accepts key, value
         setTeststepFormData(p => ({
             ...p,
-            [key]: value
-        }))
-    }
+            [key]: value,
+        }));
+    };
 
     const handleTeststepFormSubmit = (e) => {
         // submit the form
         e.preventDefault();
         if (cat === 'add') {
-            dispatch(addTeststepsRequest(teststepFormData))
+            dispatch(addTeststepsRequest(teststepFormData));
         } else {
-            dispatch(editTeststepsRequest(teststepFormData))
+            dispatch(editTeststepsRequest(teststepFormData));
         }
-    }
+    };
 
     const setInitialTestdata = () => {
         setTestdataFormData(p => ({
             ...p,
-            name: INITIAL_TESTDATA_FORM_DATA.expected_outcome,
-            teststep: selectedItem?.id || INITIAL_TESTDATA_FORM_DATA.id,
+            name: INITIAL_TESTDATA_FORM_DATA.name,
+            teststep: selectedItem?.id || INITIAL_TESTDATA_FORM_DATA.teststep,
             payload: JSON.stringify(selectedItem?.payload?.payload || INITIAL_TESTDATA_FORM_DATA.payload),
             parameters: selectedItem?.payload?.parameters || INITIAL_TESTDATA_FORM_DATA.parameters,
             expected_outcome: selectedItem?.payload?.expected_outcome || INITIAL_TESTDATA_FORM_DATA.expected_outcome,
-            selected_expected_outcome: INITIAL_TESTDATA_FORM_DATA.selected_expected_outcome
-        }))
-    }
+            selected_expected_outcome: INITIAL_TESTDATA_FORM_DATA.selected_expected_outcome,
+        }));
+    };
 
     useEffect(() => {
         setTeststepFormData(p => ({
@@ -125,22 +122,22 @@ const TeststepContainer = (props) => {
             method: selectedItem?.method || INITIAL_TESTSTEP_FORM_DATA.method,
             endpoint_id: selectedItem?.endpoint_id || INITIAL_TESTSTEP_FORM_DATA.endpoint_id,
             header_id: selectedItem?.header_id || INITIAL_TESTSTEP_FORM_DATA.header_id,
-            payload_id: selectedItem?.payload_id || INITIAL_TESTSTEP_FORM_DATA.payload_id
-        }))
+            payload_id: selectedItem?.payload_id || INITIAL_TESTSTEP_FORM_DATA.payload_id,
+        }));
         setInitialTestdata();
-    }, [selectedItem])
+    }, [selectedItem]);
 
     const toggleAddTestdataForm = () => {
         setShowAddTestdataForm(!showAddTestdataForm);
         setInitialTestdata();
-    }
+    };
 
     const handleTestdataFormChange = (key, value) => {
         setTestdataFormData(p => ({
             ...p,
             [key]: value
-        }))
-    }
+        }));
+    };
 
     const handleTestdataFormSubmit = (e) => {
         e.preventDefault();
@@ -152,7 +149,7 @@ const TeststepContainer = (props) => {
         delete submitData.selected_expected_outcome;
         dispatch(addTestdataRequest(submitData));
         toggleAddTestdataForm();
-    }
+    };
 
     return (
         <>
@@ -189,8 +186,8 @@ const TeststepContainer = (props) => {
     )
 }
 
-export default TeststepContainer;
-
 TeststepContainer.propTypes = {
     cat: PropTypes.oneOf(["add", "edit"])
-}
+};
+
+export default TeststepContainer;
