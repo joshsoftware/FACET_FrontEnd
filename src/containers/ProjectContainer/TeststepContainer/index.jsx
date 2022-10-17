@@ -56,7 +56,7 @@ const TeststepContainer = (props) => {
     }, [projectName]);
 
     useEffect(() => {
-        setSelectedItem(teststeps.filter(e => e.id == id)[0]);
+        setSelectedItem(teststeps.filter(e => e.id == id)[0] || {});
         dispatch(getTestdataRequest({ teststep: id }));
     }, [teststeps, id]);
 
@@ -103,26 +103,47 @@ const TeststepContainer = (props) => {
     };
 
     const setInitialTestdata = () => {
+        const { id: teststepId, payload } = selectedItem;
+        const {
+            expected_outcome: initialTDExpOutcome,
+            name: initialTDName,
+            parameters: initialTDParams,
+            payload: initialTDPayload,
+            selected_expected_outcome: initialTDSelectedExpOutcome,
+            teststep: initialTDId,
+        } = INITIAL_TESTDATA_FORM_DATA;
+
         setTestdataFormData(p => ({
             ...p,
-            name: INITIAL_TESTDATA_FORM_DATA.name,
-            teststep: selectedItem?.id || INITIAL_TESTDATA_FORM_DATA.teststep,
-            payload: JSON.stringify(selectedItem?.payload?.payload || INITIAL_TESTDATA_FORM_DATA.payload),
-            parameters: selectedItem?.payload?.parameters || INITIAL_TESTDATA_FORM_DATA.parameters,
-            expected_outcome: selectedItem?.payload?.expected_outcome || INITIAL_TESTDATA_FORM_DATA.expected_outcome,
-            selected_expected_outcome: INITIAL_TESTDATA_FORM_DATA.selected_expected_outcome,
+            name: initialTDName,
+            teststep: teststepId || initialTDId,
+            payload: JSON.stringify(payload?.payload || initialTDPayload),
+            parameters: payload?.parameters || initialTDParams,
+            expected_outcome: payload?.expected_outcome || initialTDExpOutcome,
+            selected_expected_outcome: initialTDSelectedExpOutcome,
         }));
     };
 
     useEffect(() => {
+        // Here ts means teststep
+        const { endpoint_id, header_id , id: teststepId, method, name: tsName, payload_id } = selectedItem;
+        const {
+            endpoint_id: initialTsEndpoint,
+            header_id: initialTsHeader,
+            id: initialTsId,
+            method: initialTsMethod,
+            name: initialTsName,
+            payload_id: initialTsPayload,
+        } = INITIAL_TESTSTEP_FORM_DATA;
+
         setTeststepFormData(p => ({
             ...p,
-            name: selectedItem?.name || INITIAL_TESTSTEP_FORM_DATA.name,
-            id: selectedItem?.id || INITIAL_TESTSTEP_FORM_DATA.id,
-            method: selectedItem?.method || INITIAL_TESTSTEP_FORM_DATA.method,
-            endpoint_id: selectedItem?.endpoint_id || INITIAL_TESTSTEP_FORM_DATA.endpoint_id,
-            header_id: selectedItem?.header_id || INITIAL_TESTSTEP_FORM_DATA.header_id,
-            payload_id: selectedItem?.payload_id || INITIAL_TESTSTEP_FORM_DATA.payload_id,
+            name: tsName || initialTsName,
+            id: teststepId || initialTsId,
+            method: method || initialTsMethod,
+            endpoint_id: endpoint_id || initialTsEndpoint,
+            header_id: header_id || initialTsHeader,
+            payload_id: payload_id || initialTsPayload,
         }));
         setInitialTestdata();
     }, [selectedItem]);
