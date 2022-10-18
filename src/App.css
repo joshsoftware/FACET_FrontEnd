@@ -19,3 +19,64 @@
 .background-secondary {
     background: #e2e3e5;
 }
+
+/* Payload table */
+.payload-table-wrapper {
+    padding: 10px;
+    background: #fff;
+    border: 1px solid #ced4da;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+
+.payload-table-wrapper thead {
+    font-size: 12px;
+    font-weight: 400;
+    text-transform: uppercase;
+    color: #808080;
+}
+
+td {
+    vertical-align: middle !important;
+}
+
+.nested-table-row {
+    position: relative;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.nested-table-row > td:first-of-type::before {
+    content: "";
+    width: 0.25rem;
+    height: calc(100% - 15px); /* Will fix */
+    position: absolute;
+    top: 4px;
+    left: 0.625rem;
+    border-radius: 4px;
+    background: #ced4da;
+}
+
+.nested-table-row > td:first-of-type {
+    padding: 0;
+    margin: 0;
+    padding-left: 1.625rem;
+    vertical-align: middle;
+    position: relative;
+}
+
+.nested-table-row tr {
+    position: relative;
+}
+
+.curve {
+    position: absolute;
+    left: -1rem;
+    top: 5px;
+}
+
+.curve::before {
+    content: "";
+    width: 0.25rem;
+    display: block;
+}
