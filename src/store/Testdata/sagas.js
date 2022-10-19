@@ -1,8 +1,10 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { getTestdataSuccess } from './actions';
-import { addTestdataApi, getTestdatasApi } from './apis';
-import testdataConstants from './constants';
 import { toast } from 'react-toastify';
+
+import { addTestdataApi, getTestdatasApi } from './apis';
+import { getTestdataSuccess } from './actions';
+
+import testdataConstants from './constants';
 
 
 export function* getTestdatas({ payload }) {
@@ -18,7 +20,7 @@ export function* addTestdata({ payload }) {
     try {
         yield call(addTestdataApi, payload);
         toast.success("Testdata Added Successfully!")
-        yield call(getTestdatas, {payload: { testcase: payload.testcase }});
+        yield call(getTestdatas, {payload: { teststep: payload.teststep }});
     } catch (error) {
         toast.error(error.data.error)
     }
