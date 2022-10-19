@@ -38,7 +38,7 @@ const TeststepContainer = (props) => {
         payloads,
         teststeps,
         isLoading,
-        testdata
+        testdata,
     } = useSelector(mapState);
 
     const [selectedItem, setSelectedItem] = useState({});
@@ -156,7 +156,7 @@ const TeststepContainer = (props) => {
     const handleTestdataFormChange = (key, value) => {
         setTestdataFormData(p => ({
             ...p,
-            [key]: value
+            [key]: value,
         }));
     };
 
