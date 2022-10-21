@@ -20,6 +20,7 @@ const reportsConstants = {
     ADD_COMMENT_REQUEST: 'ADD_COMMENT_REQUEST',
     ADD_COMMENT_SUCCESS: 'ADD_COMMENT_SUCCESS',
     ADD_COMMENT_FAILURE: 'ADD_COMMENT_FAILURE',
+    PAGE_SIZE: 20,
 }
 
 export default reportsConstants;

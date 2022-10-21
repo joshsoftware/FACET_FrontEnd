@@ -13,12 +13,14 @@ import {
 
 const mapState = ({ reports }) => ({
     reports: reports.reports,
+    page: reports.page,
+    totalResults: reports.totalResults,
     isReportsLoading: reports.isReportsLoading,
     isOneReportLoading: reports.isOneReportLoading,
     singleReport: reports.singleReport,
     isOneTeststepReportLoading: reports.isOneTeststepReportLoading,
-    singleTeststepReport: reports.singleTeststepReport
-})
+    singleTeststepReport: reports.singleTeststepReport,
+});
 
 const ReportsContainer = () => {
     let dispatch = useDispatch();
@@ -29,26 +31,32 @@ const ReportsContainer = () => {
         isReportsLoading, 
         isOneReportLoading, 
         isOneTeststepReportLoading,
+        page, 
         reports, 
         singleReport,
-        singleTeststepReport
+        singleTeststepReport,
+        totalResults,
     } = useSelector(mapState);
 
     useEffect(() => {
-        dispatch(getReportsRequest({ project: projectName }))
-    }, [projectName])
+        dispatch(getReportsRequest({ project: projectName, page: 1 }));
+    }, [projectName]);
     
     useEffect(() => {
         if(!isReportsLoading && reportId) {
-            dispatch(getSingleTestcaseReportRequest({reportId}))
+            dispatch(getSingleTestcaseReportRequest({reportId}));
         }
-    }, [reports, reportId])
+    }, [reports, reportId]);
 
     useEffect(() => {
         if(!isOneReportLoading && tname) {
-            dispatch(getSingleTeststepOfTestcaseReportRequest({testcaseName: tname}))
+            dispatch(getSingleTeststepOfTestcaseReportRequest({testcaseName: tname}));
         }
-    }, [singleReport, tname])
+    }, [singleReport, tname]);
+
+    const fetchMoreReports = () => {
+        dispatch(getReportsRequest({ project: projectName, page: page + 1 }));
+    };
 
     return (
         tname?(
@@ -71,10 +79,12 @@ const ReportsContainer = () => {
                     isLoading={isReportsLoading}
                     projectName={projectName}
                     onNavigate={navigate}
+                    fetchMore={fetchMoreReports}
+                    totalResults={totalResults}
                 />
             )
         )
-    )
-}
+    );
+};
 
 export default ReportsContainer;

@@ -3,28 +3,33 @@ import reportsConstants from "./constants";
 const INITIAL_STATE = {
     isReportsLoading: true,
     reports: [],
+    totalResults: 0,
+    page: 1,
+    pageSize: 20,
     errors: [],
     isOneReportLoading: true,
     singleReport: {},
     isOneTeststepReportLoading: true,
     singleTeststepReport: {},
     isAddCommentLoading: false
-}
+};
 
 const reportsReducer = (state=INITIAL_STATE, action) => {
     switch (action.type) {
         case reportsConstants.GET_REPORTS_REQUEST:
             return {
                 ...state,
-                isReportsLoading: true
+                isReportsLoading: true,
+                page: action.payload.page,
             }
 
         case reportsConstants.GET_REPORTS_SUCCESS:
             return {
                 ...state,
                 isReportsLoading: false,
-                reports: action.payload,
-                errors: []
+                reports: state.reports.concat(action.payload.results),
+                totalResults: action.payload.total_results,
+                errors: [],
             }
 
         case reportsConstants.GET_REPORTS_FAILURE:
