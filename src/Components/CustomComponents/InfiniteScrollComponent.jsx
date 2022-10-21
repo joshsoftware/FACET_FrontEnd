@@ -1,9 +1,21 @@
 import InfiniteScroll from 'react-infinite-scroll-component';
 import PropTypes from 'prop-types';
 import React from 'react';
+import Spinner from 'react-bootstrap/Spinner';
 
-const InfiniteScrollComponent = ({ children, ...props }) => {
-    return <InfiniteScroll {...props}>{children}</InfiniteScroll>
+const InfiniteScrollComponent = ({ children, loader, ...props }) => {
+    return (
+        <InfiniteScroll
+            loader={loader ? loader : (
+                <div className="text-center">
+                    <Spinner animation="border" size="sm" />
+                </div>
+            )}
+            {...props}
+        >
+            {children}
+        </InfiniteScroll>
+    );
 };
 
 export default InfiniteScrollComponent;
