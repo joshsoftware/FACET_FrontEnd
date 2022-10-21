@@ -41,7 +41,7 @@ export const getAllUsersFailure = (data) => ({
     payload: data,
 });
 
-export const getUserProfileReuest = (data) => ({
+export const getUserProfileRequest = (data) => ({
     type: userConstants.GET_CURRENT_USER_INFO_REQUEST,
     payload: data,
 });
@@ -56,22 +56,22 @@ export const getUserProfileFailure = (data) => ({
     payload: data,
 });
 
-export const updateUserProfileReuest = (data) => ({
-    type: userConstants.UPDATE_USER_REQUEST,
+export const updateUserProfileRequest = (data) => ({
+    type: userConstants.UPDATE_USER_PROFILE_REQUEST,
     payload: data,
 });
 
 export const updateUserProfileSuccess = (data) => ({
-    type: userConstants.UPDATE_USER_SUCCESS,
+    type: userConstants.UPDATE_USER_PROFILE_SUCCESS,
     payload: data,
 });
 
 export const updateUserProfileFailure = (data) => ({
-    type: userConstants.UPDATE_USER_FAILURE,
+    type: userConstants.UPDATE_USER_PROFILE_FAILURE,
     payload: data,
 });
 
-export const changePasswordReuest = (data) => ({
+export const changePasswordRequest = (data) => ({
     type: userConstants.CHANGE_USER_PASSWORD_REQUEST,
     payload: data,
 });

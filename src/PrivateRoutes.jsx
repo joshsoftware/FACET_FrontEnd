@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, Outlet } from 'react-router-dom';
-import { getUserProfileReuest } from 'store/User/actions';
+
+import { getUserProfileRequest } from 'store/User/actions';
 
 const mapState = (state) => ({
     isLoggedIn: state.user.isLoggedIn
@@ -12,7 +13,7 @@ const PrivateRoutes = () => {
     let dispatch = useDispatch()
 
     useEffect(() => {
-        isLoggedIn && dispatch(getUserProfileReuest());
+        isLoggedIn && dispatch(getUserProfileRequest());
     }, []);
     
 

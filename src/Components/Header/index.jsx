@@ -90,7 +90,7 @@ const Header = () => {
                         {isLoggedIn?(
                             <Nav>
                                 <NavDropdown title={`Welcome, ${currentUser.name}`}>
-                                    <NavDropdown.Item>
+                                    <NavDropdown.Item onClick={() => navigate('/profile')}>
                                         My Profile
                                     </NavDropdown.Item>
                                     <NavDropdown.Item>

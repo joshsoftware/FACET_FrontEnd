@@ -23,6 +23,7 @@ import {
   ScheduleContainer,
   SettingsContainer
 } from './containers/ProjectContainer';
+import ProfileContainer from 'containers/ProfileContainer';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
       <Routes>
         <Route path='/' element={<PrivateRoutes />}>
           <Route path='/dashboard' element={<DashBoard />} />
+          <Route path='/profile' element={<ProfileContainer />} />
           <Route path='/project' element={<ProjectContainer />}>
             <Route path='/project/:projectName' element={<ProjectOverviewContainer />} />
             <Route path='/project/:projectName/environments' element={<EnvironmentContainer />} />
