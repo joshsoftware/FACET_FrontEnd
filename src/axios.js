@@ -1,11 +1,14 @@
 import axios from 'axios';
 
+// eslint-disable-next-line no-undef
 const baseURL = process.env.REACT_APP_BACKEND_URL;
 
 const axiosInstance = axios.create({
     baseURL: baseURL,
     headers: {
-        Authorization: localStorage.getItem('user')?'Bearer '+JSON.parse(localStorage.getItem('user')).token:null,
+        Authorization: localStorage.getItem('access_token')
+            ? 'Bearer ' + localStorage.getItem('access_token')
+            : null,
         'Accept': 'application/json',
         "content-type": "application/json"
     },
