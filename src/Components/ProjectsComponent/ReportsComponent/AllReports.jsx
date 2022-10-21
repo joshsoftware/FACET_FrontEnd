@@ -27,17 +27,16 @@ const AllReports = (props) => {
                 <InfiniteScrollComponent
                     dataLength={data.length} 
                     next={fetchMore}
-                    hasMore={data.length !== totalResults} 
-                    loader={<h2>Loading...</h2>}
+                    hasMore={data.length !== totalResults}
                 >
                     <TableComponent
                         striped
                         bordered
                         headings={[
                             "#", 
-                            "Test Suite", 
+                            "Testcase", 
                             "Executed By",
-                            "Total Testcases", 
+                            "Total Teststeps", 
                             "Passed", 
                             "Failed", 
                             "Executed On", 

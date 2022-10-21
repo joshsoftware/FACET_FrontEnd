@@ -21,6 +21,7 @@ const reportsReducer = (state=INITIAL_STATE, action) => {
                 ...state,
                 isReportsLoading: true,
                 page: action.payload.page,
+                reports: action.payload.page === 1 ? [] : state.reports,
             }
 
         case reportsConstants.GET_REPORTS_SUCCESS:
