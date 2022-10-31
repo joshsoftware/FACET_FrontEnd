@@ -1,29 +1,28 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, Outlet } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { getUserProfileRequest } from 'store/User/actions';
 
 const mapState = (state) => ({
-    isLoggedIn: state.user.isLoggedIn
+    isLoggedIn: state.user.isLoggedIn,
 });
 
 const PrivateRoutes = () => {
     const { isLoggedIn } = useSelector(mapState);
-    let dispatch = useDispatch()
+    let dispatch = useDispatch();
 
     useEffect(() => {
         isLoggedIn && dispatch(getUserProfileRequest());
     }, []);
-    
 
-    return isLoggedIn?(
+    return isLoggedIn ? (
         <div>
             <Outlet />
         </div>
-    ):(
-        <Navigate to='/login' replace />
-    )
-}
+    ) : (
+        <Navigate to="/login" replace />
+    );
+};
 
 export default PrivateRoutes;

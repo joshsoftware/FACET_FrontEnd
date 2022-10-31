@@ -1,23 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { 
-    Container,
-    Nav, 
-    Navbar, 
-    NavDropdown 
-} from 'react-bootstrap';
+import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import logo from 'assets/images/logo.png';
 import { addAdminsRequest } from 'store/SuperAdmin/actions';
-import { getAllUsersRequest, signOutStart } from 'store/User/actions';
+import { getAllUsersRequest, signOutRequest } from 'store/User/actions';
 import AddAdminModal from 'Components/DashboardComponent/SuperAdmin/AddAdminModal';
+
+import logo from 'assets/images/logo.png';
 
 const mapState = ({ user, getUsers }) => ({
     isLoggedIn: user.isLoggedIn,
     currentUser: user.currentUser,
-    allUsers: getUsers.users
-})
+    allUsers: getUsers.users,
+});
 
 const Header = () => {
     let navigate = useNavigate();
@@ -29,90 +25,90 @@ const Header = () => {
     const [addAdminFormData, setAddAdminFormData] = useState({ admin: [] });
 
     useEffect(() => {
-        if(isLoggedIn && currentUser.is_super_admin){
-            dispatch(getAllUsersRequest({ exclude: "admins" }))
+        if (isLoggedIn && currentUser.is_super_admin) {
+            dispatch(getAllUsersRequest({ exclude: 'admins' }));
         }
-    }, [])
-    
+    }, []);
 
     const handleToggle = () => {
         setShowAddAdminModal(!showAddAdminModal);
-        setAddAdminFormData({ admin: [] })
-    }
+        setAddAdminFormData({ admin: [] });
+    };
 
     const handleLogout = () => {
-        dispatch(signOutStart());
-    }
+        dispatch(signOutRequest());
+    };
 
     const handleChangeAdminFormData = (_name, val) => {
-        setAddAdminFormData(p => ({
+        setAddAdminFormData((p) => ({
             ...p,
-            admin: val.map(e => e.value)
-        }))
-    }
+            admin: val.map((e) => e.value),
+        }));
+    };
 
     const handleSubmitAdminFormData = () => {
         dispatch(addAdminsRequest(addAdminFormData));
         handleToggle();
-    }
+    };
 
     return (
-        <Navbar bg='dark' sticky="top" variant='dark' expand='lg'>
+        <Navbar bg="dark" sticky="top" variant="dark" expand="lg">
             {isLoggedIn && currentUser.is_super_admin && (
-                <AddAdminModal 
+                <AddAdminModal
                     allUsers={allUsers}
                     data={addAdminFormData.admin}
                     onChange={handleChangeAdminFormData}
-                    onClose={handleToggle} 
+                    onClose={handleToggle}
                     onSubmit={handleSubmitAdminFormData}
-                    show={showAddAdminModal} 
+                    show={showAddAdminModal}
                 />
             )}
             <Container fluid>
                 <Navbar.Brand>
                     <Link to="/dashboard">
-                        <img 
-                            src={logo}
-                            width={100}
-                            alt="Facet"
-                        />
+                        <img src={logo} width={100} alt="Facet" />
                     </Link>
                 </Navbar.Brand>
-                <Navbar.Toggle aria-controls='facet-navbar-nav' />
-                <Navbar.Collapse id='facet-navbar-nav'>
-                    <Nav className='me-auto'>
+                <Navbar.Toggle aria-controls="facet-navbar-nav" />
+                <Navbar.Collapse id="facet-navbar-nav">
+                    <Nav className="me-auto">
                         <Nav.Link onClick={() => navigate('/dashboard')}>Home</Nav.Link>
-                        {isLoggedIn&&currentUser.is_super_admin&&(
+                        {isLoggedIn && currentUser.is_super_admin && (
                             <Nav.Link onClick={handleToggle}>Add Admin</Nav.Link>
                         )}
                     </Nav>
                     <>
-                        {isLoggedIn?(
+                        {isLoggedIn ? (
                             <Nav>
                                 <NavDropdown title={`Welcome, ${currentUser.name}`}>
                                     <NavDropdown.Item onClick={() => navigate('/profile')}>
                                         My Profile
                                     </NavDropdown.Item>
-                                    <NavDropdown.Item>
-                                        My Organizations
-                                    </NavDropdown.Item>
+                                    <NavDropdown.Item>My Organizations</NavDropdown.Item>
                                     <NavDropdown.Divider />
-                                    <NavDropdown.Item style={{color: 'red'}} onClick={handleLogout}>
+                                    <NavDropdown.Item
+                                        style={{ color: 'red' }}
+                                        onClick={handleLogout}
+                                    >
                                         Logout
                                     </NavDropdown.Item>
                                 </NavDropdown>
                             </Nav>
-                        ):(
+                        ) : (
                             <Nav>
-                                <Link to='/login' className='btn btn-primary me-2'>Login</Link>
-                                <Link to='/signup' className='btn btn-outline-primary'>Signup</Link>
+                                <Link to="/login" className="btn btn-primary me-2">
+                                    Login
+                                </Link>
+                                <Link to="/signup" className="btn btn-outline-primary">
+                                    Signup
+                                </Link>
                             </Nav>
                         )}
                     </>
                 </Navbar.Collapse>
             </Container>
         </Navbar>
-    )
-}
+    );
+};
 
 export default Header;

@@ -1,7 +1,8 @@
-import axiosInstance from "../../axios";
-import { GET, PATCH, POST, SERVER_URL } from "constants/appConstants";
-import { Api } from "store/apiHelper";
+import { Api } from 'store/apiHelper';
 
+import axiosInstance from '../../axios';
+
+import { GET, PATCH, POST, SERVER_URL } from 'constants/appConstants';
 
 export const signInApi = async (data) => {
     const res = await Api(`${SERVER_URL}/api/auth/login`, POST, data);

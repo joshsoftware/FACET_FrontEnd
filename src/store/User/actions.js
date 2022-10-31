@@ -1,8 +1,7 @@
-import userConstants from "./constants";
+import userConstants from './constants';
 
-
-export const signInStart = (data) => ({
-    type: userConstants.SIGN_IN_START,
+export const signInRequest = (data) => ({
+    type: userConstants.SIGN_IN_REQUEST,
     payload: data,
 });
 
@@ -11,18 +10,38 @@ export const signInSuccess = (data) => ({
     payload: data,
 });
 
-export const signUpStart = (data) => ({
-    type: userConstants.SIGN_UP_START,
+export const signInFailure = (data) => ({
+    type: userConstants.SIGN_IN_FAILURE,
     payload: data,
 });
 
-export const signOutStart = (data) => ({
-    type: userConstants.SIGN_OUT_START,
+export const signUpRequest = (data) => ({
+    type: userConstants.SIGN_UP_REQUEST,
+    payload: data,
+});
+
+export const signUpSuccess = (data) => ({
+    type: userConstants.SIGN_UP_SUCCESS,
+    payload: data,
+});
+
+export const signUpFailure = (data) => ({
+    type: userConstants.SIGN_UP_FAILURE,
+    payload: data,
+});
+
+export const signOutRequest = (data) => ({
+    type: userConstants.SIGN_OUT_REQUEST,
     payload: data,
 });
 
 export const signOutSuccess = (data) => ({
     type: userConstants.SIGN_OUT_SUCCESS,
+    payload: data,
+});
+
+export const signOutFailure = (data) => ({
+    type: userConstants.SIGN_OUT_FAILURE,
     payload: data,
 });
 

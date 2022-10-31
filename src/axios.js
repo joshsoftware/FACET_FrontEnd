@@ -9,16 +9,14 @@ const axiosInstance = axios.create({
         Authorization: localStorage.getItem('access_token')
             ? 'Bearer ' + localStorage.getItem('access_token')
             : null,
-        'Accept': 'application/json',
-        "content-type": "application/json"
+        Accept: 'application/json',
+        'content-type': 'application/json',
     },
-    data: ""
-})
+    data: '',
+});
 
-axiosInstance.interceptors.request.use(
-    (config) => {
-        return config;
-    },
-)
+axiosInstance.interceptors.request.use((config) => {
+    return config;
+});
 
 export default axiosInstance;

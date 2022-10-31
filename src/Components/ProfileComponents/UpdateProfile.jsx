@@ -1,9 +1,9 @@
-import { Col, Container, Form, Row } from "react-bootstrap";
-import PropTypes from "prop-types";
-import React from "react";
+import React from 'react';
+import { Col, Container, Form, Row } from 'react-bootstrap';
+import PropTypes from 'prop-types';
 
-import FormInput from "Components/forms/Inputs/FormInput";
-import { SaveButton } from "Components/forms/Buttons";
+import FormInput from 'Components/forms/Inputs/FormInput';
+import { SaveButton } from 'Components/forms/Buttons';
 
 const UpdateProfile = ({ data, isLoading, onChange, onSubmit }) => {
     return (
@@ -40,7 +40,7 @@ const UpdateProfile = ({ data, isLoading, onChange, onSubmit }) => {
 
 UpdateProfile.propTypes = {
     data: PropTypes.object.isRequired,
-    isLoading: PropTypes.bool.isRequired,
+    isLoading: PropTypes.bool,
     onChange: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,
 };
