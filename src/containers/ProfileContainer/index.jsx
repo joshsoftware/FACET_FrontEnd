@@ -1,9 +1,9 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useCallback, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import UpdateProfile from "Components/ProfileComponents/UpdateProfile";
-import { changePasswordRequest, updateUserProfileRequest } from "store/User/actions";
-import ChangePasswordForm from "Components/ProfileComponents/ChangePasswordForm";
+import ChangePasswordForm from 'Components/ProfileComponents/ChangePasswordForm';
+import { changePasswordRequest, updateUserProfileRequest } from 'store/User/actions';
+import UpdateProfile from 'Components/ProfileComponents/UpdateProfile';
 
 const mapState = ({ user }) => ({
     isLoading: user.isLoading,
@@ -14,11 +14,11 @@ const ProfileContainer = () => {
     let dispatch = useDispatch();
     const { user, isLoading } = useSelector(mapState);
 
-    const [userData, setUserData] = useState({ name: "", email: "" });
+    const [userData, setUserData] = useState({ name: '', email: '' });
     const [changePassForm, setChangePassForm] = useState({
-        currPass: "",
-        newPass: "",
-        conNewPass: "",
+        currPass: '',
+        newPass: '',
+        conNewPass: '',
     });
 
     useEffect(() => {

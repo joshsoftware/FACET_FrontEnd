@@ -1,5 +1,5 @@
-import { takeLatest, call, put } from "redux-saga/effects";
-import { toast } from "react-toastify";
+import { takeLatest, call, put } from 'redux-saga/effects';
+import { toast } from 'react-toastify';
 
 import {
     changePasswordApi,
@@ -8,7 +8,7 @@ import {
     signInApi,
     signUpApi,
     updateUserProfileApi,
-} from "./apis";
+} from './apis';
 import {
     changePasswordFailure,
     changePasswordSuccess,
@@ -19,13 +19,14 @@ import {
     signOutSuccess,
     updateUserProfileFailure,
     updateUserProfileSuccess,
-} from "./actions";
-import userConstants from "./constants";
+} from './actions';
+
+import userConstants from './constants';
 
 export function* signIn({ payload }) {
     try {
         const response = yield call(signInApi, payload);
-        toast.success("Login Successfully!");
+        toast.success('Login Successfully!');
         yield put(signInSuccess(response.user));
     } catch (error) {
         toast.error(error.data.error);
@@ -35,20 +36,20 @@ export function* signIn({ payload }) {
 export function* signUp({ payload: { name, email, password, cpassword } }) {
     try {
         if (password !== cpassword) {
-            toast.error("Password Not Matched!");
+            toast.error('Password Not Matched!');
             return;
         }
         yield call(signUpApi, { name, email, password });
-        toast.success("SignUp Successfully!");
+        toast.success('SignUp Successfully!');
     } catch (error) {
         toast.error(error.data.error);
     }
 }
 
 export function* signOut() {
-    localStorage.removeItem("user");
+    localStorage.removeItem('access_token');
     yield put(signOutSuccess());
-    toast.success("Log out successfully!");
+    toast.success('Log out successfully!');
 }
 
 export function* getAllUsers({ payload }) {
@@ -93,9 +94,9 @@ export function* changeUserPassword({ payload }) {
 }
 
 export default function* userSagas() {
-    yield takeLatest(userConstants.SIGN_UP_START, signUp);
-    yield takeLatest(userConstants.SIGN_IN_START, signIn);
-    yield takeLatest(userConstants.SIGN_OUT_START, signOut);
+    yield takeLatest(userConstants.SIGN_UP_REQUEST, signUp);
+    yield takeLatest(userConstants.SIGN_IN_REQUEST, signIn);
+    yield takeLatest(userConstants.SIGN_OUT_REQUEST, signOut);
     yield takeLatest(userConstants.GET_ALL_USERS_REQUEST, getAllUsers);
     yield takeLatest(userConstants.GET_CURRENT_USER_INFO_REQUEST, getuserProfile);
     yield takeLatest(userConstants.UPDATE_USER_PROFILE_REQUEST, updateUserProfile);

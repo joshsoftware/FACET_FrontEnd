@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import Signup from 'Components/Auth/Signup';
 import { AuthLayout } from 'Layout';
-import { signUpStart } from 'store/User/actions';
+import { signUpRequest } from 'store/User/actions';
 
 const mapState = (state) => ({
     isLoggedIn: state.user.isLoggedIn
@@ -31,7 +31,7 @@ const SignUpContainer = () => {
 
     const handleOnSubmit = (e) => {
         e.preventDefault();
-        dispatch(signUpStart(formData))
+        dispatch(signUpRequest(formData))
     }
     
     if(isLoggedIn){

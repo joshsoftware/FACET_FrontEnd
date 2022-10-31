@@ -1,9 +1,9 @@
-import { Col, Container, Form, Row } from "react-bootstrap";
-import PropTypes from "prop-types";
-import React from "react";
+import React from 'react';
+import { Col, Container, Form, Row } from 'react-bootstrap';
+import PropTypes from 'prop-types';
 
-import FormInput from "Components/forms/Inputs/FormInput";
-import { SaveButton } from "Components/forms/Buttons";
+import FormInput from 'Components/forms/Inputs/FormInput';
+import { SaveButton } from 'Components/forms/Buttons';
 
 const ChangePasswordForm = ({ data, isLoading, onChange, onSubmit }) => {
     return (
@@ -63,7 +63,7 @@ const ChangePasswordForm = ({ data, isLoading, onChange, onSubmit }) => {
 
 ChangePasswordForm.propTypes = {
     data: PropTypes.object.isRequired,
-    isLoading: PropTypes.bool.isRequired,
+    isLoading: PropTypes.bool,
     onChange: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,
 };
