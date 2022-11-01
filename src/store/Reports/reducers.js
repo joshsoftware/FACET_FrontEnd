@@ -20,14 +20,17 @@ const reportsReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 isReportsLoading: true,
                 page: action.payload.page,
-                reports: action.payload.page === 0 ? [] : state.reports,
+                reports: state.reports,
             };
 
         case reportsConstants.GET_REPORTS_SUCCESS:
             return {
                 ...state,
                 isReportsLoading: false,
-                reports: state.reports.concat(action.payload.results),
+                reports:
+                    state.page === 1
+                        ? action.payload.results
+                        : state.reports.concat(action.payload.results),
                 totalResults: action.payload.total_results,
                 errors: [],
             };
