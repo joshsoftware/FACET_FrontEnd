@@ -1,4 +1,7 @@
 import { call, put, takeLatest, select } from 'redux-saga/effects';
+import { toast } from 'react-toastify';
+
+import { addCommentApi, getAllReportsApi } from './apis';
 import { 
     addCommentFailure, 
     addCommentSuccess, 
@@ -6,19 +9,17 @@ import {
     getSingleTeststepOfTestcaseReportFailure, 
     getSingleTeststepOfTestcaseReportSuccess, 
     getSingleTestcaseReportFailure, 
-    getSingleTestcaseReportSuccess 
+    getSingleTestcaseReportSuccess,
 } from './actions';
-import { addCommentApi, getAllReportsApi } from './apis';
 import reportsConstants from './constants';
-import { toast } from 'react-toastify';
 
 
 export function* getReports({ payload }) {
     try {
-        const response = yield call(getAllReportsApi, payload);
-        yield put(getReportsSuccess(response.results));
+        const response = yield call(getAllReportsApi, { ...payload, pageSize: reportsConstants.PAGE_SIZE });
+        yield put(getReportsSuccess(response));
     } catch (error) {
-        toast.error(error.data.error)
+        toast.error(error.data.error);
     }
 }
 
@@ -29,11 +30,11 @@ export function* getSingleTestcaseReport({ payload }) {
         if (oneReport) {
             yield put(getSingleTestcaseReportSuccess(oneReport));
         } else {
-            throw "Report Not Found"
+            throw "Report Not Found";
         }
     } catch (error) {
-        yield put(getSingleTestcaseReportFailure(error))
-        toast.error(error)
+        yield put(getSingleTestcaseReportFailure(error));
+        toast.error(error);
     }
 }
 
@@ -44,11 +45,11 @@ export function* getTeststepOfSingleTestcaseReport({ payload }) {
         if (testcaseReport) {
             yield put(getSingleTeststepOfTestcaseReportSuccess(testcaseReport));
         } else {
-            throw "Report Not Found"
+            throw "Report Not Found";
         }
     } catch (error) {
-        yield put(getSingleTeststepOfTestcaseReportFailure(error))
-        toast.error(error)
+        yield put(getSingleTeststepOfTestcaseReportFailure(error));
+        toast.error(error);
     }
 }
 
@@ -56,12 +57,11 @@ export function* addComment({ payload }) {
     try {
         yield call(addCommentApi, payload);
         yield put(addCommentSuccess());
-        yield call(getReports, { payload: { project: payload.project } })
-        toast.success("Comment Added Successfully!")
+        yield call(getReports, { payload: { project: payload.project } });
+        toast.success("Comment Added Successfully!");
     } catch (error) {
         yield put(addCommentFailure(error));
         toast.error("Something Went Wrong!");
-
     }
 }
 
