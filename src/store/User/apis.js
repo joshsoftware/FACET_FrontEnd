@@ -3,11 +3,12 @@ import { Api } from 'store/apiHelper';
 import axiosInstance from '../../axios';
 
 import { GET, PATCH, POST, SERVER_URL } from 'constants/appConstants';
+import { setLocalStorage } from 'utils/storage';
 
 export const signInApi = async (data) => {
     const res = await Api(`${SERVER_URL}/api/auth/login`, POST, data);
-    localStorage.setItem('access_token', res.token);
-    axiosInstance.defaults.headers['Authorization'] = 'Bearer ' + res.token;
+    setLocalStorage('accessToken', res.access_token);
+    axiosInstance.defaults.headers['Authorization'] = 'Bearer ' + res.access_token;
     return res;
 };
 

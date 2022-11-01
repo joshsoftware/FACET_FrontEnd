@@ -1,7 +1,8 @@
 /* eslint-disable no-prototype-builtins */
+import { getLocalStorage } from 'utils/storage';
 import userConstants from './constants';
 
-const isTokenExist = localStorage.getItem('access_token') ? true : false;
+const isTokenExist = getLocalStorage('accessToken') ? true : false;
 
 const INITIAL_STATE = {
     isLoggedIn: isTokenExist,

@@ -22,6 +22,7 @@ import {
 } from './actions';
 
 import userConstants from './constants';
+import { removeLocalStorage } from 'utils/storage';
 
 export function* signIn({ payload }) {
     try {
@@ -47,7 +48,7 @@ export function* signUp({ payload: { name, email, password, cpassword } }) {
 }
 
 export function* signOut() {
-    localStorage.removeItem('access_token');
+    removeLocalStorage('accessToken');
     yield put(signOutSuccess());
     toast.success('Log out successfully!');
 }
