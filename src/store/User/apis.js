@@ -3,7 +3,7 @@ import { Api } from "store/apiHelper";
 import axiosInstance from "../../axios";
 
 import { GET, PATCH, POST, SERVER_URL } from "constants/appConstants";
-import { setLocalStorage } from "utils/storage";
+import { setLocalStorage } from "utils/localStorage";
 
 export const signInApi = async (data) => {
     const res = await Api(`${SERVER_URL}/api/auth/login`, POST, data);

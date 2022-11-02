@@ -3,7 +3,7 @@ import {
     getLocalStorage,
     removeLocalStorage,
     setLocalStorage,
-} from "utils/storage";
+} from "utils/localStorage";
 
 // eslint-disable-next-line no-undef
 const baseURL = process.env.REACT_APP_BACKEND_URL;
