@@ -51,9 +51,20 @@ axiosInstance.interceptors.response.use(
             originalRequest.headers["Authorization"] = `Bearer ${updatedToken}`;
             return axiosInstance(originalRequest);
         }
+
+        return Promise.reject(error);
     }
 );
 
+// refreshExpiredTokenClosure returns the function which checks if refresh api is called or not
+// to request the new access token 
+// If refresh api is already called by any other api which fails with 401 UNAUTHORIZED Token 
+// has expired message then it returns current running promise and its response.
+// If function is not called already and old access token fails then it calls refresh token 
+// api to genrate to new access token.
+
+// The closure used because if multiple resquest fails with 401 UNAUTHORIZED Token has expired
+// message then it avoid multiple refresh token calls with using previous promise called
 const refreshExpiredTokenClosure = () => {
     let isCalled = false;
     let runningPromise = undefined;
@@ -68,8 +79,10 @@ const refreshExpiredTokenClosure = () => {
     };
 };
 
+// stores the function returned by refreshExpiredTokenClosure
 const refreshExpiredToken = refreshExpiredTokenClosure();
 
+// token refresh api calls
 const refreshExpiredTokenAPI = () => {
     const refreshToken = getLocalStorage("refreshToken");
 
