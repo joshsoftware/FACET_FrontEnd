@@ -50,7 +50,10 @@ const TestsuiteViewComponent = ({ isLoading, data, projectName }) => {
                             <ul>
                               {item.teststeps?.map((teststep, ind) => (
                                 <li key={ind}>
-                                  <Link to={`/project/${projectName}/teststeps/${teststep.id}`}>
+                                  <Link
+                                    to={`/project/${projectName}/teststeps/${teststep.id}`}
+                                    className="text-decoration-none text-dark"
+                                  >
                                     {teststep.name}
                                   </Link>
                                 </li>
