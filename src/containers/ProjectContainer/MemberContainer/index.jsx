@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import { NavDropdown } from "react-bootstrap";
 import { PersonCircle } from "react-bootstrap-icons";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
-import { ViewComponent } from "Components/CustomComponents";
-import AddMembersInProject from "Components/DashboardComponent/ProjectAdmin/AddMembersInProject";
 import { AddButton } from "Components/forms/Buttons";
+import AddMembersInProject from "Components/DashboardComponent/ProjectAdmin/AddMembersInProject";
 import {
   addMembersInProjectRequest,
   getProjectMembersRequest,
@@ -14,6 +13,7 @@ import {
 } from "store/Projects/actions";
 import { getAllUsersRequest } from "store/User/actions";
 import TableComponent from "Components/CustomComponents/TableComponent/index";
+import { ViewComponent } from "Components/CustomComponents";
 
 const mapState = ({ projectMembers, user, getUsers }) => ({
   members: projectMembers.members,
@@ -28,8 +28,13 @@ const MemberContainer = () => {
   let dispatch = useDispatch();
 
   const { projectName } = useParams();
-  const { members, isLoading, project_admin, user, allUsers } =
-    useSelector(mapState);
+  const {
+    members,
+    isLoading,
+    project_admin: projectAdmin,
+    user,
+    allUsers,
+  } = useSelector(mapState);
 
   const [show, setShow] = useState(false);
   const [addMemberFormData, setAddMemberFormData] = useState({
@@ -71,8 +76,8 @@ const MemberContainer = () => {
   };
 
   const onchangeMembers = (_name, val) => {
-    setAddMemberFormData((p) => ({
-      ...p,
+    setAddMemberFormData((prevState) => ({
+      ...prevState,
       members: val,
     }));
   };
@@ -102,7 +107,7 @@ const MemberContainer = () => {
       <div className="py-5 w-100">
         <div className="d-flex justify-content-between align-items-center px-5">
           <h3>Team Members</h3>
-          {project_admin === user.id && (
+          {projectAdmin === user.id && (
             <AddButton label="Add Member" handleClick={() => setShow(true)} />
           )}
         </div>
@@ -122,7 +127,7 @@ const MemberContainer = () => {
                       <NavDropdown
                         title="More"
                         disabled={
-                          project_admin !== user.id || project_admin === item.id
+                          projectAdmin !== user.id || projectAdmin === item.id
                         }
                         style={{ lineHeight: "10px" }}
                       >

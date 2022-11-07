@@ -59,16 +59,16 @@ const TestsuiteContainer = ({ cat }) => {
         label: item.name,
       }));
 
-      setTestsuiteFormData((p) => ({
-        ...p,
+      setTestsuiteFormData((prevState) => ({
+        ...prevState,
         name,
         testcases: selectedTestcases,
       }));
     }
 
     return () =>
-      setTestsuiteFormData((p) => ({
-        ...p,
+      setTestsuiteFormData((prevState) => ({
+        ...prevState,
         name: "",
         project: projectName,
         testcases: [],
@@ -76,8 +76,8 @@ const TestsuiteContainer = ({ cat }) => {
   }, [selectedItem]);
 
   const handleOnChangeForm = (name, value) => {
-    setTestsuiteFormData((p) => ({
-      ...p,
+    setTestsuiteFormData((prevState) => ({
+      ...prevState,
       [name]: value,
     }));
   };

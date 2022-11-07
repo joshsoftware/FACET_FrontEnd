@@ -44,8 +44,8 @@ const Header = () => {
   };
 
   const handleChangeAdminFormData = (_name, val) => {
-    setAddAdminFormData((p) => ({
-      ...p,
+    setAddAdminFormData((prevState) => ({
+      ...prevState,
       admin: val,
     }));
   };

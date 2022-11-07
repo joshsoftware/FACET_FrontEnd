@@ -16,13 +16,19 @@ const AddNewTestsuite = ({ cat, data, onChange, onSubmit }) => {
     onChange(e.target.name, e.target.value);
   };
 
+  const isSaveDisabled = name.length === 0 || testcases.length === 0;
+
+  const nameBottomInfoText =
+    name.length !== 0 &&
+    `Your testsuite will be created as ${ConvertToSlug(name)}`;
+
   return (
     <Form className="w-100">
       <ViewComponent
         title={formTitle(cat)}
         type="save"
         onSave={onSubmit}
-        onSaveDisabled={name.length === 0 || testcases.length === 0}
+        onSaveDisabled={isSaveDisabled}
       >
         <FormInput
           label="Name"
@@ -30,10 +36,7 @@ const AddNewTestsuite = ({ cat, data, onChange, onSubmit }) => {
           name="name"
           value={name}
           onChange={onInpChange}
-          text={
-            name?.length !== 0 &&
-            `Your testsuite will be created as ${ConvertToSlug(name)}`
-          }
+          text={nameBottomInfoText}
           disabled={cat === "edit"}
           isRequired
         />
