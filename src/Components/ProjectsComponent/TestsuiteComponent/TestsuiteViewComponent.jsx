@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 
 import { ViewComponent } from "Components/CustomComponents";
 
-import { localDateTime } from "utils/helpers";
+import { convertToLocalDate } from "utils/convertToLocalDate";
 
 const TestsuiteViewComponent = ({ isLoading, data, projectName }) => {
   const {
@@ -71,7 +71,7 @@ const TestsuiteViewComponent = ({ isLoading, data, projectName }) => {
               <small>
                 <b>Created At</b>
               </small>
-              <div>{localDateTime(created_at)}</div>
+              <div>{convertToLocalDate(created_at)}</div>
             </Col>
             <Col md={6} className="py-2">
               <small>
@@ -83,7 +83,7 @@ const TestsuiteViewComponent = ({ isLoading, data, projectName }) => {
               <small>
                 <b>Modified At</b>
               </small>
-              <div>{localDateTime(modified_at)}</div>
+              <div>{convertToLocalDate(modified_at)}</div>
             </Col>
             <Col md={6} className="py-2">
               <small>
