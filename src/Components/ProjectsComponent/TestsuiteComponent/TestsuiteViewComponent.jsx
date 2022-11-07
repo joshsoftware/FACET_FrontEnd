@@ -39,13 +39,13 @@ const TestsuiteViewComponent = ({ isLoading, data, projectName }) => {
               <div>
                 <Accordion>
                   {testcases?.map((item, index) => (
-                    <Accordion.Item key={index}>
+                    <Accordion.Item key={index} eventKey={index}>
                       <Accordion.Header>{item.name}</Accordion.Header>
                       <Accordion.Body>
                         <Row>
                           <Col md={6} className="py-1">
                             <small>
-                              <b>Teststeps ({testcases.length})</b>
+                              <b>Teststeps ({item.teststeps?.length})</b>
                             </small>
                             <ul>
                               {item.teststeps?.map((teststep, ind) => (
