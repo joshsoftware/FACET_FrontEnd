@@ -3,11 +3,19 @@ import { Accordion, Col, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
+import ExecuteForm from "Components/ExecuteForm";
 import { ViewComponent } from "Components/CustomComponents";
 
 import { convertToLocalDate } from "utils/convertToLocalDate";
 
-const TestsuiteViewComponent = ({ isLoading, data, projectName }) => {
+const TestsuiteViewComponent = ({
+  isLoading,
+  data,
+  projectName,
+  environments,
+  isEnvLoading,
+  handleExecute,
+}) => {
   const {
     id: testsuiteId,
     name,
@@ -93,6 +101,13 @@ const TestsuiteViewComponent = ({ isLoading, data, projectName }) => {
             </Col>
           </Row>
         </ViewComponent>
+        <ExecuteForm
+          label="Testsuite"
+          data={data}
+          isEnvsLoading={isEnvLoading}
+          environments={environments}
+          handleExecute={handleExecute}
+        />
       </div>
     )
   );
@@ -104,6 +119,7 @@ TestsuiteViewComponent.propTypes = {
   projectName: PropTypes.string.isRequired,
   environments: PropTypes.array,
   isEnvLoading: PropTypes.bool,
+  handleExecute: PropTypes.func.isRequired,
 };
 
 export default React.memo(TestsuiteViewComponent);
