@@ -212,14 +212,16 @@ const TestcaseContainer = (props) => {
             }
           />
         ) : (
-          <TestcaseViewComponent
-            isLoading={isLoading}
-            data={selectedItem}
-            projectName={projectName}
-            environments={environments}
-            isEnvironmentsLoading={isEnvironmentsLoading}
-            handleExecute={handleExecute}
-          />
+          typeof selectedItem === "object" && (
+            <TestcaseViewComponent
+              isLoading={isLoading}
+              data={selectedItem}
+              projectName={projectName}
+              environments={environments}
+              isEnvironmentsLoading={isEnvironmentsLoading}
+              handleExecute={handleExecute}
+            />
+          )
         )}
       </>
     )

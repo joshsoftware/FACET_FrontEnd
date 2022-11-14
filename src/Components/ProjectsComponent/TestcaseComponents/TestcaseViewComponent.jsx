@@ -26,9 +26,7 @@ const TestcaseViewComponent = ({
     modified_by,
   } = data;
   return (
-    !isLoading &&
-    typeof data === "object" &&
-    Object.entries(data).length !== 0 && (
+    !isLoading && (
       <div className="w-100">
         <ViewComponent
           title={testcaseName}
@@ -153,4 +151,4 @@ TestcaseViewComponent.propTypes = {
   handleExecute: PropTypes.func.isRequired,
 };
 
-export default TestcaseViewComponent;
+export default React.memo(TestcaseViewComponent);
