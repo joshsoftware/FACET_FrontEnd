@@ -11,14 +11,23 @@ export function* addExecute({ payload }) {
     const response = yield call(executeTestcaseApi, payload);
     yield put(addExecuteSuccess(response));
   } catch (error) {
+    let errMsg;
     const err = error.data.error;
     yield put(addExecuteFailure(err));
     if (typeof err === "object") {
-      let errMsg = Object.entries(err)[0];
-      toast.error(`${errMsg[1].join(",")} in ${errMsg[0]}`);
+      if (Array.isArray(err)) {
+        errMsg = "Something Went Wrong!";
+      } else {
+        let [errKey, errValue] = Object.entries(err)[0];
+        errValue = Array.isArray(errValue)
+          ? errValue.join(",")
+          : "Some components missings";
+        errMsg = `${errValue} in ${errKey}`;
+      }
     } else {
-      toast.error(err);
+      errMsg = err;
     }
+    toast.error(errMsg);
   }
 }
 
