@@ -131,7 +131,7 @@ const TestcaseContainer = (props) => {
     });
   };
 
-  const onSelectedTeststepsChange = (_name, value) => {
+  const onSelectedTeststepsChange = (value) => {
     setSelectedTeststeps((prevState) => [
       ...prevState,
       {
