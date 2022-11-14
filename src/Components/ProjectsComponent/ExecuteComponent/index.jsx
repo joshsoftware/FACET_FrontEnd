@@ -28,10 +28,14 @@ const ExecuteComponent = ({ isExecute, results, data, project, reportId }) => {
     }
   };
 
+  const redirectToReportUrl = isExecute
+    ? `/project/${project}/reports/${reportId}`
+    : "";  
+
   return (
     <Card className={accordionItemClass(status)} body>
       <Link
-        to={isExecute ? `/project/${project}/reports/${reportId}` : ""}
+        to={redirectToReportUrl}
         className="text-decoration-none text-dark disabled-link"
       >
         <span>{itemName}</span>

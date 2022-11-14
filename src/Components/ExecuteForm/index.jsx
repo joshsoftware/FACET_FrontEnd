@@ -3,6 +3,7 @@ import { Button, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
 
 import FormSelect from "Components/forms/Inputs/FormSelect";
+import Loader from "Components/Loader";
 import { ViewComponent } from "Components/CustomComponents";
 
 const ExecuteForm = ({
@@ -14,7 +15,7 @@ const ExecuteForm = ({
 }) => {
   // This component and its methods need to be change with respect to FormSelect component
   const [options, setOptions] = useState([]);
-  const [selectedEnv, setSelectedEnv] = useState();
+  const [selectedEnv, setSelectedEnv] = useState(0);
 
   useEffect(() => {
     let env_options = [];
@@ -33,11 +34,13 @@ const ExecuteForm = ({
   };
 
   return (
-    !isEnvsLoading && (
-      <ViewComponent disabledHeader>
-        <small>
-          <b>Execute {label}</b>
-        </small>
+    <ViewComponent disabledHeader>
+      <small>
+        <b>Execute {label}</b>
+      </small>
+      {isEnvsLoading ? (
+        <Loader />
+      ) : (
         <div className="d-flex align-items-center">
           <Col md={6}>
             <FormSelect
@@ -55,8 +58,8 @@ const ExecuteForm = ({
             Execute
           </Button>
         </div>
-      </ViewComponent>
-    )
+      )}
+    </ViewComponent>
   );
 };
 
@@ -65,7 +68,7 @@ ExecuteForm.propTypes = {
   environments: PropTypes.array.isRequired,
   isEnvsLoading: PropTypes.bool,
   handleExecute: PropTypes.func.isRequired,
-  label: PropTypes.string,
+  label: PropTypes.string.isRequired,
 };
 
 export default ExecuteForm;

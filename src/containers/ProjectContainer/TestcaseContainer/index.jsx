@@ -122,10 +122,10 @@ const TestcaseContainer = (props) => {
     navigate(`/project/${projectName}/execute/${testcase}`);
   };
 
-  const onRemoveSelectedTeststep = (index) => {
+  const onRemoveSelectedTeststep = (selectedIndex) => {
     setSelectedTeststeps((prevState) => {
-      let fields = prevState.filter(function (_value, ind) {
-        return ind !== index;
+      let fields = prevState.filter(function (_value, index) {
+        return index !== selectedIndex;
       });
       return fields;
     });
