@@ -13,16 +13,20 @@ import {
 import { getTestcasesRequest } from "store/Testcases/actions";
 import SubComponentsNav from "Components/ProjectsComponent/SubComponentsNav";
 import TestsuiteViewComponent from "Components/ProjectsComponent/TestsuiteComponent/TestsuiteViewComponent";
+import { addExecuteRequest } from "store/Execute/actions";
 
-const mapState = ({ testsuites, testcases }) => ({
+const mapState = ({ testsuites, testcases, environments }) => ({
   isLoading: testsuites.isLoading,
   testsuites: testsuites.testsuites,
   testcases: testcases.testcases,
+  environments: environments.environments,
+  isEnvLoading: environments.isEnvLoading,
 });
 
 const TestsuiteContainer = ({ cat }) => {
   const { id, projectName } = useParams();
-  const { isLoading, testsuites, testcases } = useSelector(mapState);
+  const { isLoading, testsuites, testcases, environments, isEnvLoading } =
+    useSelector(mapState);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -118,6 +122,18 @@ const TestsuiteContainer = ({ cat }) => {
     }
   };
 
+  const handleExecute = (testsuite, env) => {
+    dispatch(
+      addExecuteRequest({
+        testsuite,
+        environment: env,
+        data: { name: selectedItem?.name, fields: selectedItem?.testcases },
+        level: "testsuite",
+      })
+    );
+    navigate(`/project/${projectName}/execute/${testsuite}`)
+  };
+
   return (
     <>
       <SubComponentsNav
@@ -140,6 +156,9 @@ const TestsuiteContainer = ({ cat }) => {
           <TestsuiteViewComponent
             data={selectedItem}
             projectName={projectName}
+            environments={environments}
+            isEnvLoading={isEnvLoading}
+            handleExecute={handleExecute}
           />
         )
       )}
