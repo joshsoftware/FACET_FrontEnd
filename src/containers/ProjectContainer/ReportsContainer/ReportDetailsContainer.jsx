@@ -23,8 +23,6 @@ const ReportDetailsContainer = () => {
     level,
     reportDetail
   );
-  console.log(reportData);
-  
 
   useEffect(() => {
     if (reportId) {
