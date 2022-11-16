@@ -5,28 +5,17 @@ import executeConstants from "./constants";
 import { executeTestcaseApi } from "./apis";
 import { addExecuteFailure, addExecuteSuccess } from "./actions";
 
+import { componentMissingErrors } from "utils/helper";
+
 export function* addExecute({ payload }) {
   try {
     delete payload.data;
     const response = yield call(executeTestcaseApi, payload);
     yield put(addExecuteSuccess(response));
   } catch (error) {
-    let errMsg;
     const err = error.data.error;
     yield put(addExecuteFailure(err));
-    if (typeof err === "object") {
-      if (Array.isArray(err)) {
-        errMsg = "Something Went Wrong!";
-      } else {
-        let [errKey, errValue] = Object.entries(err)[0];
-        errValue = Array.isArray(errValue)
-          ? errValue.join(",")
-          : "Some components missings";
-        errMsg = `${errValue} in ${errKey}`;
-      }
-    } else {
-      errMsg = err;
-    }
+    let errMsg = componentMissingErrors(err);
     toast.error(errMsg);
   }
 }
