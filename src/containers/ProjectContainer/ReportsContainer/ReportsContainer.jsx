@@ -9,6 +9,17 @@ import ReportTableRow from "Components/ProjectsComponent/ReportsComponent/Report
 import TableComponent from "Components/CustomComponents/TableComponent";
 import { ViewComponent } from "Components/CustomComponents";
 
+const tableHeadings = [
+  "#",
+  "Name",
+  "Type",
+  "Passed",
+  "Failed",
+  "Executed By",
+  "Executed On",
+  "",
+];
+
 const mapState = ({ reports }) => ({
   reports: reports.reports,
   page: reports.page,
@@ -20,16 +31,6 @@ const ReportsContainer = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const tableHeadings = [
-    "#",
-    "Name",
-    "Type",
-    "Passed",
-    "Failed",
-    "Executed By",
-    "Executed On",
-    "",
-  ];
 
   const { projectName } = useParams();
   const { isLoading, page, reports, totalResults } = useSelector(mapState);
