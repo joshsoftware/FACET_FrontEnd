@@ -14,7 +14,7 @@ import PayloadContainer from "containers/ProjectContainer/PayloadContainer";
 import ProjectContainer from "containers/ProjectContainer";
 import ProjectOverviewContainer from "containers/ProjectContainer/ProjectOverviewContainer";
 import ProfileContainer from "containers/ProfileContainer";
-import ReportsContainer from "containers/ProjectContainer/ReportsContainer";
+import ReportsContainer from "containers/ProjectContainer/ReportsContainer/ReportsContainer";
 import ScheduleContainer from "containers/ProjectContainer/ScheduleContainer";
 import SignUpContainer from "containers/SignUpContainer";
 import SettingsContainer from "containers/ProjectContainer/SettingsContainer";
