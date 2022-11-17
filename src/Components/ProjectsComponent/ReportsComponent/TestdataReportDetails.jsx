@@ -2,6 +2,7 @@ import React from "react";
 import { Accordion, Tab, Tabs } from "react-bootstrap";
 import PropTypes from "prop-types";
 
+import BadgeComponent from "Components/BadgeComponent";
 import JSONView from "Components/JSONView";
 import TableComponent from "Components/CustomComponents/TableComponent";
 import TestdataOutcomeTable from "./TestdataOutcomeTable";
@@ -11,13 +12,19 @@ const parametersTableHeadings = ["Key", "Value"];
 const TestdataReportDetails = ({ data, onOpenOutcomeModal }) => {
   const { name, status, parameters, payload, response, outcome } = data;
 
-  const testdataAccordionClass = `border-${
-    status === "passed" ? "success" : "danger"
-  }`;
+  // border color of accordion and backgound of badge based on status
+  const cardColor = status === "passed" ? "success" : "danger";
 
   return (
-    <Accordion.Item eventKey={name} className={testdataAccordionClass}>
-      <Accordion.Header>{name}</Accordion.Header>
+    <Accordion.Item eventKey={name} className={`border-${cardColor}`}>
+      <Accordion.Header>
+        {name}
+        <BadgeComponent
+          label={status}
+          bg={cardColor}
+          className="text-capitalize report-results"
+        />
+      </Accordion.Header>
       <Accordion.Body>
         <Tabs defaultActiveKey="outcome">
           <Tab eventKey="parameters" title="Parameters">
