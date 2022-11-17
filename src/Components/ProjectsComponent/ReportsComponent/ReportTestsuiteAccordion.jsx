@@ -2,9 +2,8 @@ import React from "react";
 import { Accordion } from "react-bootstrap";
 import PropTypes from "prop-types";
 
+import PassFailBadges from "Components/ProjectsComponent/PassFailBadges";
 import ReportTeststepCard from "./ReportTeststepCard";
-
-import PassFailBadges from "../PassFailBadges";
 
 import { captitalFiretLetter, componentMissingErrors } from "utils/helper";
 

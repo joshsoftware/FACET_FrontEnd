@@ -3,8 +3,7 @@ import { Card } from "react-bootstrap";
 import PropType from "prop-types";
 
 import BadgeComponent from "Components/BadgeComponent";
-
-import PassFailBadges from "../PassFailBadges";
+import PassFailBadges from "Components/ProjectsComponent/PassFailBadges";
 
 const ReportTeststepCard = ({ data, onTeststepCardClick }) => {
   const {
@@ -18,7 +17,7 @@ const ReportTeststepCard = ({ data, onTeststepCardClick }) => {
     onTeststepCardClick(data);
   };
 
-  // If testName, passedFields,etc does not have value then it will return null 
+  // If testName, passedFields,etc does not have value then it will return null
   // instead of render component
   if (
     !teststepName ||

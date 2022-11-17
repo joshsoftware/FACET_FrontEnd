@@ -3,12 +3,10 @@ import { Accordion } from "react-bootstrap";
 import PropTypes from "prop-types";
 
 import BadgeComponent from "Components/BadgeComponent";
-import ViewComponent from "Components/CustomComponents/ViewComponent";
-
+import PassFailBadges from "Components/ProjectsComponent/PassFailBadges";
 import ReportTeststepCard from "./ReportTeststepCard";
 import ReportTestsuiteAccordion from "./ReportTestsuiteAccordion";
-
-import PassFailBadges from "../PassFailBadges";
+import ViewComponent from "Components/CustomComponents/ViewComponent";
 
 const ReportDetails = ({
   name,
