@@ -2,7 +2,10 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
-import { getReportDetailRequest } from "store/Reports/actions";
+import {
+  getReportDetailRequest,
+  getTeststepReportRequest,
+} from "store/Reports/actions";
 import ReportDetails from "Components/ProjectsComponent/ReportsComponent/ReportDetails";
 
 import { getReportDetails } from "utils/reportsHelper";
@@ -30,9 +33,8 @@ const ReportDetailsContainer = () => {
     }
   }, [reportId]);
 
-  // eslint-disable-next-line no-unused-vars
-  const onTeststepCardClick = (testcaseName, teststepName) => {
-    // dispatch need to be done
+  const onTeststepCardClick = (selectedTeststep) => {
+    dispatch(getTeststepReportRequest({ teststep: selectedTeststep }));
   };
 
   return (
