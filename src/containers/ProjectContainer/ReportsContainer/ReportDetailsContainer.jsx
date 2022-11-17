@@ -41,8 +41,15 @@ const ReportDetailsContainer = () => {
     dispatch(getTeststepReportRequest({ teststep: selectedTeststep }));
   };
 
+  const onOpenOutcomeModal = () => {
+    // to be done
+  };
+
   return showTeststepReport ? (
-    <TeststepReportDetails data={teststepReport} />
+    <TeststepReportDetails
+      data={teststepReport}
+      onOpenOutcomeModal={onOpenOutcomeModal}
+    />
   ) : (
     <ReportDetails
       name={name}

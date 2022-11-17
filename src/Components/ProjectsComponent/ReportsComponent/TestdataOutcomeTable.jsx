@@ -14,7 +14,7 @@ const outcomeTableHeadings = [
   "",
 ];
 
-const TestdataOutcomeTable = ({ data }) => {
+const TestdataOutcomeTable = ({ data, onOpenOutcomeModal }) => {
   // returns bootstrap class for background color based on status
   const statusColor = (status) => {
     switch (status) {
@@ -43,6 +43,10 @@ const TestdataOutcomeTable = ({ data }) => {
     }
   };
 
+  const onOutcomeFieldClick = () => {
+    onOpenOutcomeModal();
+  };
+
   return (
     <TableComponent striped bordered headings={outcomeTableHeadings}>
       {data.map((item, index) => (
@@ -58,7 +62,11 @@ const TestdataOutcomeTable = ({ data }) => {
           </td>
           <td>{errorMessage(item.error)}</td>
           <td>
-            <EyeFill role="button" className="text-secondary" />
+            <EyeFill
+              role="button"
+              className="text-secondary"
+              onClick={onOutcomeFieldClick}
+            />
           </td>
         </tr>
       ))}
@@ -67,7 +75,19 @@ const TestdataOutcomeTable = ({ data }) => {
 };
 
 TestdataOutcomeTable.propTypes = {
-  data: PropTypes.object.isRequired,
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      error: PropTypes.string,
+      executed_status: PropTypes.oneOf(["passed", "failed"]).isRequired,
+      isExact: PropTypes.bool,
+      name: PropTypes.string.isRequired,
+      res_value: PropTypes.any,
+      status: PropTypes.string.isRequired,
+      type: PropTypes.string.isRequired,
+      value: PropTypes.any,
+    })
+  ).isRequired,
+  onOpenOutcomeModal: PropTypes.func.isRequired,
 };
 
 export default TestdataOutcomeTable;

@@ -7,7 +7,7 @@ import PassFailBadges from "Components/ProjectsComponent/PassFailBadges";
 import TestdataReportDetails from "./TestdataReportDetails";
 import ViewComponent from "Components/CustomComponents/ViewComponent";
 
-const TeststepReportDetails = ({ data }) => {
+const TeststepReportDetails = ({ data, onOpenOutcomeModal }) => {
   const {
     name,
     endpoint,
@@ -45,7 +45,11 @@ const TeststepReportDetails = ({ data }) => {
         </small>
         <Accordion>
           {testdata?.map((item, index) => (
-            <TestdataReportDetails data={item} key={index} />
+            <TestdataReportDetails
+              data={item}
+              key={index}
+              onOpenOutcomeModal={onOpenOutcomeModal}
+            />
           ))}
         </Accordion>
       </div>
@@ -54,7 +58,15 @@ const TeststepReportDetails = ({ data }) => {
 };
 
 TeststepReportDetails.propTypes = {
-  data: PropTypes.object.isRequired,
+  data: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    endpoint: PropTypes.string.isRequired,
+    header: PropTypes.object.isRequired,
+    no_of_failed_testdata_combinations: PropTypes.number.isRequired,
+    no_of_passed_testdata_combinations: PropTypes.number.isRequired,
+    testdata_combinations: PropTypes.array.isRequired,
+  }).isRequired,
+  onOpenOutcomeModal: PropTypes.func.isRequired,
 };
 
 export default TeststepReportDetails;

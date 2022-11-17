@@ -8,7 +8,7 @@ import TestdataOutcomeTable from "./TestdataOutcomeTable";
 
 const parametersTableHeadings = ["Key", "Value"];
 
-const TestdataReportDetails = ({ data }) => {
+const TestdataReportDetails = ({ data, onOpenOutcomeModal }) => {
   const { name, status, parameters, payload, response, outcome } = data;
 
   const testdataAccordionClass = `border-${
@@ -34,7 +34,10 @@ const TestdataReportDetails = ({ data }) => {
             <JSONView data={payload} />
           </Tab>
           <Tab eventKey="outcome" title="Outcome">
-            <TestdataOutcomeTable data={outcome} />
+            <TestdataOutcomeTable
+              data={outcome}
+              onOpenOutcomeModal={onOpenOutcomeModal}
+            />
           </Tab>
           <Tab eventKey="response" title="Response">
             <JSONView data={response} />
@@ -46,7 +49,15 @@ const TestdataReportDetails = ({ data }) => {
 };
 
 TestdataReportDetails.propTypes = {
-  data: PropTypes.object.isRequired,
+  data: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    status: PropTypes.string.isRequired,
+    parameters: PropTypes.object.isRequired,
+    payload: PropTypes.object.isRequired,
+    response: PropTypes.any,
+    outcome: PropTypes.array.isRequired,
+  }).isRequired,
+  onOpenOutcomeModal: PropTypes.func.isRequired,
 };
 
 export default TestdataReportDetails;
