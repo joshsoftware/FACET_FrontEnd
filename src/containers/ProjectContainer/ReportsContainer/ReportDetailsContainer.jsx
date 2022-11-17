@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
 import {
+  addCommentRequest,
   getReportDetailRequest,
   getTeststepReportRequest,
 } from "store/Reports/actions";
@@ -20,7 +21,7 @@ const initialSelectedCommentField = {
   testdata: "",
   field: "",
   status: "",
-  updatedStatus: "",
+  executedStatus: "",
   expectedValue: "",
   responseValue: "",
   project: "",
@@ -66,6 +67,7 @@ const ReportDetailsContainer = () => {
     const {
       name: field,
       status,
+      executed_status: executedStatus,
       value: expectedValue,
       res_value: responseValue,
       testsuiteName,
@@ -83,7 +85,7 @@ const ReportDetailsContainer = () => {
       testdata: testdataName,
       field,
       status,
-      updatedStatus: status,
+      executedStatus,
       expectedValue,
       responseValue,
       project: projectName,
@@ -95,6 +97,41 @@ const ReportDetailsContainer = () => {
     setIsCommentModalOpen(false);
   };
 
+  const onChangeCommentForm = (name, value) => {
+    setSelectedCommentField((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const onCommentFormSubmit = (e) => {
+    e.preventDefault();
+    const {
+      field,
+      status,
+      comment,
+      reportId,
+      project,
+      testsuite,
+      testcase,
+      teststep,
+      testdata,
+    } = selectedCommentField;
+    dispatch(
+      addCommentRequest({
+        field,
+        status,
+        comment,
+        reportId,
+        project,
+        testsuite,
+        testcase,
+        teststep,
+        testdata,
+      })
+    );
+  };
+
   return (
     <>
       {isCommentModalOpen && (
@@ -102,6 +139,8 @@ const ReportDetailsContainer = () => {
           show={isCommentModalOpen}
           data={selectedCommentField}
           onCloseModal={onCloseCommentModal}
+          onChangeCommentForm={onChangeCommentForm}
+          onCommentFormSubmit={onCommentFormSubmit}
         />
       )}
       {showTeststepReport ? (
