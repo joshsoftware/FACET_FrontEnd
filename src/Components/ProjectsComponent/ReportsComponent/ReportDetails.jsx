@@ -31,6 +31,8 @@ const ReportDetails = ({
             key={index}
             data={item}
             level={level}
+            testsuiteName={null}
+            testcaseName={name}
             onTeststepCardClick={onTeststepCardClick}
           />
         ))
@@ -41,6 +43,7 @@ const ReportDetails = ({
               key={index}
               data={suiteData}
               level={level}
+              testsuiteName={name}
               onTeststepCardClick={onTeststepCardClick}
             />
           ))}

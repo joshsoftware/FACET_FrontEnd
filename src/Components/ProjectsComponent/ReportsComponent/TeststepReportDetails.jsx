@@ -15,6 +15,8 @@ const TeststepReportDetails = ({ data, onOpenOutcomeModal }) => {
     no_of_failed_testdata_combinations: failedFields,
     no_of_passed_testdata_combinations: passedFields,
     testdata_combinations: testdata,
+    testsuiteName,
+    testcaseName,
   } = data;
 
   const rightChildrens = (
@@ -46,8 +48,11 @@ const TeststepReportDetails = ({ data, onOpenOutcomeModal }) => {
         <Accordion>
           {testdata?.map((item, index) => (
             <TestdataReportDetails
-              data={item}
               key={index}
+              data={item}
+              testsuiteName={testsuiteName}
+              testcaseName={testcaseName}
+              teststepName={name}
               onOpenOutcomeModal={onOpenOutcomeModal}
             />
           ))}
@@ -65,6 +70,8 @@ TeststepReportDetails.propTypes = {
     no_of_failed_testdata_combinations: PropTypes.number.isRequired,
     no_of_passed_testdata_combinations: PropTypes.number.isRequired,
     testdata_combinations: PropTypes.array.isRequired,
+    testsuiteName: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+    testcaseName: PropTypes.string.isRequired,
   }).isRequired,
   onOpenOutcomeModal: PropTypes.func.isRequired,
 };

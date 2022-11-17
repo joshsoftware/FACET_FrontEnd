@@ -14,7 +14,14 @@ const outcomeTableHeadings = [
   "",
 ];
 
-const TestdataOutcomeTable = ({ data, onOpenOutcomeModal }) => {
+const TestdataOutcomeTable = ({
+  data,
+  testsuiteName,
+  testcaseName,
+  teststepName,
+  testdataName,
+  onOpenOutcomeModal,
+}) => {
   // returns bootstrap class for background color based on status
   const statusColor = (status) => {
     switch (status) {
@@ -43,8 +50,14 @@ const TestdataOutcomeTable = ({ data, onOpenOutcomeModal }) => {
     }
   };
 
-  const onOutcomeFieldClick = () => {
-    onOpenOutcomeModal();
+  const onOutcomeFieldClick = (fieldData) => {
+    onOpenOutcomeModal({
+      ...fieldData,
+      testsuiteName,
+      testcaseName,
+      teststepName,
+      testdataName,
+    });
   };
 
   return (
@@ -65,7 +78,7 @@ const TestdataOutcomeTable = ({ data, onOpenOutcomeModal }) => {
             <EyeFill
               role="button"
               className="text-secondary"
-              onClick={onOutcomeFieldClick}
+              onClick={() => onOutcomeFieldClick(item)}
             />
           </td>
         </tr>
@@ -87,6 +100,10 @@ TestdataOutcomeTable.propTypes = {
       value: PropTypes.any,
     })
   ).isRequired,
+  testsuiteName: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  testcaseName: PropTypes.string.isRequired,
+  teststepName: PropTypes.string.isRequired,
+  testdataName: PropTypes.string.isRequired,
   onOpenOutcomeModal: PropTypes.func.isRequired,
 };
 

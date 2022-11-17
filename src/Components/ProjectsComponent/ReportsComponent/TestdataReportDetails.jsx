@@ -9,7 +9,13 @@ import TestdataOutcomeTable from "./TestdataOutcomeTable";
 
 const parametersTableHeadings = ["Key", "Value"];
 
-const TestdataReportDetails = ({ data, onOpenOutcomeModal }) => {
+const TestdataReportDetails = ({
+  data,
+  testsuiteName,
+  testcaseName,
+  teststepName,
+  onOpenOutcomeModal,
+}) => {
   const { name, status, parameters, payload, response, outcome } = data;
 
   // border color of accordion and backgound of badge based on status
@@ -43,6 +49,10 @@ const TestdataReportDetails = ({ data, onOpenOutcomeModal }) => {
           <Tab eventKey="outcome" title="Outcome">
             <TestdataOutcomeTable
               data={outcome}
+              testsuiteName={testsuiteName}
+              testcaseName={testcaseName}
+              teststepName={teststepName}
+              testdataName={name}
               onOpenOutcomeModal={onOpenOutcomeModal}
             />
           </Tab>
@@ -64,6 +74,9 @@ TestdataReportDetails.propTypes = {
     response: PropTypes.any,
     outcome: PropTypes.array.isRequired,
   }).isRequired,
+  testsuiteName: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  testcaseName: PropTypes.string.isRequired,
+  teststepName: PropTypes.string.isRequired,
   onOpenOutcomeModal: PropTypes.func.isRequired,
 };
 
