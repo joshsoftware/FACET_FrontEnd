@@ -1,4 +1,4 @@
-import { call, put, takeLatest, select } from "redux-saga/effects";
+import { call, put, takeLatest } from "redux-saga/effects";
 import { toast } from "react-toastify";
 
 import { addCommentApi, getAllReportsApi, getSingleReportsApi } from "./apis";
@@ -6,8 +6,8 @@ import {
   addCommentFailure,
   addCommentSuccess,
   getReportsSuccess,
-  getSingleTeststepOfTestcaseReportFailure,
-  getSingleTeststepOfTestcaseReportSuccess,
+  getTeststepReportFailure,
+  getTeststepReportSuccess,
   getReportDetailFailure,
   getReportDetailSuccess,
 } from "./actions";
@@ -37,15 +37,12 @@ export function* getReportDetail({ payload: { reportId } }) {
 
 export function* getTeststepOfSingleTestcaseReport({ payload }) {
   try {
-        const singleSuiteReport = yield select(state => state.reports.singleReport.teststeps);
-        const testcaseReport = singleSuiteReport.find(x => String(x.name)===String(payload.testcaseName));
-    if (testcaseReport) {
-      yield put(getSingleTeststepOfTestcaseReportSuccess(testcaseReport));
-    } else {
-      throw "Report Not Found";
-    }
+    // For now, this saga stores static data in the reducers, 
+    // but after the time this saga fetch data from api call
+    const { teststep } = payload;
+    yield put(getTeststepReportSuccess(teststep));
   } catch (error) {
-    yield put(getSingleTeststepOfTestcaseReportFailure(error));
+    yield put(getTeststepReportFailure(error));
     toast.error(error);
   }
 }
