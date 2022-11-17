@@ -7,6 +7,7 @@ import {
   getTeststepReportRequest,
 } from "store/Reports/actions";
 import ReportDetails from "Components/ProjectsComponent/ReportsComponent/ReportDetails";
+import TeststepReportDetails from "Components/ProjectsComponent/ReportsComponent/TeststepReportDetails";
 
 import { getReportDetails } from "utils/reportsHelper";
 
@@ -14,12 +15,15 @@ const mapState = ({ reports }) => ({
   level: reports.singleReport.level,
   reportDetail: reports.singleReport.result,
   isReportLoading: reports.isOneReportLoading,
+  showTeststepReport: reports.showTeststepReport,
+  teststepReport: reports.singleTeststepReport,
 });
 
 const ReportDetailsContainer = () => {
   const dispatch = useDispatch();
   const { reportId } = useParams();
-  const { reportDetail, level } = useSelector(mapState);
+  const { reportDetail, level, showTeststepReport, teststepReport } =
+    useSelector(mapState);
 
   // getReportDetails returns destructuring of results based on level
   const { name, passedFields, failedFields, reportData } = getReportDetails(
@@ -37,7 +41,9 @@ const ReportDetailsContainer = () => {
     dispatch(getTeststepReportRequest({ teststep: selectedTeststep }));
   };
 
-  return (
+  return showTeststepReport ? (
+    <TeststepReportDetails data={teststepReport} />
+  ) : (
     <ReportDetails
       name={name}
       passedFields={passedFields}

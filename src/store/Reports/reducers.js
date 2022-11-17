@@ -11,6 +11,7 @@ const initialState = {
     level: "",
     result: {},
   },
+  showTeststepReport: false,
   isOneTeststepReportLoading: true,
   singleTeststepReport: {},
   isAddCommentLoading: false,
@@ -42,7 +43,7 @@ const reportsReducer = (state = initialState, action) => {
       return { ...state, isReportsLoading: false, errors: action.payload };
 
     case reportsConstants.GET_SINGLE_REPORT_REQUEST:
-      return { ...state, isOneReportLoading: true };
+      return { ...state, isOneReportLoading: true, showTeststepReport: false };
 
     case reportsConstants.GET_SINGLE_REPORT_SUCCESS:
       return {
@@ -55,13 +56,18 @@ const reportsReducer = (state = initialState, action) => {
       return { ...state, isOneReportLoading: false, errors: action.payload };
 
     case reportsConstants.GET_TESTSTEP_OF_SINGLE_REPORT_REQUEST:
-      return { ...state, isOneTeststepReportLoading: true };
+      return {
+        ...state,
+        isOneTeststepReportLoading: true,
+        showTeststepReport: false,
+      };
 
     case reportsConstants.GET_TESTSTEP_OF_SINGLE_REPORT_SUCCESS:
       return {
         ...state,
         isOneTeststepReportLoading: false,
         singleTeststepReport: action.payload,
+        showTeststepReport: true,
       };
 
     case reportsConstants.GET_TESTSTEP_OF_SINGLE_REPORT_FAILURE:
@@ -69,6 +75,7 @@ const reportsReducer = (state = initialState, action) => {
         ...state,
         isOneTeststepReportLoading: false,
         errors: action.payload,
+        showTeststepReport: false,
       };
 
     case reportsConstants.ADD_COMMENT_REQUEST:
