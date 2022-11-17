@@ -1,4 +1,3 @@
-// /* eslint-disable no-unused-vars */
 import React from "react";
 import { Accordion, Col, Row } from "react-bootstrap";
 import PropTypes from "prop-types";
