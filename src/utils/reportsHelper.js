@@ -3,28 +3,35 @@ export const getReportDetails = (level, result) => {
   const {
     testcase,
     testsuite,
-    no_of_failed_testcases,
-    no_of_failed_teststeps,
-    no_of_passed_testcases,
-    no_of_passed_teststeps,
+    status,
+    teststeps: caseReportData,
+    testsuite_execution: suiteReportData,
+    no_of_passed_teststeps: passedSteps,
+    no_of_failed_teststeps: failedSteps,
+    no_of_passed_testcases: passedCases,
+    no_of_failed_testcases: failedCases,
   } = result;
 
   switch (level) {
     case "testcase":
       return {
         name: testcase?.name || "",
-        passedFields: no_of_passed_teststeps || 0,
-        failedFields: no_of_failed_teststeps || 0,
+        reportData: caseReportData || [],
+        status,
+        passedFields: passedSteps || 0,
+        failedFields: failedSteps || 0,
       };
 
     case "testsuite":
       return {
         name: testsuite?.name || "",
-        passedFields: no_of_passed_testcases || 0,
-        failedFields: no_of_failed_testcases || 0,
+        reportData: suiteReportData || [],
+        status,
+        passedFields: passedCases || 0,
+        failedFields: failedCases || 0,
       };
 
     default:
-      return { name: "", passedFields: 0, failedFields: 0 };
+      return { name: "", passedFields: 0, failedFields: 0, reportData: [], status: "" };
   }
 };

@@ -15,6 +15,7 @@ import ProjectContainer from "containers/ProjectContainer";
 import ProjectOverviewContainer from "containers/ProjectContainer/ProjectOverviewContainer";
 import ProfileContainer from "containers/ProfileContainer";
 import ReportsContainer from "containers/ProjectContainer/ReportsContainer/ReportsContainer";
+import ReportDetailsContainer from "containers/ProjectContainer/ReportsContainer/ReportDetailsContainer";
 import ScheduleContainer from "containers/ProjectContainer/ScheduleContainer";
 import SignUpContainer from "containers/SignUpContainer";
 import SettingsContainer from "containers/ProjectContainer/SettingsContainer";
@@ -47,11 +48,7 @@ function App() {
             <Route path="/project/:projectName/testsuites" element={<TestsuiteContainer />} />
             <Route path="/project/:projectName/reports" element={<ReportsContainer />} />
             <Route path="/project/:projectName/settings" element={<SettingsContainer />} />
-            <Route path="/project/:projectName/reports/:reportId" element={<ReportsContainer />} />
-            <Route
-              path="/project/:projectName/reports/:reportId/:tname"
-              element={<ReportsContainer />}
-            />
+            <Route path="/project/:projectName/reports/:reportId" element={<ReportDetailsContainer />} />
             <Route path="/project/:projectName/schedule" element={<ScheduleContainer />} />
             <Route
               path="/project/:projectName/schedule/new"
