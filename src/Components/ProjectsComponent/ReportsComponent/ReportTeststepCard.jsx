@@ -5,7 +5,7 @@ import PropType from "prop-types";
 import BadgeComponent from "Components/BadgeComponent";
 import PassFailBadges from "Components/ProjectsComponent/PassFailBadges";
 
-const ReportTeststepCard = ({ data, testcaseName, onTeststepCardClick }) => {
+const ReportTeststepCard = ({ data, onTeststepCardClick }) => {
   const {
     name: teststepName,
     method,
@@ -14,7 +14,7 @@ const ReportTeststepCard = ({ data, testcaseName, onTeststepCardClick }) => {
   } = data;
 
   const handleClick = () => {
-    onTeststepCardClick(testcaseName, teststepName);
+    onTeststepCardClick(data);
   };
 
   // If testName, passedFields,etc does not have value then it will return null
@@ -41,8 +41,6 @@ const ReportTeststepCard = ({ data, testcaseName, onTeststepCardClick }) => {
 
 ReportTeststepCard.propTypes = {
   data: PropType.object.isRequired,
-  // testcaseName only required when level of the report is testsuite
-  testcaseName: PropType.string,
   onTeststepCardClick: PropType.func.isRequired,
 };
 

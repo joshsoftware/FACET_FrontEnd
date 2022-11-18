@@ -30,17 +30,17 @@ export const getReportDetailFailure = (data) => ({
   payload: data,
 });
 
-export const getSingleTeststepOfTestcaseReportRequest = (data) => ({
+export const getTeststepReportRequest = (data) => ({
   type: reportsConstants.GET_TESTSTEP_OF_SINGLE_REPORT_REQUEST,
   payload: data,
 });
 
-export const getSingleTeststepOfTestcaseReportSuccess = (data) => ({
+export const getTeststepReportSuccess = (data) => ({
   type: reportsConstants.GET_TESTSTEP_OF_SINGLE_REPORT_SUCCESS,
   payload: data,
 });
 
-export const getSingleTeststepOfTestcaseReportFailure = (data) => ({
+export const getTeststepReportFailure = (data) => ({
   type: reportsConstants.GET_TESTSTEP_OF_SINGLE_REPORT_FAILURE,
   payload: data,
 });
