@@ -8,10 +8,7 @@ import FormSelect from "Components/forms/Inputs/FormSelect";
 import JSONView from "Components/JSONView";
 import { SaveButton } from "Components/forms/Buttons/index";
 
-const statusOptions = [
-  { label: "Passed", value: "passed" },
-  { label: "Failed", value: "failed" },
-];
+import { STATUS_OPTIONS } from "constants/appConstants";
 
 const TestFieldCommentModal = ({
   show,
@@ -51,7 +48,7 @@ const TestFieldCommentModal = ({
           </Row>
           <FormSelect
             label="Status"
-            options={statusOptions}
+            options={STATUS_OPTIONS}
             value={status}
             name="status"
             handlechange={onChangeCommentForm}
