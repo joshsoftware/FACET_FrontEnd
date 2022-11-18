@@ -1,11 +1,16 @@
 import React from "react";
 import { Card } from "react-bootstrap";
-import PropType from "prop-types";
+import PropTypes from "prop-types";
 
 import BadgeComponent from "Components/BadgeComponent";
 import PassFailBadges from "Components/ProjectsComponent/PassFailBadges";
 
-const ReportTeststepCard = ({ data, onTeststepCardClick }) => {
+const ReportTeststepCard = ({
+  data,
+  testsuiteName,
+  testcaseName,
+  onTeststepCardClick,
+}) => {
   const {
     name: teststepName,
     method,
@@ -14,7 +19,7 @@ const ReportTeststepCard = ({ data, onTeststepCardClick }) => {
   } = data;
 
   const handleClick = () => {
-    onTeststepCardClick(data);
+    onTeststepCardClick({ ...data, testsuiteName, testcaseName });
   };
 
   // If testName, passedFields,etc does not have value then it will return null
@@ -40,8 +45,10 @@ const ReportTeststepCard = ({ data, onTeststepCardClick }) => {
 };
 
 ReportTeststepCard.propTypes = {
-  data: PropType.object.isRequired,
-  onTeststepCardClick: PropType.func.isRequired,
+  data: PropTypes.object.isRequired,
+  testsuiteName: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  testcaseName: PropTypes.string.isRequired,
+  onTeststepCardClick: PropTypes.func.isRequired,
 };
 
 export default ReportTeststepCard;

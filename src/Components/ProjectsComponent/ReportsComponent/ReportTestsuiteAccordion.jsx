@@ -7,7 +7,7 @@ import ReportTeststepCard from "./ReportTeststepCard";
 
 import { captitalFiretLetter, componentMissingErrors } from "utils/helper";
 
-const ReportTestsuiteAccordion = ({ data, level, onTeststepCardClick }) => {
+const ReportTestsuiteAccordion = ({ data, level, testsuiteName, onTeststepCardClick }) => {
   const {
     testcase,
     teststeps,
@@ -35,6 +35,7 @@ const ReportTestsuiteAccordion = ({ data, level, onTeststepCardClick }) => {
               key={key}
               data={item}
               level={level}
+              testsuiteName={testsuiteName}
               testcaseName={testcase?.name}
               onTeststepCardClick={onTeststepCardClick}
             />
@@ -48,6 +49,7 @@ const ReportTestsuiteAccordion = ({ data, level, onTeststepCardClick }) => {
 ReportTestsuiteAccordion.propTypes = {
   data: PropTypes.object.isRequired,
   level: PropTypes.oneOf(["testcase", "testsuite"]).isRequired,
+  testsuiteName: PropTypes.string.isRequired,
   onTeststepCardClick: PropTypes.func.isRequired,
 };
 
