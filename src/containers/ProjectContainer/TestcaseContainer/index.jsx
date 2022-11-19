@@ -7,10 +7,7 @@ import {
   addExecuteRequest,
   clearExecutionFailure,
 } from "store/Execute/actions";
-import {
-  AddNewTestcase,
-  TestcaseViewComponent,
-} from "Components/ProjectsComponent/TestcaseComponents";
+import AddNewTestcase from "Components/ProjectsComponent/TestcaseComponents/AddNewTestcase";
 import {
   addTestcasesRequest,
   editTestcasesRequest,
@@ -19,6 +16,7 @@ import {
 import { getEnvironmentsRequest } from "store/Environments/actions";
 import { getTeststepsRequest } from "store/Teststeps/actions";
 import { SubComponentsNav } from "Components/ProjectsComponent";
+import TestcaseViewComponent from "Components/ProjectsComponent/TestcaseComponents/TestcaseViewComponent";
 
 import { GetDiffOfArrayOfObjects } from "utils";
 
@@ -181,6 +179,11 @@ const TestcaseContainer = (props) => {
     }
   };
 
+  const showViewComponent =
+    typeof selectedItem === "object" &&
+    Object.entries(selectedItem).length !== 0 &&
+    !isLoading;
+
   return (
     !isExecuteFailed && (
       <>
@@ -212,7 +215,7 @@ const TestcaseContainer = (props) => {
             }
           />
         ) : (
-          typeof selectedItem === "object" && (
+          showViewComponent && (
             <TestcaseViewComponent
               isLoading={isLoading}
               data={selectedItem}
