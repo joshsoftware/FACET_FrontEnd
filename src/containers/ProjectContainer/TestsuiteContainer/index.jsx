@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 
+import { addExecuteRequest } from "store/Execute/actions";
 import AddNewTestsuite from "Components/ProjectsComponent/TestsuiteComponent/AddNewTestsuite";
 import {
   addTestsuiteRequest,
@@ -13,7 +14,6 @@ import {
 import { getTestcasesRequest } from "store/Testcases/actions";
 import SubComponentsNav from "Components/ProjectsComponent/SubComponentsNav";
 import TestsuiteViewComponent from "Components/ProjectsComponent/TestsuiteComponent/TestsuiteViewComponent";
-import { addExecuteRequest } from "store/Execute/actions";
 
 const mapState = ({ testsuites, testcases, environments }) => ({
   isLoading: testsuites.isLoading,
@@ -30,7 +30,7 @@ const TestsuiteContainer = ({ cat }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [selectedItem, setSelectedItem] = useState({ name: "", testcases: [] });
+  const [selectedItem, setSelectedItem] = useState({});
   const [testsuiteFormData, setTestsuiteFormData] = useState({
     project: projectName,
     name: "",
@@ -131,8 +131,13 @@ const TestsuiteContainer = ({ cat }) => {
         level: "testsuite",
       })
     );
-    navigate(`/project/${projectName}/execute/${testsuite}`)
+    navigate(`/project/${projectName}/execute/${testsuite}`);
   };
+
+  const showViewComponent =
+    typeof selectedItem === "object" &&
+    Object.entries(selectedItem).length !== 0 &&
+    !isLoading;
 
   return (
     <>
@@ -152,7 +157,7 @@ const TestsuiteContainer = ({ cat }) => {
           onSubmit={handleSubmitTestsuiteForm}
         />
       ) : (
-        typeof selectedItem === "object" && (
+        showViewComponent && (
           <TestsuiteViewComponent
             data={selectedItem}
             projectName={projectName}
