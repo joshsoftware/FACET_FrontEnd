@@ -143,7 +143,16 @@ const TestcaseViewComponent = ({
 };
 
 TestcaseViewComponent.propTypes = {
-  data: PropTypes.object.isRequired,
+  data: PropTypes.shape({
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    name: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    teststeps: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+    created_at: PropTypes.string.isRequired,
+    created_by: PropTypes.string.isRequired,
+    modified_at: PropTypes.string.isRequired,
+    modified_by: PropTypes.string.isRequired,
+  }).isRequired,
   isLoading: PropTypes.bool,
   projectName: PropTypes.string.isRequired,
   environments: PropTypes.array,

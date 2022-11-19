@@ -80,7 +80,14 @@ const TestFieldCommentModal = ({
 TestFieldCommentModal.propTypes = {
   show: PropTypes.bool,
   onCloseModal: PropTypes.func.isRequired,
-  data: PropTypes.object.isRequired,
+  data: PropTypes.shape({
+    field: PropTypes.string.isRequired,
+    status: PropTypes.string.isRequired,
+    expectedValue: PropTypes.any.isRequired,
+    responseValue: PropTypes.any.isRequired,
+    executedStatus: PropTypes.string.isRequired,
+    comment: PropTypes.string.isRequired,
+  }).isRequired,
   onChangeCommentForm: PropTypes.func.isRequired,
   onCommentFormSubmit: PropTypes.func.isRequired,
 };

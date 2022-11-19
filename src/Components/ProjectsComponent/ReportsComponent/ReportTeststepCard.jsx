@@ -45,7 +45,12 @@ const ReportTeststepCard = ({
 };
 
 ReportTeststepCard.propTypes = {
-  data: PropTypes.object.isRequired,
+  data: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    method: PropTypes.string.isRequired,
+    no_of_passed_testdata_combinations: PropTypes.number.isRequired,
+    no_of_failed_testdata_combinations: PropTypes.number.isRequired,
+  }).isRequired,
   testsuiteName: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   testcaseName: PropTypes.string.isRequired,
   onTeststepCardClick: PropTypes.func.isRequired,

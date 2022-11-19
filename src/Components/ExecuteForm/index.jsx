@@ -64,7 +64,9 @@ const ExecuteForm = ({
 };
 
 ExecuteForm.propTypes = {
-  data: PropTypes.object.isRequired,
+  data: PropTypes.shape({
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  }).isRequired,
   environments: PropTypes.array.isRequired,
   isEnvsLoading: PropTypes.bool,
   handleExecute: PropTypes.func.isRequired,

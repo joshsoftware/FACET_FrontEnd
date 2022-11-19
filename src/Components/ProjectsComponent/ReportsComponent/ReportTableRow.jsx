@@ -50,7 +50,14 @@ const ReportTableRow = ({ data, projectName }) => {
 };
 
 ReportTableRow.propTypes = {
-  data: PropTypes.object.isRequired,
+  data: PropTypes.shape({
+    id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+    level: PropTypes.string.isRequired,
+    executed_by: PropTypes.shape({ name: PropTypes.string.isRequired })
+      .isRequired,
+    executed_on: PropTypes.string.isRequired,
+    result: PropTypes.object.isRequired,
+  }).isRequired,
   projectName: PropTypes.string.isRequired,
 };
 

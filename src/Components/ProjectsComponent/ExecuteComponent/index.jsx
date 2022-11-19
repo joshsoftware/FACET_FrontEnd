@@ -30,7 +30,7 @@ const ExecuteComponent = ({ isExecute, results, data, project, reportId }) => {
 
   const redirectToReportUrl = isExecute
     ? `/project/${project}/reports/${reportId}`
-    : "";  
+    : "";
 
   return (
     <Card className={accordionItemClass(status)} body>
@@ -51,7 +51,7 @@ const ExecuteComponent = ({ isExecute, results, data, project, reportId }) => {
 
 ExecuteComponent.propTypes = {
   results: PropTypes.array.isRequired,
-  data: PropTypes.object.isRequired,
+  data: PropTypes.shape({ name: PropTypes.string.isRequired }).isRequired,
   project: PropTypes.string.isRequired,
   reportId: PropTypes.string.isRequired,
   isExecute: PropTypes.bool,
