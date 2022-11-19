@@ -20,10 +20,10 @@ const TestcaseViewComponent = ({
     name: testcaseName,
     description,
     teststeps,
-    created_at,
-    created_by,
-    modified_at,
-    modified_by,
+    created_at: createdAt,
+    created_by: createdBy,
+    modified_at: modifiedAt,
+    modified_by: modifiedBy,
   } = data;
   return (
     !isLoading && (
@@ -107,25 +107,25 @@ const TestcaseViewComponent = ({
               <small>
                 <b>Created At</b>
               </small>
-              <div>{convertToLocalDate(created_at)}</div>
+              <div>{convertToLocalDate(createdAt)}</div>
             </Col>
             <Col md={6} className="py-2">
               <small>
                 <b>Created By</b>
               </small>
-              <div>{created_by}</div>
+              <div>{createdBy}</div>
             </Col>
             <Col md={6} className="py-2">
               <small>
                 <b>Modified At</b>
               </small>
-              <div>{convertToLocalDate(modified_at)}</div>
+              <div>{convertToLocalDate(modifiedAt)}</div>
             </Col>
             <Col md={6} className="py-2">
               <small>
                 <b>Modified By</b>
               </small>
-              <div>{modified_by}</div>
+              <div>{modifiedBy}</div>
             </Col>
           </Row>
           <div className="d-flex"></div>
