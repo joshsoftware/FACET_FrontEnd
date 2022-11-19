@@ -20,8 +20,6 @@ const ExecuteContainer = () => {
     isLoading,
     isError,
   } = useSelector(mapState);
-  console.log(reportId);
-  
 
   const isReport =
     !isLoading && (isError || !reportName?.length || !fields?.length);

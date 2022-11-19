@@ -3,9 +3,9 @@ import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
+import AddAdminModal from "Components/DashboardComponent/SuperAdmin/AddAdminModal";
 import { addAdminsRequest } from "store/SuperAdmin/actions";
 import { getAllUsersRequest, signOutRequest } from "store/User/actions";
-import AddAdminModal from "Components/DashboardComponent/SuperAdmin/AddAdminModal";
 
 import logo from "assets/images/logo.png";
 

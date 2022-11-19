@@ -31,7 +31,6 @@ const ReportsContainer = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-
   const { projectName } = useParams();
   const { isLoading, page, reports, totalResults } = useSelector(mapState);
 
