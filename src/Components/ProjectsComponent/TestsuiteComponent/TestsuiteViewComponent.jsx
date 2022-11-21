@@ -3,23 +3,22 @@ import { Accordion, Col, Row } from "react-bootstrap";
 import PropTypes from "prop-types";
 
 import ExecuteForm from "Components/ExecuteForm";
-import TeststepAccordionItem from "./TeststepAccordionItem";
+import TestcaseAccordionItem from "./TestcaseAccordionItem";
 import { ViewComponent } from "Components/CustomComponents";
 
 import { convertToLocalDate } from "utils/convertToLocalDate";
 
-const TestcaseViewComponent = ({
+const TestsuiteViewComponent = ({
   data,
   projectName,
   environments,
-  isEnvironmentsLoading,
+  isEnvLoading,
   handleExecute,
 }) => {
   const {
-    id: testcaseId,
-    name: testcaseName,
-    description,
-    teststeps,
+    id: testsuiteId,
+    name,
+    testcases,
     created_at: createdAt,
     created_by: createdBy,
     modified_at: modifiedAt,
@@ -29,30 +28,28 @@ const TestcaseViewComponent = ({
   return (
     <div className="w-100">
       <ViewComponent
-        title={testcaseName}
-        onEditLink={`/project/${projectName}/testcases/edit/${testcaseId}`}
+        title={name}
+        onEditLink={`/project/${projectName}/testsuites/edit/${testsuiteId}`}
       >
         <Row>
           <Col md={6} className="py-2">
             <small>
               <b>Name</b>
             </small>
-            <div>{testcaseName}</div>
-          </Col>
-          <Col md={6} className="py-2">
-            <small>
-              <b>Description</b>
-            </small>
-            <div>{description || "-"}</div>
+            <div>{name}</div>
           </Col>
           <Col md={12} className="py-2">
             <small>
-              <b>Teststeps</b>
+              <b>Testcases</b>
             </small>
             <div>
               <Accordion>
-                {teststeps?.map((item, index) => (
-                  <TeststepAccordionItem key={index} item={item} />
+                {testcases?.map((item, index) => (
+                  <TestcaseAccordionItem
+                    key={index}
+                    item={item}
+                    projectName={projectName}
+                  />
                 ))}
               </Accordion>
             </div>
@@ -82,25 +79,23 @@ const TestcaseViewComponent = ({
             <div>{modifiedBy}</div>
           </Col>
         </Row>
-        <div className="d-flex"></div>
       </ViewComponent>
       <ExecuteForm
-        label="Testcase"
+        label="Testsuite"
         data={data}
+        isEnvsLoading={isEnvLoading}
         environments={environments}
-        isEnvsLoading={isEnvironmentsLoading}
         handleExecute={handleExecute}
       />
     </div>
   );
 };
 
-TestcaseViewComponent.propTypes = {
+TestsuiteViewComponent.propTypes = {
   data: PropTypes.shape({
     id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     name: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    teststeps: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+    testcases: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
     created_at: PropTypes.string.isRequired,
     created_by: PropTypes.string.isRequired,
     modified_at: PropTypes.string.isRequired,
@@ -108,8 +103,8 @@ TestcaseViewComponent.propTypes = {
   }).isRequired,
   projectName: PropTypes.string.isRequired,
   environments: PropTypes.array,
-  isEnvironmentsLoading: PropTypes.bool,
+  isEnvLoading: PropTypes.bool,
   handleExecute: PropTypes.func.isRequired,
 };
 
-export default React.memo(TestcaseViewComponent);
+export default React.memo(TestsuiteViewComponent);

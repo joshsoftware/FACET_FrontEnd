@@ -1,41 +1,16 @@
 import React from "react";
-import EndpointContainer from "./EndpointContainer";
-import EnvironmentContainer from "./EnvironmentContainer";
-import ExecuteContainer from "./ExecuteContainer";
-import HeaderContainer from './HeaderContainer';
-import MemberContainer from "./MemberContainer";
-import PayloadContainer from './PayloadContainer';
-import ProjectOverviewContainer from "./ProjectOverviewContainer";
-import ReportsContainer from "./ReportsContainer";
-import ScheduleContainer from "./ScheduleContainer";
-import SettingsContainer from './SettingsContainer';
-import TeststepContainer from './TeststepContainer';
-import TestcaseContainer from './TestcaseContainer';
-import { ProjectLayout } from "../../Layout";
 import { Outlet } from "react-router-dom";
 
-const ProjectContainer = () => {
-    return (
-        <div>
-            <ProjectLayout>
-                <Outlet />
-            </ProjectLayout>
-        </div>
-    )
-}
+import ProjectLayout from "Layout/ProjectLayout";
 
-export {
-    EnvironmentContainer,
-    EndpointContainer,
-    ExecuteContainer,
-    HeaderContainer,
-    MemberContainer,
-    PayloadContainer,
-    ProjectOverviewContainer,
-    ProjectContainer,
-    ReportsContainer,
-    ScheduleContainer,
-    SettingsContainer,
-    TeststepContainer,
-    TestcaseContainer
-}
+const ProjectContainer = () => {
+  return (
+    <div>
+      <ProjectLayout>
+        <Outlet />
+      </ProjectLayout>
+    </div>
+  );
+};
+
+export default ProjectContainer;
