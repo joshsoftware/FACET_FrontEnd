@@ -2,6 +2,7 @@ import React from "react";
 import { Accordion } from "react-bootstrap";
 import PropTypes from "prop-types";
 
+import BadgeComponent from "Components/BadgeComponent";
 import PassFailBadges from "Components/ProjectsComponent/PassFailBadges";
 import ReportTeststepCard from "./ReportTeststepCard";
 
@@ -27,7 +28,11 @@ const ReportTestsuiteAccordion = ({
     <Accordion.Item eventKey={testcase.name}>
       <Accordion.Header>
         {testcase.name}
-        <PassFailBadges passFields={passedCases} failFields={failedCases} />
+        {isError ? (
+          <BadgeComponent bg="danger" label="Aborted" className="mx-2" />
+        ) : (
+          <PassFailBadges passFields={passedCases} failFields={failedCases} />
+        )}
       </Accordion.Header>
       <Accordion.Body>
         {isError ? (
