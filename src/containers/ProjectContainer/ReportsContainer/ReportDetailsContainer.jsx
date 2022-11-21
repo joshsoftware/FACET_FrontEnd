@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import {
   addCommentRequest,
@@ -30,7 +30,7 @@ const initialSelectedCommentField = {
 
 const mapState = ({ reports }) => ({
   level: reports.singleReport.level,
-  reportDetail: reports.singleReport.result,
+  reportDetail: reports.singleReport.result || {},
   isReportLoading: reports.isOneReportLoading,
   showTeststepReport: reports.showTeststepReport,
   teststepReport: reports.singleTeststepReport,
@@ -38,9 +38,15 @@ const mapState = ({ reports }) => ({
 
 const ReportDetailsContainer = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { projectName, reportId } = useParams();
-  const { reportDetail, level, showTeststepReport, teststepReport } =
-    useSelector(mapState);
+  const {
+    reportDetail,
+    level,
+    isReportLoading,
+    showTeststepReport,
+    teststepReport,
+  } = useSelector(mapState);
 
   // getReportDetails returns destructuring of results based on level
   const { name, passedFields, failedFields, reportData } = getReportDetails(
@@ -67,6 +73,7 @@ const ReportDetailsContainer = () => {
     const {
       name: field,
       status,
+      comment,
       executed_status: executedStatus,
       value: expectedValue,
       res_value: responseValue,
@@ -84,7 +91,9 @@ const ReportDetailsContainer = () => {
       teststep: teststepName,
       testdata: testdataName,
       field,
+      prevStatus: status,
       status,
+      comment,
       executedStatus,
       expectedValue,
       responseValue,
@@ -131,6 +140,11 @@ const ReportDetailsContainer = () => {
       })
     );
   };
+
+  // navigate to reports page when reportDeatil not available
+  if (!isReportLoading && Object.entries(reportDetail).length === 0) {
+    navigate(`/project/${projectName}/reports`);
+  }
 
   return (
     <>

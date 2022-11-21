@@ -17,16 +17,10 @@ const TestFieldCommentModal = ({
   onChangeCommentForm,
   onCommentFormSubmit,
 }) => {
-  const {
-    field,
-    status,
-    expectedValue,
-    responseValue,
-    executedStatus,
-    comment,
-  } = data;
+  const { field, status, expectedValue, responseValue, prevStatus, comment } =
+    data;
 
-  const isStatusChanged = status !== executedStatus;
+  const isStatusChanged = prevStatus !== status;
 
   const handleInputChange = (e) => {
     onChangeCommentForm(e.target.name, e.target.value);
@@ -85,7 +79,7 @@ TestFieldCommentModal.propTypes = {
     status: PropTypes.string.isRequired,
     expectedValue: PropTypes.any.isRequired,
     responseValue: PropTypes.any.isRequired,
-    executedStatus: PropTypes.string.isRequired,
+    prevStatus: PropTypes.string.isRequired,
     comment: PropTypes.string.isRequired,
   }).isRequired,
   onChangeCommentForm: PropTypes.func.isRequired,

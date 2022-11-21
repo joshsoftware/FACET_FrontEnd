@@ -23,7 +23,12 @@ const TestdataOutcomeTable = ({
   onOpenOutcomeModal,
 }) => {
   // returns bootstrap class for background color based on status
-  const statusColor = (status) => {
+  const statusColor = (isStatusManuallyUpdated, status) => {
+    // if the status field is manually updated then it returns the warning class
+    if (isStatusManuallyUpdated) {
+      return "warning";
+    }
+
     switch (status) {
       case "passed":
         return "success";
@@ -70,7 +75,7 @@ const TestdataOutcomeTable = ({
           <td>
             <BadgeComponent
               label={item?.status}
-              bg={statusColor(item?.status)}
+              bg={statusColor(item?.is_status_manually_updated, item?.status)}
             />
           </td>
           <td>{errorMessage(item.error)}</td>
@@ -98,6 +103,7 @@ TestdataOutcomeTable.propTypes = {
       status: PropTypes.string.isRequired,
       type: PropTypes.string.isRequired,
       value: PropTypes.any,
+      is_status_manually_updated: PropTypes.bool,
     })
   ).isRequired,
   testsuiteName: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
