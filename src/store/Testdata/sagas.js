@@ -16,6 +16,8 @@ import {
 } from "./actions";
 import testdataConstants from "./constants";
 
+import { downloadFiles } from "utils/downloadFiles";
+
 export function* getTestdatas({ payload }) {
   try {
     const response = yield call(getTestdatasApi, payload);
@@ -48,7 +50,15 @@ export function* uploadTestdataExcelFile({ payload }) {
 
 export function* downloadTestdataExcelFile({ payload }) {
   try {
-    yield call(downloadTestdataExcelApi, payload);
+    const res = yield call(downloadTestdataExcelApi, payload);
+
+    const fileName = res.headers["content-disposition"].replace(
+      "attachment; filename=",
+      ""
+    );
+
+    downloadFiles(res.data, fileName);
+
     yield put(downloadExcelSuccess());
   } catch (error) {
     toast.error(error.data.error);

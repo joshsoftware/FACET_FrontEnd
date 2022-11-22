@@ -8,7 +8,7 @@ export const addTestdataApi = (data) =>
   Api(`${SERVER_URL}/api/testdata/new`, POST, data);
 
 export const downloadTestdataExcelApi = (data) =>
-  Api(`${SERVER_URL}/api/testdata-excel/download`, GET, null, data);
+  Api(`${SERVER_URL}/api/testdata-excel/download`, GET, null, data, "blob");
 
 export const uploadTestdataExcelApi = (data) =>
   Api(`${SERVER_URL}/api/testdata-excel/upload`, POST, data);
