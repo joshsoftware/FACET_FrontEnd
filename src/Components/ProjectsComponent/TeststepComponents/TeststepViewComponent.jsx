@@ -1,6 +1,6 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { Accordion, Col, Row } from "react-bootstrap";
+import PropTypes from "prop-types";
 
 import { AddButton } from "Components/forms/Buttons";
 import AddNewTestdata from "./AddNewTestdata";
