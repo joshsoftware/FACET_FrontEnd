@@ -11,6 +11,7 @@ import {
   editTestsuiteRequest,
   getTestsuitesRequest,
 } from "store/Testsuites/actions";
+import { getEnvironmentsRequest } from "store/Environments/actions";
 import { getTestcasesRequest } from "store/Testcases/actions";
 import SubComponentsNav from "Components/ProjectsComponent/SubComponentsNav";
 import TestsuiteViewComponent from "Components/ProjectsComponent/TestsuiteComponent/TestsuiteViewComponent";
@@ -40,8 +41,15 @@ const TestsuiteContainer = ({ cat }) => {
 
   useEffect(() => {
     dispatch(getTestsuitesRequest({ project: projectName }));
-    dispatch(getTestcasesRequest({ project: projectName }));
+    dispatch(getEnvironmentsRequest({ project: projectName }));
   }, [projectName]);
+
+  useEffect(() => {
+    // call testcases api if category of form changes and valid
+    if (cat) {
+      dispatch(getTestcasesRequest({ project: projectName }));
+    }
+  }, [cat]);
 
   useEffect(() => {
     setSelectedItem(testsuites.filter((item) => item.id == id)[0]);
