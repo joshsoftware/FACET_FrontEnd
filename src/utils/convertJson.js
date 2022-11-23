@@ -9,7 +9,7 @@ export const stringToJson = (stringData) => {
     const parsedJson = JSON.parse(stringData);
     return parsedJson;
   } catch (error) {
-    console.log("Failed to parse string: ", error);
+    console.error("Failed to parse string: ", error);
     return null;
   }
 };

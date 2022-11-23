@@ -10,6 +10,8 @@ export const Api = async (url, method, data, params, responseType) => {
       responseType,
     });
 
+    // If the responseType is blob then headers and others config of response maybe used
+    // so instead of data all configs response return
     if (responseType === "blob") {
       return res;
     }
