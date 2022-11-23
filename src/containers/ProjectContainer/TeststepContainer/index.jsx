@@ -3,10 +3,7 @@ import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 
-import {
-  AddNewTeststep,
-  TeststepViewComponent,
-} from "Components/ProjectsComponent/TeststepComponents";
+import AddNewTeststep from "Components/ProjectsComponent/TeststepComponents/AddNewTeststep";
 import {
   addTestdataRequest,
   downloadExcelRequest,
@@ -22,6 +19,7 @@ import { getEndpointsRequest } from "store/Endpoints/actions";
 import { getHeadersRequest } from "store/Headers/actions";
 import { getPayloadsRequest } from "store/Payloads/actions";
 import { SubComponentsNav } from "Components/ProjectsComponent";
+import TeststepViewComponent from "Components/ProjectsComponent/TeststepComponents/TeststepViewComponent";
 
 import {
   INITIAL_TESTSTEP_FORM_DATA,
@@ -212,13 +210,16 @@ const TeststepContainer = (props) => {
     typeof selectedItem === "object" &&
     Object.entries(selectedItem).length !== 0;
 
+  const onAddButtonClick = () =>
+    navigate(`/project/${projectName}/teststeps/new`);
+
   return (
     <>
       <SubComponentsNav
         title="Teststeps"
         data={teststeps}
         isLoading={isLoading}
-        onAddBtnClick={() => navigate(`/project/${projectName}/teststeps/new`)}
+        onAddBtnClick={onAddButtonClick}
         onSelectItemUrl={`/project/${projectName}/teststeps`}
       />
       {cat ? (

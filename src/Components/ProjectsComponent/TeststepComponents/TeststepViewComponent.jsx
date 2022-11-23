@@ -36,12 +36,11 @@ const TeststepViewComponent = ({
     modified_by: modifiedBy,
   } = data;
 
+  const editTeststepLink = `/project/${projectName}/teststeps/edit/${teststepId}`;
+
   return (
     <div className="w-100">
-      <ViewComponent
-        title={teststepName}
-        onEditLink={`/project/${projectName}/teststeps/edit/${teststepId}`}
-      >
+      <ViewComponent title={teststepName} onEditLink={editTeststepLink}>
         <Row>
           <Col md={6} className="pb-4">
             <small>
