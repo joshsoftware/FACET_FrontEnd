@@ -203,7 +203,7 @@ const TeststepContainer = (props) => {
       const formData = new FormData();
       formData.append("file", file);
       formData.append("project", projectName);
-      dispatch(uploadExcelRequest(formData));
+      dispatch(uploadExcelRequest({ formData, teststep: selectedItem?.id }));
     }
   };
 

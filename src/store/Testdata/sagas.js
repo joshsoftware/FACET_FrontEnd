@@ -39,9 +39,10 @@ export function* addTestdata({ payload }) {
 
 export function* uploadTestdataExcelFile({ payload }) {
   try {
-    yield call(uploadTestdataExcelApi, payload);
+    yield call(uploadTestdataExcelApi, payload.formData);
     toast.success("File Uploaded successfully!");
     yield put(uploadExcelSuccess());
+    yield call(getTestdatas, { payload: { teststep: payload.teststep } });
   } catch (error) {
     toast.error(error.data.error);
     yield put(uploadExcelFailure(error.data));
