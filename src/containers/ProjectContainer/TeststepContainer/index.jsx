@@ -26,6 +26,7 @@ import {
   INITIAL_TESTDATA_FORM_DATA,
   SELECT_OPTIONS_TESTDATA_FORM,
 } from "constants/appConstants";
+import { jsonToString, stringToJson } from "utils/convertJson";
 
 const mapState = ({ endpoints, headers, payloads, teststeps, testdata }) => ({
   isLoading: teststeps.isLoading,
@@ -131,7 +132,7 @@ const TeststepContainer = (props) => {
       ...prevState,
       name: initialTDName,
       teststep: teststepId || initialTDId,
-      payload: JSON.stringify(payload?.payload || initialTDPayload),
+      payload: jsonToString(payload?.payload || initialTDPayload),
       parameters: payload?.parameters || initialTDParams,
       expected_outcome: payload?.expected_outcome || initialTDExpOutcome,
       selected_expected_outcome: initialTDSelectedExpOutcome,
@@ -185,7 +186,7 @@ const TeststepContainer = (props) => {
     e.preventDefault();
     let submitData = {
       ...testdataFormData,
-      payload: JSON.parse(testdataFormData.payload),
+      payload: stringToJson(testdataFormData.payload),
       expected_outcome: testdataFormData.expected_outcome.find(
         (ele) => ele.name === testdataFormData.selected_expected_outcome
       )?.expected_outcome,
