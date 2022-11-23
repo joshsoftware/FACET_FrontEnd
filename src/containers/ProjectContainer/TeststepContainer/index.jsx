@@ -3,31 +3,28 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { SubComponentsNav } from 'Components/ProjectsComponent';
 import { AddNewTeststep, TeststepViewComponent } from 'Components/ProjectsComponent/TeststepComponents';
-import { 
-    addTeststepsRequest, 
-    editTeststepsRequest, 
-    getTeststepsRequest 
-} from 'store/Teststeps/actions';
 import { addTestdataRequest, getTestdataRequest } from 'store/Testdata/actions';
+import { addTeststepsRequest, editTeststepsRequest, getTeststepsRequest } from 'store/Teststeps/actions';
 import { getEndpointsRequest } from 'store/Endpoints/actions';
 import { getHeadersRequest } from 'store/Headers/actions';
 import { getPayloadsRequest } from 'store/Payloads/actions';
-import { 
+import { SubComponentsNav } from 'Components/ProjectsComponent';
+
+import {
     INITIAL_TESTSTEP_FORM_DATA,
-    INITIAL_TESTDATA_FORM_DATA, 
-    SELECT_OPTIONS_TESTDATA_FORM 
+    INITIAL_TESTDATA_FORM_DATA,
+    SELECT_OPTIONS_TESTDATA_FORM
 } from 'constants/appConstants';
 
 const mapState = ({ endpoints, headers, payloads, teststeps, testdata }) => ({
-    teststeps: teststeps.teststeps,
     isLoading: teststeps.isLoading,
-    testdata: testdata.testdata,
     endpoints: endpoints.endpoints,
     headers: headers.headers,
-    payloads: payloads.payloads
-})
+    payloads: payloads.payloads,
+    testdata: testdata.testdata,
+    teststeps: teststeps.teststeps,
+});
 
 const TeststepContainer = (props) => {
     let dispatch = useDispatch();
@@ -35,13 +32,13 @@ const TeststepContainer = (props) => {
 
     const { cat } = props;
     const { projectName, id } = useParams();
-    const { 
-        endpoints, 
-        headers, 
-        payloads, 
+    const {
+        endpoints,
+        headers,
+        payloads,
         teststeps,
-        isLoading, 
-        testdata 
+        isLoading,
+        testdata,
     } = useSelector(mapState);
 
     const [selectedItem, setSelectedItem] = useState({});
@@ -52,17 +49,17 @@ const TeststepContainer = (props) => {
 
     useEffect(() => {
         // get all teststeps, endpoints, headers, payloads
-        dispatch(getTeststepsRequest({project: projectName}));
-        dispatch(getEndpointsRequest({project: projectName}))
-        dispatch(getHeadersRequest({project: projectName}))
-        dispatch(getPayloadsRequest({project: projectName}))
-    }, [projectName])
+        dispatch(getTeststepsRequest({ project: projectName }));
+        dispatch(getEndpointsRequest({ project: projectName }));
+        dispatch(getHeadersRequest({ project: projectName }));
+        dispatch(getPayloadsRequest({ project: projectName }));
+    }, [projectName]);
 
     useEffect(() => {
-        setSelectedItem(teststeps.filter(e => e.id==id)[0]);
-        dispatch(getTestdataRequest({teststep: id}));
-    }, [teststeps, id])
-    
+        setSelectedItem(teststeps.filter(e => e.id == id)[0] || {});
+        dispatch(getTestdataRequest({ teststep: id }));
+    }, [teststeps, id]);
+
     useEffect(() => {
         // set options to react-select format {value: "", label: ""}
         let endpoints_data = [];
@@ -70,63 +67,98 @@ const TeststepContainer = (props) => {
         let payloads_data = [];
 
         endpoints.forEach(ele => {
-            endpoints_data.push({value: ele.id, label: ele.name})
-        })
+            endpoints_data.push({ value: ele.id, label: ele.name });
+        });
         headers.forEach(ele => {
-            headers_data.push({value: ele.id, label: ele.name})
-        })
+            headers_data.push({ value: ele.id, label: ele.name });
+        });
         payloads.forEach(ele => {
-            payloads_data.push({value: ele.id, label: ele.name})
-        })
+            payloads_data.push({ value: ele.id, label: ele.name });
+        });
 
         setOptions(p => ({
-            ...p, 
-            endpoints: endpoints_data, 
-            headers: headers_data, 
-            payloads: payloads_data
-        }))
-    }, [endpoints, headers, payloads])
+            ...p,
+            endpoints: endpoints_data,
+            headers: headers_data,
+            payloads: payloads_data,
+        }));
+    }, [endpoints, headers, payloads]);
 
     const handleFormDataChange = (key, value) => {
         // Accepts key, value
         setTeststepFormData(p => ({
             ...p,
-            [key]: value
-        }))
-    }
+            [key]: value,
+        }));
+    };
 
     const handleTeststepFormSubmit = (e) => {
         // submit the form
         e.preventDefault();
-        if(cat==='add') {
-            dispatch(addTeststepsRequest(teststepFormData))
+        if (cat === 'add') {
+            dispatch(addTeststepsRequest(teststepFormData));
         } else {
-            dispatch(editTeststepsRequest(teststepFormData))
+            dispatch(editTeststepsRequest(teststepFormData));
         }
-    }
+    };
+
+    const setInitialTestdata = () => {
+        const { id: teststepId, payload } = selectedItem;
+        const {
+            expected_outcome: initialTDExpOutcome,
+            name: initialTDName,
+            parameters: initialTDParams,
+            payload: initialTDPayload,
+            selected_expected_outcome: initialTDSelectedExpOutcome,
+            teststep: initialTDId,
+        } = INITIAL_TESTDATA_FORM_DATA;
+
+        setTestdataFormData(p => ({
+            ...p,
+            name: initialTDName,
+            teststep: teststepId || initialTDId,
+            payload: JSON.stringify(payload?.payload || initialTDPayload),
+            parameters: payload?.parameters || initialTDParams,
+            expected_outcome: payload?.expected_outcome || initialTDExpOutcome,
+            selected_expected_outcome: initialTDSelectedExpOutcome,
+        }));
+    };
 
     useEffect(() => {
+        // Here ts means teststep
+        const { endpoint_id, header_id , id: teststepId, method, name: tsName, payload_id } = selectedItem;
+        const {
+            endpoint_id: initialTsEndpoint,
+            header_id: initialTsHeader,
+            id: initialTsId,
+            method: initialTsMethod,
+            name: initialTsName,
+            payload_id: initialTsPayload,
+        } = INITIAL_TESTSTEP_FORM_DATA;
+
         setTeststepFormData(p => ({
             ...p,
-            name: selectedItem?.name || INITIAL_TESTSTEP_FORM_DATA.name,
-            id: selectedItem?.id || INITIAL_TESTSTEP_FORM_DATA.id,
-            method: selectedItem?.method || INITIAL_TESTSTEP_FORM_DATA.method,
-            endpoint_id: selectedItem?.endpoint_id || INITIAL_TESTSTEP_FORM_DATA.endpoint_id,
-            header_id: selectedItem?.header_id || INITIAL_TESTSTEP_FORM_DATA.header_id,
-            payload_id: selectedItem?.payload_id || INITIAL_TESTSTEP_FORM_DATA.payload_id
-        }))
-    }, [selectedItem])
-    
+            name: tsName || initialTsName,
+            id: teststepId || initialTsId,
+            method: method || initialTsMethod,
+            endpoint_id: endpoint_id || initialTsEndpoint,
+            header_id: header_id || initialTsHeader,
+            payload_id: payload_id || initialTsPayload,
+        }));
+        setInitialTestdata();
+    }, [selectedItem]);
+
     const toggleAddTestdataForm = () => {
         setShowAddTestdataForm(!showAddTestdataForm);
-    }
+        setInitialTestdata();
+    };
 
     const handleTestdataFormChange = (key, value) => {
         setTestdataFormData(p => ({
             ...p,
-            [key]: value
-        }))
-    }
+            [key]: value,
+        }));
+    };
 
     const handleTestdataFormSubmit = (e) => {
         e.preventDefault();
@@ -138,31 +170,19 @@ const TeststepContainer = (props) => {
         delete submitData.selected_expected_outcome;
         dispatch(addTestdataRequest(submitData));
         toggleAddTestdataForm();
-    }
-
-    useEffect(() => {
-        setTestdataFormData(p => ({
-            ...p,
-            teststep: selectedItem?.id || INITIAL_TESTDATA_FORM_DATA.id,
-            payload: JSON.stringify(selectedItem?.payload?.payload || INITIAL_TESTDATA_FORM_DATA.payload),
-            parameters: selectedItem?.payload?.parameters || INITIAL_TESTDATA_FORM_DATA.parameters,
-            expected_outcome: selectedItem?.payload?.expected_outcome || INITIAL_TESTDATA_FORM_DATA.expected_outcome
-        }))
-    }, [selectedItem])
-    
-    
+    };
 
     return (
         <>
-            <SubComponentsNav 
+            <SubComponentsNav
                 title="Teststeps"
                 data={teststeps}
                 isLoading={isLoading}
                 onAddBtnClick={() => navigate(`/project/${projectName}/teststeps/new`)}
                 onSelectItemUrl={`/project/${projectName}/teststeps`}
             />
-            {cat?(
-                <AddNewTeststep 
+            {cat ? (
+                <AddNewTeststep
                     cat={cat}
                     isLoading={isLoading}
                     data={teststepFormData}
@@ -170,8 +190,8 @@ const TeststepContainer = (props) => {
                     options={options}
                     handleSubmit={handleTeststepFormSubmit}
                 />
-            ):(
-                <TeststepViewComponent 
+            ) : (
+                <TeststepViewComponent
                     isLoading={isLoading}
                     data={selectedItem}
                     projectName={projectName}
@@ -187,8 +207,8 @@ const TeststepContainer = (props) => {
     )
 }
 
-export default TeststepContainer;
-
 TeststepContainer.propTypes = {
     cat: PropTypes.oneOf(["add", "edit"])
-}
+};
+
+export default TeststepContainer;

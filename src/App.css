@@ -5,7 +5,7 @@
     box-sizing: border-box;
 }
 
-.report_results{
+.report-results{
     display: flex;
     position: absolute;
     right: 3.5rem;
