@@ -57,12 +57,17 @@ const TeststepContainer = (props) => {
   const [options, setOptions] = useState(SELECT_OPTIONS_TESTDATA_FORM);
 
   useEffect(() => {
-    // get all teststeps, endpoints, headers, payloads
     dispatch(getTeststepsRequest({ project: projectName }));
-    dispatch(getEndpointsRequest({ project: projectName }));
-    dispatch(getHeadersRequest({ project: projectName }));
-    dispatch(getPayloadsRequest({ project: projectName }));
   }, [projectName]);
+
+  useEffect(() => {
+    // if cat available and changes then makes api calls for required data
+    if (cat) {
+      dispatch(getEndpointsRequest({ project: projectName }));
+      dispatch(getHeadersRequest({ project: projectName }));
+      dispatch(getPayloadsRequest({ project: projectName }));
+    }
+  }, [cat]);
 
   useEffect(() => {
     setSelectedItem(teststeps.filter((item) => item.id == id)[0] || {});
