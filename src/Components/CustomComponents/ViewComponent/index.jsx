@@ -4,7 +4,11 @@ import { Card } from 'react-bootstrap';
 import { ArrowLeft } from 'react-bootstrap-icons';
 import { useNavigate } from 'react-router-dom';
 
-import { DeleteButton, EditButton, SaveButton } from 'Components/forms/Buttons';
+import { 
+    // DeleteButton, 
+    EditButton, 
+    SaveButton 
+} from 'Components/forms/Buttons';
 import './style.css';
 
 const ViewComponent = (props) => {
@@ -12,7 +16,7 @@ const ViewComponent = (props) => {
         children,
         disabledBtns,
         disabledHeader,
-        onDelete,
+        // onDelete,
         onEditLink,
         onSave,
         onSaveDisabled,
@@ -69,10 +73,10 @@ const ViewComponent = (props) => {
                                         className='mx-2'
                                         handleClick={() => navigate(onEditLink)}
                                     />
-                                    <DeleteButton 
+                                    {/* <DeleteButton 
                                         handleClick={onDelete} 
                                         disabled 
-                                    />
+                                    /> */}
                                 </>
                             )}
                         </div>
