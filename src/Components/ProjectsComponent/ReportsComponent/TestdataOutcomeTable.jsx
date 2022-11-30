@@ -43,15 +43,10 @@ const TestdataOutcomeTable = ({
 
   // returns error message if error comes as string which is not empty
   const errorMessage = (error) => {
-    switch (error) {
-      case error.length === 0:
-        return "-";
-
-      case typeof error === "string":
-        return error;
-
-      default:
-        return "-";
+    if (typeof error === "string" && error.length === 0) {
+      return error;
+    } else {
+      return "-";
     }
   };
 
