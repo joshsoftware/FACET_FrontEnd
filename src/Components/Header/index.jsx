@@ -32,7 +32,7 @@ const Header = () => {
     if (isLoggedIn && isSuperAdmin) {
       dispatch(getAllUsersRequest({ exclude: "admins" }));
     }
-  }, []);
+  }, [isLoggedIn, isSuperAdmin]);
 
   const handleToggle = () => {
     setShowAddAdminModal(!showAddAdminModal);
