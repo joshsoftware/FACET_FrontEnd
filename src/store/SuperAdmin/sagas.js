@@ -4,12 +4,13 @@ import { addAdminsApi } from "./apis";
 import { addAdminsFailure, addAdminsSuccess } from "./actions";
 import superAdminConstants from "./constants";
 
+import { ADMINS_ADD_SUCCESS } from "constants/userMessagesConstants";
 import { toastMessage } from "utils/toastMessage";
 
 export function* addAdmins({ payload }) {
   try {
     yield call(addAdminsApi, payload);
-    toastMessage("Admins Added Successfully!", "success");
+    toastMessage(ADMINS_ADD_SUCCESS, "success");
     yield put(addAdminsSuccess());
   } catch (error) {
     const errorMessage = error.data?.error;

@@ -15,8 +15,9 @@ import {
 } from "./actions";
 import environmentConstants from "./constants";
 
-import { toastMessage } from "utils/toastMessage";
+import { ENVIRONMENTS } from "constants/userMessagesConstants";
 import { apisErrorMessage } from "utils/apisErrorMessage";
+import { toastMessage } from "utils/toastMessage";
 
 // saga for get All Environments data for a project
 export function* getEnvironments({ payload }) {
@@ -34,7 +35,7 @@ export function* getEnvironments({ payload }) {
 export function* addEnvironment({ payload }) {
   try {
     yield call(addEnvironmentApi, payload);
-    toastMessage("Environments Added Successfully!", "success");
+    toastMessage(ENVIRONMENTS.ADD_NEW_SUCCESS, "success");
     yield call(getEnvironments, { payload: { project: payload.project } });
     yield put(addEnvironmentsSuccess());
   } catch (error) {
@@ -48,7 +49,7 @@ export function* addEnvironment({ payload }) {
 export function* editEnvironment({ payload }) {
   try {
     yield call(editEnvironmentApi, payload);
-    toastMessage("Environments Updated Successfully!", "success");
+    toastMessage(ENVIRONMENTS.UPDATE_SUCCESS, "success");
     yield call(getEnvironments, { payload: { project: payload.project } });
     yield put(editEnvironmentsSuccess());
   } catch (error) {
