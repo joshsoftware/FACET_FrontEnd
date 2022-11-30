@@ -11,7 +11,7 @@ const INITIAL_VALUE = {
     name: "",
     type: "",
     value: "",
-    isExact: ""
+    isExact: true
 }
 
 const ExpectedOutcomeModal = (

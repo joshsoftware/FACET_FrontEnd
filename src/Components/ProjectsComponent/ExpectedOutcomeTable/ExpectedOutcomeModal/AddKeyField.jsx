@@ -91,8 +91,9 @@ const AddKeyField = ({ data, onSuccess }) => {
                                             "tagline": "Dynamic Value or validations"
                                         }
                                     }
-                                    handleClick={() => onchangeType("dynamic")}
+                                    // handleClick={() => onchangeType("dynamic")}
                                 />
+                                <small className='text-muted'>Comming Soon</small>
                             </Col>
                         </Row>
                     }
