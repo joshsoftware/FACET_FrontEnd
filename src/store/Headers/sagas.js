@@ -1,7 +1,12 @@
 import { call, put, takeLatest } from "redux-saga/effects";
 
-import { getHeadersFailure, getHeadersSuccess } from "./actions";
 import { addHeaderApi, editHeaderApi, getHeadersApi } from "./apis";
+import {
+  addHeadersFailure,
+  editHeadersFailure,
+  getHeadersFailure,
+  getHeadersSuccess,
+} from "./actions";
 import headerConstants from "./constants";
 
 import { HEADERS } from "constants/userMessagesConstants";
@@ -27,7 +32,7 @@ export function* addHeader({ payload }) {
   } catch (error) {
     const errorMessage = apisErrorMessage(error);
     toastMessage(errorMessage, "error");
-    yield put(getHeadersFailure(errorMessage));
+    yield put(addHeadersFailure(errorMessage));
   }
 }
 
@@ -39,7 +44,7 @@ export function* editHeader({ payload }) {
   } catch (error) {
     const errorMessage = apisErrorMessage(error);
     toastMessage(errorMessage, "error");
-    yield put(getHeadersFailure(errorMessage));
+    yield put(editHeadersFailure(errorMessage));
   }
 }
 
