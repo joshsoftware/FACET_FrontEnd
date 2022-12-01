@@ -6,7 +6,8 @@ import executeReducer from "./Execute/reducers";
 import { getUsersReducer, userReducer } from "./User/reducers";
 import headerReducer from "./Headers/reducers";
 import payloadReducer from "./Payloads/reducers";
-import { projectReducer, projectMemberReducer } from "./Projects/reducers";
+import projectMembersReducer from "./ProjectMembers/reducers";
+import projectReducer from "./Projects/reducers";
 import reportsReducer from "./Reports/reducers";
 import scheduleReducer from "./Schedule/reducers";
 import superAdminReducer from "./SuperAdmin/reducers";
@@ -26,7 +27,7 @@ const rootReducer = combineReducers({
   testcases: testcaseReducer,
   testdata: testdataReducer,
   execute: executeReducer,
-  projectMembers: projectMemberReducer,
+  projectMembers: projectMembersReducer,
   superAdmin: superAdminReducer,
   getUsers: getUsersReducer,
   reports: reportsReducer,

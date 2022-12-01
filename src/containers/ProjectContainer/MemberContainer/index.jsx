@@ -10,7 +10,7 @@ import {
   addMembersInProjectRequest,
   getProjectMembersRequest,
   removeMembersInProjectRequest,
-} from "store/Projects/actions";
+} from "store/ProjectMembers/actions";
 import { getAllUsersRequest } from "store/User/actions";
 import TableComponent from "Components/CustomComponents/TableComponent/index";
 import { ViewComponent } from "Components/CustomComponents";
