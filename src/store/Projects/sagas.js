@@ -1,114 +1,96 @@
 import { call, put, takeLatest } from "redux-saga/effects";
-import { 
-    addMembersInProjectApi, 
-    addNewProjectApi, 
-    deleteProjectApi, 
-    getOneProjectApi, 
-    getProjectMembersApi, 
-    getProjectsApi,
-    removeMembersInProjectApi,
-    updateProjectNameApi
+
+import {
+  addNewProjectApi,
+  deleteProjectApi,
+  getOneProjectApi,
+  getProjectsApi,
+  updateProjectNameApi,
 } from "./apis";
-import projectConstants from "./constants";
-import { toast } from 'react-toastify';
-import { 
-    deleteProjectFailure,
-    deleteProjectSuccess,
-    getOneProjectSuccess, 
-    getProjectMembersSuccess, 
-    setProjects, 
-    updateProjectNameFailure, 
-    updateProjectNameSuccess 
+import {
+  addProjectFailure,
+  deleteProjectFailure,
+  deleteProjectSuccess,
+  getOneProjectFailure,
+  getOneProjectSuccess,
+  getProjectsFailure,
+  getProjectsSuccess,
+  updateProjectNameFailure,
+  updateProjectNameSuccess,
 } from "./actions";
+import projectConstants from "./constants";
 
+import { PROJECTS } from "constants/userMessagesConstants";
+import { apisErrorMessage } from "utils/apisErrorMessage";
+import { toastMessage } from "utils/toastMessage";
 
-export function* fetchProjects() {
-    try {
-        const response = yield call(getProjectsApi);
-        yield put(setProjects(response.projects));
-    } catch (error) {
-        toast.error(error.data.error)
-    }
+export function* getProjects() {
+  try {
+    const response = yield call(getProjectsApi);
+    yield put(getProjectsSuccess(response.projects));
+  } catch (error) {
+    const errorMessage = apisErrorMessage(error);
+    toastMessage(errorMessage, "error");
+    yield put(getProjectsFailure(errorMessage));
+  }
 }
 
 export function* addNewProject({ payload }) {
-    try {
-        const response = yield call(addNewProjectApi, payload)
-        yield call(fetchProjects);
-        toast.success(response.success);
-    } catch (error) {
-        toast.error("Something Wnt Wrong!")
-    }
-}
-
-export function* getProjectMembers({ payload }) {
-    try {
-        const response = yield call(getProjectMembersApi, payload);
-        yield put(getProjectMembersSuccess(response));
-    } catch (error) {
-        toast.error(error.data.error)
-    }
-}
-
-export function* addMembersInProject({ payload }) {
-    try {
-        yield call(addMembersInProjectApi, payload);
-        yield call(getProjectMembers, { payload: {project: payload.project} })
-        toast.success("Members Added Successfully!")
-    } catch (error) {
-        toast.error(error.data.error)
-    }
-}
-
-export function* removeMembersInProject({ payload }) {
-    try {
-        yield call(removeMembersInProjectApi, payload);
-        yield call(getProjectMembers, { payload: { project: payload.project } })
-        toast.success("Members Removed Successfully!")
-    } catch (error) {
-        toast.error(error.data.error)
-    }
+  try {
+    yield call(addNewProjectApi, payload);
+    yield call(getProjects);
+    toastMessage(PROJECTS.ADD_NEW_SUCCESS, "success");
+  } catch (error) {
+    const errorMessage = apisErrorMessage(error);
+    toastMessage(errorMessage, "error");
+    yield put(addProjectFailure(errorMessage));
+  }
 }
 
 export function* getOneProject({ payload }) {
-    try {
-        const response = yield call(getOneProjectApi, payload);
-        yield put(getOneProjectSuccess(response));
-    } catch (error) {
-        toast.error(error.data.error);
-    }
+  try {
+    const response = yield call(getOneProjectApi, payload);
+    yield put(getOneProjectSuccess(response));
+  } catch (error) {
+    const errorMessage = apisErrorMessage(error);
+    toastMessage(errorMessage, "error");
+    yield put(getOneProjectFailure(errorMessage));
+  }
 }
 
 export function* updateProjectName({ payload }) {
-    try {
-        const response = yield call(updateProjectNameApi, payload);
-        yield put(updateProjectNameSuccess());
-        toast.success(response.message);
-    } catch (error) {
-        yield put(updateProjectNameFailure(error.data))
-        toast.error(error.data.error);
-    }
+  try {
+    yield call(updateProjectNameApi, payload);
+    yield put(updateProjectNameSuccess());
+    toastMessage(PROJECTS.UPDATE_PROJECT_NAME_SUCCESS, "success");
+  } catch (error) {
+    const errorMessage = apisErrorMessage(error);
+    toastMessage(errorMessage, "error");
+    yield put(updateProjectNameFailure(errorMessage));
+  }
 }
 
 export function* deleteProject({ payload }) {
-    try {
-        const response = yield call(deleteProjectApi, payload);
-        yield put(deleteProjectSuccess());
-        yield call(fetchProjects);
-        toast.success(response.message);
-    } catch (error) {
-        yield put(deleteProjectFailure(error.data))
-        toast.error(error.data.error)
-    }
+  try {
+    yield call(deleteProjectApi, payload);
+    yield put(deleteProjectSuccess());
+    yield call(getProjects);
+    toastMessage(PROJECTS.DELETE_PROJECT_SUCCESS, "success");
+  } catch (error) {
+    const errorMessage = apisErrorMessage(error);
+    toastMessage(errorMessage, "error");
+    yield put(deleteProjectFailure(errorMessage));
+  }
 }
 
+// Watcher saga
 export default function* projectSagas() {
-    yield takeLatest(projectConstants.FETCH_PROJECTS, fetchProjects);
-    yield takeLatest(projectConstants.ADD_NEW_PROJECT, addNewProject);
-    yield takeLatest(projectConstants.GET_PROJECT_MEMBERS_REQUEST, getProjectMembers);
-    yield takeLatest(projectConstants.ADD_MEMBERS_IN_PROJECT_REQUEST, addMembersInProject);
-    yield takeLatest(projectConstants.REMOVE_MEMBERS_IN_PROJECT_REQUEST, removeMembersInProject);
-    yield takeLatest(projectConstants.GET_ONE_PROJECT_REQUEST, getOneProject);
-    yield takeLatest(projectConstants.UPDATE_PROJECT_NAME_REQUEST, updateProjectName);
-    yield takeLatest(projectConstants.DELETE_PROJECT_REQUEST, deleteProject);
+  yield takeLatest(projectConstants.GET_PROJECTS_REQUEST, getProjects);
+  yield takeLatest(projectConstants.ADD_PROJECT_REQUEST, addNewProject);
+  yield takeLatest(projectConstants.GET_ONE_PROJECT_REQUEST, getOneProject);
+  yield takeLatest(
+    projectConstants.UPDATE_PROJECT_NAME_REQUEST,
+    updateProjectName
+  );
+  yield takeLatest(projectConstants.DELETE_PROJECT_REQUEST, deleteProject);
 }
