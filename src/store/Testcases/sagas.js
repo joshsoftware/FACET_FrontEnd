@@ -7,11 +7,12 @@ import {
   getTestcasesFailure,
   getTestcasesSuccess,
 } from "./actions";
-import testcaseConstants from "./constants";
 
-import { TESTCASES } from "constants/userMessagesConstants";
 import { apisErrorMessage } from "utils/apisErrorMessage";
 import { toastMessage } from "utils/toastMessage";
+
+import testcaseConstants from "./constants";
+import { TESTCASES } from "constants/userMessagesConstants";
 
 export function* getTestcases({ payload }) {
   try {
@@ -20,7 +21,7 @@ export function* getTestcases({ payload }) {
   } catch (error) {
     const errorMessage = apisErrorMessage(error);
     toastMessage(errorMessage, "error");
-    yield put(getTestcasesFailure(errorMessage));
+    yield put(getTestcasesFailure());
   }
 }
 
@@ -32,7 +33,7 @@ export function* addTestcase({ payload }) {
   } catch (error) {
     const errorMessage = apisErrorMessage(error);
     toastMessage(errorMessage, "error");
-    yield put(addTestcasesFailure(errorMessage));
+    yield put(addTestcasesFailure());
   }
 }
 
@@ -44,7 +45,7 @@ export function* editTestcase({ payload }) {
   } catch (error) {
     const errorMessage = apisErrorMessage(error);
     toastMessage(errorMessage, "error");
-    yield put(editTestcasesFailure(errorMessage));
+    yield put(editTestcasesFailure());
   }
 }
 

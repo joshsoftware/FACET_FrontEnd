@@ -1,6 +1,6 @@
 import testcaseConstants from "./constants";
 
-const initialState = { isLoading: false, testcases: [], errors: [] };
+const initialState = { isLoading: false, testcases: [] };
 
 const testcaseReducer = (state = initialState, action) => {
   const { type, payload } = action;
@@ -10,10 +10,10 @@ const testcaseReducer = (state = initialState, action) => {
       return { ...state, isLoading: true };
 
     case testcaseConstants.GET_TESTCASES_SUCCESS:
-      return { ...state, isLoading: false, testcases: payload, errors: [] };
+      return { ...state, isLoading: false, testcases: payload };
 
     case testcaseConstants.GET_TESTCASES_FAILURE:
-      return { ...state, isLoading: false, errors: payload };
+      return { ...state, isLoading: false };
 
     case testcaseConstants.ADD_TESTCASES_REQUEST:
       return { ...state, isLoading: true };
@@ -22,7 +22,7 @@ const testcaseReducer = (state = initialState, action) => {
       return { ...state, isLoading: false };
 
     case testcaseConstants.ADD_TESTCASES_FAILURE:
-      return { ...state, isLoading: false, errors: payload };
+      return { ...state, isLoading: false };
 
     case testcaseConstants.EDIT_TESTCASES_REQUEST:
       return { ...state, isLoading: true };
@@ -31,7 +31,7 @@ const testcaseReducer = (state = initialState, action) => {
       return { ...state, isLoading: false };
 
     case testcaseConstants.EDIT_TESTCASES_FAILURE:
-      return { ...state, isLoading: false, errors: payload };
+      return { ...state, isLoading: false };
 
     default:
       return state;

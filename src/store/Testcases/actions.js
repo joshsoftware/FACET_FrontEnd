@@ -10,9 +10,8 @@ export const getTestcasesSuccess = (data) => ({
   payload: data,
 });
 
-export const getTestcasesFailure = (data) => ({
+export const getTestcasesFailure = () => ({
   type: testcaseConstants.GET_TESTCASES_FAILURE,
-  payload: data,
 });
 
 export const addTestcasesRequest = (data) => ({
@@ -24,9 +23,8 @@ export const addTestcasesSuccess = () => ({
   type: testcaseConstants.ADD_TESTCASES_SUCCESS,
 });
 
-export const addTestcasesFailure = (data) => ({
+export const addTestcasesFailure = () => ({
   type: testcaseConstants.ADD_TESTCASES_FAILURE,
-  payload: data,
 });
 
 export const editTestcasesRequest = (data) => ({
@@ -38,9 +36,8 @@ export const editTestcasesSuccess = () => ({
   type: testcaseConstants.EDIT_TESTCASES_SUCCESS,
 });
 
-export const editTestcasesFailure = (data) => ({
+export const editTestcasesFailure = () => ({
   type: testcaseConstants.EDIT_TESTCASES_FAILURE,
-  payload: data,
 });
 
 export const deleteTestcasesRequest = (data) => ({
@@ -48,12 +45,10 @@ export const deleteTestcasesRequest = (data) => ({
   payload: data,
 });
 
-export const deleteTestcasesSuccess = (data) => ({
+export const deleteTestcasesSuccess = () => ({
   type: testcaseConstants.DELETE_TESTCASES_SUCCESS,
-  payload: data,
 });
 
-export const deleteTestcasesFailure = (data) => ({
+export const deleteTestcasesFailure = () => ({
   type: testcaseConstants.DELETE_TESTCASES_FAILURE,
-  payload: data,
 });
