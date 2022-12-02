@@ -2,10 +2,12 @@ import { call, put, takeLatest } from "redux-saga/effects";
 
 import { addAdminsApi } from "./apis";
 import { addAdminsFailure, addAdminsSuccess } from "./actions";
-import superAdminConstants from "./constants";
+
+import { apisErrorMessage } from "utils/apisErrorMessage";
+import { toastMessage } from "utils/toastMessage";
 
 import { ADMINS_ADD_SUCCESS } from "constants/userMessagesConstants";
-import { toastMessage } from "utils/toastMessage";
+import superAdminConstants from "./constants";
 
 export function* addAdmins({ payload }) {
   try {
@@ -13,8 +15,8 @@ export function* addAdmins({ payload }) {
     toastMessage(ADMINS_ADD_SUCCESS, "success");
     yield put(addAdminsSuccess());
   } catch (error) {
-    const errorMessage = error.data?.error;
-    yield put(addAdminsFailure(errorMessage));
+    const errorMessage = apisErrorMessage(error);
+    yield put(addAdminsFailure());
     toastMessage(errorMessage, "danger");
   }
 }

@@ -1,12 +1,18 @@
 import { call, put, takeLatest } from "redux-saga/effects";
 
 import { addPayloadApi, editPayloadApi, getPayloadsApi } from "./apis";
-import { addPayloadsFailure, editPayloadsFailure, getPayloadsFailure, getPayloadsSuccess } from "./actions";
-import payloadConstants from "./constants";
+import {
+  addPayloadsFailure,
+  editPayloadsFailure,
+  getPayloadsFailure,
+  getPayloadsSuccess,
+} from "./actions";
 
-import { PAYLOADS } from "constants/userMessagesConstants";
 import { apisErrorMessage } from "utils/apisErrorMessage";
 import { toastMessage } from "utils/toastMessage";
+
+import payloadConstants from "./constants";
+import { PAYLOADS } from "constants/userMessagesConstants";
 
 export function* getPayloads({ payload }) {
   try {
@@ -15,31 +21,31 @@ export function* getPayloads({ payload }) {
   } catch (error) {
     const errorMessage = apisErrorMessage(error);
     toastMessage(errorMessage, "error");
-    yield put(getPayloadsFailure(errorMessage));
+    yield put(getPayloadsFailure());
   }
 }
 
 export function* addPayload({ payload }) {
   try {
     yield call(addPayloadApi, payload);
-		toastMessage(PAYLOADS.ADD_NEW_SUCCESS, "success");
+    toastMessage(PAYLOADS.ADD_NEW_SUCCESS, "success");
     yield call(getPayloads, { payload: { project: payload.project } });
   } catch (error) {
     const errorMessage = apisErrorMessage(error);
     toastMessage(errorMessage, "error");
-    yield put(addPayloadsFailure(errorMessage));
+    yield put(addPayloadsFailure());
   }
 }
 
 export function* editPayload({ payload }) {
   try {
     yield call(editPayloadApi, payload);
-		toastMessage(PAYLOADS.UPDATE_SUCCESS, "success")
+    toastMessage(PAYLOADS.UPDATE_SUCCESS, "success");
     yield call(getPayloads, { payload: { project: payload.project } });
   } catch (error) {
     const errorMessage = apisErrorMessage(error);
     toastMessage(errorMessage, "error");
-    yield put(editPayloadsFailure(errorMessage));
+    yield put(editPayloadsFailure());
   }
 }
 

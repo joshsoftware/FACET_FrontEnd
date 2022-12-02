@@ -7,11 +7,12 @@ import {
   getHeadersFailure,
   getHeadersSuccess,
 } from "./actions";
-import headerConstants from "./constants";
 
-import { HEADERS } from "constants/userMessagesConstants";
-import { toastMessage } from "utils/toastMessage";
 import { apisErrorMessage } from "utils/apisErrorMessage";
+import { toastMessage } from "utils/toastMessage";
+
+import headerConstants from "./constants";
+import { HEADERS } from "constants/userMessagesConstants";
 
 export function* getHeaders({ payload }) {
   try {
@@ -20,7 +21,7 @@ export function* getHeaders({ payload }) {
   } catch (error) {
     const errorMessage = apisErrorMessage(error);
     toastMessage(errorMessage, "error");
-    yield put(getHeadersFailure(errorMessage));
+    yield put(getHeadersFailure());
   }
 }
 
@@ -32,7 +33,7 @@ export function* addHeader({ payload }) {
   } catch (error) {
     const errorMessage = apisErrorMessage(error);
     toastMessage(errorMessage, "error");
-    yield put(addHeadersFailure(errorMessage));
+    yield put(addHeadersFailure());
   }
 }
 
@@ -44,7 +45,7 @@ export function* editHeader({ payload }) {
   } catch (error) {
     const errorMessage = apisErrorMessage(error);
     toastMessage(errorMessage, "error");
-    yield put(editHeadersFailure(errorMessage));
+    yield put(editHeadersFailure());
   }
 }
 

@@ -1,8 +1,8 @@
 import { call, put, takeLatest } from "redux-saga/effects";
 
 import { addExecuteFailure, addExecuteSuccess } from "./actions";
-import executeConstants from "./constants";
 import { executeTestcaseApi } from "./apis";
+import executeConstants from "./constants";
 
 import { componentMissingErrors } from "utils/helper";
 import { toastMessage } from "utils/toastMessage";
@@ -13,10 +13,9 @@ export function* addExecute({ payload }) {
     const response = yield call(executeTestcaseApi, payload);
     yield put(addExecuteSuccess(response));
   } catch (error) {
-    const err = error.data.error;
-    let errMsg = componentMissingErrors(err);
-    yield put(addExecuteFailure(errMsg));
-    toastMessage(errMsg, "error");
+    const errorMessage = componentMissingErrors(error.data.error);
+    yield put(addExecuteFailure());
+    toastMessage(errorMessage, "error");
   }
 }
 

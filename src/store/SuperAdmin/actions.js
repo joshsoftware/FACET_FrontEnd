@@ -9,7 +9,6 @@ export const addAdminsSuccess = () => ({
   type: superAdminConstants.ADD_ADMINS_SUCCESS,
 });
 
-export const addAdminsFailure = (data) => ({
+export const addAdminsFailure = () => ({
   type: superAdminConstants.ADD_ADMINS_FAILURE,
-  payload: data,
 });

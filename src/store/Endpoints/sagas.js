@@ -7,11 +7,12 @@ import {
   getEndpointsFailure,
   getEndpointsSuccess,
 } from "./actions";
-import endpointConstants from "./constants";
 
-import { ENDPOINTS } from "constants/userMessagesConstants";
 import { apisErrorMessage } from "utils/apisErrorMessage";
 import { toastMessage } from "utils/toastMessage";
+
+import endpointConstants from "./constants";
+import { ENDPOINTS } from "constants/userMessagesConstants";
 
 export function* getEndpoints({ payload }) {
   try {
@@ -20,7 +21,7 @@ export function* getEndpoints({ payload }) {
   } catch (error) {
     const errorMessage = apisErrorMessage(error);
     toastMessage(errorMessage, "error");
-    yield put(getEndpointsFailure(errorMessage));
+    yield put(getEndpointsFailure());
   }
 }
 
@@ -32,7 +33,7 @@ export function* addEndpoint({ payload }) {
   } catch (error) {
     const errorMessage = apisErrorMessage(error);
     toastMessage(errorMessage, "error");
-    yield put(addEndpointsFailure(errorMessage));
+    yield put(addEndpointsFailure());
   }
 }
 
@@ -44,7 +45,7 @@ export function* editEndpoint({ payload }) {
   } catch (error) {
     const errorMessage = apisErrorMessage(error);
     toastMessage(errorMessage, "error");
-    yield put(editEndpointsFailure(errorMessage));
+    yield put(editEndpointsFailure());
   }
 }
 

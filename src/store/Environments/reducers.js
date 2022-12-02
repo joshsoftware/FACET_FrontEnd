@@ -1,21 +1,19 @@
 import environmentConstants from "./constants";
 
-const initialState = {
-  isLoading: false,
-  environments: [],
-  errors: [],
-};
+const initialState = { isLoading: false, environments: [] };
 
 const environmentReducer = (state = initialState, action) => {
-  switch (action.type) {
+  const { type, payload } = action;
+
+  switch (type) {
     case environmentConstants.GET_ENVIRONMENTS_REQUEST:
       return { ...state, isLoading: true };
 
     case environmentConstants.GET_ENVIRONMENTS_SUCCESS:
-      return { ...state, isLoading: false, environments: action.payload };
+      return { ...state, isLoading: false, environments: payload };
 
     case environmentConstants.GET_ENVIRONMENTS_FAILURE:
-      return { ...state, isLoading: false, errors: action.payload };
+      return { ...state, isLoading: false };
 
     case environmentConstants.ADD_ENVIRONMENTS_REQUEST:
       return { ...state, isLoading: true };
@@ -24,7 +22,7 @@ const environmentReducer = (state = initialState, action) => {
       return { ...state, isLoading: false };
 
     case environmentConstants.ADD_ENVIRONMENTS_FAILURE:
-      return { ...state, isLoading: false, errors: action.payload };
+      return { ...state, isLoading: false };
 
     case environmentConstants.EDIT_ENVIRONMENTS_REQUEST:
       return { ...state, isLoading: true };
@@ -33,7 +31,7 @@ const environmentReducer = (state = initialState, action) => {
       return { ...state, isLoading: false };
 
     case environmentConstants.EDIT_ENVIRONMENTS_FAILURE:
-      return { ...state, isLoading: false, errors: action.payload };
+      return { ...state, isLoading: false };
 
     default:
       return state;

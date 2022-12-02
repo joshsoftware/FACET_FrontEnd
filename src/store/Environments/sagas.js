@@ -13,11 +13,12 @@ import {
   getEnvironmentsFailure,
   getEnvironmentsSuccess,
 } from "./actions";
-import environmentConstants from "./constants";
 
-import { ENVIRONMENTS } from "constants/userMessagesConstants";
 import { apisErrorMessage } from "utils/apisErrorMessage";
 import { toastMessage } from "utils/toastMessage";
+
+import environmentConstants from "./constants";
+import { ENVIRONMENTS } from "constants/userMessagesConstants";
 
 // saga for get All Environments data for a project
 export function* getEnvironments({ payload }) {
@@ -27,7 +28,7 @@ export function* getEnvironments({ payload }) {
   } catch (error) {
     const errorMessage = apisErrorMessage(error);
     toastMessage(errorMessage, "error");
-    yield put(getEnvironmentsFailure(errorMessage));
+    yield put(getEnvironmentsFailure());
   }
 }
 
@@ -41,7 +42,7 @@ export function* addEnvironment({ payload }) {
   } catch (error) {
     const errorMessage = apisErrorMessage(error);
     toastMessage(errorMessage, "error");
-    yield put(addEnvironmentsFailure(errorMessage));
+    yield put(addEnvironmentsFailure());
   }
 }
 
@@ -55,7 +56,7 @@ export function* editEnvironment({ payload }) {
   } catch (error) {
     const errorMessage = apisErrorMessage(error);
     toastMessage(errorMessage, "error");
-    yield put(editEnvironmentsFailure(errorMessage));
+    yield put(editEnvironmentsFailure());
   }
 }
 

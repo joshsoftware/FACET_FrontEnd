@@ -24,9 +24,8 @@ export const addEnvironmentsSuccess = () => ({
   type: environmentConstants.ADD_ENVIRONMENTS_SUCCESS,
 });
 
-export const addEnvironmentsFailure = (data) => ({
+export const addEnvironmentsFailure = () => ({
   type: environmentConstants.ADD_ENVIRONMENTS_FAILURE,
-  payload: data,
 });
 
 export const editEnvironmentsRequest = (data) => ({
@@ -38,9 +37,8 @@ export const editEnvironmentsSuccess = () => ({
   type: environmentConstants.EDIT_ENVIRONMENTS_SUCCESS,
 });
 
-export const editEnvironmentsFailure = (data) => ({
+export const editEnvironmentsFailure = () => ({
   type: environmentConstants.EDIT_ENVIRONMENTS_FAILURE,
-  payload: data,
 });
 
 export const deleteEnvironmentsRequest = (data) => ({
@@ -48,12 +46,10 @@ export const deleteEnvironmentsRequest = (data) => ({
   payload: data,
 });
 
-export const deleteEnvironmentsSuccess = (data) => ({
+export const deleteEnvironmentsSuccess = () => ({
   type: environmentConstants.DELETE_ENVIRONMENTS_SUCCESS,
-  payload: data,
 });
 
-export const deleteEnvironmentsFailure = (data) => ({
+export const deleteEnvironmentsFailure = () => ({
   type: environmentConstants.DELETE_ENVIRONMENTS_FAILURE,
-  payload: data,
 });
