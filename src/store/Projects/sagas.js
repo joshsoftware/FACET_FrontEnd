@@ -18,9 +18,10 @@ import {
   updateProjectNameFailure,
   updateProjectNameSuccess,
 } from "./actions";
-import projectConstants from "./constants";
 
+import projectConstants from "./constants";
 import { PROJECTS } from "constants/userMessagesConstants";
+
 import { apisErrorMessage } from "utils/apisErrorMessage";
 import { toastMessage } from "utils/toastMessage";
 
@@ -31,7 +32,7 @@ export function* getProjects() {
   } catch (error) {
     const errorMessage = apisErrorMessage(error);
     toastMessage(errorMessage, "error");
-    yield put(getProjectsFailure(errorMessage));
+    yield put(getProjectsFailure());
   }
 }
 
@@ -43,7 +44,7 @@ export function* addNewProject({ payload }) {
   } catch (error) {
     const errorMessage = apisErrorMessage(error);
     toastMessage(errorMessage, "error");
-    yield put(addProjectFailure(errorMessage));
+    yield put(addProjectFailure());
   }
 }
 
@@ -54,7 +55,7 @@ export function* getOneProject({ payload }) {
   } catch (error) {
     const errorMessage = apisErrorMessage(error);
     toastMessage(errorMessage, "error");
-    yield put(getOneProjectFailure(errorMessage));
+    yield put(getOneProjectFailure());
   }
 }
 
@@ -66,7 +67,7 @@ export function* updateProjectName({ payload }) {
   } catch (error) {
     const errorMessage = apisErrorMessage(error);
     toastMessage(errorMessage, "error");
-    yield put(updateProjectNameFailure(errorMessage));
+    yield put(updateProjectNameFailure());
   }
 }
 
@@ -79,7 +80,7 @@ export function* deleteProject({ payload }) {
   } catch (error) {
     const errorMessage = apisErrorMessage(error);
     toastMessage(errorMessage, "error");
-    yield put(deleteProjectFailure(errorMessage));
+    yield put(deleteProjectFailure());
   }
 }
 

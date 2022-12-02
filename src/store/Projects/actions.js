@@ -9,9 +9,8 @@ export const getProjectsSuccess = (data) => ({
   payload: data,
 });
 
-export const getProjectsFailure = (data) => ({
+export const getProjectsFailure = () => ({
   type: projectConstants.GET_PROJECTS_FAILURE,
-  payload: data,
 });
 
 export const addProjectRequest = (data) => ({
@@ -19,14 +18,12 @@ export const addProjectRequest = (data) => ({
   payload: data,
 });
 
-export const addProjectSuccess = (data) => ({
+export const addProjectSuccess = () => ({
   type: projectConstants.ADD_PROJECT_SUCCESS,
-  payload: data,
 });
 
-export const addProjectFailure = (data) => ({
+export const addProjectFailure = () => ({
   type: projectConstants.ADD_PROJECT_FAILURE,
-  payload: data,
 });
 
 export const getOneProjectRequest = (data) => ({
@@ -39,9 +36,8 @@ export const getOneProjectSuccess = (data) => ({
   payload: data,
 });
 
-export const getOneProjectFailure = (data) => ({
+export const getOneProjectFailure = () => ({
   type: projectConstants.GET_ONE_PROJECT_FAILURE,
-  payload: data,
 });
 
 export const updateProjectNameRequest = (data) => ({
@@ -49,14 +45,12 @@ export const updateProjectNameRequest = (data) => ({
   payload: data,
 });
 
-export const updateProjectNameSuccess = (data) => ({
+export const updateProjectNameSuccess = () => ({
   type: projectConstants.UPDATE_PROJECT_NAME_SUCCESS,
-  payload: data,
 });
 
-export const updateProjectNameFailure = (data) => ({
+export const updateProjectNameFailure = () => ({
   type: projectConstants.UPDATE_PROJECT_NAME_FAILURE,
-  payload: data,
 });
 
 export const deleteProjectRequest = (data) => ({
@@ -64,12 +58,10 @@ export const deleteProjectRequest = (data) => ({
   payload: data,
 });
 
-export const deleteProjectSuccess = (data) => ({
+export const deleteProjectSuccess = () => ({
   type: projectConstants.DELETE_PROJECT_SUCCESS,
-  payload: data,
 });
 
-export const deleteProjectFailure = (data) => ({
+export const deleteProjectFailure = () => ({
   type: projectConstants.DELETE_PROJECT_FAILURE,
-  payload: data,
 });

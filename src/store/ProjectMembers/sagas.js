@@ -5,10 +5,16 @@ import {
   getProjectMembersApi,
   removeMembersInProjectApi,
 } from "./apis";
-import { getProjectMembersSuccess } from "./actions";
-import projectMembersConstants from "./constants";
+import {
+  addMembersInProjectFailure,
+  getProjectMembersFailure,
+  getProjectMembersSuccess,
+  removeMembersInProjectFailure,
+} from "./actions";
 
 import { MEMBERS } from "constants/userMessagesConstants";
+import projectMembersConstants from "./constants";
+
 import { apisErrorMessage } from "utils/apisErrorMessage";
 import { toastMessage } from "utils/toastMessage";
 
@@ -19,6 +25,7 @@ export function* getProjectMembers({ payload }) {
   } catch (error) {
     const errorMessage = apisErrorMessage(error);
     toastMessage(errorMessage, "error");
+    yield put(getProjectMembersFailure());
   }
 }
 
@@ -30,6 +37,7 @@ export function* addMembersInProject({ payload }) {
   } catch (error) {
     const errorMessage = apisErrorMessage(error);
     toastMessage(errorMessage, "error");
+    yield put(addMembersInProjectFailure());
   }
 }
 
@@ -41,6 +49,7 @@ export function* removeMembersInProject({ payload }) {
   } catch (error) {
     const errorMessage = apisErrorMessage(error);
     toastMessage(errorMessage, "error");
+    yield put(removeMembersInProjectFailure());
   }
 }
 

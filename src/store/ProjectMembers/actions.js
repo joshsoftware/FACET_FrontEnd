@@ -10,9 +10,8 @@ export const getProjectMembersSuccess = (data) => ({
   payload: data,
 });
 
-export const getProjectMembersFailure = (data) => ({
+export const getProjectMembersFailure = () => ({
   type: projectMembersConstants.GET_PROJECT_MEMBERS_FAILURE,
-  payload: data,
 });
 
 export const addMembersInProjectRequest = (data) => ({
@@ -24,9 +23,8 @@ export const addMembersInProjectSuccess = () => ({
   type: projectMembersConstants.ADD_MEMBERS_IN_PROJECT_SUCCESS,
 });
 
-export const addMembersInProjectFailure = (data) => ({
+export const addMembersInProjectFailure = () => ({
   type: projectMembersConstants.ADD_MEMBERS_IN_PROJECT_FAILURE,
-  payload: data,
 });
 
 export const removeMembersInProjectRequest = (data) => ({
@@ -38,7 +36,6 @@ export const removeMembersInProjectSuccess = () => ({
   type: projectMembersConstants.REMOVE_MEMBERS_IN_PROJECT_SUCCESS,
 });
 
-export const removeMembersInProjectFailure = (data) => ({
+export const removeMembersInProjectFailure = () => ({
   type: projectMembersConstants.REMOVE_MEMBERS_IN_PROJECT_FAILURE,
-  payload: data,
 });
