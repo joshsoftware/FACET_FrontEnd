@@ -1,6 +1,6 @@
 import scheduleConstants from "./constants";
 
-const initialState = { isLoading: true, scheduledCases: [], errors: [] };
+const initialState = { isLoading: true, scheduledCases: [] };
 
 const scheduleReducer = (state = initialState, action) => {
   const { type, payload } = action;
@@ -13,7 +13,7 @@ const scheduleReducer = (state = initialState, action) => {
       return { ...state, isLoading: false, scheduledCases: payload };
 
     case scheduleConstants.GET_SCHEDULE_TESTCASE_FAILURE:
-      return { ...state, isLoading: false, errors: payload };
+      return { ...state, isLoading: false };
 
     case scheduleConstants.ADD_SCHEDULE_REQUEST:
       return { ...state, isLoading: true };
@@ -22,7 +22,7 @@ const scheduleReducer = (state = initialState, action) => {
       return { ...state, isLoading: false };
 
     case scheduleConstants.ADD_SCHEDULE_FAILURE:
-      return { ...state, isLoading: false, errors: payload };
+      return { ...state, isLoading: false };
 
     default:
       return state;

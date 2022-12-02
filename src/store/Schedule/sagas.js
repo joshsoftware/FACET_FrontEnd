@@ -1,26 +1,27 @@
 import { call, put, takeLatest } from "redux-saga/effects";
 
-import { addScheduleTestcaseApi, getAllSchesuledTestcasesApi } from "./apis";
 import {
   addScheduleFailure,
   addScheduleSuccess,
   getAllSchedulesFailure,
   getAllSchedulesSuccess,
 } from "./actions";
-import scheduleConstants from "./constants";
+import { addScheduleTestcaseApi, getAllScheduledTestcasesApi } from "./apis";
 
+import scheduleConstants from "./constants";
 import { TESTCASE_SCHEDULE_ADD_SUCCESS } from "constants/userMessagesConstants";
+
 import { apisErrorMessage } from "utils/apisErrorMessage";
 import { toastMessage } from "utils/toastMessage";
 
 export function* getAllSchedules({ payload }) {
   try {
-    const response = yield call(getAllSchesuledTestcasesApi, payload);
+    const response = yield call(getAllScheduledTestcasesApi, payload);
     yield put(getAllSchedulesSuccess(response.scheduled_jobs));
   } catch (error) {
     const errorMessage = apisErrorMessage(error);
     toastMessage(errorMessage, "error");
-    yield put(getAllSchedulesFailure(errorMessage));
+    yield put(getAllSchedulesFailure());
   }
 }
 
@@ -28,11 +29,11 @@ export function* scheduleNewTestcase({ payload }) {
   try {
     yield call(addScheduleTestcaseApi, payload);
     yield put(addScheduleSuccess());
-    toastMessage(TESTCASE_SCHEDULE_ADD_SUCCESS)
+    toastMessage(TESTCASE_SCHEDULE_ADD_SUCCESS, "success");
   } catch (error) {
     const errorMessage = apisErrorMessage(error);
     toastMessage(errorMessage, "error");
-    yield put(addScheduleFailure(errorMessage));
+    yield put(addScheduleFailure());
   }
 }
 
