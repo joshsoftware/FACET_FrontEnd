@@ -5,7 +5,6 @@ const initialState = {
   reports: [],
   totalResults: 0,
   page: 0,
-  errors: [],
   isOneReportLoading: true,
   singleReport: {
     level: "",
@@ -18,12 +17,14 @@ const initialState = {
 };
 
 const reportsReducer = (state = initialState, action) => {
-  switch (action.type) {
+  const { type, payload } = action;
+
+  switch (type) {
     case reportsConstants.GET_REPORTS_REQUEST:
       return {
         ...state,
         isReportsLoading: true,
-        page: action.payload.page,
+        page: payload.page,
         reports: state.reports,
       };
 
@@ -33,27 +34,22 @@ const reportsReducer = (state = initialState, action) => {
         isReportsLoading: false,
         reports:
           state.page === 1
-            ? action.payload.results
-            : state.reports.concat(action.payload.results),
-        totalResults: action.payload.total_results,
-        errors: [],
+            ? payload.results
+            : state.reports.concat(payload.results),
+        totalResults: payload.total_results,
       };
 
     case reportsConstants.GET_REPORTS_FAILURE:
-      return { ...state, isReportsLoading: false, errors: action.payload };
+      return { ...state, isReportsLoading: false };
 
     case reportsConstants.GET_SINGLE_REPORT_REQUEST:
       return { ...state, isOneReportLoading: true, showTeststepReport: false };
 
     case reportsConstants.GET_SINGLE_REPORT_SUCCESS:
-      return {
-        ...state,
-        isOneReportLoading: false,
-        singleReport: action.payload,
-      };
+      return { ...state, isOneReportLoading: false, singleReport: payload };
 
     case reportsConstants.GET_SINGLE_REPORT_FAILURE:
-      return { ...state, isOneReportLoading: false, errors: action.payload };
+      return { ...state, isOneReportLoading: false };
 
     case reportsConstants.GET_TESTSTEP_OF_SINGLE_REPORT_REQUEST:
       return {
@@ -66,7 +62,7 @@ const reportsReducer = (state = initialState, action) => {
       return {
         ...state,
         isOneTeststepReportLoading: false,
-        singleTeststepReport: action.payload,
+        singleTeststepReport: payload,
         showTeststepReport: true,
       };
 
@@ -74,7 +70,6 @@ const reportsReducer = (state = initialState, action) => {
       return {
         ...state,
         isOneTeststepReportLoading: false,
-        errors: action.payload,
         showTeststepReport: false,
       };
 
@@ -85,7 +80,7 @@ const reportsReducer = (state = initialState, action) => {
       return { ...state, isAddCommentLoading: false };
 
     case reportsConstants.ADD_COMMENT_FAILURE:
-      return { ...state, isAddCommentLoading: false, errors: action.payload };
+      return { ...state, isAddCommentLoading: false };
 
     default:
       return state;

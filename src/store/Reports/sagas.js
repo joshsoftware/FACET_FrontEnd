@@ -11,9 +11,10 @@ import {
   getReportDetailSuccess,
   getReportsFailure,
 } from "./actions";
-import reportsConstants from "./constants";
 
 import { COMMENT_ADD_SUCCESS } from "constants/userMessagesConstants";
+import reportsConstants from "./constants";
+
 import { apisErrorMessage } from "utils/apisErrorMessage";
 import { toastMessage } from "utils/toastMessage";
 
@@ -27,7 +28,7 @@ export function* getReports({ payload }) {
   } catch (error) {
     const errorMessage = apisErrorMessage(error);
     toastMessage(errorMessage, "error");
-    yield put(getReportsFailure(errorMessage));
+    yield put(getReportsFailure());
   }
 }
 
@@ -38,7 +39,7 @@ export function* getReportDetail({ payload: { reportId } }) {
   } catch (error) {
     const errorMessage = apisErrorMessage(error);
     toastMessage(errorMessage, "error");
-    yield put(getReportDetailFailure(errorMessage));
+    yield put(getReportDetailFailure());
   }
 }
 
@@ -51,7 +52,7 @@ export function* getTeststepOfSingleTestcaseReport({ payload }) {
   } catch (error) {
     const errorMessage = apisErrorMessage(error);
     toastMessage(errorMessage, "error");
-    yield put(getTeststepReportFailure(errorMessage));
+    yield put(getTeststepReportFailure());
   }
 }
 
@@ -64,7 +65,7 @@ export function* addComment({ payload }) {
   } catch (error) {
     const errorMessage = apisErrorMessage(error);
     toastMessage(errorMessage, "error");
-    yield put(addCommentFailure(errorMessage));
+    yield put(addCommentFailure());
   }
 }
 

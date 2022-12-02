@@ -10,9 +10,8 @@ export const getReportsSuccess = (data) => ({
   payload: data,
 });
 
-export const getReportsFailure = (data) => ({
+export const getReportsFailure = () => ({
   type: reportsConstants.GET_REPORTS_FAILURE,
-  payload: data,
 });
 
 export const getReportDetailRequest = (data) => ({
@@ -25,9 +24,8 @@ export const getReportDetailSuccess = (data) => ({
   payload: data,
 });
 
-export const getReportDetailFailure = (data) => ({
+export const getReportDetailFailure = () => ({
   type: reportsConstants.GET_SINGLE_REPORT_FAILURE,
-  payload: data,
 });
 
 export const getTeststepReportRequest = (data) => ({
@@ -40,54 +38,8 @@ export const getTeststepReportSuccess = (data) => ({
   payload: data,
 });
 
-export const getTeststepReportFailure = (data) => ({
+export const getTeststepReportFailure = () => ({
   type: reportsConstants.GET_TESTSTEP_OF_SINGLE_REPORT_FAILURE,
-  payload: data,
-});
-
-export const addReportsRequest = (data) => ({
-  type: reportsConstants.ADD_REPORTS_REQUEST,
-  payload: data,
-});
-
-export const addReportsSuccess = (data) => ({
-  type: reportsConstants.ADD_REPORTS_SUCCESS,
-  payload: data,
-});
-
-export const addReportsFailure = (data) => ({
-  type: reportsConstants.ADD_REPORTS_FAILURE,
-  payload: data,
-});
-
-export const editReportsRequest = (data) => ({
-  type: reportsConstants.EDIT_REPORTS_REQUEST,
-  payload: data,
-});
-
-export const editReportsSuccess = (data) => ({
-  type: reportsConstants.EDIT_REPORTS_SUCCESS,
-  payload: data,
-});
-
-export const editReportsFailure = (data) => ({
-  type: reportsConstants.EDIT_REPORTS_FAILURE,
-  payload: data,
-});
-
-export const deleteReportsRequest = (data) => ({
-  type: reportsConstants.DELETE_REPORTS_REQUEST,
-  payload: data,
-});
-
-export const deleteReportsSuccess = (data) => ({
-  type: reportsConstants.DELETE_REPORTS_SUCCESS,
-  payload: data,
-});
-
-export const deleteReportsFailure = (data) => ({
-  type: reportsConstants.DELETE_REPORTS_FAILURE,
-  payload: data,
 });
 
 export const addCommentRequest = (data) => ({
@@ -95,12 +47,10 @@ export const addCommentRequest = (data) => ({
   payload: data,
 });
 
-export const addCommentSuccess = (data) => ({
+export const addCommentSuccess = () => ({
   type: reportsConstants.ADD_COMMENT_SUCCESS,
-  payload: data,
 });
 
-export const addCommentFailure = (data) => ({
+export const addCommentFailure = () => ({
   type: reportsConstants.ADD_COMMENT_FAILURE,
-  payload: data,
 });
