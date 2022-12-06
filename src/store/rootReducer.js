@@ -3,7 +3,7 @@ import { combineReducers } from "redux";
 import endpointReducer from "./Endpoints/reducers";
 import environmentReducer from "./Environments/reducers";
 import executeReducer from "./Execute/reducers";
-import { getUsersReducer, userReducer } from "./User/reducers";
+import userReducer from "./User/reducers";
 import headerReducer from "./Headers/reducers";
 import payloadReducer from "./Payloads/reducers";
 import projectMembersReducer from "./ProjectMembers/reducers";
@@ -29,7 +29,6 @@ const rootReducer = combineReducers({
   execute: executeReducer,
   projectMembers: projectMembersReducer,
   superAdmin: superAdminReducer,
-  getUsers: getUsersReducer,
   reports: reportsReducer,
   schedules: scheduleReducer,
   testsuites: testsuiteReducer,

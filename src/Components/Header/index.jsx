@@ -4,15 +4,16 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import AddAdminModal from "Components/DashboardComponent/SuperAdmin/AddAdminModal";
+
 import { addAdminsRequest } from "store/SuperAdmin/actions";
-import { getAllUsersRequest, signOutRequest } from "store/User/actions";
+import { getUsersRequest, signOutRequest } from "store/User/actions";
 
 import logo from "assets/images/logo.png";
 
-const mapState = ({ user, getUsers }) => ({
+const mapState = ({ user }) => ({
   isLoggedIn: user.isLoggedIn,
   currentUser: user.currentUser,
-  allUsers: getUsers.users,
+  allUsers: user.users,
 });
 
 const Header = () => {
@@ -30,7 +31,7 @@ const Header = () => {
 
   useEffect(() => {
     if (isLoggedIn && isSuperAdmin) {
-      dispatch(getAllUsersRequest({ exclude: "admins" }));
+      dispatch(getUsersRequest({ exclude: "admins" }));
     }
   }, []);
 
