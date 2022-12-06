@@ -6,22 +6,23 @@ import { useParams } from "react-router-dom";
 
 import { AddButton } from "Components/forms/Buttons";
 import AddMembersInProject from "Components/DashboardComponent/ProjectAdmin/AddMembersInProject";
+import TableComponent from "Components/CustomComponents/TableComponent/index";
+import { ViewComponent } from "Components/CustomComponents";
+
 import {
   addMembersInProjectRequest,
   getProjectMembersRequest,
   removeMembersInProjectRequest,
 } from "store/Projects/actions";
-import { getAllUsersRequest } from "store/User/actions";
-import TableComponent from "Components/CustomComponents/TableComponent/index";
-import { ViewComponent } from "Components/CustomComponents";
+import { getUsersRequest } from "store/User/actions";
 
-const mapState = ({ projectMembers, user, getUsers }) => ({
+const mapState = ({ projectMembers, user }) => ({
   members: projectMembers.members,
   project: projectMembers.project,
   isLoading: projectMembers.isLoading,
   project_admin: projectMembers.project_admin,
   user: user.currentUser,
-  allUsers: getUsers.users,
+  allUsers: user.users,
 });
 
 const MemberContainer = () => {
@@ -54,7 +55,7 @@ const MemberContainer = () => {
   useEffect(() => {
     if (projectName) {
       dispatch(
-        getAllUsersRequest({ exclude: "projectMembers", project: projectName })
+        getUsersRequest({ exclude: "projectMembers", project: projectName })
       );
     }
   }, [projectName]);

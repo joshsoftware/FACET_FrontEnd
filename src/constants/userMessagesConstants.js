@@ -9,6 +9,11 @@ export const USER_AUTH = {
   PASSWORD_NOT_MATCHED: "Password not matched!",
 };
 
+export const USERS = {
+  CHANGE_PASSWORD_SUCCESS: "Password updated successfully!",
+  UPDATE_PROFILE_SUCCESS: "Profile updated successfully!",
+};
+
 export const PROJECTS = {
   ADD_NEW_SUCCESS: "Project added successfully!",
   UPDATE_PROJECT_NAME_SUCCESS: "Project name updated successfully!",
