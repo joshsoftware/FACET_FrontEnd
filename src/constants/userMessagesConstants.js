@@ -1,7 +1,14 @@
-export const LOGOUT_SUCCESS = "Logout successfully!";
+// common error messages
+export const COMMON_ERROR_MESSAGE = "Something went wrong!";
 
-export const COMMON_ERROR_MESSAGE = "Something Went Wrong!";
+// common FORM error messages
 export const ALL_FIELDS_REQUIRED = "Please fill all required fields!";
+
+// user message constants for toast messages after api call  succeed
+export const LOGOUT_SUCCESS = "Logout successfully!";
+export const ADMINS_ADD_SUCCESS = "Admins added successfully!";
+export const COMMENT_ADD_SUCCESS = "Comment added successfully!";
+export const TESTCASE_SCHEDULE_ADD_SUCCESS = "Testcase scheduled successfully!";
 
 export const USER_AUTH = {
   LOGIN_SUCCESS: "Login successfully!",
@@ -62,9 +69,5 @@ export const TESTSUITES = {
 
 export const MEMBERS = {
   ADD_NEW_SUCCESS: "Members added successfully!",
-  REMOVE_SUCCESS: "Member Removed Successfully! ",
+  REMOVE_SUCCESS: "Member removed Successfully! ",
 };
-
-export const ADMINS_ADD_SUCCESS = "Admins added successfully!";
-export const COMMENT_ADD_SUCCESS = "Comment added successfully!";
-export const TESTCASE_SCHEDULE_ADD_SUCCESS = "Testcase scheduled successfully!";
