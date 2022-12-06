@@ -12,12 +12,14 @@ const ReportTableRow = ({ data, projectName }) => {
   const {
     id,
     level,
+    status,
     executed_by: { name: executedBy },
     executed_on: executedOn,
     result,
   } = data;
-  const { name, passedFields, failedFields } = getReportDetails(level, result);
+  const { name } = getReportDetails(level, result);
   const redirectToReport = `/project/${projectName}/reports/${id}`;
+  const statusColor = status === "passed" ? "success" : "danger";
 
   return (
     <tr>
@@ -32,11 +34,8 @@ const ReportTableRow = ({ data, projectName }) => {
         </Link>
       </td>
       <td className="text-capitalize">{level}</td>
-      <td>
-        <BadgeComponent bg="success" label={passedFields} />
-      </td>
-      <td>
-        <BadgeComponent bg="danger" label={failedFields} />
+      <td className="text-capitalize">
+        <BadgeComponent bg={statusColor} label={status} />
       </td>
       <td className="text-capitalize">{executedBy}</td>
       <td>{convertToLocalDate(executedOn)}</td>
@@ -53,6 +52,7 @@ ReportTableRow.propTypes = {
   data: PropTypes.shape({
     id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
     level: PropTypes.string.isRequired,
+    status: PropTypes.string.isRequired,
     executed_by: PropTypes.shape({ name: PropTypes.string.isRequired })
       .isRequired,
     executed_on: PropTypes.string.isRequired,
