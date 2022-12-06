@@ -7,7 +7,6 @@ import {
   getEndpointsFailure,
   getEndpointsSuccess,
 } from "./actions";
-
 import { apisErrorMessage } from "utils/apisErrorMessage";
 import { toastMessage } from "utils/toastMessage";
 
@@ -29,7 +28,7 @@ export function* addEndpoint({ payload }) {
   try {
     yield call(addEndpointApi, payload);
     yield call(getEndpoints, { payload: { project: payload.project } });
-    toastMessage(ENDPOINTS.ADD_NEW_SUCCESS, "success");
+    toastMessage(ENDPOINTS.ADD_NEW_SUCCESS);
   } catch (error) {
     const errorMessage = apisErrorMessage(error);
     toastMessage(errorMessage, "error");
@@ -40,7 +39,7 @@ export function* addEndpoint({ payload }) {
 export function* editEndpoint({ payload }) {
   try {
     yield call(editEndpointApi, payload);
-    toastMessage(ENDPOINTS.UPDATE_SUCCESS, "success");
+    toastMessage(ENDPOINTS.UPDATE_SUCCESS);
     yield call(getEndpoints, { payload: { project: payload.project } });
   } catch (error) {
     const errorMessage = apisErrorMessage(error);

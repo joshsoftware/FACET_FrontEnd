@@ -7,7 +7,6 @@ import {
   getHeadersFailure,
   getHeadersSuccess,
 } from "./actions";
-
 import { apisErrorMessage } from "utils/apisErrorMessage";
 import { toastMessage } from "utils/toastMessage";
 
@@ -28,7 +27,7 @@ export function* getHeaders({ payload }) {
 export function* addHeader({ payload }) {
   try {
     yield call(addHeaderApi, payload);
-    toastMessage(HEADERS.ADD_NEW_SUCCESS, "success");
+    toastMessage(HEADERS.ADD_NEW_SUCCESS);
     yield call(getHeaders, { payload: { project: payload.project } });
   } catch (error) {
     const errorMessage = apisErrorMessage(error);
@@ -40,7 +39,7 @@ export function* addHeader({ payload }) {
 export function* editHeader({ payload }) {
   try {
     yield call(editHeaderApi, payload);
-    toastMessage(HEADERS.UPDATE_SUCCESS, "success");
+    toastMessage(HEADERS.UPDATE_SUCCESS);
     yield call(getHeaders, { payload: { project: payload.project } });
   } catch (error) {
     const errorMessage = apisErrorMessage(error);

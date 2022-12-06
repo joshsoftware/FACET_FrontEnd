@@ -13,7 +13,6 @@ import {
   getEnvironmentsFailure,
   getEnvironmentsSuccess,
 } from "./actions";
-
 import { apisErrorMessage } from "utils/apisErrorMessage";
 import { toastMessage } from "utils/toastMessage";
 
@@ -36,7 +35,7 @@ export function* getEnvironments({ payload }) {
 export function* addEnvironment({ payload }) {
   try {
     yield call(addEnvironmentApi, payload);
-    toastMessage(ENVIRONMENTS.ADD_NEW_SUCCESS, "success");
+    toastMessage(ENVIRONMENTS.ADD_NEW_SUCCESS);
     yield call(getEnvironments, { payload: { project: payload.project } });
     yield put(addEnvironmentsSuccess());
   } catch (error) {
@@ -50,7 +49,7 @@ export function* addEnvironment({ payload }) {
 export function* editEnvironment({ payload }) {
   try {
     yield call(editEnvironmentApi, payload);
-    toastMessage(ENVIRONMENTS.UPDATE_SUCCESS, "success");
+    toastMessage(ENVIRONMENTS.UPDATE_SUCCESS);
     yield call(getEnvironments, { payload: { project: payload.project } });
     yield put(editEnvironmentsSuccess());
   } catch (error) {
