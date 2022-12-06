@@ -15,31 +15,31 @@ export const getReportsFailure = () => ({
 });
 
 export const getReportDetailRequest = (data) => ({
-  type: reportsConstants.GET_SINGLE_REPORT_REQUEST,
+  type: reportsConstants.GET_REPORT_REQUEST,
   payload: data,
 });
 
 export const getReportDetailSuccess = (data) => ({
-  type: reportsConstants.GET_SINGLE_REPORT_SUCCESS,
+  type: reportsConstants.GET_REPORT_SUCCESS,
   payload: data,
 });
 
 export const getReportDetailFailure = () => ({
-  type: reportsConstants.GET_SINGLE_REPORT_FAILURE,
+  type: reportsConstants.GET_REPORT_FAILURE,
 });
 
 export const getTeststepReportRequest = (data) => ({
-  type: reportsConstants.GET_TESTSTEP_OF_SINGLE_REPORT_REQUEST,
+  type: reportsConstants.GET_TESTSTEP_OF_REPORT_REQUEST,
   payload: data,
 });
 
 export const getTeststepReportSuccess = (data) => ({
-  type: reportsConstants.GET_TESTSTEP_OF_SINGLE_REPORT_SUCCESS,
+  type: reportsConstants.GET_TESTSTEP_OF_REPORT_SUCCESS,
   payload: data,
 });
 
 export const getTeststepReportFailure = () => ({
-  type: reportsConstants.GET_TESTSTEP_OF_SINGLE_REPORT_FAILURE,
+  type: reportsConstants.GET_TESTSTEP_OF_REPORT_FAILURE,
 });
 
 export const addCommentRequest = (data) => ({

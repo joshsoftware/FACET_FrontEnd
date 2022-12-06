@@ -5,14 +5,14 @@ const initialState = {
   reports: [],
   totalResults: 0,
   page: 0,
-  isOneReportLoading: true,
-  singleReport: {
+  isReportLoading: true,
+  report: {
     level: "",
     result: {},
   },
   showTeststepReport: false,
-  isOneTeststepReportLoading: true,
-  singleTeststepReport: {},
+  isTeststepReportLoading: true,
+  teststepReport: {},
   isAddCommentLoading: false,
 };
 
@@ -42,34 +42,34 @@ const reportsReducer = (state = initialState, action) => {
     case reportsConstants.GET_REPORTS_FAILURE:
       return { ...state, isReportsLoading: false };
 
-    case reportsConstants.GET_SINGLE_REPORT_REQUEST:
-      return { ...state, isOneReportLoading: true, showTeststepReport: false };
+    case reportsConstants.GET_REPORT_REQUEST:
+      return { ...state, isReportLoading: true, showTeststepReport: false };
 
-    case reportsConstants.GET_SINGLE_REPORT_SUCCESS:
-      return { ...state, isOneReportLoading: false, singleReport: payload };
+    case reportsConstants.GET_REPORT_SUCCESS:
+      return { ...state, isReportLoading: false, report: payload };
 
-    case reportsConstants.GET_SINGLE_REPORT_FAILURE:
-      return { ...state, isOneReportLoading: false };
+    case reportsConstants.GET_REPORT_FAILURE:
+      return { ...state, isReportLoading: false };
 
-    case reportsConstants.GET_TESTSTEP_OF_SINGLE_REPORT_REQUEST:
+    case reportsConstants.GET_TESTSTEP_OF_REPORT_REQUEST:
       return {
         ...state,
-        isOneTeststepReportLoading: true,
+        isTeststepReportLoading: true,
         showTeststepReport: false,
       };
 
-    case reportsConstants.GET_TESTSTEP_OF_SINGLE_REPORT_SUCCESS:
+    case reportsConstants.GET_TESTSTEP_OF_REPORT_SUCCESS:
       return {
         ...state,
-        isOneTeststepReportLoading: false,
-        singleTeststepReport: payload,
+        isTeststepReportLoading: false,
+        teststepReport: payload,
         showTeststepReport: true,
       };
 
-    case reportsConstants.GET_TESTSTEP_OF_SINGLE_REPORT_FAILURE:
+    case reportsConstants.GET_TESTSTEP_OF_REPORT_FAILURE:
       return {
         ...state,
-        isOneTeststepReportLoading: false,
+        isTeststepReportLoading: false,
         showTeststepReport: false,
       };
 

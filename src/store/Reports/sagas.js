@@ -71,9 +71,9 @@ export function* addComment({ payload }) {
 // Watcher saga
 export default function* reportSagas() {
   yield takeLatest(reportsConstants.GET_REPORTS_REQUEST, getReports);
-  yield takeLatest(reportsConstants.GET_SINGLE_REPORT_REQUEST, getReportDetail);
+  yield takeLatest(reportsConstants.GET_REPORT_REQUEST, getReportDetail);
   yield takeLatest(
-    reportsConstants.GET_TESTSTEP_OF_SINGLE_REPORT_REQUEST,
+    reportsConstants.GET_TESTSTEP_OF_REPORT_REQUEST,
     getTeststepOfSingleTestcaseReport
   );
   yield takeLatest(reportsConstants.ADD_COMMENT_REQUEST, addComment);
