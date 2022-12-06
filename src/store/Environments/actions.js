@@ -10,9 +10,8 @@ export const getEnvironmentsSuccess = (data) => ({
   payload: data,
 });
 
-export const getEnvironmentsFailure = (data) => ({
+export const getEnvironmentsFailure = () => ({
   type: environmentConstants.GET_ENVIRONMENTS_FAILURE,
-  payload: data,
 });
 
 export const addEnvironmentsRequest = (data) => ({

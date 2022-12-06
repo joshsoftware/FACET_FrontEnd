@@ -10,9 +10,8 @@ export const getHeadersSuccess = (data) => ({
   payload: data,
 });
 
-export const getHeadersFailure = (data) => ({
+export const getHeadersFailure = () => ({
   type: headerConstants.GET_HEADERS_FAILURE,
-  payload: data,
 });
 
 export const addHeadersRequest = (data) => ({
