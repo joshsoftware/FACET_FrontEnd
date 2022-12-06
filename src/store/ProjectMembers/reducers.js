@@ -3,7 +3,7 @@ import projectMembersConstants from "./constants";
 const initialState = {
   project: "",
   members: [],
-  project_admin: null,
+  projectAdmin: null,
   isLoading: false,
 };
 
@@ -20,7 +20,7 @@ const projectMembersReducer = (state = initialState, action) => {
         isLoading: false,
         project: payload.project,
         members: payload.members,
-        project_admin: payload.project_admin,
+        projectAdmin: payload.project_admin,
       };
 
     case projectMembersConstants.GET_PROJECT_MEMBERS_FAILURE:
