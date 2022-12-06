@@ -20,7 +20,7 @@ const mapState = ({ projectMembers, user }) => ({
   members: projectMembers.members,
   project: projectMembers.project,
   isLoading: projectMembers.isLoading,
-  project_admin: projectMembers.project_admin,
+  projectAdmin: projectMembers.projectAdmin,
   user: user.currentUser,
   allUsers: user.users,
 });
@@ -29,13 +29,8 @@ const MemberContainer = () => {
   let dispatch = useDispatch();
 
   const { projectName } = useParams();
-  const {
-    members,
-    isLoading,
-    project_admin: projectAdmin,
-    user,
-    allUsers,
-  } = useSelector(mapState);
+  const { members, isLoading, projectAdmin, user, allUsers } =
+    useSelector(mapState);
 
   const [show, setShow] = useState(false);
   const [addMemberFormData, setAddMemberFormData] = useState({

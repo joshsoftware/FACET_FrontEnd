@@ -1,5 +1,4 @@
 import { call, put, takeLatest } from "redux-saga/effects";
-import { toast } from "react-toastify";
 
 import { addCommentApi, getAllReportsApi, getSingleReportsApi } from "./apis";
 import {
@@ -10,7 +9,12 @@ import {
   getTeststepReportSuccess,
   getReportDetailFailure,
   getReportDetailSuccess,
+  getReportsFailure,
 } from "./actions";
+import { apisErrorMessage } from "utils/apisErrorMessage";
+import { toastMessage } from "utils/toastMessage";
+
+import { COMMENT_ADD_SUCCESS } from "constants/userMessagesConstants";
 import reportsConstants from "./constants";
 
 export function* getReports({ payload }) {
@@ -21,7 +25,9 @@ export function* getReports({ payload }) {
     });
     yield put(getReportsSuccess(response));
   } catch (error) {
-    toast.error(error.data.error);
+    const errorMessage = apisErrorMessage(error);
+    toastMessage(errorMessage, "error");
+    yield put(getReportsFailure());
   }
 }
 
@@ -30,20 +36,22 @@ export function* getReportDetail({ payload: { reportId } }) {
     const report = yield call(getSingleReportsApi, reportId);
     yield put(getReportDetailSuccess(report));
   } catch (error) {
-    yield put(getReportDetailFailure(error));
-    toast.error(error);
+    const errorMessage = apisErrorMessage(error);
+    toastMessage(errorMessage, "error");
+    yield put(getReportDetailFailure());
   }
 }
 
 export function* getTeststepOfSingleTestcaseReport({ payload }) {
   try {
-    // For now, this saga stores static data in the reducers, 
+    // For now, this saga stores static data in the reducers,
     // but after the time this saga fetch data from api call
     const { teststep } = payload;
     yield put(getTeststepReportSuccess(teststep));
   } catch (error) {
-    yield put(getTeststepReportFailure(error));
-    toast.error(error);
+    const errorMessage = apisErrorMessage(error);
+    toastMessage(errorMessage, "error");
+    yield put(getTeststepReportFailure());
   }
 }
 
@@ -52,18 +60,20 @@ export function* addComment({ payload }) {
     yield call(addCommentApi, payload);
     yield put(addCommentSuccess());
     yield call(getReports, { payload: { project: payload.project } });
-    toast.success("Comment Added Successfully!");
+    toastMessage(COMMENT_ADD_SUCCESS);
   } catch (error) {
-    yield put(addCommentFailure(error));
-    toast.error("Something Went Wrong!");
+    const errorMessage = apisErrorMessage(error);
+    toastMessage(errorMessage, "error");
+    yield put(addCommentFailure());
   }
 }
 
+// Watcher saga
 export default function* reportSagas() {
   yield takeLatest(reportsConstants.GET_REPORTS_REQUEST, getReports);
-  yield takeLatest(reportsConstants.GET_SINGLE_REPORT_REQUEST, getReportDetail);
+  yield takeLatest(reportsConstants.GET_REPORT_REQUEST, getReportDetail);
   yield takeLatest(
-    reportsConstants.GET_TESTSTEP_OF_SINGLE_REPORT_REQUEST,
+    reportsConstants.GET_TESTSTEP_OF_REPORT_REQUEST,
     getTeststepOfSingleTestcaseReport
   );
   yield takeLatest(reportsConstants.ADD_COMMENT_REQUEST, addComment);

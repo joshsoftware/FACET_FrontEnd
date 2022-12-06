@@ -1,5 +1,4 @@
 import { call, put, takeLatest } from "redux-saga/effects";
-import { toast } from "react-toastify";
 
 import { addTestsuiteApi, editTestsuiteApi, getTestsuitesApi } from "./apis";
 import {
@@ -8,44 +7,44 @@ import {
   getTestsuitesFailure,
   getTestsuitesSuccess,
 } from "./actions";
+import { apisErrorMessage } from "utils/apisErrorMessage";
+import { toastMessage } from "utils/toastMessage";
 
 import testsuiteConstants from "./constants";
+import { TESTSUITES } from "constants/userMessagesConstants";
 
 export function* getTestsuites({ payload }) {
   try {
     const response = yield call(getTestsuitesApi, payload);
     yield put(getTestsuitesSuccess(response.testsuites));
   } catch (error) {
-    const errorResp =
-      error.data?.error ?? "Something went wrong while fetching testsuites!";
-    toast.error(errorResp);
-    yield put(getTestsuitesFailure(errorResp));
+    const errorMessage = apisErrorMessage(error);
+    toastMessage(errorMessage, "error");
+    yield put(getTestsuitesFailure());
   }
 }
 
 export function* addTestsuite({ payload }) {
   try {
     yield call(addTestsuiteApi, payload);
-    toast.success("Testsuite Added Successfully!");
+    toastMessage(TESTSUITES.ADD_NEW_SUCCESS);
     yield call(getTestsuites, { payload: { project: payload.project } });
   } catch (error) {
-    const errorResp =
-      error.data?.error ?? "Something went wrong while adding testsuite!";
-    toast.error(errorResp);
-    yield put(addTestsuiteFailure(errorResp));
+    const errorMessage = apisErrorMessage(error);
+    toastMessage(errorMessage, "error");
+    yield put(addTestsuiteFailure());
   }
 }
 
 export function* editTestsuite({ payload }) {
   try {
     yield call(editTestsuiteApi, payload);
-    toast.success("Testsuite Updated Successfully!");
+    toastMessage(TESTSUITES.UPDATE_SUCCESS);
     yield call(getTestsuites, { payload: { project: payload.project } });
   } catch (error) {
-    const errorResp =
-      error.data?.error ?? "Something went wrong while updating testsuite!";
-    toast.error(errorResp);
-    yield put(editTestsuiteFailure(errorResp));
+    const errorMessage = apisErrorMessage(error);
+    toastMessage(errorMessage, "error");
+    yield put(editTestsuiteFailure());
   }
 }
 
