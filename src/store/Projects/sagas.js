@@ -18,12 +18,11 @@ import {
   updateProjectNameFailure,
   updateProjectNameSuccess,
 } from "./actions";
+import { apisErrorMessage } from "utils/apisErrorMessage";
+import { toastMessage } from "utils/toastMessage";
 
 import projectConstants from "./constants";
 import { PROJECTS } from "constants/userMessagesConstants";
-
-import { apisErrorMessage } from "utils/apisErrorMessage";
-import { toastMessage } from "utils/toastMessage";
 
 export function* getProjects() {
   try {
@@ -40,7 +39,7 @@ export function* addNewProject({ payload }) {
   try {
     yield call(addNewProjectApi, payload);
     yield call(getProjects);
-    toastMessage(PROJECTS.ADD_NEW_SUCCESS, "success");
+    toastMessage(PROJECTS.ADD_NEW_SUCCESS);
   } catch (error) {
     const errorMessage = apisErrorMessage(error);
     toastMessage(errorMessage, "error");
@@ -63,7 +62,7 @@ export function* updateProjectName({ payload }) {
   try {
     yield call(updateProjectNameApi, payload);
     yield put(updateProjectNameSuccess());
-    toastMessage(PROJECTS.UPDATE_PROJECT_NAME_SUCCESS, "success");
+    toastMessage(PROJECTS.UPDATE_PROJECT_NAME_SUCCESS);
   } catch (error) {
     const errorMessage = apisErrorMessage(error);
     toastMessage(errorMessage, "error");
@@ -76,7 +75,7 @@ export function* deleteProject({ payload }) {
     yield call(deleteProjectApi, payload);
     yield put(deleteProjectSuccess());
     yield call(getProjects);
-    toastMessage(PROJECTS.DELETE_PROJECT_SUCCESS, "success");
+    toastMessage(PROJECTS.DELETE_PROJECT_SUCCESS);
   } catch (error) {
     const errorMessage = apisErrorMessage(error);
     toastMessage(errorMessage, "error");
