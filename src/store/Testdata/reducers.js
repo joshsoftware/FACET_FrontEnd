@@ -1,31 +1,32 @@
 import testdataConstants from "./constants";
 
-const INITIAL_STATE = {
-    isLoading: true,
-    testdata: [],
-    errors: []
-}
+const initialState = { isLoading: false, testdata: [] };
 
-const testdataReducer = (state=INITIAL_STATE, action) => {
-    switch (action.type) {
-        case testdataConstants.GET_TESTDATA_SUCCESS:
-            return {
-                ...state,
-                isLoading: false,
-                testdata: action.payload,
-                errors: []
-            }
-    
-        case testdataConstants.GET_TESTDATA_FAILURE:
-            return {
-                ...state,
-                isLoading: false,
-                errors: action.payload
-            }
-            
-        default:
-            return state;
-    }
-}
+const testdataReducer = (state = initialState, action) => {
+  const { type, payload } = action;
+
+  switch (type) {
+    case testdataConstants.GET_TESTDATA_REQUEST:
+      return { ...state, isLoading: true };
+
+    case testdataConstants.GET_TESTDATA_SUCCESS:
+      return { ...state, isLoading: false, testdata: payload };
+
+    case testdataConstants.GET_TESTDATA_FAILURE:
+      return { ...state, isLoading: false };
+
+    case testdataConstants.ADD_TESTDATA_REQUEST:
+      return { ...state, isLoading: true };
+
+    case testdataConstants.ADD_TESTDATA_SUCCESS:
+      return { ...state, isLoading: false };
+
+    case testdataConstants.ADD_TESTDATA_FAILURE:
+      return { ...state, isLoading: false };
+
+    default:
+      return state;
+  }
+};
 
 export default testdataReducer;
