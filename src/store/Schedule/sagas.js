@@ -7,12 +7,11 @@ import {
   getAllSchedulesSuccess,
 } from "./actions";
 import { addScheduleTestcaseApi, getAllScheduledTestcasesApi } from "./apis";
+import { apisErrorMessage } from "utils/apisErrorMessage";
+import { toastMessage } from "utils/toastMessage";
 
 import scheduleConstants from "./constants";
 import { TESTCASE_SCHEDULE_ADD_SUCCESS } from "constants/userMessagesConstants";
-
-import { apisErrorMessage } from "utils/apisErrorMessage";
-import { toastMessage } from "utils/toastMessage";
 
 export function* getAllSchedules({ payload }) {
   try {
@@ -29,7 +28,7 @@ export function* scheduleNewTestcase({ payload }) {
   try {
     yield call(addScheduleTestcaseApi, payload);
     yield put(addScheduleSuccess());
-    toastMessage(TESTCASE_SCHEDULE_ADD_SUCCESS, "success");
+    toastMessage(TESTCASE_SCHEDULE_ADD_SUCCESS);
   } catch (error) {
     const errorMessage = apisErrorMessage(error);
     toastMessage(errorMessage, "error");

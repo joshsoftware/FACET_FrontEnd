@@ -11,12 +11,11 @@ import {
   getReportDetailSuccess,
   getReportsFailure,
 } from "./actions";
+import { apisErrorMessage } from "utils/apisErrorMessage";
+import { toastMessage } from "utils/toastMessage";
 
 import { COMMENT_ADD_SUCCESS } from "constants/userMessagesConstants";
 import reportsConstants from "./constants";
-
-import { apisErrorMessage } from "utils/apisErrorMessage";
-import { toastMessage } from "utils/toastMessage";
 
 export function* getReports({ payload }) {
   try {
@@ -61,7 +60,7 @@ export function* addComment({ payload }) {
     yield call(addCommentApi, payload);
     yield put(addCommentSuccess());
     yield call(getReports, { payload: { project: payload.project } });
-    toastMessage(COMMENT_ADD_SUCCESS, "success");
+    toastMessage(COMMENT_ADD_SUCCESS);
   } catch (error) {
     const errorMessage = apisErrorMessage(error);
     toastMessage(errorMessage, "error");
