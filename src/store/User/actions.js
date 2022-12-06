@@ -14,8 +14,9 @@ export const signInFailure = () => ({
   type: userConstants.SIGN_IN_FAILURE,
 });
 
-export const signUpRequest = () => ({
+export const signUpRequest = (data) => ({
   type: userConstants.SIGN_UP_REQUEST,
+  payload: data,
 });
 
 export const signUpSuccess = () => ({
@@ -88,7 +89,6 @@ export const changePasswordSuccess = () => ({
   type: userConstants.CHANGE_USER_PASSWORD_SUCCESS,
 });
 
-export const changePasswordFailure = (data) => ({
+export const changePasswordFailure = () => ({
   type: userConstants.CHANGE_USER_PASSWORD_FAILURE,
-  payload: data,
 });

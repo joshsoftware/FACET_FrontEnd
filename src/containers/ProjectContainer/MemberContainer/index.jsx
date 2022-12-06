@@ -13,7 +13,7 @@ import {
   addMembersInProjectRequest,
   getProjectMembersRequest,
   removeMembersInProjectRequest,
-} from "store/Projects/actions";
+} from "store/ProjectMembers/actions";
 import { getUsersRequest } from "store/User/actions";
 
 const mapState = ({ projectMembers, user }) => ({
