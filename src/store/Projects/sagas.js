@@ -3,7 +3,7 @@ import { call, put, takeLatest } from "redux-saga/effects";
 import {
   addNewProjectApi,
   deleteProjectApi,
-  getOneProjectApi,
+  getProjectApi,
   getProjectsApi,
   updateProjectNameApi,
 } from "./apis";
@@ -11,8 +11,8 @@ import {
   addProjectFailure,
   deleteProjectFailure,
   deleteProjectSuccess,
-  getOneProjectFailure,
-  getOneProjectSuccess,
+  getProjectFailure,
+  getProjectSuccess,
   getProjectsFailure,
   getProjectsSuccess,
   updateProjectNameFailure,
@@ -49,12 +49,12 @@ export function* addNewProject({ payload }) {
 
 export function* getOneProject({ payload }) {
   try {
-    const response = yield call(getOneProjectApi, payload);
-    yield put(getOneProjectSuccess(response));
+    const response = yield call(getProjectApi, payload);
+    yield put(getProjectSuccess(response));
   } catch (error) {
     const errorMessage = apisErrorMessage(error);
     toastMessage(errorMessage, "error");
-    yield put(getOneProjectFailure());
+    yield put(getProjectFailure());
   }
 }
 
@@ -87,7 +87,7 @@ export function* deleteProject({ payload }) {
 export default function* projectSagas() {
   yield takeLatest(projectConstants.GET_PROJECTS_REQUEST, getProjects);
   yield takeLatest(projectConstants.ADD_PROJECT_REQUEST, addNewProject);
-  yield takeLatest(projectConstants.GET_ONE_PROJECT_REQUEST, getOneProject);
+  yield takeLatest(projectConstants.GET_PROJECT_REQUEST, getOneProject);
   yield takeLatest(
     projectConstants.UPDATE_PROJECT_NAME_REQUEST,
     updateProjectName

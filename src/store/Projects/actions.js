@@ -26,18 +26,18 @@ export const addProjectFailure = () => ({
   type: projectConstants.ADD_PROJECT_FAILURE,
 });
 
-export const getOneProjectRequest = (data) => ({
-  type: projectConstants.GET_ONE_PROJECT_REQUEST,
+export const getProjectRequest = (data) => ({
+  type: projectConstants.GET_PROJECT_REQUEST,
   payload: data,
 });
 
-export const getOneProjectSuccess = (data) => ({
-  type: projectConstants.GET_ONE_PROJECT_SUCCESS,
+export const getProjectSuccess = (data) => ({
+  type: projectConstants.GET_PROJECT_SUCCESS,
   payload: data,
 });
 
-export const getOneProjectFailure = () => ({
-  type: projectConstants.GET_ONE_PROJECT_FAILURE,
+export const getProjectFailure = () => ({
+  type: projectConstants.GET_PROJECT_FAILURE,
 });
 
 export const updateProjectNameRequest = (data) => ({

@@ -4,7 +4,7 @@ const initialState = {
   projects: [],
   isLoading: false,
   isSuccess: false,
-  oneProject: {},
+  project: {},
 };
 
 const projectReducer = (state = initialState, action) => {
@@ -29,13 +29,13 @@ const projectReducer = (state = initialState, action) => {
     case projectConstants.ADD_PROJECT_FAILURE:
       return { ...state, isLoading: false };
 
-    case projectConstants.GET_ONE_PROJECT_REQUEST:
-      return { ...state, isLoading: true, oneProject: {} };
+    case projectConstants.GET_PROJECT_REQUEST:
+      return { ...state, isLoading: true, project: {} };
 
-    case projectConstants.GET_ONE_PROJECT_SUCCESS:
-      return { ...state, isLoading: false, oneProject: payload };
+    case projectConstants.GET_PROJECT_SUCCESS:
+      return { ...state, isLoading: false, project: payload };
 
-    case projectConstants.GET_ONE_PROJECT_FAILURE:
+    case projectConstants.GET_PROJECT_FAILURE:
       return { ...state, isLoading: false };
 
     case projectConstants.UPDATE_PROJECT_NAME_REQUEST:

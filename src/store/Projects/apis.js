@@ -6,7 +6,7 @@ export const getProjectsApi = () => Api(`${SERVER_URL}/api/projects/`, GET);
 export const addNewProjectApi = (data) =>
   Api(`${SERVER_URL}/api/projects/new`, POST, data);
 
-export const getOneProjectApi = (data) =>
+export const getProjectApi = (data) =>
   Api(`${SERVER_URL}/api/projects/`, GET, null, data);
 
 export const updateProjectNameApi = (data) =>
