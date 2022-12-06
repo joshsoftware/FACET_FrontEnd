@@ -16,7 +16,7 @@ export function* addAdmins({ payload }) {
   } catch (error) {
     const errorMessage = apisErrorMessage(error);
     yield put(addAdminsFailure());
-    toastMessage(errorMessage, "danger");
+    toastMessage(errorMessage, "error");
   }
 }
 
