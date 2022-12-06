@@ -47,7 +47,7 @@ export function* addNewProject({ payload }) {
   }
 }
 
-export function* getOneProject({ payload }) {
+export function* getProject({ payload }) {
   try {
     const response = yield call(getProjectApi, payload);
     yield put(getProjectSuccess(response));
@@ -87,7 +87,7 @@ export function* deleteProject({ payload }) {
 export default function* projectSagas() {
   yield takeLatest(projectConstants.GET_PROJECTS_REQUEST, getProjects);
   yield takeLatest(projectConstants.ADD_PROJECT_REQUEST, addNewProject);
-  yield takeLatest(projectConstants.GET_PROJECT_REQUEST, getOneProject);
+  yield takeLatest(projectConstants.GET_PROJECT_REQUEST, getProject);
   yield takeLatest(
     projectConstants.UPDATE_PROJECT_NAME_REQUEST,
     updateProjectName
