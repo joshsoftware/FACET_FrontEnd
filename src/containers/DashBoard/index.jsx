@@ -7,12 +7,10 @@ import {
   ProjectsComponent,
 } from "Components/DashboardComponent";
 import { DashboardLayout } from "Layout";
+
 import { addProjectRequest, getProjectsRequest } from "store/Projects/actions";
 
-const INITIAL_PROJECT_FORM_DATA = {
-  name: "",
-  description: "",
-};
+const initialProjectFormData = { name: "", description: "" };
 
 const mapState = ({ user, projects }) => ({
   currentUser: user.currentUser,
@@ -28,16 +26,16 @@ const DashBoard = () => {
 
   const [showAddProjectModal, setShowAddProjectModal] = useState(false);
   const [addProjectFormData, setAddProjectFormData] = useState(
-    INITIAL_PROJECT_FORM_DATA
+    initialProjectFormData
   );
 
   const toggleModal = () => {
     setShowAddProjectModal(!showAddProjectModal);
   };
 
-  const onchangeProjectFormData = (e) => {
-    setAddProjectFormData((p) => ({
-      ...p,
+  const onChangeProjectFormData = (e) => {
+    setAddProjectFormData((prevState) => ({
+      ...prevState,
       [e.target.name]: e.target.value,
     }));
   };
@@ -46,7 +44,7 @@ const DashBoard = () => {
     e.preventDefault();
     dispatch(addProjectRequest(addProjectFormData));
     toggleModal();
-    setAddProjectFormData(INITIAL_PROJECT_FORM_DATA);
+    setAddProjectFormData(initialProjectFormData);
   };
 
   useEffect(() => {
@@ -59,7 +57,7 @@ const DashBoard = () => {
         show={showAddProjectModal}
         handleClose={toggleModal}
         data={addProjectFormData}
-        onChange={onchangeProjectFormData}
+        onChange={onChangeProjectFormData}
         onSubmit={handleSubmitAddProjectForm}
       />
       <DashboardSubHeader
