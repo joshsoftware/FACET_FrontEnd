@@ -7,7 +7,6 @@ import {
   getTestcasesFailure,
   getTestcasesSuccess,
 } from "./actions";
-
 import { apisErrorMessage } from "utils/apisErrorMessage";
 import { toastMessage } from "utils/toastMessage";
 
@@ -28,7 +27,7 @@ export function* getTestcases({ payload }) {
 export function* addTestcase({ payload }) {
   try {
     yield call(addTestcaseApi, payload);
-    toastMessage(TESTCASES.ADD_NEW_SUCCESS, "success");
+    toastMessage(TESTCASES.ADD_NEW_SUCCESS);
     yield call(getTestcases, { payload: { project: payload.project } });
   } catch (error) {
     const errorMessage = apisErrorMessage(error);
@@ -40,7 +39,7 @@ export function* addTestcase({ payload }) {
 export function* editTestcase({ payload }) {
   try {
     yield call(editTestcaseApi, payload);
-    toastMessage(TESTCASES.UPDATE_SUCCESS, "success");
+    toastMessage(TESTCASES.UPDATE_SUCCESS);
     yield call(getTestcases, { payload: { project: payload.project } });
   } catch (error) {
     const errorMessage = apisErrorMessage(error);
