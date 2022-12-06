@@ -62,3 +62,4 @@ export const MEMBERS = {
 
 export const ADMINS_ADD_SUCCESS = "Admins added successfully!";
 export const COMMENT_ADD_SUCCESS = "Comment added successfully!";
+export const TESTCASE_SCHEDULE_ADD_SUCCESS = "Testcase scheduled successfully!";
