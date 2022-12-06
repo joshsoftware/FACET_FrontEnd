@@ -10,7 +10,7 @@ import {
   addMembersInProjectRequest,
   getProjectMembersRequest,
   removeMembersInProjectRequest,
-} from "store/Projects/actions";
+} from "store/ProjectMembers/actions";
 import { getAllUsersRequest } from "store/User/actions";
 import TableComponent from "Components/CustomComponents/TableComponent/index";
 import { ViewComponent } from "Components/CustomComponents";
@@ -19,7 +19,7 @@ const mapState = ({ projectMembers, user, getUsers }) => ({
   members: projectMembers.members,
   project: projectMembers.project,
   isLoading: projectMembers.isLoading,
-  project_admin: projectMembers.project_admin,
+  projectAdmin: projectMembers.projectAdmin,
   user: user.currentUser,
   allUsers: getUsers.users,
 });
@@ -28,13 +28,8 @@ const MemberContainer = () => {
   let dispatch = useDispatch();
 
   const { projectName } = useParams();
-  const {
-    members,
-    isLoading,
-    project_admin: projectAdmin,
-    user,
-    allUsers,
-  } = useSelector(mapState);
+  const { members, isLoading, projectAdmin, user, allUsers } =
+    useSelector(mapState);
 
   const [show, setShow] = useState(false);
   const [addMemberFormData, setAddMemberFormData] = useState({
