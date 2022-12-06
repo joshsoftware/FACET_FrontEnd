@@ -6,7 +6,6 @@ import {
   getTestdataFailure,
   getTestdataSuccess,
 } from "./actions";
-
 import { apisErrorMessage } from "utils/apisErrorMessage";
 import { toastMessage } from "utils/toastMessage";
 
@@ -27,7 +26,7 @@ export function* getTestdatas({ payload }) {
 export function* addTestdata({ payload }) {
   try {
     yield call(addTestdataApi, payload);
-    toastMessage(TESTDATA.ADD_NEW_SUCCESS, "success");
+    toastMessage(TESTDATA.ADD_NEW_SUCCESS);
     yield call(getTestdatas, { payload: { teststep: payload.teststep } });
   } catch (error) {
     const errorMessage = apisErrorMessage(error);
