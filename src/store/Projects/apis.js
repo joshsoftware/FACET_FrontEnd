@@ -3,6 +3,7 @@ import { Api } from "store/apiHelper";
 import { DELETE, GET, POST, SERVER_URL } from "constants/appConstants";
 
 export const getProjectsApi = () => Api(`${SERVER_URL}/api/projects/`, GET);
+
 export const addNewProjectApi = (data) =>
   Api(`${SERVER_URL}/api/projects/new`, POST, data);
 
