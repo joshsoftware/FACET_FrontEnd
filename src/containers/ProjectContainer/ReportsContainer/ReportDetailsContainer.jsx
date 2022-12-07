@@ -29,11 +29,11 @@ const initialSelectedCommentField = {
 };
 
 const mapState = ({ reports }) => ({
-  level: reports.singleReport.level,
-  reportDetail: reports.singleReport.result || {},
-  isReportLoading: reports.isOneReportLoading,
+  level: reports.report.level,
+  reportDetail: reports.report.result || {},
+  isReportLoading: reports.isReportLoading,
   showTeststepReport: reports.showTeststepReport,
-  teststepReport: reports.singleTeststepReport,
+  teststepReport: reports.teststepReport,
 });
 
 const ReportDetailsContainer = () => {

@@ -1,106 +1,67 @@
 import projectConstants from "./constants";
 
-export const fetchProjects = () => ({
-    type: projectConstants.FETCH_PROJECTS
-})
+export const getProjectsRequest = () => ({
+  type: projectConstants.GET_PROJECTS_REQUEST,
+});
 
-export const setProjects = (data) => ({
-    type:projectConstants.SET_PROJECTS,
-    payload: data
-})
+export const getProjectsSuccess = (data) => ({
+  type: projectConstants.GET_PROJECTS_SUCCESS,
+  payload: data,
+});
 
-export const addProject = (data) => ({
-    type: projectConstants.ADD_NEW_PROJECT,
-    payload: data
-})
+export const getProjectsFailure = () => ({
+  type: projectConstants.GET_PROJECTS_FAILURE,
+});
 
-export const getProjectMembersRequest = (data) => ({
-    type: projectConstants.GET_PROJECT_MEMBERS_REQUEST,
-    payload: data
-})
+export const addProjectRequest = (data) => ({
+  type: projectConstants.ADD_PROJECT_REQUEST,
+  payload: data,
+});
 
-export const getProjectMembersSuccess = (data) => ({
-    type: projectConstants.GET_PROJECT_MEMBERS_SUCCESS,
-    payload: data
-})
+export const addProjectSuccess = () => ({
+  type: projectConstants.ADD_PROJECT_SUCCESS,
+});
 
-export const getProjectMembersFailure = (data) => ({
-    type: projectConstants.GET_PROJECT_MEMBERS_FAILURE,
-    payload: data
-})
+export const addProjectFailure = () => ({
+  type: projectConstants.ADD_PROJECT_FAILURE,
+});
 
-export const addMembersInProjectRequest = (data) => ({
-    type: projectConstants.ADD_MEMBERS_IN_PROJECT_REQUEST,
-    payload: data
-})
+export const getProjectRequest = (data) => ({
+  type: projectConstants.GET_PROJECT_REQUEST,
+  payload: data,
+});
 
-export const addMembersInProjectSuccess = (data) => ({
-    type: projectConstants.ADD_MEMBERS_IN_PROJECT_SUCCESS,
-    payload: data
-})
+export const getProjectSuccess = (data) => ({
+  type: projectConstants.GET_PROJECT_SUCCESS,
+  payload: data,
+});
 
-export const addMembersInProjectFailure = (data) => ({
-    type: projectConstants.ADD_MEMBERS_IN_PROJECT_FAILURE,
-    payload: data
-})
-
-export const removeMembersInProjectRequest = (data) => ({
-    type: projectConstants.REMOVE_MEMBERS_IN_PROJECT_REQUEST,
-    payload: data
-})
-
-export const removeMembersInProjectSuccess = (data) => ({
-    type: projectConstants.REMOVE_MEMBERS_IN_PROJECT_SUCCESS,
-    payload: data
-})
-
-export const removeMembersInProjectFailure = (data) => ({
-    type: projectConstants.REMOVE_MEMBERS_IN_PROJECT_FAILURE,
-    payload: data
-})
-
-
-export const getOneProjectRequest = (data) => ({
-    type: projectConstants.GET_ONE_PROJECT_REQUEST,
-    payload: data
-})
-
-export const getOneProjectSuccess = (data) => ({
-    type: projectConstants.GET_ONE_PROJECT_SUCCESS,
-    payload: data
-})
-
-export const getOneProjectFailure = (data) => ({
-    type: projectConstants.GET_ONE_PROJECT_FAILURE,
-    payload: data
-})
+export const getProjectFailure = () => ({
+  type: projectConstants.GET_PROJECT_FAILURE,
+});
 
 export const updateProjectNameRequest = (data) => ({
-    type: projectConstants.UPDATE_PROJECT_NAME_REQUEST,
-    payload: data
-})
+  type: projectConstants.UPDATE_PROJECT_NAME_REQUEST,
+  payload: data,
+});
 
-export const updateProjectNameSuccess = (data) => ({
-    type: projectConstants.UPDATE_PROJECT_NAME_SUCCESS,
-    payload: data
-})
+export const updateProjectNameSuccess = () => ({
+  type: projectConstants.UPDATE_PROJECT_NAME_SUCCESS,
+});
 
-export const updateProjectNameFailure = (data) => ({
-    type: projectConstants.UPDATE_PROJECT_NAME_FAILURE,
-    payload: data
-})
+export const updateProjectNameFailure = () => ({
+  type: projectConstants.UPDATE_PROJECT_NAME_FAILURE,
+});
 
 export const deleteProjectRequest = (data) => ({
-    type: projectConstants.DELETE_PROJECT_REQUEST,
-    payload: data
-})
+  type: projectConstants.DELETE_PROJECT_REQUEST,
+  payload: data,
+});
 
-export const deleteProjectSuccess = (data) => ({
-    type: projectConstants.DELETE_PROJECT_SUCCESS,
-    payload: data
-})
+export const deleteProjectSuccess = () => ({
+  type: projectConstants.DELETE_PROJECT_SUCCESS,
+});
 
-export const deleteProjectFailure = (data) => ({
-    type: projectConstants.DELETE_PROJECT_FAILURE,
-    payload: data
-})
+export const deleteProjectFailure = () => ({
+  type: projectConstants.DELETE_PROJECT_FAILURE,
+});

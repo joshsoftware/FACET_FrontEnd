@@ -10,9 +10,8 @@ export const addExecuteSuccess = (data) => ({
   payload: data,
 });
 
-export const addExecuteFailure = (data) => ({
+export const addExecuteFailure = () => ({
   type: executeConstants.ADD_EXECUTE_FAILURE,
-  payload: data,
 });
 
 export const clearExecutionFailure = () => ({
