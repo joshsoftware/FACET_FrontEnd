@@ -51,12 +51,12 @@ const MemberContainer = () => {
   }, [projectName]);
 
   useEffect(() => {
-    if (projectName) {
+    if (show === true) {
       dispatch(
         getUsersRequest({ exclude: "projectMembers", project: projectName })
       );
     }
-  }, [projectName]);
+  }, [projectName, show]);
 
   useEffect(() => {
     let options_data = [];
