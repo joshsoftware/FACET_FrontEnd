@@ -6,7 +6,6 @@ import DashBoard from "containers/DashBoard";
 import EndpointContainer from "containers/ProjectContainer/EndpointContainer";
 import EnvironmentContainer from "containers/ProjectContainer/EnvironmentContainer";
 import ExecuteContainer from "containers/ProjectContainer/ExecuteContainer";
-import Header from "Components/Header";
 import HeaderContainer from "containers/ProjectContainer/HeaderContainer";
 import LoginContainer from "containers/LoginContainer";
 import MemberContainer from "containers/ProjectContainer/MemberContainer";
@@ -32,7 +31,6 @@ function App() {
   return (
     <div className="App">
       <ToastContainer />
-      <Header />
       <Routes>
         <Route path="/" element={<PrivateRoutes />}>
           <Route path="/dashboard" element={<DashBoard />} />
