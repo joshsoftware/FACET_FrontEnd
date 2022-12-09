@@ -6,7 +6,7 @@ const isTokenExist = getLocalStorage("accessToken") ? true : false;
 
 const initialState = {
   isLoggedIn: isTokenExist,
-  isSignupSuccess: false,
+  isSignUpSuccess: false,
   isLoading: false,
   currentUser: {},
   users: [],
@@ -34,7 +34,7 @@ const userReducer = (state = initialState, action) => {
       return { ...state, isLoading: true };
 
     case userConstants.SIGN_UP_SUCCESS:
-      return { ...state, isLoading: false, isSignupSuccess: true };
+      return { ...state, isLoading: false, isSignUpSuccess: true };
 
     case userConstants.SIGN_UP_FAILURE:
       return { ...state, isLoading: false };

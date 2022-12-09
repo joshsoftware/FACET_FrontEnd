@@ -11,12 +11,12 @@ const initialState = { name: "", email: "", password: "", confirmPassword: "" };
 
 const mapState = ({ user }) => ({
   isLoggedIn: user.isLoggedIn,
-  isSignupSuccess: user.isSignupSuccess,
+  isSignUpSuccess: user.isSignUpSuccess,
 });
 
 const SignUpContainer = () => {
   const dispatch = useDispatch();
-  const { isLoggedIn, isSignupSuccess } = useSelector(mapState);
+  const { isLoggedIn, isSignUpSuccess } = useSelector(mapState);
 
   const [formData, setFormData] = useState(initialState);
 
@@ -42,7 +42,7 @@ const SignUpContainer = () => {
   }
 
   // If signup success redirect user to login screen
-  if (isSignupSuccess) {
+  if (isSignUpSuccess) {
     return <Navigate to="/login" />;
   }
 
