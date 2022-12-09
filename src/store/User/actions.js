@@ -92,3 +92,7 @@ export const changePasswordSuccess = () => ({
 export const changePasswordFailure = () => ({
   type: userConstants.CHANGE_USER_PASSWORD_FAILURE,
 });
+
+export const clearUserState = () => ({
+  type: userConstants.CLEAR_USER_STATE,
+});
