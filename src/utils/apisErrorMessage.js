@@ -2,9 +2,7 @@ import { COMMON_ERROR_MESSAGE } from "constants/userMessagesConstants";
 
 // helper function to filter backend apis error message if api fails
 export const apisErrorMessage = (err) => {
-  const {
-    data: { error },
-  } = err;
+  const error = err.data?.error;
 
   if (error) {
     switch (typeof error) {

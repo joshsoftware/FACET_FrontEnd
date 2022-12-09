@@ -7,7 +7,7 @@ const isTokenExist = getLocalStorage("accessToken") ? true : false;
 const initialState = {
   isLoggedIn: isTokenExist,
   isLoading: false,
-  currentUser: {},
+  currentUser: { name: "" },
   users: [],
 };
 

@@ -1,5 +1,9 @@
 import axios from "axios";
-import { getLocalStorage, removeLocalStorage, setLocalStorage } from "utils/localStorage";
+import {
+  getLocalStorage,
+  removeLocalStorage,
+  setLocalStorage,
+} from "utils/localStorage";
 
 // eslint-disable-next-line no-undef
 const baseURL = process.env.REACT_APP_BACKEND_URL;
@@ -27,11 +31,22 @@ axiosInstance.interceptors.response.use(
 
   async (error) => {
     const originalRequest = error.config;
+    console.log(error.response.data);
 
-    if (
-      error.response.status === 401 &&
-      originalRequest.url === baseURL + "/api/auth/token/refresh/"
-    ) {
+    // It checks whether access_token or refresh_token verification fails
+    // TO DO: API dependency
+    // response message validations need to be done for this and it will be only when api will be ready
+    // for now its only validates if status is 422 or not
+    const isTokenVerificationFailed = error.response.status === 422;
+
+    // It checks whether the user is authorized or not
+    const isAuthorizationFailed =
+      isTokenVerificationFailed ||
+      ((error.response.status === 401 || error.response.status === 500) &&
+        originalRequest.url === "/api/auth/token/refresh/");
+
+    // If authorizations fails then perform logout
+    if (isAuthorizationFailed) {
       removeLocalStorage("accessToken");
       removeLocalStorage("refreshToken");
       window.location.href = "/login";
@@ -89,7 +104,9 @@ const refreshExpiredTokenAPI = () => {
       const res_access_token = res.data.access_token;
 
       setLocalStorage("accessToken", res_access_token);
-      axiosInstance.defaults.headers["Authorization"] = `Bearer ${res_access_token}`;
+      axiosInstance.defaults.headers[
+        "Authorization"
+      ] = `Bearer ${res_access_token}`;
 
       return res_access_token;
     });
