@@ -10,10 +10,10 @@ import { USER_AUTH } from "constants/userMessagesConstants";
 const Signup = ({ data, onChange, onSubmit }) => {
   const { name, email, password, confirmPassword } = data;
 
-  // check whether if password and confirm password fields are matche or not
-  const isPasswordMatch = password === confirmPassword;
+  // check whether if password and confirm password fields are matched or not
+  const isPasswordMatched = password === confirmPassword;
   const isButtonDisabled =
-    !name || !email || !password || !confirmPassword || !isPasswordMatch;
+    !name || !email || !password || !confirmPassword || !isPasswordMatched;
 
   return (
     <Form className="py-2" onSubmit={onSubmit}>
@@ -51,9 +51,9 @@ const Signup = ({ data, onChange, onSubmit }) => {
         value={confirmPassword}
         onChange={onChange}
         placeholder="Enter Password"
-        className={!isPasswordMatch ? "border-danger error" : ""}
+        className={!isPasswordMatched ? "border-danger error" : ""}
         errorMessage={USER_AUTH.PASSWORD_NOT_MATCHED}
-        error={!isPasswordMatch}
+        error={!isPasswordMatched}
         isRequired
       />
       <SubmitButton

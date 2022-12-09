@@ -1,21 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import AuthLayout from "Layout/AuthLayout";
 import Signup from "Components/Auth/Signup";
 
-import { signUpRequest } from "store/User/actions";
+import { clearUserState, signUpRequest } from "store/User/actions";
 
 const initialState = { name: "", email: "", password: "", confirmPassword: "" };
 
-const mapState = ({ user }) => ({ isLoggedIn: user.isLoggedIn });
+const mapState = ({ user }) => ({
+  isLoggedIn: user.isLoggedIn,
+  isSignupSuccess: user.isSignupSuccess,
+});
 
 const SignUpContainer = () => {
   const dispatch = useDispatch();
-  const { isLoggedIn } = useSelector(mapState);
+  const { isLoggedIn, isSignupSuccess } = useSelector(mapState);
 
   const [formData, setFormData] = useState(initialState);
+
+  useEffect(() => {
+    return () => dispatch(clearUserState());
+  }, []);
 
   // handle formdata change
   const handleOnChange = (e) => {
@@ -32,6 +39,11 @@ const SignUpContainer = () => {
   // If user already loggedin then redirect to dashboard screen
   if (isLoggedIn) {
     return <Navigate to="/dashboard" />;
+  }
+
+  // If signup success redirect user to login screen
+  if (isSignupSuccess) {
+    return <Navigate to="/login" />;
   }
 
   return (
