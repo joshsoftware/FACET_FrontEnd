@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
+import Header from 'Components/Header';
+
 import { getUserProfileRequest } from 'store/User/actions';
 
 const mapState = (state) => ({
@@ -18,6 +20,7 @@ const PrivateRoutes = () => {
 
     return isLoggedIn ? (
         <div>
+            <Header />
             <Outlet />
         </div>
     ) : (

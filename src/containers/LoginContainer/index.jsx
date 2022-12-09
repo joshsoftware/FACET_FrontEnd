@@ -1,52 +1,58 @@
-import React, { useState } from 'react'
-import { Link, Navigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from "react";
+import { Link, Navigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
-import { AuthLayout } from 'Layout';
-import Login from 'Components/Auth/Login';
-import { signInRequest } from 'store/User/actions';
+import { AuthLayout } from "Layout";
+import Login from "Components/Auth/Login";
 
-const mapState = (state) => ({
-    isLoggedIn: state.user.isLoggedIn
-})
+import { signInRequest } from "store/User/actions";
+
+const initialFormData = { email: "", password: "" };
+
+const mapState = ({ user }) => ({
+  isLoggedIn: user.isLoggedIn,
+});
 
 const LoginContainer = () => {
-    let dispatch = useDispatch();
+  const dispatch = useDispatch();
+  const { isLoggedIn } = useSelector(mapState);
 
-    const { isLoggedIn } = useSelector(mapState);
-    const [formData, setFormData] = useState({email: "", password: ""})
-    
-    const handleOnChange = (e) => {
-        setFormData(p => ({
-            ...p,
-            [e.target.name]: e.target.value
-        }))
-    }
+  const [formData, setFormData] = useState(initialFormData);
 
-    const handleOnSubmit = (e) => {
-        e.preventDefault();
-        dispatch(signInRequest(formData))
-    }
+  // update state when login form field changes
+  const handleOnChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevState) => ({ ...prevState, [name]: value }));
+  };
 
-    if(isLoggedIn){
-        return <Navigate to='/dashboard' /> 
-    }
+  // on submit login form
+  const handleOnSubmit = (e) => {
+    e.preventDefault();
+    dispatch(signInRequest(formData));
+  };
 
-    return (
-        <>
-            <AuthLayout>
-                <Login 
-                    data={formData}
-                    onchange={handleOnChange}
-                    handleSubmit={handleOnSubmit}
-                />
-                <div className='d-flex flex-column align-items-center'>
-                    <Link to='' className='fst-italic'>Forgot Password?</Link>
-                    <Link to='/signup' className='pt-3 fst-italic'>New User?</Link>
-                </div>
-            </AuthLayout>
-        </>
-    )
-}
+  if (isLoggedIn) {
+    return <Navigate to="/dashboard" />;
+  }
+
+  return (
+    <AuthLayout>
+      <h5 className="fw-bold">Login</h5>
+      <Login
+        data={formData}
+        onChange={handleOnChange}
+        onSubmit={handleOnSubmit}
+      />
+      <div className="d-flex flex-column align-items-center">
+        <span className="pt-3">
+          New User?
+          <Link to="/signup" className="ps-1 fst-italic">
+            Create Account
+          </Link>
+        </span>
+      </div>
+    </AuthLayout>
+  );
+};
 
 export default LoginContainer;
