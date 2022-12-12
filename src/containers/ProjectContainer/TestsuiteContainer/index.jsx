@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import PropTypes from "prop-types";
+
+import AddNewTestsuite from "Components/ProjectsComponent/TestsuiteComponent/AddNewTestsuite";
+import SubComponentsNav from "Components/ProjectsComponent/SubComponentsNav";
+import TestsuiteViewComponent from "Components/ProjectsComponent/TestsuiteComponent/TestsuiteViewComponent";
 
 import { addExecuteRequest } from "store/Execute/actions";
-import AddNewTestsuite from "Components/ProjectsComponent/TestsuiteComponent/AddNewTestsuite";
 import {
   addTestsuiteRequest,
   editTestsuiteRequest,
@@ -13,23 +15,30 @@ import {
 } from "store/Testsuites/actions";
 import { getEnvironmentsRequest } from "store/Environments/actions";
 import { getTestcasesRequest } from "store/Testcases/actions";
-import SubComponentsNav from "Components/ProjectsComponent/SubComponentsNav";
-import TestsuiteViewComponent from "Components/ProjectsComponent/TestsuiteComponent/TestsuiteViewComponent";
+import { toastMessage } from "utils/toastMessage";
+
+import { ALL_FIELDS_REQUIRED } from "constants/userMessagesConstants";
 
 const mapState = ({ testsuites, testcases, environments }) => ({
   isLoading: testsuites.isLoading,
   testsuites: testsuites.testsuites,
   testcases: testcases.testcases,
-  environments: environments.environments,
+  environments: environments.environments.map((ele) => ({
+    label: ele.name,
+    value: ele.id,
+  })),
   isEnvLoading: environments.isEnvLoading,
 });
 
 const TestsuiteContainer = ({ cat }) => {
+  // TO-Do:
+  // needs to refactor this container and it's component with add comments wherever necessary
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const { id, projectName } = useParams();
   const { isLoading, testsuites, testcases, environments, isEnvLoading } =
     useSelector(mapState);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const [selectedItem, setSelectedItem] = useState({});
   const [testsuiteFormData, setTestsuiteFormData] = useState({
@@ -104,7 +113,7 @@ const TestsuiteContainer = ({ cat }) => {
     } = testsuiteFormData;
 
     if (!project || !testsuiteName || testcasesFD.length === 0) {
-      toast.error("All Fields Required!!");
+      toastMessage(ALL_FIELDS_REQUIRED, "error");
       return;
     } else {
       testcasesFD = testcasesFD.map((ele) => ele.value);

@@ -3,27 +3,30 @@ import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 
+import AddNewTestcase from "Components/ProjectsComponent/TestcaseComponents/AddNewTestcase";
+import { SubComponentsNav } from "Components/ProjectsComponent";
+import TestcaseViewComponent from "Components/ProjectsComponent/TestcaseComponents/TestcaseViewComponent";
+
 import {
   addExecuteRequest,
   clearExecutionFailure,
 } from "store/Execute/actions";
-import AddNewTestcase from "Components/ProjectsComponent/TestcaseComponents/AddNewTestcase";
 import {
   addTestcasesRequest,
   editTestcasesRequest,
   getTestcasesRequest,
 } from "store/Testcases/actions";
+import { GetDiffOfArrayOfObjects } from "utils";
 import { getEnvironmentsRequest } from "store/Environments/actions";
 import { getTeststepsRequest } from "store/Teststeps/actions";
-import { SubComponentsNav } from "Components/ProjectsComponent";
-import TestcaseViewComponent from "Components/ProjectsComponent/TestcaseComponents/TestcaseViewComponent";
-
-import { GetDiffOfArrayOfObjects } from "utils";
 
 const mapState = ({ testcases, environments, execute, teststeps }) => ({
   testcases: testcases.testcases,
   isLoading: testcases.isLoading,
-  environments: environments.environments,
+  environments: environments.environments.map((ele) => ({
+    label: ele.name,
+    value: ele.id,
+  })),
   isEnvironmentsLoading: environments.isLoading,
   isExecuteFailed: execute.isError,
   teststeps: teststeps.teststeps,
@@ -36,8 +39,10 @@ const INITIAL_TESTCASE_FORM_DATA = {
 };
 
 const TestcaseContainer = (props) => {
-  let dispatch = useDispatch();
-  let navigate = useNavigate();
+  // TO-Do:
+  // needs to refactor this container and it's component with add comments wherever necessary
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { cat } = props;
   const { projectName, id } = useParams();
