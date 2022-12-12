@@ -16,6 +16,7 @@ const FormSelect = ({
   placeholder,
   isLoading,
   isDisabled,
+  ...props
 }) => (
   <>
     <Form.Group className={`${className} mb-3`} style={style}>
@@ -33,6 +34,7 @@ const FormSelect = ({
         placeholder={placeholder}
         isLoading={isLoading}
         isDisabled={isDisabled}
+        {...props}
       />
       {text && <Form.Text className="text-muted">{text}</Form.Text>}
     </Form.Group>
