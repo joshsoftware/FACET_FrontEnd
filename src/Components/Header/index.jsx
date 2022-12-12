@@ -13,51 +13,46 @@ import logo from "assets/images/logo.png";
 const mapState = ({ user }) => ({
   isLoggedIn: user.isLoggedIn,
   currentUser: user.currentUser,
-  allUsers: user.users,
+  usersOptions: user.users.map((ele) => ({ label: ele.name, value: ele.id })),
+  isUsersLoading: user.isLoading,
 });
 
 const Header = () => {
-  let navigate = useNavigate();
-  let dispatch = useDispatch();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const {
     isLoggedIn,
     currentUser: { is_super_admin: isSuperAdmin, name: userName },
-    allUsers,
+    usersOptions,
+    isUsersLoading,
   } = useSelector(mapState);
 
   const [showAddAdminModal, setShowAddAdminModal] = useState(false);
-  const [addAdminFormData, setAddAdminFormData] = useState({ admin: [] });
+  const [selectedUsers, setSelectedUsers] = useState([]);
 
+  // get list of users whose role is not admin
   useEffect(() => {
-    if (isLoggedIn && isSuperAdmin) {
+    if (showAddAdminModal && isLoggedIn && isSuperAdmin) {
       dispatch(getUsersRequest({ exclude: "admins" }));
     }
-  }, [isLoggedIn, isSuperAdmin]);
+  }, [isLoggedIn, isSuperAdmin, showAddAdminModal]);
 
+  // toggle add admin modal
   const handleToggle = () => {
     setShowAddAdminModal(!showAddAdminModal);
-    setAddAdminFormData({ admin: [] });
+    setSelectedUsers([]);
   };
 
-  const handleLogout = () => {
-    dispatch(signOutRequest());
-  };
+  // handle user logout action
+  const handleLogout = () => dispatch(signOutRequest());
 
-  const handleChangeAdminFormData = (_name, val) => {
-    setAddAdminFormData((prevState) => ({
-      ...prevState,
-      admin: val,
-    }));
-  };
+  // sets selected users
+  const handleChangeAdminFormData = (value) => {console.log(value);setSelectedUsers(value)};
 
+  // helps to submit admin form data and close the modal
   const handleSubmitAdminFormData = () => {
-    dispatch(
-      addAdminsRequest({
-        ...addAdminFormData,
-        admin: addAdminFormData.admin.map((e) => e.value),
-      })
-    );
+    dispatch(addAdminsRequest({ admin: selectedUsers.map((e) => e.value) }));
     handleToggle();
   };
 
@@ -65,12 +60,13 @@ const Header = () => {
     <Navbar bg="dark" sticky="top" variant="dark" expand="lg">
       {isLoggedIn && isSuperAdmin && (
         <AddAdminModal
-          allUsers={allUsers}
-          data={addAdminFormData.admin}
+          show={showAddAdminModal}
+          data={selectedUsers}
+          usersOptions={usersOptions}
           onChange={handleChangeAdminFormData}
           onClose={handleToggle}
           onSubmit={handleSubmitAdminFormData}
-          show={showAddAdminModal}
+          isUsersLoading={isUsersLoading}
         />
       )}
       <Container fluid>

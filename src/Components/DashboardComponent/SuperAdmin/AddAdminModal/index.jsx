@@ -1,62 +1,44 @@
-import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import React from "react";
+import PropTypes from "prop-types";
 
-import { CustomModal } from 'Components/CustomComponents';
-import { SaveButton } from 'Components/forms/Buttons';
-import FormSelect from 'Components/forms/Inputs/FormSelect';
+import { CustomModal } from "Components/CustomComponents";
+import FormSelect from "Components/forms/Inputs/FormSelect";
+import { SaveButton } from "Components/forms/Buttons";
 
-
-const AddAdminModal = (props) => {
-    const { 
-        allUsers,
-        onChange,
-        onClose, 
-        onSubmit,
-        show, 
-        data,
-    } = props;
-
-    const [options, setOptions] = useState([]);
-
-    useEffect(() => {
-        let options_data = [];
-        allUsers.forEach(ele => {
-            options_data.push({value: ele.id, label: ele.name})
-        })
-        setOptions(options_data);
-    }, [allUsers])
-    
-
-    return (
-        <CustomModal 
-            show={show} 
-            onClose={onClose} 
-            title="Add Admins"
-        >
-            <CustomModal.Body>
-                <FormSelect 
-                    name='members'
-                    options={options} 
-                    handlechange={onChange}
-                    className="py-2"
-                    value={data}
-                    isMulti
-                />
-                <SaveButton 
-                    handleClick={onSubmit}
-                />
-            </CustomModal.Body>
-        </CustomModal>
-    )
-}
-
-export default AddAdminModal;
+const AddAdminModal = ({
+  usersOptions,
+  onChange,
+  onClose,
+  onSubmit,
+  show,
+  data,
+  isUsersLoading,
+}) => (
+  <CustomModal show={show} onClose={onClose} title="Add Admins">
+    <CustomModal.Body>
+      <FormSelect
+        name="members"
+        options={usersOptions}
+        onChange={onChange}
+        className="py-2"
+        value={data}
+        isMulti
+        isLoading={isUsersLoading}
+        isDisabled={isUsersLoading}
+      />
+      <SaveButton handleClick={onSubmit} />
+    </CustomModal.Body>
+  </CustomModal>
+);
 
 AddAdminModal.propTypes = {
-    allUsers: PropTypes.array,
-    data: PropTypes.array, 
-    onChange: PropTypes.func,
-    onClose: PropTypes.func, 
-    onSubmit: PropTypes.func,
-    show: PropTypes.bool, 
-}
+  usersOptions: PropTypes.array.isRequired,
+  data: PropTypes.array.isRequired,
+  onChange: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  show: PropTypes.bool,
+  isUsersLoading: PropTypes.bool,
+};
+
+export default AddAdminModal;
