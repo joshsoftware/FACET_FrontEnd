@@ -8,7 +8,7 @@ const initialState = {
   isLoggedIn: isTokenExist,
   isSignUpSuccess: false,
   isLoading: false,
-  currentUser: {},
+  currentUser: { name: "" },
   users: [],
 };
 
