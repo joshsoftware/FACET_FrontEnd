@@ -1,214 +1,268 @@
-import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
+import React, { useCallback, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import PropTypes from "prop-types";
 
-import { AddNewTeststep, TeststepViewComponent } from 'Components/ProjectsComponent/TeststepComponents';
-import { addTestdataRequest, getTestdataRequest } from 'store/Testdata/actions';
-import { addTeststepsRequest, editTeststepsRequest, getTeststepsRequest } from 'store/Teststeps/actions';
-import { getEndpointsRequest } from 'store/Endpoints/actions';
-import { getHeadersRequest } from 'store/Headers/actions';
-import { getPayloadsRequest } from 'store/Payloads/actions';
-import { SubComponentsNav } from 'Components/ProjectsComponent';
+import AddNewTeststep from "Components/ProjectsComponent/TeststepComponents/AddNewTeststep";
+import SubComponentsNav from "Components/ProjectsComponent/SubComponentsNav";
+import TeststepViewComponent from "Components/ProjectsComponent/TeststepComponents/TeststepViewComponent";
+
+import { addTestdataRequest, getTestdataRequest } from "store/Testdata/actions";
+import {
+  addTeststepsRequest,
+  editTeststepsRequest,
+  getTeststepsRequest,
+} from "store/Teststeps/actions";
+import { getEndpointsRequest } from "store/Endpoints/actions";
+import { getHeadersRequest } from "store/Headers/actions";
+import { getPayloadsRequest } from "store/Payloads/actions";
+import { toastMessage } from "utils/toastMessage";
 
 import {
-    INITIAL_TESTSTEP_FORM_DATA,
-    INITIAL_TESTDATA_FORM_DATA,
-    SELECT_OPTIONS_TESTDATA_FORM
-} from 'constants/appConstants';
+  INITIAL_TESTSTEP_FORM_DATA,
+  INITIAL_TESTDATA_FORM_DATA,
+  HTTP_METHODS_OPTIONS,
+} from "constants/appConstants";
+import { ALL_FIELDS_REQUIRED } from "constants/userMessagesConstants";
 
 const mapState = ({ endpoints, headers, payloads, teststeps, testdata }) => ({
-    isLoading: teststeps.isLoading,
-    endpoints: endpoints.endpoints,
-    headers: headers.headers,
-    payloads: payloads.payloads,
-    testdata: testdata.testdata,
-    teststeps: teststeps.teststeps,
+  isLoading: teststeps.isLoading,
+  teststeps: teststeps.teststeps,
+  testdata: testdata.testdata,
+  endpointOptions: endpoints.endpoints.map((ele) => ({
+    label: ele.name,
+    value: ele.id,
+  })),
+  headerOptions: headers.headers.map((ele) => ({
+    label: ele.name,
+    value: ele.id,
+  })),
+  payloadOptions: payloads.payloads.map((ele) => ({
+    label: ele.name,
+    value: ele.id,
+  })),
 });
 
-const TeststepContainer = (props) => {
-    let dispatch = useDispatch();
-    let navigate = useNavigate();
+const TeststepContainer = ({ cat }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-    const { cat } = props;
-    const { projectName, id } = useParams();
-    const {
-        endpoints,
-        headers,
-        payloads,
-        teststeps,
-        isLoading,
-        testdata,
-    } = useSelector(mapState);
+  const { projectName, id } = useParams();
+  const {
+    endpointOptions,
+    headerOptions,
+    payloadOptions,
+    teststeps,
+    isLoading,
+    testdata,
+  } = useSelector(mapState);
 
-    const [selectedItem, setSelectedItem] = useState({});
-    const [teststepFormData, setTeststepFormData] = useState({ ...INITIAL_TESTSTEP_FORM_DATA, project: projectName });
-    const [testdataFormData, setTestdataFormData] = useState({ ...INITIAL_TESTDATA_FORM_DATA });
-    const [showAddTestdataForm, setShowAddTestdataForm] = useState(false);
-    const [options, setOptions] = useState(SELECT_OPTIONS_TESTDATA_FORM);
+  const [selectedItem, setSelectedItem] = useState({});
+  const [teststepFormData, setTeststepFormData] = useState(
+    INITIAL_TESTSTEP_FORM_DATA
+  );
+  const [testdataFormData, setTestdataFormData] = useState(
+    INITIAL_TESTDATA_FORM_DATA
+  );
+  const [showAddTestdataForm, setShowAddTestdataForm] = useState(false);
 
-    useEffect(() => {
-        // get all teststeps, endpoints, headers, payloads
-        dispatch(getTeststepsRequest({ project: projectName }));
-        dispatch(getEndpointsRequest({ project: projectName }));
-        dispatch(getHeadersRequest({ project: projectName }));
-        dispatch(getPayloadsRequest({ project: projectName }));
-    }, [projectName]);
+  // get list of teststeps of the project
+  useEffect(() => {
+    dispatch(getTeststepsRequest({ project: projectName }));
+  }, [projectName]);
 
-    useEffect(() => {
-        setSelectedItem(teststeps.filter(e => e.id == id)[0] || {});
-        dispatch(getTestdataRequest({ teststep: id }));
-    }, [teststeps, id]);
+  // get all endpoints, headers, payloads when cat changes
+  useEffect(() => {
+    if (cat) {
+      dispatch(getEndpointsRequest({ project: projectName }));
+      dispatch(getHeadersRequest({ project: projectName }));
+      dispatch(getPayloadsRequest({ project: projectName }));
+    }
+  }, [cat, projectName]);
 
-    useEffect(() => {
-        // set options to react-select format {value: "", label: ""}
-        let endpoints_data = [];
-        let headers_data = [];
-        let payloads_data = [];
+  // set selected teststep item data
+  useEffect(() => {
+    if (id) {
+      setSelectedItem(teststeps.filter((ele) => ele.id == id)[0] || {});
+      dispatch(getTestdataRequest({ teststep: id }));
+    }
+    return () => setSelectedItem({});
+  }, [teststeps, id]);
 
-        endpoints.forEach(ele => {
-            endpoints_data.push({ value: ele.id, label: ele.name });
-        });
-        headers.forEach(ele => {
-            headers_data.push({ value: ele.id, label: ele.name });
-        });
-        payloads.forEach(ele => {
-            payloads_data.push({ value: ele.id, label: ele.name });
-        });
+  // set teststep form data for selected teststep when cat is edit
+  useEffect(() => {
+    if (Object.keys(selectedItem).length && cat === "edit") {
+      let { endpoint, header, method, payload } = selectedItem;
+      endpoint = { value: endpoint?.id, label: endpoint?.name };
+      payload = { value: payload?.id, label: payload?.name };
+      header = { value: header?.id, label: header?.name };
+      method = HTTP_METHODS_OPTIONS.filter(
+        (ele) => ele.value === method?.toUpperCase()
+      );
 
-        setOptions(p => ({
-            ...p,
-            endpoints: endpoints_data,
-            headers: headers_data,
-            payloads: payloads_data,
-        }));
-    }, [endpoints, headers, payloads]);
+      setTeststepFormData((prevState) => ({
+        ...prevState,
+        ...selectedItem,
+        endpoint,
+        method,
+        payload,
+        header,
+      }));
+    }
 
-    const handleFormDataChange = (key, value) => {
-        // Accepts key, value
-        setTeststepFormData(p => ({
-            ...p,
-            [key]: value,
-        }));
-    };
+    return () => setTeststepFormData(INITIAL_TESTSTEP_FORM_DATA);
+  }, [selectedItem, cat]);
 
-    const handleTeststepFormSubmit = (e) => {
-        // submit the form
-        e.preventDefault();
-        if (cat === 'add') {
-            dispatch(addTeststepsRequest(teststepFormData));
-        } else {
-            dispatch(editTeststepsRequest(teststepFormData));
-        }
-    };
+  // on teststep form data change
+  const handleFormDataChange = (key, value) => {
+    setTeststepFormData((prevState) => ({ ...prevState, [key]: value }));
+  };
 
-    const setInitialTestdata = () => {
-        const { id: teststepId, payload } = selectedItem;
-        const {
-            expected_outcome: initialTDExpOutcome,
-            name: initialTDName,
-            parameters: initialTDParams,
-            payload: initialTDPayload,
-            selected_expected_outcome: initialTDSelectedExpOutcome,
-            teststep: initialTDId,
-        } = INITIAL_TESTDATA_FORM_DATA;
+  // submit teststep form data
+  const handleTeststepFormSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      const {
+        name,
+        header: { value: header_id },
+        method: { value: method },
+        payload: { value: payload_id },
+        endpoint: { value: endpoint_id },
+      } = teststepFormData;
 
-        setTestdataFormData(p => ({
-            ...p,
-            name: initialTDName,
-            teststep: teststepId || initialTDId,
-            payload: JSON.stringify(payload?.payload || initialTDPayload),
-            parameters: payload?.parameters || initialTDParams,
-            expected_outcome: payload?.expected_outcome || initialTDExpOutcome,
-            selected_expected_outcome: initialTDSelectedExpOutcome,
-        }));
-    };
+      const formDataToSubmit = {
+        name,
+        method,
+        endpoint_id,
+        header_id,
+        payload_id,
+        project: projectName,
+      };
+      if (cat === "add") {
+        dispatch(addTeststepsRequest(formDataToSubmit));
+      } else {
+        dispatch(editTeststepsRequest({ ...formDataToSubmit, id }));
+      }
+    },
+    [teststepFormData]
+  );
 
-    useEffect(() => {
-        // Here ts means teststep
-        const { endpoint_id, header_id , id: teststepId, method, name: tsName, payload_id } = selectedItem;
-        const {
-            endpoint_id: initialTsEndpoint,
-            header_id: initialTsHeader,
-            id: initialTsId,
-            method: initialTsMethod,
-            name: initialTsName,
-            payload_id: initialTsPayload,
-        } = INITIAL_TESTSTEP_FORM_DATA;
+  // sets testdata form data when testdata forms active
+  useEffect(() => {
+    if (showAddTestdataForm && selectedItem) {
+      const { id: teststepId, payload } = selectedItem;
+      const {
+        teststep: initialTDId,
+        name: initialTDName,
+        parameters: initialTDParams,
+        payload: initialTDPayload,
+        expectedOutcome: initialTDExpOutcome,
+        selectedExpOutcome: initialTDSelectedExpOutcome,
+      } = INITIAL_TESTDATA_FORM_DATA;
 
-        setTeststepFormData(p => ({
-            ...p,
-            name: tsName || initialTsName,
-            id: teststepId || initialTsId,
-            method: method || initialTsMethod,
-            endpoint_id: endpoint_id || initialTsEndpoint,
-            header_id: header_id || initialTsHeader,
-            payload_id: payload_id || initialTsPayload,
-        }));
-        setInitialTestdata();
-    }, [selectedItem]);
+      setTestdataFormData((prevState) => ({
+        ...prevState,
+        name: initialTDName,
+        teststep: teststepId || initialTDId,
+        payload: JSON.stringify(payload?.payload || initialTDPayload),
+        parameters: payload?.parameters || initialTDParams,
+        expectedOutcome: payload?.expected_outcome || initialTDExpOutcome,
+        selectedExpOutcome: initialTDSelectedExpOutcome,
+      }));
+    }
+    return () => setTestdataFormData(INITIAL_TESTDATA_FORM_DATA);
+  }, [showAddTestdataForm]);
 
-    const toggleAddTestdataForm = () => {
-        setShowAddTestdataForm(!showAddTestdataForm);
-        setInitialTestdata();
-    };
+  // toggle testdata form visibility
+  const toggleAddTestdataForm = () =>
+    setShowAddTestdataForm(!showAddTestdataForm);
 
-    const handleTestdataFormChange = (key, value) => {
-        setTestdataFormData(p => ({
-            ...p,
-            [key]: value,
-        }));
-    };
+  // handles testdataFormData changes
+  const handleTestdataFormChange = (key, value) => {
+    setTestdataFormData((prevState) => ({ ...prevState, [key]: value }));
+  };
 
-    const handleTestdataFormSubmit = (e) => {
-        e.preventDefault();
-        let submitData = {
-            ...testdataFormData,
-            payload: JSON.parse(testdataFormData.payload),
-            expected_outcome: testdataFormData.expected_outcome.find(x => x.name === testdataFormData.selected_expected_outcome)?.expected_outcome,
-        };
-        delete submitData.selected_expected_outcome;
-        dispatch(addTestdataRequest(submitData));
+  // handle testdata form submit action: validates all fields then dispatch action
+  const handleTestdataFormSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      const {
+        name,
+        teststep,
+        parameters,
+        payload,
+        expectedOutcome,
+        selectedExpOutcome,
+      } = testdataFormData;
+
+      const expected_outcome = expectedOutcome.find(
+        (ele) => ele.id === selectedExpOutcome?.value
+      )?.expected_outcome;
+
+      if (!name || !teststep || !JSON.parse(payload) || !expected_outcome) {
+        toastMessage(ALL_FIELDS_REQUIRED, "error");
+      } else {
+        dispatch(
+          addTestdataRequest({
+            name,
+            teststep,
+            parameters,
+            payload: JSON.parse(payload),
+            expected_outcome,
+          })
+        );
         toggleAddTestdataForm();
-    };
+      }
+    },
+    [testdataFormData]
+  );
 
-    return (
-        <>
-            <SubComponentsNav
-                title="Teststeps"
-                data={teststeps}
-                isLoading={isLoading}
-                onAddBtnClick={() => navigate(`/project/${projectName}/teststeps/new`)}
-                onSelectItemUrl={`/project/${projectName}/teststeps`}
-            />
-            {cat ? (
-                <AddNewTeststep
-                    cat={cat}
-                    isLoading={isLoading}
-                    data={teststepFormData}
-                    onchange={handleFormDataChange}
-                    options={options}
-                    handleSubmit={handleTeststepFormSubmit}
-                />
-            ) : (
-                <TeststepViewComponent
-                    isLoading={isLoading}
-                    data={selectedItem}
-                    projectName={projectName}
-                    testdata={testdata}
-                    showAddTestdataForm={showAddTestdataForm}
-                    toggleAddTestdataForm={toggleAddTestdataForm}
-                    testdataFormData={testdataFormData}
-                    onTestdataFormChange={handleTestdataFormChange}
-                    onTestdataFormSubmit={handleTestdataFormSubmit}
-                />
-            )}
-        </>
-    )
-}
+  const showViewComponent =
+    typeof selectedItem === "object" &&
+    Object.entries(selectedItem).length !== 0 &&
+    !isLoading;
+
+  return (
+    <>
+      <SubComponentsNav
+        title="Teststeps"
+        data={teststeps}
+        isLoading={isLoading}
+        onAddBtnClick={() => navigate(`/project/${projectName}/teststeps/new`)}
+        onSelectItemUrl={`/project/${projectName}/teststeps`}
+      />
+      {cat ? (
+        <AddNewTeststep
+          cat={cat}
+          data={teststepFormData}
+          onChange={handleFormDataChange}
+          endpointOptions={endpointOptions}
+          headerOptions={headerOptions}
+          payloadOptions={payloadOptions}
+          methodOptions={HTTP_METHODS_OPTIONS}
+          onSubmit={handleTeststepFormSubmit}
+        />
+      ) : (
+        showViewComponent && (
+          <TeststepViewComponent
+            isLoading={isLoading}
+            data={selectedItem}
+            projectName={projectName}
+            testdata={testdata}
+            showAddTestdataForm={showAddTestdataForm}
+            toggleAddTestdataForm={toggleAddTestdataForm}
+            testdataFormData={testdataFormData}
+            onTestdataFormChange={handleTestdataFormChange}
+            onTestdataFormSubmit={handleTestdataFormSubmit}
+          />
+        )
+      )}
+    </>
+  );
+};
 
 TeststepContainer.propTypes = {
-    cat: PropTypes.oneOf(["add", "edit"])
+  cat: PropTypes.oneOf(["add", "edit"]),
 };
 
 export default TeststepContainer;

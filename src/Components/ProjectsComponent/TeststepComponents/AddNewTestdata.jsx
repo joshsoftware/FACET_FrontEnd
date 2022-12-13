@@ -1,138 +1,137 @@
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import { Form } from 'react-bootstrap';
-import { toast } from 'react-toastify';
+import React, { useState } from "react";
+import { Form } from "react-bootstrap";
+import PropTypes from "prop-types";
 
-import Editor from 'Components/Editor';
-import { DeleteButton, SaveButton } from 'Components/forms/Buttons';
-import { FormInput } from 'Components/forms/Inputs';
-import ExpectedOutcomeTable from '../ExpectedOutcomeTable';
-import KeyValuePairsFormField from 'Components/forms/KeyValuePairsFormField';
-import { ConvertToSlug } from 'utils';
-import FormSelect from 'Components/forms/Inputs/FormSelect';
+import { DeleteButton, SaveButton } from "Components/forms/Buttons";
+import Editor from "Components/Editor";
+import ExpectedOutcomeTable from "../ExpectedOutcomeTable";
+import FormInput from "Components/forms/Inputs/FormInput";
+import FormSelect from "Components/forms/Inputs/FormSelect";
+import KeyValuePairsFormField from "Components/forms/KeyValuePairsFormField";
 
-const AddNewTestdata = (props) => {
-    const { data, onChange, onSubmit, handleClose } = props;
+import { ConvertToSlug } from "utils";
 
-    const [showPayloadInJsonFormat, setShowPayloadInJsonFormat] = useState(false);
-    const [selectOptions, setSelectOptions] = useState([]);
+const AddNewTestdata = ({ data, onChange, onSubmit, handleClose }) => {
+  const { name, parameters, payload, expectedOutcome, selectedExpOutcome } =
+    data;
 
-    useEffect(() => {
-        let options = [];
-        data.expected_outcome.forEach(element => {
-            options.push({label: element.name, value: element.name});
-        });
-        setSelectOptions(options);
-    }, [])
-    
+  const expectedOutcomeOptions = expectedOutcome.map((ele) => ({
+    label: ele.name,
+    value: ele.id,
+  }));
 
-    const onchange = (e) => {
-        onChange(e.target.name, e.target.value)
+  const activeExpectedOutcome = expectedOutcome?.find(
+    (ele) => ele.id === selectedExpOutcome?.value
+  )?.expected_outcome;
+
+  const [showPayloadInJsonFormat, setShowPayloadInJsonFormat] = useState(false);
+
+  const togglePayloadFormat = () =>
+    setShowPayloadInJsonFormat(!showPayloadInJsonFormat);
+
+  // handle input fields change
+  const handleInputChange = (e) => onChange(e.target.name, e.target.value);
+
+  // handle select field change
+  const onSelectChange = (value, { name }) => onChange(name, value);
+
+  // handles payload fields change
+  const onPayloadFieldsChange = (res) => {
+    if (JSON.parse(res)) {
+      onChange("payload", res);
     }
+  };
 
-    const onPayloadFieldsChange = (res) => {
-        if(JSON.parse(res)){
-            onChange('payload', res)
-        }
-    }
+  // handles parameters field change
+  const onParameterFieldsChange = (result) => onChange("parameters", result);
 
-    const onParameterFieldsChange = (result) => {
-        onChange('parameters', result)
-    } 
+  // handles expected outcome fields change
+  const onExpectedOutcomeFieldsChange = (result) => {
+    let expOutcome = expectedOutcome;
+    expOutcome.find(
+      (ele) => ele.id === selectedExpOutcome?.value
+    ).expectedOutcome = result;
+    onChange("expectedOutcome", expOutcome);
+  };
 
-    const onExpectedOutcomeFieldsChange = (result) => {
-        let expOutcome = data?.expected_outcome;
-        expOutcome.find(x => x.name === data.selected_expected_outcome).expected_outcome = result;
-        onChange('expected_outcome', expOutcome)
-    }
+  // bottom info text for name field
+  const nameBottomInfoText =
+    name && `Your testdata will be created as ${ConvertToSlug(name)}`;
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if(data.name.length){
-            onSubmit(e);
-        } else {
-            toast.error("Please Fill All Required Fields.")
-        }
-    }
-
-    return (
-        <div className='bg-light border rounded p-3'>
-            <Form onSubmit={handleSubmit}>
-                <FormInput 
-                    label="Name"
-                    name="name"
-                    placeholder="Name"
-                    value={data.name}
-                    onChange={onchange}
-                    isRequired
-                    text={data.name.length!==0&&`Your testdata will created as ${ConvertToSlug(data.name)}`}
-                />
-                <FormInput 
-                    name='parameters'
-                    label='Parameters'
-                    element={
-                        <KeyValuePairsFormField 
-                            data={data.parameters} 
-                            setData={onParameterFieldsChange} 
-                        />}
-                />
-                <FormInput 
-                    label={
-                        <div className='d-flex justify-content-between align-items-center'>
-                            <span>Payload<span className='text-danger'>*</span></span>
-                            <Form.Check 
-                                type="switch"
-                                label="Json Format"
-                                value={showPayloadInJsonFormat}
-                                onChange={() => setShowPayloadInJsonFormat(!showPayloadInJsonFormat)}
-                            />
-                        </div>
-                    }
-                    element={
-                        <>
-                            <Editor 
-                                text={data.payload}
-                                mode={showPayloadInJsonFormat?"code":"tree"}
-                                indentation={4}
-                                onChangeText={onPayloadFieldsChange}
-                            />
-                        </>
-                        }
-                />
-                <FormSelect
-                    label='Select Exp. Outcome'
-                    options={selectOptions}
-                    value={data.selected_expected_outcome}
-                    name="selected_expected_outcome"
-                    handlechange={onChange}
-                    isRequired
-                />
-                {data?.selected_expected_outcome && (
-                    <ExpectedOutcomeTable 
-                        data={data?.expected_outcome?.find(x => x.name===data.selected_expected_outcome)?.expected_outcome}
-                        onchange={onExpectedOutcomeFieldsChange}
-                    />
-                )}
-                <div className='d-flex justify-content-end mt-3'>
-                    <DeleteButton 
-                        size='sm'
-                        className="mx-1"
-                        handleClick={handleClose}
-                    />
-                    <SaveButton 
-                        size='sm'
-                    />
-                </div>
-            </Form>
+  return (
+    <div className="bg-light border rounded p-3">
+      <Form onSubmit={onSubmit}>
+        <FormInput
+          label="Name"
+          name="name"
+          placeholder="Name"
+          value={name}
+          onChange={handleInputChange}
+          isRequired
+          text={nameBottomInfoText}
+        />
+        <div className="mb-3">
+          <label className="mb-2">Parameters</label>
+          <KeyValuePairsFormField
+            data={parameters}
+            setData={onParameterFieldsChange}
+          />
         </div>
-    )
-}
+        <div className="mb-3">
+          <label className="w-100 mb-2">
+            <div className="d-flex justify-content-between align-items-center">
+              <span>
+                Payload <span className="text-danger">*</span>
+              </span>
+              <Form.Check
+                type="switch"
+                label="Json Format"
+                value={showPayloadInJsonFormat}
+                onChange={togglePayloadFormat}
+              />
+            </div>
+          </label>
+          <Editor
+            text={payload}
+            mode={showPayloadInJsonFormat ? "code" : "tree"}
+            indentation={4}
+            onChangeText={onPayloadFieldsChange}
+          />
+        </div>
+        <FormSelect
+          label="Select Exp. Outcome"
+          options={expectedOutcomeOptions}
+          value={selectedExpOutcome}
+          name="selectedExpOutcome"
+          onChange={onSelectChange}
+          isRequired
+        />
+        {selectedExpOutcome && (
+          <ExpectedOutcomeTable
+            data={activeExpectedOutcome}
+            onchange={onExpectedOutcomeFieldsChange}
+          />
+        )}
+        <div className="d-flex justify-content-end mt-3">
+          <DeleteButton size="sm" className="mx-1" handleClick={handleClose} />
+          <SaveButton size="sm" />
+        </div>
+      </Form>
+    </div>
+  );
+};
+
+AddNewTestdata.propTypes = {
+  data: PropTypes.shape({
+    name: PropTypes.string,
+    parameters: PropTypes.object,
+    payload: PropTypes.object,
+    expectedOutcome: PropTypes.arrayOf(PropTypes.object),
+    selectedExpOutcome: PropTypes.object,
+  }).isRequired,
+  onChange: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  handleClose: PropTypes.func.isRequired,
+};
 
 export default AddNewTestdata;
-
-AddNewTestdata.propTypes = { 
-    data: PropTypes.object, 
-    onChange: PropTypes.func, 
-    onSubmit: PropTypes.func,
-    handleClose: PropTypes.func 
-}
