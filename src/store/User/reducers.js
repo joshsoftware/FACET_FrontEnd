@@ -1,21 +1,21 @@
-/* eslint-disable no-prototype-builtins */
 import { getLocalStorage } from "utils/localStorage";
+
 import userConstants from "./constants";
 
 const isTokenExist = getLocalStorage("accessToken") ? true : false;
 
 const initialState = {
   isLoggedIn: isTokenExist,
+  isSignUpSuccess: false,
   isLoading: false,
-  currentUser: {},
-  userErr: [],
-  error: [],
+  currentUser: { name: "" },
+  users: [],
 };
 
-const getUsersInitialState = { isLoading: true, users: [], errors: [] };
-
 const userReducer = (state = initialState, action) => {
-  switch (action.type) {
+  const { type, payload } = action;
+
+  switch (type) {
     case userConstants.SIGN_IN_REQUEST:
       return { ...state, isLoading: true };
 
@@ -24,49 +24,38 @@ const userReducer = (state = initialState, action) => {
         ...state,
         isLoading: false,
         isLoggedIn: true,
-        currentUser: action.payload,
-        userErr: [],
+        currentUser: payload,
       };
 
     case userConstants.SIGN_IN_FAILURE:
-      return { ...state, isLoading: false, userErr: action.payload };
+      return { ...state, isLoading: false };
 
     case userConstants.SIGN_UP_REQUEST:
       return { ...state, isLoading: true };
 
     case userConstants.SIGN_UP_SUCCESS:
-      return { ...state, isLoading: false };
+      return { ...state, isLoading: false, isSignUpSuccess: true };
 
     case userConstants.SIGN_UP_FAILURE:
-      return { ...state, isLoading: false, userErr: action.payload };
+      return { ...state, isLoading: false };
 
     case userConstants.SIGN_OUT_SUCCESS:
-      return {
-        ...state,
-        isLoggedIn: false,
-        currentUser: {},
-        userErr: [],
-      };
+      return { ...state, isLoggedIn: false, currentUser: {} };
 
     case userConstants.GET_CURRENT_USER_INFO_REQUEST:
       return { ...state, isLoading: true };
 
     case userConstants.GET_CURRENT_USER_INFO_SUCCESS:
-      return {
-        ...state,
-        currentUser: action.payload,
-        userErr: [],
-        isLoading: false,
-      };
+      return { ...state, currentUser: payload, isLoading: false };
 
     case userConstants.GET_CURRENT_USER_INFO_FAILURE:
-      return { ...state, userErr: action.payload, isLoading: false };
+      return { ...state, isLoading: false };
 
     case userConstants.UPDATE_USER_PROFILE_REQUEST:
       return { ...state, isLoading: true };
 
     case userConstants.UPDATE_USER_PROFILE_SUCCESS:
-      return { ...state, currentUser: action.payload, isLoading: false };
+      return { ...state, currentUser: payload, isLoading: false };
 
     case userConstants.UPDATE_USER_PROFILE_FAILURE:
       return { ...state, isLoading: false };
@@ -80,24 +69,21 @@ const userReducer = (state = initialState, action) => {
     case userConstants.CHANGE_USER_PASSWORD_FAILURE:
       return { ...state, isLoading: false };
 
-    default:
-      return state;
-  }
-};
+    case userConstants.GET_USERS_REQUEST:
+      return { ...state, isLoading: true };
 
-const getUsersReducer = (state = getUsersInitialState, action) => {
-  switch (action.type) {
-    case userConstants.GET_ALL_USERS_SUCCESS:
-      return {
-        ...state,
-        isLoading: false,
-        users: action.payload,
-        errors: [],
-      };
+    case userConstants.GET_USERS_SUCCESS:
+      return { ...state, isLoading: false, users: payload };
+
+    case userConstants.GET_USERS_FAILURE:
+      return { ...state, isLoading: false };
+
+    case userConstants.CLEAR_USER_STATE:
+      return initialState;
 
     default:
       return state;
   }
 };
 
-export { getUsersReducer, userReducer };
+export default userReducer;

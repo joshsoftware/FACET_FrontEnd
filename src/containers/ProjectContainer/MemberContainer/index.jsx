@@ -1,45 +1,44 @@
 import React, { useEffect, useState } from "react";
-import { NavDropdown } from "react-bootstrap";
-import { PersonCircle } from "react-bootstrap-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
 import { AddButton } from "Components/forms/Buttons";
 import AddMembersInProject from "Components/DashboardComponent/ProjectAdmin/AddMembersInProject";
+import MemberTableRow from "Components/ProjectsComponent/MemberComponent/MemberTableRow";
+import TableComponent from "Components/CustomComponents/TableComponent/index";
+import { ViewComponent } from "Components/CustomComponents";
+
 import {
   addMembersInProjectRequest,
   getProjectMembersRequest,
   removeMembersInProjectRequest,
-} from "store/Projects/actions";
-import { getAllUsersRequest } from "store/User/actions";
-import TableComponent from "Components/CustomComponents/TableComponent/index";
-import { ViewComponent } from "Components/CustomComponents";
+} from "store/ProjectMembers/actions";
+import { getUsersRequest } from "store/User/actions";
 
-const mapState = ({ projectMembers, user, getUsers }) => ({
+const adminTableHeadings = ["#", "Member", "Role", "Actions"];
+const nonAdminTableHeadings = ["#", "Member", "Role"];
+const initialState = { project: "", members: [] };
+
+const mapState = ({ projectMembers, user }) => ({
   members: projectMembers.members,
   project: projectMembers.project,
   isLoading: projectMembers.isLoading,
-  project_admin: projectMembers.project_admin,
+  projectAdmin: projectMembers.projectAdmin,
   user: user.currentUser,
-  allUsers: getUsers.users,
+  allUsers: user.users,
 });
 
 const MemberContainer = () => {
-  let dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const { projectName } = useParams();
-  const {
-    members,
-    isLoading,
-    project_admin: projectAdmin,
-    user,
-    allUsers,
-  } = useSelector(mapState);
+  const { members, isLoading, projectAdmin, user, allUsers } =
+    useSelector(mapState);
 
   const [show, setShow] = useState(false);
   const [addMemberFormData, setAddMemberFormData] = useState({
+    ...initialState,
     project: projectName,
-    members: [],
   });
   const [usersOptions, setUsersOptions] = useState([]);
 
@@ -52,12 +51,12 @@ const MemberContainer = () => {
   }, [projectName]);
 
   useEffect(() => {
-    if (projectName) {
+    if (show === true) {
       dispatch(
-        getAllUsersRequest({ exclude: "projectMembers", project: projectName })
+        getUsersRequest({ exclude: "projectMembers", project: projectName })
       );
     }
-  }, [projectName]);
+  }, [projectName, show]);
 
   useEffect(() => {
     let options_data = [];
@@ -83,14 +82,16 @@ const MemberContainer = () => {
   };
 
   const onSubmitMemberForm = () => {
-    dispatch(
-      addMembersInProjectRequest({
-        ...addMemberFormData,
-        members: addMemberFormData.members.map((e) => e.value),
-      })
-    );
+    const members = addMemberFormData.members.map((e) => e.value);
+    dispatch(addMembersInProjectRequest({ ...addMemberFormData, members }));
     toggleModal();
+    setAddMemberFormData((prevState) => ({ ...prevState, members: [] }));
   };
+
+  const isProjectAdmin = projectAdmin === user.id;
+  const tableHeadings = isProjectAdmin
+    ? adminTableHeadings
+    : nonAdminTableHeadings;
 
   return (
     <>
@@ -107,41 +108,22 @@ const MemberContainer = () => {
       <div className="py-5 w-100">
         <div className="d-flex justify-content-between align-items-center px-5">
           <h3>Team Members</h3>
-          {projectAdmin === user.id && (
-            <AddButton label="Add Member" handleClick={() => setShow(true)} />
+          {isProjectAdmin && (
+            <AddButton label="Add Member" handleClick={toggleModal} />
           )}
         </div>
         <ViewComponent disabledHeader>
-          <TableComponent striped headings={["#", "Member", "Role", "Actions"]}>
+          <TableComponent striped headings={tableHeadings}>
             {!isLoading &&
-              members.map((item, index) => {
-                return (
-                  <tr key={index}>
-                    <td>{index + 1}</td>
-                    <td>
-                      <PersonCircle size={24} className="mx-2" />
-                      {item.name}
-                    </td>
-                    <td>{item.is_project_admin ? "Admin" : "Member"}</td>
-                    <td>
-                      <NavDropdown
-                        title="More"
-                        disabled={
-                          projectAdmin !== user.id || projectAdmin === item.id
-                        }
-                        style={{ lineHeight: "10px" }}
-                      >
-                        <NavDropdown.Item
-                          onClick={() => removeMember(item.id)}
-                          style={{ lineHeight: "initial" }}
-                        >
-                          Remove from Project
-                        </NavDropdown.Item>
-                      </NavDropdown>
-                    </td>
-                  </tr>
-                );
-              })}
+              members.map((item, index) => (
+                <MemberTableRow
+                  key={index}
+                  index={index + 1}
+                  data={item}
+                  isProjectAdmin={isProjectAdmin}
+                  onRemoveMember={removeMember}
+                />
+              ))}
           </TableComponent>
         </ViewComponent>
       </div>

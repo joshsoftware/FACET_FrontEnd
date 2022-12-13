@@ -5,26 +5,17 @@ const initialState = {
   isError: false,
   data: {},
   results: [],
-  errors: [],
 };
 
 const executeReducer = (state = initialState, action) => {
-  switch (action.type) {
+  const { type, payload } = action;
+
+  switch (type) {
     case executeConstants.ADD_EXECUTE_REQUEST:
-      return {
-        ...state,
-        isLoading: true,
-        data: action.payload.data,
-        errors: [],
-      };
+      return { ...state, isLoading: true, data: payload.data };
 
     case executeConstants.ADD_EXECUTE_SUCCESS:
-      return {
-        ...state,
-        isLoading: false,
-        results: action.payload,
-        errors: [],
-      };
+      return { ...state, isLoading: false, results: payload };
 
     case executeConstants.ADD_EXECUTE_FAILURE:
       return {
@@ -33,7 +24,6 @@ const executeReducer = (state = initialState, action) => {
         data: {},
         results: [],
         isError: true,
-        errors: action.payload,
       };
 
     case executeConstants.CLEAR_EXECUTE_FAILURE:

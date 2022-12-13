@@ -1,57 +1,69 @@
-import React, { useState } from 'react'
-import { Link, Navigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useState } from "react";
+import { Link, Navigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
-import Signup from 'Components/Auth/Signup';
-import { AuthLayout } from 'Layout';
-import { signUpRequest } from 'store/User/actions';
+import AuthLayout from "Layout/AuthLayout";
+import Signup from "Components/Auth/Signup";
 
-const mapState = (state) => ({
-    isLoggedIn: state.user.isLoggedIn
-})
+import { clearUserState, signUpRequest } from "store/User/actions";
+
+const initialState = { name: "", email: "", password: "", confirmPassword: "" };
+
+const mapState = ({ user }) => ({
+  isLoggedIn: user.isLoggedIn,
+  isSignUpSuccess: user.isSignUpSuccess,
+});
 
 const SignUpContainer = () => {
-    let dispatch = useDispatch();
+  const dispatch = useDispatch();
+  const { isLoggedIn, isSignUpSuccess } = useSelector(mapState);
 
-    const { isLoggedIn } = useSelector(mapState);
+  const [formData, setFormData] = useState(initialState);
 
-    const [formData, setFormData] = useState({
-        name: "",
-        email: "", 
-        password: "",
-        cpassword: ""
-    })
+  useEffect(() => {
+    return () => dispatch(clearUserState());
+  }, []);
 
-    const handleOnChange = (e) => {
-        setFormData(p => ({
-            ...p,
-            [e.target.name]: e.target.value
-        }))
-    }
+  // handle formdata change
+  const handleOnChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevState) => ({ ...prevState, [name]: value }));
+  };
 
-    const handleOnSubmit = (e) => {
-        e.preventDefault();
-        dispatch(signUpRequest(formData))
-    }
-    
-    if(isLoggedIn){
-        return <Navigate to='/dashboard' /> 
-    }
-    
-    return (
-        <>
-            <AuthLayout>
-                <Signup 
-                    data={formData}
-                    onchange={handleOnChange}
-                    handleSubmit={handleOnSubmit}
-                />
-                <div className='d-flex flex-column align-items-center'>
-                    <Link to='/login' className='pt-3 fst-italic'>Already have an account?</Link>
-                </div>
-            </AuthLayout>
-        </>
-    )
-}
+  // on submit sign up form
+  const handleOnSubmit = (e) => {
+    e.preventDefault();
+    dispatch(signUpRequest(formData));
+  };
+
+  // If user already loggedin then redirect to dashboard screen
+  if (isLoggedIn) {
+    return <Navigate to="/dashboard" />;
+  }
+
+  // If signup success redirect user to login screen
+  if (isSignUpSuccess) {
+    return <Navigate to="/login" />;
+  }
+
+  return (
+    <AuthLayout>
+      <h5 className="fw-bold">Sign Up</h5>
+      <Signup
+        data={formData}
+        onChange={handleOnChange}
+        onSubmit={handleOnSubmit}
+      />
+      <div className="d-flex flex-column align-items-center">
+        <span className="pt-3">
+          Already have an account?
+          <Link to="/login" className="ps-1 fst-italic">
+            Login
+          </Link>
+        </span>
+      </div>
+    </AuthLayout>
+  );
+};
 
 export default SignUpContainer;

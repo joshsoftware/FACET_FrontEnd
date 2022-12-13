@@ -2,19 +2,19 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 
-import { getReportsRequest } from "store/Reports/actions";
 import InfiniteScroll from "Components/InfiniteScroll";
 import NoResultsFound from "Components/NoResultsFound";
 import ReportTableRow from "Components/ProjectsComponent/ReportsComponent/ReportTableRow";
 import TableComponent from "Components/CustomComponents/TableComponent";
 import { ViewComponent } from "Components/CustomComponents";
 
+import { getReportsRequest } from "store/Reports/actions";
+
 const tableHeadings = [
   "#",
   "Name",
   "Type",
-  "Passed",
-  "Failed",
+  "Status",
   "Executed By",
   "Executed On",
   "",
