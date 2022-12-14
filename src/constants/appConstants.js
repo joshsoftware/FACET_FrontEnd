@@ -64,6 +64,11 @@ export const INITIAL_PAYLOAD_FORM_DATA = {
   expected_outcome: [],
 };
 
+export const INITIAL_TESTSUITE_FORM_DATA = {
+  name: "",
+  testcases: [],
+};
+
 export const STATUS_OPTIONS = [
   { label: "Passed", value: "passed" },
   { label: "Failed", value: "failed" },

@@ -18,11 +18,15 @@ import { getTestcasesRequest } from "store/Testcases/actions";
 import { toastMessage } from "utils/toastMessage";
 
 import { ALL_FIELDS_REQUIRED } from "constants/userMessagesConstants";
+import { INITIAL_TESTSUITE_FORM_DATA } from "constants/appConstants";
 
 const mapState = ({ testsuites, testcases, environments }) => ({
   isLoading: testsuites.isLoading,
   testsuites: testsuites.testsuites,
-  testcases: testcases.testcases,
+  testcasesOptions: testcases.testcases.map((ele) => ({
+    label: ele.name,
+    value: ele.id,
+  })),
   environments: environments.environments.map((ele) => ({
     label: ele.name,
     value: ele.id,
@@ -31,49 +35,46 @@ const mapState = ({ testsuites, testcases, environments }) => ({
 });
 
 const TestsuiteContainer = ({ cat }) => {
-  // TO-Do:
-  // needs to refactor this container and it's component with add comments wherever necessary
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const { id, projectName } = useParams();
-  const { isLoading, testsuites, testcases, environments, isEnvLoading } =
-    useSelector(mapState);
+  const {
+    isLoading,
+    testsuites,
+    testcasesOptions,
+    environments,
+    isEnvLoading,
+  } = useSelector(mapState);
 
   const [selectedItem, setSelectedItem] = useState({});
-  const [testsuiteFormData, setTestsuiteFormData] = useState({
-    project: projectName,
-    name: "",
-    testcases: [],
-    testcasesOptions: [],
-  });
+  const [testsuiteFormData, setTestsuiteFormData] = useState(
+    INITIAL_TESTSUITE_FORM_DATA
+  );
 
   useEffect(() => {
     dispatch(getTestsuitesRequest({ project: projectName }));
     dispatch(getEnvironmentsRequest({ project: projectName }));
   }, [projectName]);
 
+  // call testcases api if category of form changes and valid
   useEffect(() => {
-    // call testcases api if category of form changes and valid
     if (cat) {
       dispatch(getTestcasesRequest({ project: projectName }));
     }
   }, [cat]);
 
+  // set selected testsuite data
   useEffect(() => {
-    setSelectedItem(testsuites.filter((item) => item.id == id)[0]);
+    if (id) {
+      setSelectedItem(testsuites.filter((item) => item.id == id)[0]);
+    }
+    return () => setSelectedItem({});
   }, [testsuites, id]);
 
+  // set testsuite form data for selected suite when cat is edit
   useEffect(() => {
-    let testcasesData = testcases.map((ele) => ({
-      value: ele.id,
-      label: ele.name,
-    }));
-    handleOnChangeForm("testcasesOptions", testcasesData);
-  }, [testcases]);
-
-  useEffect(() => {
-    if (selectedItem) {
+    if (Object.keys(selectedItem).length && cat === "edit") {
       let { name, testcases: selectedTestcases } = selectedItem;
       selectedTestcases = selectedTestcases?.map((item) => ({
         value: item.id,
@@ -87,39 +88,26 @@ const TestsuiteContainer = ({ cat }) => {
       }));
     }
 
-    return () =>
-      setTestsuiteFormData((prevState) => ({
-        ...prevState,
-        name: "",
-        project: projectName,
-        testcases: [],
-      }));
-  }, [selectedItem]);
+    return () => setTestsuiteFormData(() => INITIAL_TESTSUITE_FORM_DATA);
+  }, [selectedItem, cat]);
 
-  const handleOnChangeForm = (name, value) => {
-    setTestsuiteFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
+  const handleOnFormChange = (name, value) => {
+    setTestsuiteFormData((prevState) => ({ ...prevState, [name]: value }));
   };
 
+  // handles the testsuite form submit action
   const handleSubmitTestsuiteForm = (e) => {
     e.preventDefault();
     // Here FD means FormData
-    let {
-      project,
-      name: testsuiteName,
-      testcases: testcasesFD,
-    } = testsuiteFormData;
+    let { name: testsuiteName, testcases: testcasesFD } = testsuiteFormData;
 
-    if (!project || !testsuiteName || testcasesFD.length === 0) {
+    if (!projectName || !testsuiteName || !testcasesFD.length) {
       toastMessage(ALL_FIELDS_REQUIRED, "error");
-      return;
     } else {
       testcasesFD = testcasesFD.map((ele) => ele.value);
 
       let formPayload = {
-        project,
+        project: projectName,
         name: testsuiteName,
         array_of_testcases: testcasesFD,
       };
@@ -139,6 +127,7 @@ const TestsuiteContainer = ({ cat }) => {
     }
   };
 
+  // calls the execute testsuite action by taking testsuite and environment's id as parameter
   const handleExecute = (testsuite, env) => {
     dispatch(
       addExecuteRequest({
@@ -170,7 +159,8 @@ const TestsuiteContainer = ({ cat }) => {
           cat={cat}
           isLoading={isLoading}
           data={testsuiteFormData}
-          onChange={handleOnChangeForm}
+          testcasesOptions={testcasesOptions}
+          onChange={handleOnFormChange}
           onSubmit={handleSubmitTestsuiteForm}
         />
       ) : (
