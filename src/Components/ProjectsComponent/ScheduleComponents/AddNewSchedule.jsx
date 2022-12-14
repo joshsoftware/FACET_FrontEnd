@@ -25,14 +25,25 @@ const AddNewSchedule = ({ isLoading, data, onChange, onSubmit, options }) => {
     startDateTime,
     endDateTime,
   } = data;
+
+  const { testcases: testcasesOptions, environments: environmentsOptions } =
+    options;
+
   // on change input
   const onchange = (e) => onChange(e.target.name, e.target.value);
 
   // on FormSelect Changes
   const onSelectChange = (value, { name }) => onChange(name, value);
 
+  // it checks whether all entries of form filled or not, if not it will disable the save button
+  // testcase and evironment is object if selected otherwise it will be null 
   const isSaveButtonDisabled =
-    !testcase || !environment || !frequencyType || !startDateTime;
+    !testcase ||
+    !environment ||
+    !Object.keys(testcase)?.length ||
+    !Object.keys(environment)?.length ||
+    !frequencyType ||
+    !startDateTime;
 
   return (
     !isLoading && (
@@ -46,7 +57,7 @@ const AddNewSchedule = ({ isLoading, data, onChange, onSubmit, options }) => {
           <Row>
             <FormSelect
               label="Testcase"
-              options={options.testcases}
+              options={testcasesOptions}
               onChange={onSelectChange}
               className="col-md-6"
               value={testcase}
@@ -56,7 +67,7 @@ const AddNewSchedule = ({ isLoading, data, onChange, onSubmit, options }) => {
             />
             <FormSelect
               label="Environment"
-              options={options.environments}
+              options={environmentsOptions}
               onChange={onSelectChange}
               className="col-md-6"
               value={environment}
@@ -69,21 +80,19 @@ const AddNewSchedule = ({ isLoading, data, onChange, onSubmit, options }) => {
                 Frequency<span className="text-danger">*</span>
               </label>
               <div className="pt-1">
-                {frequecyTypes.map((item, index) => {
-                  return (
-                    <Button
-                      key={index}
-                      className="mx-1 text-capitalize"
-                      size="sm"
-                      variant={frequencyType === item ? "success" : "primary"}
-                      onClick={onchange}
-                      name="frequencyType"
-                      value={item}
-                    >
-                      {item}
-                    </Button>
-                  );
-                })}
+                {frequecyTypes.map((item, index) => (
+                  <Button
+                    key={index}
+                    className="mx-1 text-capitalize"
+                    size="sm"
+                    variant={frequencyType === item ? "success" : "primary"}
+                    onClick={onchange}
+                    name="frequencyType"
+                    value={item}
+                  >
+                    {item}
+                  </Button>
+                ))}
               </div>
             </div>
 
@@ -91,9 +100,7 @@ const AddNewSchedule = ({ isLoading, data, onChange, onSubmit, options }) => {
               <div className="col-md-12 alert-secondary rounded py-2 mb-3">
                 <SetCustomTimeInput
                   value={frequencyValue}
-                  handleChange={(value) =>
-                    onSelectChange("frequencyValue", value)
-                  }
+                  handleChange={(value) => onChange("frequencyValue", value)}
                 />
               </div>
             )}
@@ -130,10 +137,20 @@ const AddNewSchedule = ({ isLoading, data, onChange, onSubmit, options }) => {
 
 AddNewSchedule.propTypes = {
   isLoading: PropTypes.bool,
-  data: PropTypes.object.isRequired,
+  data: PropTypes.shape({
+    testcase: PropTypes.object,
+    environment: PropTypes.object,
+    frequencyType: PropTypes.string,
+    frequencyValue: PropTypes.object,
+    startDateTime: PropTypes.string,
+    endDateTime: PropTypes.string,
+  }).isRequired,
   onChange: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  options: PropTypes.objectOf(PropTypes.array).isRequired,
+  options: PropTypes.shape({
+    environments: PropTypes.array,
+    testcases: PropTypes.array,
+  }).isRequired,
 };
 
 export default AddNewSchedule;
