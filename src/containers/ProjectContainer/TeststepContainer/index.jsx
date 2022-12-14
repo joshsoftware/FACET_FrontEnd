@@ -78,6 +78,7 @@ const TeststepContainer = ({ cat }) => {
       dispatch(getHeadersRequest({ project: projectName }));
       dispatch(getPayloadsRequest({ project: projectName }));
     }
+    return () => setTeststepFormData(INITIAL_TESTSTEP_FORM_DATA);
   }, [cat, projectName]);
 
   // set selected teststep item data

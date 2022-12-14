@@ -59,15 +59,16 @@ const MemberContainer = () => {
         getUsersRequest({ exclude: "projectMembers", project: projectName })
       );
     }
+    return () => setSelectedMembers([]);
   }, [projectName, show]);
 
-  // helps to remove member from the project 
+  // helps to remove member from the project
   const removeMember = (id) =>
     dispatch(
       removeMembersInProjectRequest({ project: projectName, members: [id] })
     );
 
-    // set selected members 
+  // set selected members
   const onChangeMembers = (value) => setSelectedMembers(value);
 
   // helps to submit add members form
@@ -77,7 +78,6 @@ const MemberContainer = () => {
       addMembersInProjectRequest({ project: projectName, members: membersData })
     );
     toggleModal();
-    setSelectedMembers([]);
   };
 
   // check whether loggedin user is the project admin or not

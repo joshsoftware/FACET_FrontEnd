@@ -28,14 +28,12 @@ const TestdataAccordionItem = ({ eventKey, data }) => {
               size="sm"
               headings={PARAMETERS_TABLE_HEADINGS}
             >
-              {Object.entries(parameters).map(([key, val], ind) => {
-                return (
-                  <tr key={ind}>
-                    <td>{key}</td>
-                    <td>{val}</td>
-                  </tr>
-                );
-              })}
+              {Object.entries(parameters).map(([key, val], ind) => (
+                <tr key={ind}>
+                  <td>{key}</td>
+                  <td>{val}</td>
+                </tr>
+              ))}
             </TableComponent>
           </Col>
           <Col md={6}>
@@ -53,22 +51,20 @@ const TestdataAccordionItem = ({ eventKey, data }) => {
               bordered
               headings={EXPECTED_OUTCOME_TABLE_HEADINGS}
             >
-              {expectedOutcome?.map((item, index) => {
-                return (
-                  <tr key={index}>
-                    <td>{index + 1}</td>
-                    <td>{item.name}</td>
-                    <td>{item.type}</td>
-                    <td>{item.isExact ? "Yes" : "No"}</td>
-                    <td>{item.value || "-"}</td>
-                    <td>
-                      <pre className="mb-0">
-                        {JSON.stringify(item.validations, null, 2) || "-"}
-                      </pre>
-                    </td>
-                  </tr>
-                );
-              })}
+              {expectedOutcome?.map((item, index) => (
+                <tr key={index}>
+                  <td>{index + 1}</td>
+                  <td>{item.name}</td>
+                  <td>{item.type}</td>
+                  <td>{item.isExact ? "Yes" : "No"}</td>
+                  <td>{item.value || "-"}</td>
+                  <td>
+                    <pre className="mb-0">
+                      {JSON.stringify(item.validations, null, 2) || "-"}
+                    </pre>
+                  </td>
+                </tr>
+              ))}
             </TableComponent>
           </Col>
         </Row>

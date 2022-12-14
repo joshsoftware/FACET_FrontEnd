@@ -52,10 +52,9 @@ const ScheduleContainer = ({ cat }) => {
   const { projectName } = useParams();
   const { isLoading, scheduledCases, options } = useSelector(mapState);
 
-  const [addNewScheduleFormData, setAddNewScheduleFormData] = useState({
-    ...initialScheduleFormData,
-    project: projectName,
-  });
+  const [addNewScheduleFormData, setAddNewScheduleFormData] = useState(
+    initialScheduleFormData
+  );
 
   useEffect(() => {
     dispatch(getAllSchedulesRequest({ project: projectName }));
@@ -68,11 +67,7 @@ const ScheduleContainer = ({ cat }) => {
       dispatch(getEnvironmentsRequest({ project: projectName }));
     }
 
-    return () =>
-      setAddNewScheduleFormData({
-        ...initialScheduleFormData,
-        project: projectName,
-      });
+    return () => setAddNewScheduleFormData(initialScheduleFormData);
   }, [projectName, cat]);
 
   // on form data change
@@ -99,6 +94,7 @@ const ScheduleContainer = ({ cat }) => {
         endDateTime: new Date(otherFormData.endDateTime).getTime() / 1000,
         frequency: frequencyValue,
         frequency_type: frequencyType,
+        project: projectName,
       })
     );
   };
@@ -127,7 +123,7 @@ const ScheduleContainer = ({ cat }) => {
 };
 
 ScheduleContainer.propTypes = {
-  cat: PropTypes.string,
+  cat: PropTypes.oneOf(["add", "edit"]),
 };
 
 export default ScheduleContainer;
