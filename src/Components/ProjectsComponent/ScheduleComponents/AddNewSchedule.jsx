@@ -30,7 +30,7 @@ const AddNewSchedule = ({ isLoading, data, onChange, onSubmit, options }) => {
     options;
 
   // on change input
-  const onchange = (e) => onChange(e.target.name, e.target.value);
+  const onInputChange = (e) => onChange(e.target.name, e.target.value);
 
   // on FormSelect Changes
   const onSelectChange = (value, { name }) => onChange(name, value);
@@ -86,7 +86,7 @@ const AddNewSchedule = ({ isLoading, data, onChange, onSubmit, options }) => {
                     className="mx-1 text-capitalize"
                     size="sm"
                     variant={frequencyType === item ? "success" : "primary"}
-                    onClick={onchange}
+                    onClick={onInputChange}
                     name="frequencyType"
                     value={item}
                   >
@@ -113,7 +113,7 @@ const AddNewSchedule = ({ isLoading, data, onChange, onSubmit, options }) => {
                   className="col-md-6"
                   value={startDateTime}
                   name="startDateTime"
-                  onChange={onchange}
+                  onChange={onInputChange}
                   isRequired
                 />
                 {frequencyType !== "oneTime" && (
@@ -123,7 +123,7 @@ const AddNewSchedule = ({ isLoading, data, onChange, onSubmit, options }) => {
                     className="col-md-6"
                     value={endDateTime}
                     name="endDateTime"
-                    onChange={onchange}
+                    onChange={onInputChange}
                   />
                 )}
               </>
