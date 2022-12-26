@@ -1,60 +1,54 @@
-import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import PropTypes from "prop-types";
+import React, { useEffect, useState } from "react";
 
-import { FormCheckBox, FormInput } from 'Components/forms/Inputs';
+import { FormCheckBox, FormInput } from "Components/forms/Inputs";
 
 const CheckBoxWithNumField = (props) => {
-    const {
-        label,
-        value,
-        name,
-        handlechange
-    } = props;
+  const { label, value, name, handlechange } = props;
 
-    const [isChecked, setIsChecked] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
 
-    const onchange = (e) => {
-        let val = e.target.value;
-        if (val==='') {
-            val=0;
-        }
-        handlechange(e.target.name, val);
+  const onchange = (e) => {
+    let val = e.target.value;
+    if (val === "") {
+      val = 0;
     }
+    handlechange(e.target.name, val);
+  };
 
-    useEffect(() => {
-        if(!isChecked) {
-            handlechange(name, null)
-        } else {
-            handlechange(name, 0)
-        }
-    }, [isChecked])
-    
+  useEffect(() => {
+    if (!isChecked) {
+      handlechange(name, null);
+    } else {
+      handlechange(name, 0);
+    }
+  }, [isChecked]);
 
-    return (
-        <>
-            <FormCheckBox 
-                label={label}
-                value={isChecked} 
-                handlechange={() => setIsChecked(!isChecked)}
-                className="py-2"
-            />
-            {isChecked&&(
-                <FormInput 
-                    type="number"
-                    name={name}
-                    value={value}
-                    onChange={onchange}
-                />
-            )}
-        </>
-    )
-}
+  return (
+    <>
+      <FormCheckBox
+        label={label}
+        value={isChecked}
+        handlechange={() => setIsChecked(!isChecked)}
+        className="py-2"
+      />
+      {isChecked && (
+        <FormInput
+          type="number"
+          name={name}
+          value={value}
+          onChange={onchange}
+        />
+      )}
+    </>
+  );
+};
 
 export default CheckBoxWithNumField;
 
 CheckBoxWithNumField.propTypes = {
-    label: PropTypes.string,
-    value: PropTypes.number,
-    name: PropTypes.string,
-    handlechange: PropTypes.func
-}
+  label: PropTypes.string,
+  value: PropTypes.number,
+  name: PropTypes.string,
+  handlechange: PropTypes.func,
+};

@@ -24,7 +24,10 @@ const mapState = ({ projectMembers, user }) => ({
   isLoading: projectMembers.isLoading,
   projectAdmin: projectMembers.projectAdmin,
   user: user.currentUser,
-  usersOptions: user.users.map((user) => ({ label: user.name, value: user.id })),
+  usersOptions: user.users.map((user) => ({
+    label: user.name,
+    value: user.id,
+  })),
   isUsersLoading: user.isLoading,
 });
 

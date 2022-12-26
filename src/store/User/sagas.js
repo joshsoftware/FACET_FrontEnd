@@ -46,7 +46,9 @@ export function* signIn({ payload }) {
   }
 }
 
-export function* signUp({ payload: { name, email, password, confirmPassword } }) {
+export function* signUp({
+  payload: { name, email, password, confirmPassword },
+}) {
   try {
     if (password !== confirmPassword) {
       toastMessage(USER_AUTH.PASSWORD_NOT_MATCHED, "error");

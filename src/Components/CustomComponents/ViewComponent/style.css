@@ -1,9 +1,9 @@
 .viewcomponent-header {
-    position: sticky;
-    top: 58px;
-    z-index: 99;
+  position: sticky;
+  top: 58px;
+  z-index: 99;
 }
 .sticky-component-header {
-    background: #f8f9fa;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 3px 2px 0px;
+  background: #f8f9fa;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 3px 2px 0px;
 }

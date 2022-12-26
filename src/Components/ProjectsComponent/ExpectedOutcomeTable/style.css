@@ -1,17 +1,17 @@
 .addNewFieldTableButton {
-    cursor: pointer;
-    padding-top: 0.65rem !important;
-    padding-bottom: 0.65rem !important;
+  cursor: pointer;
+  padding-top: 0.65rem !important;
+  padding-bottom: 0.65rem !important;
 }
 .addNewFieldTableButton .plusBtn {
-    background: #e5efff;
-    border-radius: 100%;
-    padding: 0 6px;
+  background: #e5efff;
+  border-radius: 100%;
+  padding: 0 6px;
 }
 
 .tableActions {
-    width: 100px;
+  width: 100px;
 }
 .tableActions .icon {
-    cursor: pointer;
+  cursor: pointer;
 }

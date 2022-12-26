@@ -13,7 +13,10 @@ import logo from "assets/images/logo.png";
 const mapState = ({ user }) => ({
   isLoggedIn: user.isLoggedIn,
   currentUser: user.currentUser,
-  usersOptions: user.users.map((user) => ({ label: user.name, value: user.id })),
+  usersOptions: user.users.map((user) => ({
+    label: user.name,
+    value: user.id,
+  })),
   isUsersLoading: user.isLoading,
 });
 
@@ -48,7 +51,10 @@ const Header = () => {
   const handleLogout = () => dispatch(signOutRequest());
 
   // sets selected users
-  const handleChangeAdminFormData = (value) => {console.log(value);setSelectedUsers(value)};
+  const handleChangeAdminFormData = (value) => {
+    console.log(value);
+    setSelectedUsers(value);
+  };
 
   // helps to submit admin form data and close the modal
   const handleSubmitAdminFormData = () => {
