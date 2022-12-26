@@ -9,18 +9,25 @@ import { ViewComponent } from "Components/CustomComponents";
 import ConvertToSlug from "utils/ConvertToSlug";
 import { formTitle } from "utils/helper";
 
-const AddNewTestsuite = ({ cat, data, onChange, onSubmit }) => {
-  const { name, testcases, testcasesOptions } = data;
+const AddNewTestsuite = ({
+  cat,
+  data,
+  onChange,
+  onSubmit,
+  testcasesOptions,
+}) => {
+  const { name, testcases } = data;
 
-  const onInpChange = (e) => {
-    onChange(e.target.name, e.target.value);
-  };
+  // handles input field change
+  const onInputChange = (e) => onChange(e.target.name, e.target.value);
+  // handles select filed change
+  const onSelectChange = (value, { name }) => onChange(name, value);
 
-  const isSaveDisabled = name.length === 0 || testcases.length === 0;
+  // check whether all fields are filled and used enable/disable the save button
+  const isSaveButtonDisabled = !name || testcases?.length === 0;
 
   const nameBottomInfoText =
-    name.length !== 0 &&
-    `Your testsuite will be created as ${ConvertToSlug(name)}`;
+    name && `Your testsuite will be created as ${ConvertToSlug(name)}`;
 
   return (
     <Form className="w-100">
@@ -28,14 +35,14 @@ const AddNewTestsuite = ({ cat, data, onChange, onSubmit }) => {
         title={formTitle(cat)}
         type="save"
         onSave={onSubmit}
-        onSaveDisabled={isSaveDisabled}
+        onSaveDisabled={isSaveButtonDisabled}
       >
         <FormInput
           label="Name"
           placeholder="Name"
           name="name"
           value={name}
-          onChange={onInpChange}
+          onChange={onInputChange}
           text={nameBottomInfoText}
           disabled={cat === "edit"}
           isRequired
@@ -45,7 +52,7 @@ const AddNewTestsuite = ({ cat, data, onChange, onSubmit }) => {
           name="testcases"
           options={testcasesOptions}
           value={testcases}
-          handlechange={onChange}
+          onChange={onSelectChange}
           isRequired
           isMulti
         />
@@ -62,8 +69,12 @@ AddNewTestsuite.defaultProps = {
 };
 
 AddNewTestsuite.propTypes = {
-  cat: PropTypes.oneOf(["add", "edit"]),
-  data: PropTypes.object,
+  cat: PropTypes.oneOf(["add", "edit"]).isRequired,
+  data: PropTypes.shape({
+    name: PropTypes.string,
+    testcases: PropTypes.arrayOf(PropTypes.object),
+  }).isRequired,
+  testcasesOptions: PropTypes.arrayOf(PropTypes.object).isRequired,
   onChange: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
 };
