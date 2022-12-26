@@ -23,9 +23,9 @@ import { getTeststepsRequest } from "store/Teststeps/actions";
 const mapState = ({ testcases, environments, execute, teststeps }) => ({
   testcases: testcases.testcases,
   isLoading: testcases.isLoading,
-  environments: environments.environments.map((ele) => ({
-    label: ele.name,
-    value: ele.id,
+  environments: environments.environments.map((environment) => ({
+    label: environment.name,
+    value: environment.id,
   })),
   isEnvironmentsLoading: environments.isLoading,
   isExecuteFailed: execute.isError,

@@ -29,17 +29,17 @@ const mapState = ({ endpoints, headers, payloads, teststeps, testdata }) => ({
   isLoading: teststeps.isLoading,
   teststeps: teststeps.teststeps,
   testdata: testdata.testdata,
-  endpointOptions: endpoints.endpoints.map((ele) => ({
-    label: ele.name,
-    value: ele.id,
+  endpointOptions: endpoints.endpoints.map((endpoint) => ({
+    label: endpoint.name,
+    value: endpoint.id,
   })),
-  headerOptions: headers.headers.map((ele) => ({
-    label: ele.name,
-    value: ele.id,
+  headerOptions: headers.headers.map((header) => ({
+    label: header.name,
+    value: header.id,
   })),
-  payloadOptions: payloads.payloads.map((ele) => ({
-    label: ele.name,
-    value: ele.id,
+  payloadOptions: payloads.payloads.map((payload) => ({
+    label: payload.name,
+    value: payload.id,
   })),
 });
 

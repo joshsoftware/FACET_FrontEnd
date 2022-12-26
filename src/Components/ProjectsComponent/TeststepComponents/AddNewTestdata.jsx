@@ -15,9 +15,9 @@ const AddNewTestdata = ({ data, onChange, onSubmit, handleClose }) => {
   const { name, parameters, payload, expectedOutcome, selectedExpOutcome } =
     data;
 
-  const expectedOutcomeOptions = expectedOutcome.map((ele) => ({
-    label: ele.name,
-    value: ele.id,
+  const expectedOutcomeOptions = expectedOutcome.map((expOutcome) => ({
+    label: expOutcome.name,
+    value: expOutcome.id,
   }));
 
   const activeExpectedOutcome = expectedOutcome?.find(

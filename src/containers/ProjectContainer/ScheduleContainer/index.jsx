@@ -17,13 +17,13 @@ const mapState = ({ schedules, testcases, environments }) => ({
   isLoading: schedules.isLoading,
   scheduledCases: schedules.scheduledCases,
   options: {
-    testcases: testcases.testcases.map((ele) => ({
-      label: ele.name,
-      value: ele.id,
+    testcases: testcases.testcases.map((testcase) => ({
+      label: testcase.name,
+      value: testcase.id,
     })),
-    environments: environments.environments.map((ele) => ({
-      label: ele.name,
-      value: ele.id,
+    environments: environments.environments.map((environment) => ({
+      label: environment.name,
+      value: environment.id,
     })),
   },
 });

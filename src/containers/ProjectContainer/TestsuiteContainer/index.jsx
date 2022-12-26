@@ -23,13 +23,13 @@ import { INITIAL_TESTSUITE_FORM_DATA } from "constants/appConstants";
 const mapState = ({ testsuites, testcases, environments }) => ({
   isLoading: testsuites.isLoading,
   testsuites: testsuites.testsuites,
-  testcasesOptions: testcases.testcases.map((ele) => ({
-    label: ele.name,
-    value: ele.id,
+  testcasesOptions: testcases.testcases.map((testcase) => ({
+    label: testcase.name,
+    value: testcase.id,
   })),
-  environments: environments.environments.map((ele) => ({
-    label: ele.name,
-    value: ele.id,
+  environments: environments.environments.map((environment) => ({
+    label: environment.name,
+    value: environment.id,
   })),
   isEnvLoading: environments.isEnvLoading,
 });
@@ -104,7 +104,7 @@ const TestsuiteContainer = ({ cat }) => {
     if (!projectName || !testsuiteName || !testcasesFD.length) {
       toastMessage(ALL_FIELDS_REQUIRED, "error");
     } else {
-      testcasesFD = testcasesFD.map((ele) => ele.value);
+      testcasesFD = testcasesFD.map((testcase) => testcase.value);
 
       let formPayload = {
         project: projectName,

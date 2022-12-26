@@ -24,7 +24,7 @@ const mapState = ({ projectMembers, user }) => ({
   isLoading: projectMembers.isLoading,
   projectAdmin: projectMembers.projectAdmin,
   user: user.currentUser,
-  usersOptions: user.users.map((ele) => ({ label: ele.name, value: ele.id })),
+  usersOptions: user.users.map((user) => ({ label: user.name, value: user.id })),
   isUsersLoading: user.isLoading,
 });
 
@@ -73,7 +73,7 @@ const MemberContainer = () => {
 
   // helps to submit add members form
   const onSubmitMemberForm = () => {
-    const membersData = selectedMembers.map((ele) => ele.value);
+    const membersData = selectedMembers.map((member) => member.value);
     dispatch(
       addMembersInProjectRequest({ project: projectName, members: membersData })
     );

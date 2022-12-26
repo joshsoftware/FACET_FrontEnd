@@ -13,7 +13,7 @@ import logo from "assets/images/logo.png";
 const mapState = ({ user }) => ({
   isLoggedIn: user.isLoggedIn,
   currentUser: user.currentUser,
-  usersOptions: user.users.map((ele) => ({ label: ele.name, value: ele.id })),
+  usersOptions: user.users.map((user) => ({ label: user.name, value: user.id })),
   isUsersLoading: user.isLoading,
 });
 
