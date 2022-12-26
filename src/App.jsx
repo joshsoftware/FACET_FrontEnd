@@ -36,18 +36,54 @@ function App() {
           <Route path="/dashboard" element={<DashBoard />} />
           <Route path="/profile" element={<ProfileContainer />} />
           <Route path="/project" element={<ProjectContainer />}>
-            <Route path="/project/:projectName" element={<ProjectOverviewContainer />} />
-            <Route path="/project/:projectName/environments" element={<EnvironmentContainer />} />
-            <Route path="/project/:projectName/endpoints" element={<EndpointContainer />} />
-            <Route path="/project/:projectName/headers" element={<HeaderContainer />} />
-            <Route path="/project/:projectName/payloads" element={<PayloadContainer />} />
-            <Route path="/project/:projectName/teststeps" element={<TeststepContainer />} />
-            <Route path="/project/:projectName/testcases" element={<TestcaseContainer />} />
-            <Route path="/project/:projectName/testsuites" element={<TestsuiteContainer />} />
-            <Route path="/project/:projectName/reports" element={<ReportsContainer />} />
-            <Route path="/project/:projectName/settings" element={<SettingsContainer />} />
-            <Route path="/project/:projectName/reports/:reportId" element={<ReportDetailsContainer />} />
-            <Route path="/project/:projectName/schedule" element={<ScheduleContainer />} />
+            <Route
+              path="/project/:projectName"
+              element={<ProjectOverviewContainer />}
+            />
+            <Route
+              path="/project/:projectName/environments"
+              element={<EnvironmentContainer />}
+            />
+            <Route
+              path="/project/:projectName/endpoints"
+              element={<EndpointContainer />}
+            />
+            <Route
+              path="/project/:projectName/headers"
+              element={<HeaderContainer />}
+            />
+            <Route
+              path="/project/:projectName/payloads"
+              element={<PayloadContainer />}
+            />
+            <Route
+              path="/project/:projectName/teststeps"
+              element={<TeststepContainer />}
+            />
+            <Route
+              path="/project/:projectName/testcases"
+              element={<TestcaseContainer />}
+            />
+            <Route
+              path="/project/:projectName/testsuites"
+              element={<TestsuiteContainer />}
+            />
+            <Route
+              path="/project/:projectName/reports"
+              element={<ReportsContainer />}
+            />
+            <Route
+              path="/project/:projectName/settings"
+              element={<SettingsContainer />}
+            />
+            <Route
+              path="/project/:projectName/reports/:reportId"
+              element={<ReportDetailsContainer />}
+            />
+            <Route
+              path="/project/:projectName/schedule"
+              element={<ScheduleContainer />}
+            />
             <Route
               path="/project/:projectName/schedule/new"
               element={<ScheduleContainer cat="add" />}
@@ -57,12 +93,30 @@ function App() {
               path="/project/:projectName/environments/:id"
               element={<EnvironmentContainer />}
             />
-            <Route path="/project/:projectName/endpoints/:id" element={<EndpointContainer />} />
-            <Route path="/project/:projectName/headers/:id" element={<HeaderContainer />} />
-            <Route path="/project/:projectName/payloads/:id" element={<PayloadContainer />} />
-            <Route path="/project/:projectName/teststeps/:id" element={<TeststepContainer />} />
-            <Route path="/project/:projectName/testcases/:id" element={<TestcaseContainer />} />
-            <Route path="/project/:projectName/testsuites/:id" element={<TestsuiteContainer />} />
+            <Route
+              path="/project/:projectName/endpoints/:id"
+              element={<EndpointContainer />}
+            />
+            <Route
+              path="/project/:projectName/headers/:id"
+              element={<HeaderContainer />}
+            />
+            <Route
+              path="/project/:projectName/payloads/:id"
+              element={<PayloadContainer />}
+            />
+            <Route
+              path="/project/:projectName/teststeps/:id"
+              element={<TeststepContainer />}
+            />
+            <Route
+              path="/project/:projectName/testcases/:id"
+              element={<TestcaseContainer />}
+            />
+            <Route
+              path="/project/:projectName/testsuites/:id"
+              element={<TestsuiteContainer />}
+            />
 
             <Route
               path="/project/:projectName/environments/new"
@@ -122,8 +176,14 @@ function App() {
               element={<TestsuiteContainer cat="edit" />}
             />
 
-            <Route path="/project/:projectName/execute/:id" element={<ExecuteContainer />} />
-            <Route path="/project/:projectName/members" element={<MemberContainer />} />
+            <Route
+              path="/project/:projectName/execute/:id"
+              element={<ExecuteContainer />}
+            />
+            <Route
+              path="/project/:projectName/members"
+              element={<MemberContainer />}
+            />
           </Route>
         </Route>
         <Route path="/login" element={<LoginContainer />} />

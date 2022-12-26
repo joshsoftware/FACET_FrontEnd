@@ -36,7 +36,7 @@ const AddNewSchedule = ({ isLoading, data, onChange, onSubmit, options }) => {
   const onSelectChange = (value, { name }) => onChange(name, value);
 
   // it checks whether all entries of form filled or not, if not it will disable the save button
-  // testcase and evironment is object if selected otherwise it will be null 
+  // testcase and evironment is object if selected otherwise it will be null
   const isSaveButtonDisabled =
     !testcase ||
     !environment ||

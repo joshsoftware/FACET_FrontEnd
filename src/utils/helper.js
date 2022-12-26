@@ -19,7 +19,7 @@ export const componentMissingErrors = (error) => {
     errMsg = error;
   }
   return errMsg;
-}
+};
 
 // Capital first letter of sentence
 export const captitalFiretLetter = (sentence) => {

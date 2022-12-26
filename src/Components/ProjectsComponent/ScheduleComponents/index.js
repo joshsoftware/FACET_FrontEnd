@@ -1,7 +1,4 @@
 import AddNewSchedule from "./AddNewSchedule";
 import ScheduleViewComponent from "./ScheduleViewComponent";
 
-export {
-    AddNewSchedule,
-    ScheduleViewComponent
-}
+export { AddNewSchedule, ScheduleViewComponent };

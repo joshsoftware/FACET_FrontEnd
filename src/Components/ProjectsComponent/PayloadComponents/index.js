@@ -1,7 +1,4 @@
-import AddNewPayload from "./AddNewPayload"
-import PayloadViewComponent from "./PayloadViewComponent"
+import AddNewPayload from "./AddNewPayload";
+import PayloadViewComponent from "./PayloadViewComponent";
 
-export {
-    AddNewPayload,
-    PayloadViewComponent
-}
+export { AddNewPayload, PayloadViewComponent };

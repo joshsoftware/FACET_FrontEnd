@@ -32,6 +32,12 @@ export const getReportDetails = (level, result) => {
       };
 
     default:
-      return { name: "", passedFields: 0, failedFields: 0, reportData: [], status: "" };
+      return {
+        name: "",
+        passedFields: 0,
+        failedFields: 0,
+        reportData: [],
+        status: "",
+      };
   }
 };

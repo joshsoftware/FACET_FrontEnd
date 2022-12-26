@@ -20,7 +20,7 @@ const AddTeststepsModal = ({
   const draggingItem = useRef();
   const dragOverItem = useRef();
 
-	const { updatedOptions } = teststepsOptions;
+  const { updatedOptions } = teststepsOptions;
 
   const onSave = () => {
     onAddTeststepDataSave();
