@@ -66,7 +66,7 @@ const TestsuiteContainer = ({ cat }) => {
 
   // set selected testsuite data
   useEffect(() => {
-    if (id) {
+    if (testsuites.length && id) {
       setSelectedItem(testsuites.filter((item) => item.id == id)[0]);
     }
     return () => setSelectedItem({});
