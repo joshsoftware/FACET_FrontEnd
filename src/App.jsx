@@ -2,6 +2,7 @@ import React, { lazy, Suspense } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
+import Fallback from "Components/Loader/fallback";
 import {
   privateRoutesConfig,
   projectRoutesConfig,
@@ -20,10 +21,7 @@ function App() {
   return (
     <div className="App">
       <ToastContainer />
-      {/* TO-Do
-        Fallback loader component to be add
-      */}
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<Fallback />}>
         <Routes>
           {/* authenticated routes */}
           <Route path="/" element={<PrivateRoutes />}>
@@ -32,7 +30,7 @@ function App() {
                 key={route.key}
                 path={route.path}
                 element={
-                  <Suspense fallback={<div>Loading...</div>}>
+                  <Suspense fallback={<Fallback />}>
                     <route.component />
                   </Suspense>
                 }
@@ -45,7 +43,7 @@ function App() {
                   key={route.key}
                   path={route.path}
                   element={
-                    <Suspense fallback={<div>Loading...</div>}>
+                    <Suspense fallback={<Fallback />}>
                       <route.component {...route.props} />
                     </Suspense>
                   }
@@ -61,7 +59,7 @@ function App() {
               key={route.key}
               path={route.path}
               element={
-                <Suspense fallback={<div>Loading...</div>}>
+                <Suspense fallback={<Fallback />}>
                   <route.component />
                 </Suspense>
               }
