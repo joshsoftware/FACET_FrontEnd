@@ -58,11 +58,7 @@ function App() {
             <Route
               key={route.key}
               path={route.path}
-              element={
-                <Suspense fallback={<Fallback />}>
-                  <route.component />
-                </Suspense>
-              }
+              element={<route.component />}
             />
           ))}
         </Routes>
