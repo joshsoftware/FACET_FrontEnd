@@ -1,6 +1,7 @@
 import { call, put, takeLatest } from "redux-saga/effects";
 
 import { apisErrorMessage } from "utils/apisErrorMessage";
+import { getOrganizationsApi } from "./apis";
 import { getOrganizationsFailure, getOrganizationsSuccess } from "./actions";
 import { toastMessage } from "utils/toastMessage";
 
@@ -8,7 +9,7 @@ import orgConstants from "./constants";
 
 export function* getOrganizations() {
   try {
-    const response = yield call();
+    const response = yield call(getOrganizationsApi);
     yield put(getOrganizationsSuccess(response.organizations));
   } catch (error) {
     const errorMessage = apisErrorMessage(error);
@@ -19,5 +20,5 @@ export function* getOrganizations() {
 
 // watcher saga
 export default function* organizationsSagas() {
-  yield takeLatest(orgConstants.GET_ORGANIZATIONS_REQUEST);
+  yield takeLatest(orgConstants.GET_ORGANIZATIONS_REQUEST, getOrganizations);
 }
