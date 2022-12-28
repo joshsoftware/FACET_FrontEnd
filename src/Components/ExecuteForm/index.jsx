@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
 
@@ -13,25 +13,13 @@ const ExecuteForm = ({
   isEnvsLoading,
   handleExecute,
 }) => {
-  // This component and its methods need to be change with respect to FormSelect component
-  const [options, setOptions] = useState([]);
-  const [selectedEnv, setSelectedEnv] = useState(0);
+  const [selectedEnv, setSelectedEnv] = useState(null);
 
-  useEffect(() => {
-    let env_options = [];
-    environments.forEach((ele) => {
-      env_options.push({ value: ele.id, label: ele.name });
-    });
-    setOptions(env_options);
-  }, [environments]);
+  // set selected environment's value
+  const handleEnvChange = (value) => setSelectedEnv(value);
 
-  const handleEnvChange = (_name, value) => {
-    setSelectedEnv(value);
-  };
-
-  const onExecute = () => {
-    handleExecute(data.id, selectedEnv);
-  };
+  // helps to call execute action function by passing id and env as parameters
+  const onExecute = () => handleExecute(data?.id, selectedEnv.value);
 
   return (
     <ViewComponent disabledHeader>
@@ -45,8 +33,11 @@ const ExecuteForm = ({
           <Col md={6}>
             <FormSelect
               placeholder="Select Environment..."
-              options={options}
-              handlechange={handleEnvChange}
+              options={environments}
+              value={selectedEnv}
+              onChange={handleEnvChange}
+              isLoading={isEnvsLoading}
+              isDisabled={isEnvsLoading}
             />
           </Col>
           <Button

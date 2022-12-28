@@ -17,7 +17,6 @@ import { getUsersRequest } from "store/User/actions";
 
 const adminTableHeadings = ["#", "Member", "Role", "Actions"];
 const nonAdminTableHeadings = ["#", "Member", "Role"];
-const initialState = { project: "", members: [] };
 
 const mapState = ({ projectMembers, user }) => ({
   members: projectMembers.members,
@@ -25,69 +24,66 @@ const mapState = ({ projectMembers, user }) => ({
   isLoading: projectMembers.isLoading,
   projectAdmin: projectMembers.projectAdmin,
   user: user.currentUser,
-  allUsers: user.users,
+  usersOptions: user.users.map((user) => ({
+    label: user.name,
+    value: user.id,
+  })),
+  isUsersLoading: user.isLoading,
 });
 
 const MemberContainer = () => {
   const dispatch = useDispatch();
 
   const { projectName } = useParams();
-  const { members, isLoading, projectAdmin, user, allUsers } =
-    useSelector(mapState);
+  const {
+    members,
+    isLoading,
+    projectAdmin,
+    user,
+    usersOptions,
+    isUsersLoading,
+  } = useSelector(mapState);
 
   const [show, setShow] = useState(false);
-  const [addMemberFormData, setAddMemberFormData] = useState({
-    ...initialState,
-    project: projectName,
-  });
-  const [usersOptions, setUsersOptions] = useState([]);
+  const [selectedMembers, setSelectedMembers] = useState([]);
 
-  const toggleModal = () => {
-    setShow(!show);
-  };
+  // toggle modal
+  const toggleModal = () => setShow(!show);
 
+  // get all members of the project
   useEffect(() => {
     dispatch(getProjectMembersRequest({ project: projectName }));
   }, [projectName]);
 
+  // get users which are not members of the project when modal opens
   useEffect(() => {
-    if (show === true) {
+    if (show) {
       dispatch(
         getUsersRequest({ exclude: "projectMembers", project: projectName })
       );
     }
+    return () => setSelectedMembers([]);
   }, [projectName, show]);
 
-  useEffect(() => {
-    let options_data = [];
-    if (allUsers) {
-      allUsers.forEach((ele) => {
-        options_data.push({ value: ele.id, label: ele.name });
-      });
-    }
-    setUsersOptions(options_data);
-  }, [allUsers]);
-
-  const removeMember = (id) => {
+  // helps to remove member from the project
+  const removeMember = (id) =>
     dispatch(
       removeMembersInProjectRequest({ project: projectName, members: [id] })
     );
-  };
 
-  const onchangeMembers = (_name, val) => {
-    setAddMemberFormData((prevState) => ({
-      ...prevState,
-      members: val,
-    }));
-  };
+  // set selected members
+  const onChangeMembers = (value) => setSelectedMembers(value);
 
+  // helps to submit add members form
   const onSubmitMemberForm = () => {
-    const members = addMemberFormData.members.map((e) => e.value);
-    dispatch(addMembersInProjectRequest({ ...addMemberFormData, members }));
+    const membersData = selectedMembers.map((member) => member.value);
+    dispatch(
+      addMembersInProjectRequest({ project: projectName, members: membersData })
+    );
     toggleModal();
-    setAddMemberFormData((prevState) => ({ ...prevState, members: [] }));
   };
 
+  // check whether loggedin user is the project admin or not
   const isProjectAdmin = projectAdmin === user.id;
   const tableHeadings = isProjectAdmin
     ? adminTableHeadings
@@ -100,9 +96,11 @@ const MemberContainer = () => {
           show={show}
           handleClose={toggleModal}
           usersOptions={usersOptions}
-          onchange={onchangeMembers}
-          value={addMemberFormData.members}
-          handleSubmit={onSubmitMemberForm}
+          value={selectedMembers}
+          onChange={onChangeMembers}
+          onSubmit={onSubmitMemberForm}
+          isLoading={isUsersLoading}
+          isDisabled={isUsersLoading}
         />
       )}
       <div className="py-5 w-100">

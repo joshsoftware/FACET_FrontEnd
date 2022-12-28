@@ -21,10 +21,11 @@ const TestFieldCommentModal = ({
     data;
 
   const isStatusChanged = prevStatus !== status;
+  const activeStatus = STATUS_OPTIONS.filter((ele) => ele.value === status);
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e) =>
     onChangeCommentForm(e.target.name, e.target.value);
-  };
+  const handleStatusChange = (val) => onChangeCommentForm("status", val.value);
 
   return (
     <CustomModal show={show} size="lg" onClose={onCloseModal} title={field}>
@@ -43,9 +44,9 @@ const TestFieldCommentModal = ({
           <FormSelect
             label="Status"
             options={STATUS_OPTIONS}
-            value={status}
+            value={activeStatus}
             name="status"
-            handlechange={onChangeCommentForm}
+            onChange={handleStatusChange}
             isRequired
           />
           <FormInput

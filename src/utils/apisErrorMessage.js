@@ -16,7 +16,8 @@ export const apisErrorMessage = (err) => {
           }
         } else {
           let [errKey, errValue] = Object.entries(error)[0];
-          errValue = typeof errValue === "string" ? errValue : COMMON_ERROR_MESSAGE;
+          errValue =
+            typeof errValue === "string" ? errValue : COMMON_ERROR_MESSAGE;
           return `${errValue} in ${errKey}`;
         }
         return COMMON_ERROR_MESSAGE;

@@ -19,6 +19,14 @@ export const EXPECTED_OUTCOME_TEMPLATE = {
   value: 200,
 };
 
+export const HTTP_METHODS_OPTIONS = [
+  { value: "GET", label: "GET" },
+  { value: "POST", label: "POST" },
+  { value: "PUT", label: "PUT" },
+  { value: "PATCH", label: "PATCH" },
+  { value: "DELETE", label: "DELETE" },
+];
+
 export const SELECT_OPTIONS_TESTDATA_FORM = {
   methods: [
     { value: "GET", label: "GET" },
@@ -35,9 +43,9 @@ export const SELECT_OPTIONS_TESTDATA_FORM = {
 export const INITIAL_TESTSTEP_FORM_DATA = {
   name: "",
   method: "",
-  endpoint_id: "",
-  header_id: "",
-  payload_id: "",
+  endpoint: "",
+  header: "",
+  payload: "",
 };
 
 export const INITIAL_TESTDATA_FORM_DATA = {
@@ -45,8 +53,8 @@ export const INITIAL_TESTDATA_FORM_DATA = {
   name: "",
   payload: JSON.stringify({}),
   parameters: { "": "" },
-  selected_expected_outcome: "",
-  expected_outcome: [],
+  selectedExpOutcome: null,
+  expectedOutcome: [],
 };
 
 export const INITIAL_PAYLOAD_FORM_DATA = {
@@ -56,7 +64,23 @@ export const INITIAL_PAYLOAD_FORM_DATA = {
   expected_outcome: [],
 };
 
+export const INITIAL_TESTSUITE_FORM_DATA = {
+  name: "",
+  testcases: [],
+};
+
 export const STATUS_OPTIONS = [
   { label: "Passed", value: "passed" },
   { label: "Failed", value: "failed" },
+];
+
+export const PARAMETERS_TABLE_HEADINGS = ["Key", "Value"];
+
+export const EXPECTED_OUTCOME_TABLE_HEADINGS = [
+  "#",
+  "Name",
+  "Type",
+  "isExact",
+  "Value",
+  "Validations",
 ];

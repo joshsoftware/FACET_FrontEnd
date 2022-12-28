@@ -1,83 +1,89 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Form } from 'react-bootstrap';
+import React from "react";
+import { Form } from "react-bootstrap";
+import PropTypes from "prop-types";
 
-import { ViewComponent } from 'Components/CustomComponents';
-import { FormInput, FormSelect } from 'Components/forms/Inputs';
-import { ConvertToSlug } from 'utils';
+import FormInput from "Components/forms/Inputs/FormInput";
+import FormSelect from "Components/forms/Inputs/FormSelect";
+import { ViewComponent } from "Components/CustomComponents";
 
+import { ConvertToSlug } from "utils";
 
-const AddNewTeststep = (props) => {
-    const { cat, data, handleSubmit, onchange, options } = props;
+const AddNewTeststep = ({
+  cat,
+  data,
+  onSubmit,
+  onChange,
+  methodOptions,
+  endpointOptions,
+  payloadOptions,
+  headerOptions,
+}) => {
+  const { name, method, endpoint, header, payload } = data;
 
-    const onFieldChange = (e) => {
-        onchange(e.target.name, e.target.value)
-    }
+  // on input field change
+  const onFieldChange = (e) => onChange(e.target.name, e.target.value);
+  // on select field change
+  const onSelectChange = (value, { name }) => onChange(name, value);
 
-    const onSelectChange = (name, value) => {
-        onchange(name, value)
-    }    
-    
-    return (
-        <Form className='w-100' onSubmit={handleSubmit}>
-            <ViewComponent
-                title="Add New"
-                type="save"
-                onSave={handleSubmit}
-            >
-                <FormInput 
-                    label="Name"
-                    placeholder="Name"
-                    name="name"
-                    value={data.name}
-                    onChange={onFieldChange}
-                    text={data.name.length!==0&&`Your teststep will created as ${ConvertToSlug(data.name)}`}
-                    disabled={cat==='edit'}
-                    isRequired
-                />
-                <FormSelect 
-                    label="Method"
-                    name="method"
-                    options={options.methods}
-                    value={data.method}
-                    handlechange={onSelectChange}
-                    isRequired
-                />
-                <FormSelect 
-                    label="Endpoint"
-                    name="endpoint_id"
-                    options={options.endpoints}
-                    value={data.endpoint_id}
-                    handlechange={onSelectChange}
-                    isRequired
-                />
-                <FormSelect 
-                    label="Header"
-                    name="header_id"
-                    options={options.headers}
-                    value={data.header_id}
-                    handlechange={onSelectChange}
-                    isRequired
-                />
-                <FormSelect 
-                    label="Payload"
-                    name="payload_id"
-                    options={options.payloads}
-                    value={data.payload_id}
-                    handlechange={onSelectChange}
-                    isRequired
-                />
-            </ViewComponent>
-        </Form>
-    )
-}
+  return (
+    <Form className="w-100" onSubmit={onSubmit}>
+      <ViewComponent title="Add New" type="save" onSave={onSubmit}>
+        <FormInput
+          label="Name"
+          placeholder="Name"
+          name="name"
+          value={name}
+          onChange={onFieldChange}
+          text={name && `Your teststep will created as ${ConvertToSlug(name)}`}
+          disabled={cat === "edit"}
+          isRequired
+        />
+        <FormSelect
+          label="Method"
+          name="method"
+          options={methodOptions}
+          value={method}
+          onChange={onSelectChange}
+          isRequired
+        />
+        <FormSelect
+          label="Endpoint"
+          name="endpoint"
+          options={endpointOptions}
+          value={endpoint}
+          onChange={onSelectChange}
+          isRequired
+        />
+        <FormSelect
+          label="Header"
+          name="header"
+          options={headerOptions}
+          value={header}
+          onChange={onSelectChange}
+          isRequired
+        />
+        <FormSelect
+          label="Payload"
+          name="payload"
+          options={payloadOptions}
+          value={payload}
+          onChange={onSelectChange}
+          isRequired
+        />
+      </ViewComponent>
+    </Form>
+  );
+};
+
+AddNewTeststep.propTypes = {
+  cat: PropTypes.oneOf(["add", "edit"]).isRequired,
+  data: PropTypes.object.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
+  methodOptions: PropTypes.arrayOf(PropTypes.object).isRequired,
+  endpointOptions: PropTypes.arrayOf(PropTypes.object).isRequired,
+  headerOptions: PropTypes.arrayOf(PropTypes.object).isRequired,
+  payloadOptions: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 export default AddNewTeststep;
-
-AddNewTeststep.propTypes = { 
-    cat: PropTypes.string, 
-    data: PropTypes.object, 
-    handleSubmit: PropTypes.func, 
-    onchange: PropTypes.func, 
-    options: PropTypes.object
-}
