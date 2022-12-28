@@ -3,7 +3,7 @@ const organizationsData = {
     {
       id: 1,
       name: "sample-org-1",
-      image: "",
+      image: "https://avatars.githubusercontent.com/u/111271602?s=40&v=4",
       description: "sample org description",
       is_owner: true,
     },
