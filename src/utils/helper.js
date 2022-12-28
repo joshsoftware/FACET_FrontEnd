@@ -25,3 +25,22 @@ export const componentMissingErrors = (error) => {
 export const captitalFiretLetter = (sentence) => {
   return sentence.charAt(0).toUpperCase() + sentence.slice(1).toLowerCase();
 };
+
+// helps to build dyanamic url by replacing :key with value
+export const buildRoute = (message, interpolationObject) => {
+  try {
+    Object.entries(interpolationObject).forEach(([key, value]) => {
+      message = message.replace(":" + key, value.toString());
+    });
+  } catch (error) {
+    console.error(
+      "error while setting values to string: ",
+      message,
+      " with object: ",
+      interpolationObject,
+      "error: ",
+      error
+    );
+  }
+  return message;
+};
