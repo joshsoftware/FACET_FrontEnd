@@ -2,11 +2,18 @@ import { lazy } from "react";
 
 import * as routes from "constants/routeConstants";
 
+// public routes containers
 const LoginContainer = lazy(() => import("containers/LoginContainer"));
 const SignUpContainer = lazy(() => import("containers/SignUpContainer"));
 
+// private routes containers
 const DashBoard = lazy(() => import("containers/DashBoard"));
 const Profile = lazy(() => import("containers/ProfileContainer"));
+const MyOrganizations = lazy(() =>
+  import("containers/OrganizationContainer/MyOrganizations")
+);
+
+// project routes containers
 const ProjectOverview = lazy(() =>
   import("containers/ProjectContainer/ProjectOverviewContainer")
 );
@@ -78,6 +85,11 @@ export const privateRoutesConfig = [
     key: "user-profile",
     path: routes.USER_PROFILE_ROUTE,
     component: Profile,
+  },
+  {
+    key: "my-organizations",
+    path: routes.MY_ORGANIZATIONS_ROUTE,
+    component: MyOrganizations,
   },
 ];
 

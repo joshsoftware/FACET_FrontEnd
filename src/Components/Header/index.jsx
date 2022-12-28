@@ -1,12 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import AddAdminModal from "Components/DashboardComponent/SuperAdmin/AddAdminModal";
 
 import { addAdminsRequest } from "store/SuperAdmin/actions";
 import { getUsersRequest, signOutRequest } from "store/User/actions";
+
+import {
+  DASHBOARD_ROUTE,
+  LOGIN_ROUTE,
+  MY_ORGANIZATIONS_ROUTE,
+  SIGNUP_ROUTE,
+  USER_PROFILE_ROUTE,
+} from "constants/routeConstants";
 
 import logo from "assets/images/logo.png";
 
@@ -21,7 +29,6 @@ const mapState = ({ user }) => ({
 });
 
 const Header = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const {
@@ -77,14 +84,16 @@ const Header = () => {
       )}
       <Container fluid>
         <Navbar.Brand>
-          <Link to="/dashboard">
+          <Link to={DASHBOARD_ROUTE}>
             <img src={logo} width={100} alt="Facet" />
           </Link>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="facet-navbar-nav" />
         <Navbar.Collapse id="facet-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link onClick={() => navigate("/dashboard")}>Home</Nav.Link>
+            <Nav.Link as={Link} to={DASHBOARD_ROUTE}>
+              Home
+            </Nav.Link>
             {isLoggedIn && isSuperAdmin && (
               <Nav.Link onClick={handleToggle}>Add Admin</Nav.Link>
             )}
@@ -93,10 +102,12 @@ const Header = () => {
             {isLoggedIn ? (
               <Nav>
                 <NavDropdown title={`Welcome, ${userName}`}>
-                  <NavDropdown.Item onClick={() => navigate("/profile")}>
+                  <NavDropdown.Item as={Link} to={USER_PROFILE_ROUTE}>
                     My Profile
                   </NavDropdown.Item>
-                  <NavDropdown.Item>My Organizations</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to={MY_ORGANIZATIONS_ROUTE}>
+                    My Organizations
+                  </NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item
                     style={{ color: "red" }}
@@ -108,10 +119,10 @@ const Header = () => {
               </Nav>
             ) : (
               <Nav>
-                <Link to="/login" className="btn btn-primary me-2">
+                <Link to={LOGIN_ROUTE} className="btn btn-primary me-2">
                   Login
                 </Link>
-                <Link to="/signup" className="btn btn-outline-primary">
+                <Link to={SIGNUP_ROUTE} className="btn btn-outline-primary">
                   Signup
                 </Link>
               </Nav>
