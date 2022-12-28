@@ -9,6 +9,10 @@ export const SIGNUP_ROUTE = "/signup";
 export const DASHBOARD_ROUTE = "/dashboard";
 export const USER_PROFILE_ROUTE = "/profile";
 export const MY_ORGANIZATIONS_ROUTE = "/organizations";
+export const ADD_ORGANIZATION_ROUTE = "/organization/new";
+
+// organizations routes
+export const ORG_OVERVIEW_ROUTE = "/orgs/:org";
 
 // project routes contants
 const projectRoutePrefix = "/project/:projectName";
