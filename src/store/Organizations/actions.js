@@ -1,0 +1,71 @@
+import orgConstants from "./constants";
+
+export const getOrganizationsRequest = (data) => ({
+  type: orgConstants.GET_ORGANIZATIONS_REQUEST,
+  payload: data,
+});
+
+export const getOrganizationsSuccess = (data) => ({
+  type: orgConstants.GET_ORGANIZATIONS_SUCCESS,
+  payload: data,
+});
+
+export const getOrganizationsFailure = () => ({
+  type: orgConstants.GET_ORGANIZATIONS_FAILURE,
+});
+
+export const addOrganizationRequest = (data) => ({
+  type: orgConstants.ADD_ORGANIZATION_REQUEST,
+  payload: data,
+});
+
+export const addOrganizationSuccess = (data) => ({
+  type: orgConstants.ADD_ORGANIZATION_SUCCESS,
+  payload: data,
+});
+
+export const addOrganizationFailure = () => ({
+  type: orgConstants.ADD_ORGANIZATION_FAILURE,
+});
+
+export const editOrganizationRequest = (data) => ({
+  type: orgConstants.EDIT_ORGANIZATION_REQUEST,
+  payload: data,
+});
+
+export const editOrganizationSuccess = (data) => ({
+  type: orgConstants.EDIT_ORGANIZATION_SUCCESS,
+  payload: data,
+});
+
+export const editOrganizationFailure = () => ({
+  type: orgConstants.EDIT_ORGANIZATION_FAILURE,
+});
+
+export const leaveOrganizationRequest = (data) => ({
+  type: orgConstants.LEAVE_ORGANIZATION_REQUEST,
+  payload: data,
+});
+
+export const leaveOrganizationSuccess = (data) => ({
+  type: orgConstants.LEAVE_ORGANIZATION_SUCCESS,
+  payload: data,
+});
+
+export const leaveOrganizationFailure = () => ({
+  type: orgConstants.LEAVE_ORGANIZATION_FAILURE,
+});
+
+export const deleteOrganizationRequest = (data) => ({
+  type: orgConstants.DELETE_ORGANIZATION_REQUEST,
+  payload: data,
+});
+
+export const deleteOrganizationSuccess = (data) => ({
+  type: orgConstants.DELETE_ORGANIZATION_SUCCESS,
+  payload: data,
+});
+
+export const deleteOrganizationFailure = () => ({
+  type: orgConstants.DELETE_ORGANIZATION_FAILURE,
+});
