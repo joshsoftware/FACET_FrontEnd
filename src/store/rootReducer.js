@@ -15,6 +15,7 @@ import testcaseReducer from "./Testcases/reducers";
 import testdataReducer from "./Testdata/reducers";
 import teststepReducer from "./Teststeps/reducers";
 import testsuiteReducer from "./Testsuites/reducers";
+import organizationsReducer from "./Organizations/reducers";
 
 const rootReducer = combineReducers({
   user: userReducer,
@@ -32,6 +33,7 @@ const rootReducer = combineReducers({
   reports: reportsReducer,
   schedules: scheduleReducer,
   testsuites: testsuiteReducer,
+  orgs: organizationsReducer,
 });
 
 export default rootReducer;
