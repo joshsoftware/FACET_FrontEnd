@@ -8,6 +8,7 @@ export const SIGNUP_ROUTE = "/signup";
 // private route constants
 export const DASHBOARD_ROUTE = "/dashboard";
 export const USER_PROFILE_ROUTE = "/profile";
+export const MY_ORGANIZATIONS_ROUTE = "/organizations";
 
 // project routes contants
 const projectRoutePrefix = "/project/:projectName";
