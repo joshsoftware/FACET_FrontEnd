@@ -2,7 +2,7 @@ import orgConstants from "./constants";
 
 const initialState = { isLoading: false, organizations: [], isSuccess: false };
 
-const organizationReducer = (state = initialState, action) => {
+const organizationsReducer = (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
@@ -56,4 +56,4 @@ const organizationReducer = (state = initialState, action) => {
   }
 };
 
-export default organizationReducer;
+export default organizationsReducer;
