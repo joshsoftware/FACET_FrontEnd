@@ -10,6 +10,7 @@ export const DASHBOARD_ROUTE = "/dashboard";
 export const USER_PROFILE_ROUTE = "/profile";
 export const MY_ORGANIZATIONS_ROUTE = "/organizations";
 export const ADD_ORGANIZATION_ROUTE = "/organization/new";
+export const INVITE_ORGANIZATION_ROUTE = "/organization/:org/invite";
 
 // organizations routes
 export const ORG_OVERVIEW_ROUTE = "/orgs/:org";

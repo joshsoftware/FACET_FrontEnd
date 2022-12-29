@@ -71,3 +71,7 @@ export const MEMBERS = {
   ADD_NEW_SUCCESS: "Members added successfully!",
   REMOVE_SUCCESS: "Member removed Successfully! ",
 };
+
+export const ORGANIZATIONS = {
+  ADD_NEW_SUCCESS: "Organization created successfully!",
+};
