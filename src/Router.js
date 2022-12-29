@@ -12,6 +12,11 @@ const Profile = lazy(() => import("containers/ProfileContainer"));
 const MyOrganizations = lazy(() =>
   import("containers/OrganizationContainer/MyOrganizations")
 );
+const AddNewOrganization = lazy(() =>
+  import(
+    "containers/OrganizationContainer/OnboardOrganization/AddNewOrganization"
+  )
+);
 
 // project routes containers
 const ProjectOverview = lazy(() =>
@@ -90,6 +95,11 @@ export const privateRoutesConfig = [
     key: "my-organizations",
     path: routes.MY_ORGANIZATIONS_ROUTE,
     component: MyOrganizations,
+  },
+  {
+    key: "add-new-organization",
+    path: routes.ADD_ORGANIZATION_ROUTE,
+    component: AddNewOrganization,
   },
 ];
 
