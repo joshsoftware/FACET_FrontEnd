@@ -6,6 +6,7 @@ import FormInput from "Components/forms/Inputs/FormInput";
 import { SaveButton } from "Components/forms/Buttons";
 
 import ConvertToSlug from "utils/ConvertToSlug";
+import { DESCRIPTION, EMAIL, ORG_NAME } from "constants/userMessagesConstants";
 
 const AddNewOrganizationForm = ({ data, onChange, onSubmit }) => {
   const { orgName, description, contactEmail } = data;
@@ -33,7 +34,7 @@ const AddNewOrganizationForm = ({ data, onChange, onSubmit }) => {
     <Form className="my-4 px-4 py-5 rounded bg-white" onSubmit={onSubmit}>
       <FormInput
         label="Organization Name"
-        placeholder="Ex. my-sample-org"
+        placeholder={ORG_NAME}
         name="orgName"
         value={orgName}
         onChange={onChange}
@@ -46,7 +47,7 @@ const AddNewOrganizationForm = ({ data, onChange, onSubmit }) => {
         name="description"
         value={description}
         onChange={onChange}
-        placeholder="Write here..."
+        placeholder={DESCRIPTION}
         rows={3}
       />
       <FormInput
@@ -55,7 +56,7 @@ const AddNewOrganizationForm = ({ data, onChange, onSubmit }) => {
         name="contactEmail"
         value={contactEmail}
         onChange={onChange}
-        placeholder="Ex. contact@myorg.com"
+        placeholder={EMAIL}
         isRequired
       />
       <SaveButton className="w-100" type="submit" disabled={isButtonDisabled} />

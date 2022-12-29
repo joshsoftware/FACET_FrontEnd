@@ -4,6 +4,11 @@ export const COMMON_ERROR_MESSAGE = "Something went wrong!";
 // common FORM error messages
 export const ALL_FIELDS_REQUIRED = "Please fill all required fields!";
 
+// user messages constants for placeholder
+export const ORG_NAME = "my-sample-org";
+export const DESCRIPTION = "Write Here...";
+export const EMAIL = "contact@org.com";
+
 // user message constants for toast messages after api call  succeed
 export const LOGOUT_SUCCESS = "Logout successfully!";
 export const ADMINS_ADD_SUCCESS = "Admins added successfully!";
