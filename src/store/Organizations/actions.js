@@ -69,3 +69,7 @@ export const deleteOrganizationSuccess = (data) => ({
 export const deleteOrganizationFailure = () => ({
   type: orgConstants.DELETE_ORGANIZATION_FAILURE,
 });
+
+export const clearOrganizationsState = () => ({
+  type: orgConstants.CLEAR_STATE,
+});
