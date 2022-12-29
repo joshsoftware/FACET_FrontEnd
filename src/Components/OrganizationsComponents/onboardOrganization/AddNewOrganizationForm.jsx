@@ -24,7 +24,10 @@ const AddNewOrganizationForm = ({ data, onChange, onSubmit }) => {
   );
 
   // check whether the all required fields of form are filled
-  const isButtonDisabled = !orgName || !contactEmail;
+  const isButtonDisabled = useMemo(
+    () => !orgName || !contactEmail,
+    [orgName, contactEmail]
+  );
 
   return (
     <Form className="my-4 px-4 py-5 rounded bg-white" onSubmit={onSubmit}>

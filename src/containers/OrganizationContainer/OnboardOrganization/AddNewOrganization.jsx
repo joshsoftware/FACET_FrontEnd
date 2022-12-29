@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Container, Col } from "react-bootstrap";
 import { Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -33,10 +33,10 @@ const AddNewOrganization = () => {
   }, []);
 
   // handles and store the data into state when input changed
-  const onFormDataChange = (e) => {
+  const onFormDataChange = useCallback((e) => {
     const { name, value } = e.target;
     setOrgFormData((prevState) => ({ ...prevState, [name]: value }));
-  };
+  }, []);
 
   // handle form submit action
   const handleSubmit = (e) => {
