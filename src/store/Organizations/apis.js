@@ -5,3 +5,5 @@
 import organizationsData from "utils/mockdata/organizations";
 
 export const getOrganizationsApi = () => organizationsData;
+
+export const addOrganizationApi = (data) => data;

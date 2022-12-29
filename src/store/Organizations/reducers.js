@@ -1,6 +1,11 @@
 import orgConstants from "./constants";
 
-const initialState = { isLoading: false, organizations: [], isSuccess: false };
+const initialState = {
+  isLoading: false,
+  organizations: [],
+  organization: {},
+  isSuccess: false,
+};
 
 const organizationsReducer = (state = initialState, action) => {
   const { type, payload } = action;
@@ -19,7 +24,12 @@ const organizationsReducer = (state = initialState, action) => {
       return { ...state, isLoading: true };
 
     case orgConstants.ADD_ORGANIZATION_SUCCESS:
-      return { ...state, isLoading: false, isSuccess: true };
+      return {
+        ...state,
+        isLoading: false,
+        isSuccess: true,
+        organization: payload,
+      };
 
     case orgConstants.ADD_ORGANIZATION_FAILURE:
       return { ...state, isLoading: false };
@@ -50,6 +60,9 @@ const organizationsReducer = (state = initialState, action) => {
 
     case orgConstants.DELETE_ORGANIZATION_FAILURE:
       return { ...state, isLoading: false };
+
+    case orgConstants.CLEAR_STATE:
+      return initialState;
 
     default:
       return state;
