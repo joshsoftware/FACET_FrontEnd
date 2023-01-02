@@ -42,6 +42,20 @@ export const editOrganizationFailure = () => ({
   type: orgConstants.EDIT_ORGANIZATION_FAILURE,
 });
 
+export const inviteUsersInOrganizationRequest = (data) => ({
+  type: orgConstants.EDIT_ORGANIZATION_REQUEST,
+  payload: data,
+});
+
+export const inviteUsersInOrganizationSuccess = (data) => ({
+  type: orgConstants.EDIT_ORGANIZATION_SUCCESS,
+  payload: data,
+});
+
+export const inviteUsersInOrganizationFailure = () => ({
+  type: orgConstants.EDIT_ORGANIZATION_FAILURE,
+});
+
 export const leaveOrganizationRequest = (data) => ({
   type: orgConstants.LEAVE_ORGANIZATION_REQUEST,
   payload: data,
