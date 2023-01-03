@@ -17,6 +17,24 @@ const InviteMembersSelect = ({ org, value, loadOptions, onChange }) => {
   // check whether the new option is valid or not
   const isValidNewOption = (inputValue) => validateEmail(inputValue);
 
+  // styles for react select
+  const creatableAsyncSelectStyles = {
+    multiValue: (styles) => ({
+      ...styles,
+      marginTop: 8,
+      marginBottom: 8,
+      marginLeft: 4,
+      marginRight: 4,
+    }),
+    multiValueLabel: (styles) => ({
+      ...styles,
+      paddingLeft: 8,
+      paddingTop: 4,
+      paddingBottom: 4,
+      paddingRight: 4,
+    }),
+  };
+
   return (
     <CreatableAsyncSelect
       value={value}
@@ -24,6 +42,7 @@ const InviteMembersSelect = ({ org, value, loadOptions, onChange }) => {
       onChange={onChange}
       formatCreateLabel={formatCreateLabel}
       components={{ MultiValueLabel: UsersMultiValueLabel }}
+      styles={creatableAsyncSelectStyles}
       isValidNewOption={isValidNewOption}
       isMulti
       cacheOptions
