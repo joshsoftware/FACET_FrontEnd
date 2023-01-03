@@ -80,3 +80,5 @@ export const MEMBERS = {
 export const ORGANIZATIONS = {
   ADD_NEW_SUCCESS: "Organization created successfully!",
 };
+
+export const INVITE_USERS_SUCCESS = "Invitation email has been sent to users!";

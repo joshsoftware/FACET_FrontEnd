@@ -43,6 +43,15 @@ const organizationsReducer = (state = initialState, action) => {
     case orgConstants.EDIT_ORGANIZATION_FAILURE:
       return { ...state, isLoading: false };
 
+    case orgConstants.INVITE_USERS_IN_ORGANIZATION_REQUEST:
+      return { ...state, isLoading: true };
+
+    case orgConstants.INVITE_USERS_IN_ORGANIZATION_SUCCESS:
+      return { ...state, isLoading: false, isSuccess: true };
+
+    case orgConstants.INVITE_USERS_IN_ORGANIZATION_FAILURE:
+      return { ...state, isLoading: false };
+
     case orgConstants.LEAVE_ORGANIZATION_REQUEST:
       return { ...state, isLoading: true };
 
