@@ -14,6 +14,7 @@ const InviteMembersSelect = ({ org, value, loadOptions, onChange }) => {
     </div>
   );
 
+  // check whether the new option is valid or not
   const isValidNewOption = (inputValue) => validateEmail(inputValue);
 
   return (
