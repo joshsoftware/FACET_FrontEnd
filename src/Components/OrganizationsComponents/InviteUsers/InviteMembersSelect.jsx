@@ -19,15 +19,15 @@ const InviteMembersSelect = ({ org, value, loadOptions, onChange }) => {
 
   return (
     <CreatableAsyncSelect
+      value={value}
+      loadOptions={loadOptions}
+      onChange={onChange}
+      formatCreateLabel={formatCreateLabel}
+      components={{ MultiValueLabel: UsersMultiValueLabel }}
+      isValidNewOption={isValidNewOption}
       isMulti
       cacheOptions
       defaultOptions
-      value={value}
-      isValidNewOption={isValidNewOption}
-      onChange={onChange}
-      loadOptions={loadOptions}
-      formatCreateLabel={formatCreateLabel}
-      components={{ MultiValueLabel: UsersMultiValueLabel }}
     />
   );
 };
