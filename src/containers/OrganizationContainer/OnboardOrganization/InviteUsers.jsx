@@ -38,7 +38,10 @@ const InviteUsers = () => {
   // handles invite users form submit
   const handleSubmit = (e) => {
     e.preventDefault();
-    const inviteUsersInOrg = selectedMembers.map((user) => user.value);
+    const inviteUsersInOrg = selectedMembers.map(({ value, __isNew__ }) => ({
+      type: __isNew__ ? "email" : "user",
+      value: value,
+    }));
     dispatch(inviteUsersInOrganizationRequest(inviteUsersInOrg));
   };
 
@@ -52,12 +55,12 @@ const InviteUsers = () => {
         <Card className="my-4">
           <Card.Body className="py-4">
             <h5>Add organization members</h5>
-            <div className="text-muted">
+            <small className="text-muted">
               Organization members will be able to view projects, organize into
               teams, and collaborate on the project that is assigned to them.
-            </div>
+            </small>
             <Form onSubmit={handleSubmit}>
-              <div className="py-3">
+              <div className="pt-4 pb-3">
                 <FormLabel>Search by username, email address</FormLabel>
                 <InviteMembersSelect
                   org={org}
