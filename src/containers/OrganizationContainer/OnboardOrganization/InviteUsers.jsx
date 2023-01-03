@@ -1,12 +1,14 @@
 import React, { useState } from "react";
-import { Card, Col, Container } from "react-bootstrap";
+import { Card, Col, Container, Form, FormLabel } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
 import InviteMembersSelect from "Components/OrganizationsComponents/InviteUsers/InviteMembersSelect";
 import UserSelectFieldLabel from "Components/OrganizationsComponents/InviteUsers/UserSelectFieldLabel";
+import { SaveButton } from "Components/forms/Buttons";
 
 import { getUsersRequest } from "store/User/actions";
+import { inviteUsersInOrganizationRequest } from "store/Organizations/actions";
 
 const mapState = ({ user }) => ({
   users: user.users.map((userData) => ({
@@ -24,6 +26,7 @@ const InviteUsers = () => {
 
   const [selectedMembers, setSelectedMembers] = useState([]);
 
+  // loads users options when query changed
   const loadOptions = (inputValue) =>
     new Promise((resolve) => {
       dispatch(getUsersRequest({ q: inputValue }));
@@ -31,6 +34,16 @@ const InviteUsers = () => {
         resolve(users);
       }
     });
+
+  // handles invite users form submit
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const inviteUsersInOrg = selectedMembers.map((user) => user.value);
+    dispatch(inviteUsersInOrganizationRequest(inviteUsersInOrg));
+  };
+
+  // check whether all fields of form are filled
+  const isSaveButtonDisabled = !selectedMembers.length;
 
   return (
     <Container className="d-flex justify-content-center">
@@ -43,12 +56,22 @@ const InviteUsers = () => {
               Organization members will be able to view projects, organize into
               teams, and collaborate on the project that is assigned to them.
             </div>
-            <InviteMembersSelect
-              org={org}
-              value={selectedMembers}
-              onChange={setSelectedMembers}
-              loadOptions={loadOptions}
-            />
+            <Form onSubmit={handleSubmit}>
+              <div className="py-3">
+                <FormLabel>Search by username, email address</FormLabel>
+                <InviteMembersSelect
+                  org={org}
+                  value={selectedMembers}
+                  onChange={setSelectedMembers}
+                  loadOptions={loadOptions}
+                />
+              </div>
+              <SaveButton
+                type="submit"
+                disabled={isSaveButtonDisabled}
+                className="w-100"
+              />
+            </Form>
           </Card.Body>
         </Card>
       </Col>
