@@ -52,3 +52,7 @@ export const validateEmail = (email) =>
     .match(
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     );
+
+// helps to truncate text
+export const truncate = (text, length = 100) =>
+  text?.length > length ? text.slice(0, length) + "..." : text;
