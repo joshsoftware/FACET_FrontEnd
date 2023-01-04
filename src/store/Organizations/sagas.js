@@ -3,14 +3,17 @@ import { call, put, takeLatest } from "redux-saga/effects";
 import { apisErrorMessage } from "utils/apisErrorMessage";
 import {
   addOrganizationApi,
+  getOrganizationApi,
   getOrganizationsApi,
   inviteUsersInOragnizationApi,
 } from "./apis";
 import {
   addOrganizationFailure,
   addOrganizationSuccess,
+  getOrganizationFailure,
   getOrganizationsFailure,
   getOrganizationsSuccess,
+  getOrganizationSuccess,
   inviteUsersInOrganizationFailure,
   inviteUsersInOrganizationSuccess,
 } from "./actions";
@@ -30,6 +33,17 @@ export function* getOrganizations() {
     const errorMessage = apisErrorMessage(error);
     toastMessage(errorMessage, "error");
     yield put(getOrganizationsFailure());
+  }
+}
+
+export function* getOrganization({ payload }) {
+  try {
+    const response = yield call(getOrganizationApi, payload);
+    yield put(getOrganizationSuccess(response));
+  } catch (error) {
+    const errorMessage = apisErrorMessage(error);
+    toastMessage(errorMessage, "error");
+    yield put(getOrganizationFailure());
   }
 }
 
@@ -60,6 +74,7 @@ export function* inviteUsersInOrganization({ payload }) {
 // watcher saga
 export default function* organizationsSagas() {
   yield takeLatest(orgConstants.GET_ORGANIZATIONS_REQUEST, getOrganizations);
+  yield takeLatest(orgConstants.GET_ORGANIZATION_REQUEST, getOrganization);
   yield takeLatest(orgConstants.ADD_ORGANIZATION_REQUEST, addOrganization);
   yield takeLatest(
     orgConstants.INVITE_USERS_IN_ORGANIZATION_REQUEST,

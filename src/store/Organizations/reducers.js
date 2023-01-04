@@ -20,6 +20,15 @@ const organizationsReducer = (state = initialState, action) => {
     case orgConstants.GET_ORGANIZATIONS_FAILURE:
       return { ...state, isLoading: false };
 
+    case orgConstants.GET_ORGANIZATION_REQUEST:
+      return { ...state, isLoading: true };
+
+    case orgConstants.GET_ORGANIZATION_SUCCESS:
+      return { ...state, isLoading: false, organization: payload };
+
+    case orgConstants.GET_ORGANIZATION_FAILURE:
+      return { ...state, isLoading: false };
+
     case orgConstants.ADD_ORGANIZATION_REQUEST:
       return { ...state, isLoading: true };
 
