@@ -30,7 +30,8 @@ const Organization = () => {
     org && dispatch(getOrganizationRequest({ org }));
   }, [org]);
 
-  const activeRoute = buildRoute(ORG_OVERVIEW_ROUTE, { org });
+  // to create initial active Route
+  const initialActiveRoute = buildRoute(ORG_OVERVIEW_ROUTE, { org });
 
   return (
     <Container className="my-2 border-bottom border-light">
@@ -51,7 +52,7 @@ const Organization = () => {
           </div>
         </div>
       </Col>
-      <Nav variant="tabs" activeKey={activeRoute}>
+      <Nav variant="tabs" activeKey={initialActiveRoute}>
         {ORG_HEADER_TAB_ITEMS?.map((item, index) => (
           <OrgNavItem key={index} data={item} org={org} />
         ))}
