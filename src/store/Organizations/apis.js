@@ -6,6 +6,9 @@ import organizationsData from "utils/mockdata/organizations";
 
 export const getOrganizationsApi = () => organizationsData;
 
+// eslint-disable-next-line no-unused-vars
+export const getOrganizationApi = (data) => organizationsData.organizations[0];
+
 export const addOrganizationApi = (data) => data;
 
 export const inviteUsersInOragnizationApi = (data) => data;

@@ -9,11 +9,14 @@ import {
   publicRoutesConfig,
 } from "Router";
 
-import { ROOT_ROUTE } from "constants/routeConstants";
+import { ORG_OVERVIEW_ROUTE, ROOT_ROUTE } from "constants/routeConstants";
 
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
 
+const Organization = lazy(() =>
+  import("containers/OrganizationContainer/Organizations")
+);
 const PrivateRoutes = lazy(() => import("./PrivateRoutes"));
 const ProjectContainer = lazy(() => import("containers/ProjectContainer"));
 
@@ -50,6 +53,8 @@ function App() {
                 />
               ))}
             </Route>
+            {/* Organization Routes */}
+            <Route path={ORG_OVERVIEW_ROUTE} element={<Organization />} />
             <Route path="*" element={<Navigate to={ROOT_ROUTE} replace />} />
           </Route>
 
