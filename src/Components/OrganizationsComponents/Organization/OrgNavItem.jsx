@@ -30,7 +30,7 @@ const OrgNavItem = ({ data, org }) => {
 OrgNavItem.propTypes = {
   data: PropTypes.shape({
     title: PropTypes.string.isRequired,
-    icon: PropTypes.element.isRequired,
+    icon: PropTypes.object.isRequired,
     url: PropTypes.string.isRequired,
   }).isRequired,
   org: PropTypes.string.isRequired,
