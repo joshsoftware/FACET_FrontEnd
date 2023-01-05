@@ -14,6 +14,9 @@ export const INVITE_ORGANIZATION_ROUTE = "/organization/:org/invite";
 
 // organizations routes
 export const ORG_OVERVIEW_ROUTE = "/orgs/:org";
+export const ORG_PROJECTS_ROUTE = "/orgs/:org/projects";
+export const ORG_MEMBERS_ROUTE = "/orgs/:org/members";
+export const ORG_SETTINGS_ROUTE = "/orgs/:org/settings";
 
 // project routes contants
 const projectRoutePrefix = "/project/:projectName";
