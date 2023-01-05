@@ -1,0 +1,17 @@
+.org-nav-tab {
+  background: none !important;
+  border: none !important;
+}
+.org-nav-tab.active{
+  border-bottom: 2px solid #0d6efd !important;
+}
+.org-nav-tab-text {
+  color: #495057;
+}
+.org-nav-tab.active .org-nav-tab-text {
+  color: #0d6efd !important;
+}
+.org-nav-tab:hover .org-nav-tab-text{
+  background: #ffffff;
+  transition: .3s ease-in-out;
+}
