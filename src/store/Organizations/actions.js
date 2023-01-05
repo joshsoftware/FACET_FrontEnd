@@ -11,7 +11,7 @@ export const getOrganizationsSuccess = (data) => ({
 });
 
 export const getOrganizationsFailure = () => ({
-  type: orgConstants.GET_ORGANIZATION_FAILURE,
+  type: orgConstants.GET_ORGANIZATIONS_FAILURE,
 });
 
 export const getOrganizationRequest = (data) => ({
@@ -25,7 +25,7 @@ export const getOrganizationSuccess = (data) => ({
 });
 
 export const getOrganizationFailure = () => ({
-  type: orgConstants.GET_ORGANIZATIONS_FAILURE,
+  type: orgConstants.GET_ORGANIZATION_FAILURE,
 });
 
 export const addOrganizationRequest = (data) => ({
