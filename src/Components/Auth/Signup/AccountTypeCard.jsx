@@ -1,11 +1,10 @@
 import React from "react";
 import { Card } from "react-bootstrap";
+import PropTypes from "prop-types";
 
 import "./style.css";
 
-// eslint-disable-next-line react/prop-types
 const AccountTypeCard = ({ data, accountType, setAccountType }) => {
-  // eslint-disable-next-line react/prop-types
   const { Icon, title, subTitle, value } = data;
 
   const isActive =
@@ -27,6 +26,17 @@ const AccountTypeCard = ({ data, accountType, setAccountType }) => {
       </Card.Body>
     </Card>
   );
+};
+
+AccountTypeCard.propTypes = {
+  data: PropTypes.shape({
+    Icon: PropTypes.object.isRequired,
+    title: PropTypes.string.isRequired,
+    subTitle: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
+  }).isRequired,
+  accountType: PropTypes.string.isRequired,
+  setAccountType: PropTypes.object.isRequired,
 };
 
 export default AccountTypeCard;
