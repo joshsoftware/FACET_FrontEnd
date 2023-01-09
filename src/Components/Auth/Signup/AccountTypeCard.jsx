@@ -7,6 +7,8 @@ import "./style.css";
 const AccountTypeCard = ({ data, accountType, setAccountType }) => {
   const { Icon, title, subTitle, value } = data;
 
+  // check whether current accountType is selected
+  // if none accountType selected then it select first accountType i.e. personal
   const isActive =
     (!accountType && value === "personal") || accountType === value;
 
