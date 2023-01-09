@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 const AuthLayout = ({ children }) => {
   return (
     <div className="h-100 d-flex justify-content-center align-items-center">
-      <div>
+      <div className="col-md-4">
         <h1 className="text-uppercase text-center">Facet</h1>
         <Card className="p-4">{children}</Card>
       </div>
