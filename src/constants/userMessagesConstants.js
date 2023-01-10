@@ -3,6 +3,7 @@ export const COMMON_ERROR_MESSAGE = "Something went wrong!";
 
 // common FORM error messages
 export const ALL_FIELDS_REQUIRED = "Please fill all required fields!";
+export const EMAIL_NOT_VALID = "Please enter valid email address!";
 
 // user messages constants for placeholder
 export const ORG_NAME = "my-sample-org";
