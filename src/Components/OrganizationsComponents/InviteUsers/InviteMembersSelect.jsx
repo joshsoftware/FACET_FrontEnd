@@ -1,21 +1,29 @@
 import React from "react";
+import { CheckLg, ExclamationTriangleFill } from "react-bootstrap-icons";
 import PropTypes from "prop-types";
 
-import CreatableAsyncSelect from "Components/forms/Inputs/CreatableAsyncSelect";
+import CreatableSelect from "Components/forms/Inputs/CreatableSelect";
 import UsersMultiValueLabel from "./UsersMultiValueLabel";
 
-import { validateEmail } from "utils/helper";
+import { isValidEmail } from "utils/helper";
+import { toastMessage } from "utils/toastMessage";
 
-const InviteMembersSelect = ({ org, value, loadOptions, onChange }) => {
+import { EMAIL_NOT_VALID } from "constants/userMessagesConstants";
+
+const InviteMembersSelect = ({ org, value, onChange }) => {
   // helps to format label which created using AsyncCreatableSelect
   const formatCreateLabel = (inputValue) => (
-    <div className="text-muted">
-      Invite <span className="text-dark">{inputValue}</span> to {org}
+    <div className="d-flex justify-content-between align-items-center disabled">
+      <div className="text-muted">
+        Invite <span className="text-dark">{inputValue}</span> to {org}
+      </div>
+      {isValidEmail(inputValue) ? (
+        <CheckLg className="text-success" size={24} />
+      ) : (
+        <ExclamationTriangleFill className="text-danger" />
+      )}
     </div>
   );
-
-  // check whether the new option is valid or not
-  const isValidNewOption = (inputValue) => validateEmail(inputValue);
 
   // styles for react select
   const creatableAsyncSelectStyles = {
@@ -35,15 +43,26 @@ const InviteMembersSelect = ({ org, value, loadOptions, onChange }) => {
     }),
   };
 
+  // handles create new option in creatable select
+  const onCreateNewOption = (inputValue) => {
+    if (isValidEmail(inputValue)) {
+      onChange((prevState) => [
+        ...prevState,
+        { value: inputValue, label: inputValue, __isNew__: true },
+      ]);
+    } else {
+      toastMessage(EMAIL_NOT_VALID, "error");
+    }
+  };
+
   return (
-    <CreatableAsyncSelect
+    <CreatableSelect
       value={value}
-      loadOptions={loadOptions}
       onChange={onChange}
+      onCreateOption={onCreateNewOption}
       formatCreateLabel={formatCreateLabel}
       components={{ MultiValueLabel: UsersMultiValueLabel }}
       styles={creatableAsyncSelectStyles}
-      isValidNewOption={isValidNewOption}
       isMulti
       cacheOptions
       defaultOptions
@@ -55,7 +74,6 @@ InviteMembersSelect.propTypes = {
   org: PropTypes.string.isRequired,
   value: PropTypes.arrayOf(PropTypes.object).isRequired,
   onChange: PropTypes.func.isRequired,
-  loadOptions: PropTypes.func.isRequired,
 };
 
 export default InviteMembersSelect;

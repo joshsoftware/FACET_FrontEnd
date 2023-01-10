@@ -1,39 +1,19 @@
 import React, { useState } from "react";
 import { Card, Col, Container, Form, FormLabel } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 
 import InviteMembersSelect from "Components/OrganizationsComponents/InviteUsers/InviteMembersSelect";
-import UserSelectFieldLabel from "Components/OrganizationsComponents/InviteUsers/UserSelectFieldLabel";
 import { SaveButton } from "Components/forms/Buttons";
 
-import { getUsersRequest } from "store/User/actions";
 import { inviteUsersInOrganizationRequest } from "store/Organizations/actions";
-
-const mapState = ({ user }) => ({
-  users: user.users.map((userData) => ({
-    label: <UserSelectFieldLabel data={userData} />,
-    value: userData.id,
-  })),
-  isLoading: user.isLoading,
-});
 
 const InviteUsers = () => {
   const dispatch = useDispatch();
 
   const { org } = useParams();
-  const { users, isLoading } = useSelector(mapState);
 
   const [selectedMembers, setSelectedMembers] = useState([]);
-
-  // loads users options when query changed
-  const loadOptions = (inputValue) =>
-    new Promise((resolve) => {
-      dispatch(getUsersRequest({ q: inputValue }));
-      if (!isLoading) {
-        resolve(users);
-      }
-    });
 
   // handles invite users form submit
   const handleSubmit = (e) => {
@@ -66,7 +46,6 @@ const InviteUsers = () => {
                   org={org}
                   value={selectedMembers}
                   onChange={setSelectedMembers}
-                  loadOptions={loadOptions}
                 />
               </div>
               <SaveButton
