@@ -9,7 +9,7 @@ import orgMembersConstants from "./constants";
 
 export function* getOrgMembers({ payload }) {
   try {
-    const response = call(getOrgMembersApi, payload);
+    const response = yield call(getOrgMembersApi, payload);
     yield put(getOrgMembersSuccess(response.members));
   } catch (error) {
     const errorMessage = apisErrorMessage(error);
