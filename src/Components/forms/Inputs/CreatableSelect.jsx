@@ -1,3 +1,1 @@
-import CreatableSelect from "react-select/creatable";
-
-export default CreatableSelect;
+export { default } from "react-select/creatable";
