@@ -2,5 +2,7 @@
 // Currently this apis file functions returns mockdata
 // When Apis are available then this functions will be replaced
 // by api calls
+import orgMembersResponse from "utils/mockdata/orgMembers";
 
-export const getOrgMembersApi = () => {};
+// eslint-disable-next-line no-unused-vars
+export const getOrgMembersApi = (data) => orgMembersResponse;
