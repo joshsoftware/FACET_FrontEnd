@@ -4,6 +4,7 @@ import endpointSagas from "./Endpoints/sagas";
 import environmentSagas from "./Environments/sagas";
 import executeSagas from "./Execute/sagas";
 import headerSagas from "./Headers/sagas";
+import orgMembersSagas from "./Organizations/OrgMembers/sagas";
 import organizationsSagas from "./Organizations/sagas";
 import payloadSagas from "./Payloads/sagas";
 import projectMemberSagas from "./ProjectMembers/sagas";
@@ -35,5 +36,6 @@ export default function* rootSaga() {
     call(testsuiteSagas),
     call(projectMemberSagas),
     call(organizationsSagas),
+    call(orgMembersSagas),
   ]);
 }
