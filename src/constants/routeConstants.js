@@ -10,13 +10,13 @@ export const DASHBOARD_ROUTE = "/dashboard";
 export const USER_PROFILE_ROUTE = "/profile";
 export const MY_ORGANIZATIONS_ROUTE = "/organizations";
 export const ADD_ORGANIZATION_ROUTE = "/organization/new";
-export const INVITE_ORGANIZATION_ROUTE = "/organization/:org/invite";
+export const INVITE_ORGANIZATION_ROUTE = "/organization/invite";
+export const ORG_OVERVIEW_ROUTE = "/organization";
+export const ORG_MEMBERS_ROUTE = "/organization/members";
+export const ORG_SETTINGS_ROUTE = "/organization/settings";
 
-// organizations routes
-export const ORG_OVERVIEW_ROUTE = "/orgs/:org";
+// organizations routes: TO-DO: Remove the next line
 export const ORG_PROJECTS_ROUTE = "/orgs/:org/projects";
-export const ORG_MEMBERS_ROUTE = "/orgs/:org/members";
-export const ORG_SETTINGS_ROUTE = "/orgs/:org/settings";
 
 // project routes contants
 const projectRoutePrefix = "/project/:projectName";
