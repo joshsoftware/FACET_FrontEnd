@@ -28,8 +28,8 @@ const CheckBoxWithNumField = (props) => {
     <>
       <FormCheckBox
         label={label}
-        value={isChecked}
-        handlechange={() => setIsChecked(!isChecked)}
+        checked={isChecked}
+        onChange={() => setIsChecked(!isChecked)}
         className="py-2"
       />
       {isChecked && (
