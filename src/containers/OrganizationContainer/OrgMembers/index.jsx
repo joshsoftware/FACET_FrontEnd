@@ -17,18 +17,18 @@ import {
 import { INVITE_ORGANIZATION_ROUTE } from "constants/routeConstants";
 
 const adminTableHeadings = ["Member", "Role", "Actions"];
-// eslint-disable-next-line no-unused-vars
-const nonAdminTableHeadings = ["#", "Member", "Role"];
+const nonAdminTableHeadings = ["Member", "Role"];
 
-const mapState = ({ orgMembers }) => ({
+const mapState = ({ orgMembers, user }) => ({
   members: orgMembers.members,
   isLoading: orgMembers.isLoading,
+  isOrgOwner: user.isOrgOwner,
 });
 
 const OrgMembers = () => {
   const dispatch = useDispatch();
 
-  const { members } = useSelector(mapState);
+  const { members, isOrgOwner } = useSelector(mapState);
 
   const [showChangeRoleModal, setShowChangeRoleModal] = useState(false);
   const [changeRoleFormData, setChangeRoleFormData] = useState({
@@ -79,6 +79,8 @@ const OrgMembers = () => {
     dispatch(removeMemberFromOrgRequest({ member }));
   }, []);
 
+  const tableHeadings = isOrgOwner ? adminTableHeadings : nonAdminTableHeadings;
+
   return (
     <Container className="py-5">
       <ChangeOrgMemberRole
@@ -92,21 +94,24 @@ const OrgMembers = () => {
         <Col md={10}>
           <div className="d-flex justify-content-between align-items-center mb-4">
             <h4>Organization Members</h4>
-            <AddButton
-              label="Invite Members"
-              as={Link}
-              to={INVITE_ORGANIZATION_ROUTE}
-              size="sm"
-            />
+            {isOrgOwner && (
+              <AddButton
+                label="Invite Members"
+                as={Link}
+                to={INVITE_ORGANIZATION_ROUTE}
+                size="sm"
+              />
+            )}
           </div>
           <div className="px-5 py-4 bg-light rounded">
-            <TableComponent headings={adminTableHeadings} striped>
+            <TableComponent headings={tableHeadings} striped>
               {members?.map((item, index) => (
                 <OrgMemberTableRow
                   key={index}
                   data={item}
                   openChangeRoleModal={onOpenChangeRoleModal}
                   onRemoveMember={onRemoveMember}
+                  isCurrUserOrgOwner={isOrgOwner}
                 />
               ))}
             </TableComponent>

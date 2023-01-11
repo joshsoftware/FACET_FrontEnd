@@ -5,7 +5,12 @@ import PropTypes from "prop-types";
 
 import { ORG_ROLES } from "constants/roleConstants";
 
-const OrgMemberTableRow = ({ data, openChangeRoleModal, onRemoveMember }) => {
+const OrgMemberTableRow = ({
+  data,
+  openChangeRoleModal,
+  onRemoveMember,
+  isCurrUserOrgOwner,
+}) => {
   const {
     id,
     name,
@@ -45,20 +50,22 @@ const OrgMemberTableRow = ({ data, openChangeRoleModal, onRemoveMember }) => {
         </div>
       </td>
       <td>{memberRole}</td>
-      <td>
-        <NavDropdown
-          title={<Gear size={16} />}
-          className={`d-inline-block ${isOrgOwner && "text-muted"}`}
-          disabled={isOrgOwner}
-        >
-          <NavDropdown.Item onClick={onChangeRoleClick}>
-            Change Role
-          </NavDropdown.Item>
-          <NavDropdown.Item onClick={() => onRemoveMember(id)}>
-            Remove from Organization
-          </NavDropdown.Item>
-        </NavDropdown>
-      </td>
+      {isCurrUserOrgOwner && (
+        <td>
+          <NavDropdown
+            title={<Gear size={16} />}
+            className={`d-inline-block ${isOrgOwner && "text-muted"}`}
+            disabled={isOrgOwner}
+          >
+            <NavDropdown.Item onClick={onChangeRoleClick}>
+              Change Role
+            </NavDropdown.Item>
+            <NavDropdown.Item onClick={() => onRemoveMember(id)}>
+              Remove from Organization
+            </NavDropdown.Item>
+          </NavDropdown>
+        </td>
+      )}
     </tr>
   );
 };
@@ -74,6 +81,7 @@ OrgMemberTableRow.propTypes = {
   }).isRequired,
   openChangeRoleModal: PropTypes.func.isRequired,
   onRemoveMember: PropTypes.func.isRequired,
+  isCurrUserOrgOwner: PropTypes.bool,
 };
 
 export default React.memo(OrgMemberTableRow);
