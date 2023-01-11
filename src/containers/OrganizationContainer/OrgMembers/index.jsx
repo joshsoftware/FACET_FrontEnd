@@ -21,7 +21,6 @@ const nonAdminTableHeadings = ["Member", "Role"];
 
 const mapState = ({ orgMembers, user }) => ({
   members: orgMembers.members,
-  isLoading: orgMembers.isLoading,
   isOrgOwner: user.isOrgOwner,
 });
 
