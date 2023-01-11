@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 
 import { ORG_ROLES } from "constants/roleConstants";
 
-const OrgMemberTableRow = ({ data, openChangeRoleModal }) => {
+const OrgMemberTableRow = ({ data, openChangeRoleModal, onRemoveMember }) => {
   const {
     id,
     name,
@@ -54,7 +54,9 @@ const OrgMemberTableRow = ({ data, openChangeRoleModal }) => {
           <NavDropdown.Item onClick={onChangeRoleClick}>
             Change Role
           </NavDropdown.Item>
-          <NavDropdown.Item>Remove from Organization</NavDropdown.Item>
+          <NavDropdown.Item onClick={() => onRemoveMember(id)}>
+            Remove from Organization
+          </NavDropdown.Item>
         </NavDropdown>
       </td>
     </tr>
@@ -71,6 +73,7 @@ OrgMemberTableRow.propTypes = {
     is_admin: PropTypes.bool,
   }).isRequired,
   openChangeRoleModal: PropTypes.func.isRequired,
+  onRemoveMember: PropTypes.func.isRequired,
 };
 
 export default React.memo(OrgMemberTableRow);

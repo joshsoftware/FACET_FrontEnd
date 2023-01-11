@@ -11,6 +11,7 @@ import TableComponent from "Components/CustomComponents/TableComponent";
 import {
   changeMemberRoleRequest,
   getOrgMembersRequest,
+  removeMemberFromOrgRequest,
 } from "store/Organizations/OrgMembers/actions";
 
 import { INVITE_ORGANIZATION_ROUTE } from "constants/routeConstants";
@@ -73,6 +74,11 @@ const OrgMembers = () => {
     dispatch(changeMemberRoleRequest(changeRoleFormData));
   };
 
+  // dispatch action to remove member from organization
+  const onRemoveMember = useCallback((member) => {
+    dispatch(removeMemberFromOrgRequest({ member }));
+  }, []);
+
   return (
     <Container className="py-5">
       <ChangeOrgMemberRole
@@ -100,6 +106,7 @@ const OrgMembers = () => {
                   key={index}
                   data={item}
                   openChangeRoleModal={onOpenChangeRoleModal}
+                  onRemoveMember={onRemoveMember}
                 />
               ))}
             </TableComponent>

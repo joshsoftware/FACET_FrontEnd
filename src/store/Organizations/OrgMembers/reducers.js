@@ -19,7 +19,7 @@ const orgMembersReducer = (state = initialState, action) => {
       return { ...state, isLoading: true };
 
     case orgMembersConstants.CHANGE_MEMBER_ROLE_SUCCESS:
-      return { ...state, isLoading: false, members: payload, isSuccess: true };
+      return { ...state, isLoading: false, isSuccess: true };
 
     case orgMembersConstants.CHANGE_MEMBER_ROLE_FAILURE:
       return { ...state, isLoading: false };
@@ -28,7 +28,7 @@ const orgMembersReducer = (state = initialState, action) => {
       return { ...state, isLoading: true };
 
     case orgMembersConstants.REMOVE_MEMBER_FROM_ORG_SUCCESS:
-      return { ...state, isLoading: false, members: payload, isSuccess: true };
+      return { ...state, isLoading: false, isSuccess: true };
 
     case orgMembersConstants.REMOVE_MEMBER_FROM_ORG_FAILURE:
       return { ...state, isLoading: false };

@@ -9,3 +9,6 @@ export const getOrgMembersApi = (data) => orgMembersResponse;
 
 // eslint-disable-next-line no-unused-vars
 export const changeMemberRoleApi = (data) => {};
+
+// eslint-disable-next-line no-unused-vars
+export const removeMemberApi = (data) => {};
