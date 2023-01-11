@@ -3,8 +3,11 @@ import { Image, NavDropdown } from "react-bootstrap";
 import { Gear, PersonCircle } from "react-bootstrap-icons";
 import PropTypes from "prop-types";
 
-const OrgMemberTableRow = ({ data }) => {
+import { ORG_ROLES } from "constants/roleConstants";
+
+const OrgMemberTableRow = ({ data, openChangeRoleModal }) => {
   const {
+    id,
     name,
     username,
     image,
@@ -13,10 +16,12 @@ const OrgMemberTableRow = ({ data }) => {
   } = data;
 
   const memberRole = isOrgOwner
-    ? "Owner"
+    ? ORG_ROLES.OWNER
     : isProjectAdmin
-    ? "Project Admin"
-    : "Member";
+    ? ORG_ROLES.PROJECT_ADMIN
+    : ORG_ROLES.MEMBER;
+
+  const onChangeRoleClick = () => openChangeRoleModal(id, memberRole);
 
   return (
     <tr className="align-middle">
@@ -42,7 +47,9 @@ const OrgMemberTableRow = ({ data }) => {
       <td>{memberRole}</td>
       <td>
         <NavDropdown title={<Gear size={16} />} className="d-inline-block">
-          <NavDropdown.Item>Change Role</NavDropdown.Item>
+          <NavDropdown.Item onClick={onChangeRoleClick}>
+            Change Role
+          </NavDropdown.Item>
           <NavDropdown.Item>Remove from Organization</NavDropdown.Item>
         </NavDropdown>
       </td>
@@ -52,12 +59,14 @@ const OrgMemberTableRow = ({ data }) => {
 
 OrgMemberTableRow.propTypes = {
   data: PropTypes.shape({
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     name: PropTypes.string,
     username: PropTypes.string,
     image: PropTypes.string,
     is_super_admin: PropTypes.bool,
     is_admin: PropTypes.bool,
   }).isRequired,
+  openChangeRoleModal: PropTypes.func.isRequired,
 };
 
-export default OrgMemberTableRow;
+export default React.memo(OrgMemberTableRow);
