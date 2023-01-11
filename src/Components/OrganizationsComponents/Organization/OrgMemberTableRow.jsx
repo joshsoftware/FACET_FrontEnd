@@ -46,7 +46,11 @@ const OrgMemberTableRow = ({ data, openChangeRoleModal }) => {
       </td>
       <td>{memberRole}</td>
       <td>
-        <NavDropdown title={<Gear size={16} />} className="d-inline-block">
+        <NavDropdown
+          title={<Gear size={16} />}
+          className={`d-inline-block ${isOrgOwner && "text-muted"}`}
+          disabled={isOrgOwner}
+        >
           <NavDropdown.Item onClick={onChangeRoleClick}>
             Change Role
           </NavDropdown.Item>

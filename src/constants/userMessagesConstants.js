@@ -83,3 +83,4 @@ export const ORGANIZATIONS = {
 };
 
 export const INVITE_USERS_SUCCESS = "Invitation email has been sent to users!";
+export const CHANGE_MEMBER_ROLE_SUCCESS = "Member's role updated successfully!";

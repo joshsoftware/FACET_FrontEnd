@@ -6,3 +6,6 @@ import orgMembersResponse from "utils/mockdata/orgMembers";
 
 // eslint-disable-next-line no-unused-vars
 export const getOrgMembersApi = (data) => orgMembersResponse;
+
+// eslint-disable-next-line no-unused-vars
+export const changeMemberRoleApi = (data) => {};
