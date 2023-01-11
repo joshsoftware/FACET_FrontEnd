@@ -8,7 +8,13 @@ import { SaveButton } from "Components/forms/Buttons";
 
 import { ORG_MEMBERS_ROLE } from "constants/orgMemberConstants";
 
-const ChangeOrgMemberRole = ({ data, show, onChange, onClose, onSubmit }) => {
+const ChangeOrgMemberRoleModal = ({
+  data,
+  show,
+  onChange,
+  onClose,
+  onSubmit,
+}) => {
   const { currRole, updatedRole } = data;
 
   // check whether role of member is changed or not
@@ -45,7 +51,7 @@ const ChangeOrgMemberRole = ({ data, show, onChange, onClose, onSubmit }) => {
   );
 };
 
-ChangeOrgMemberRole.propTypes = {
+ChangeOrgMemberRoleModal.propTypes = {
   data: PropTypes.shape({
     member: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     currRole: PropTypes.string,
@@ -57,4 +63,4 @@ ChangeOrgMemberRole.propTypes = {
   onSubmit: PropTypes.func.isRequired,
 };
 
-export default React.memo(ChangeOrgMemberRole);
+export default React.memo(ChangeOrgMemberRoleModal);

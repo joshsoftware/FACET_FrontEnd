@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { AddButton } from "Components/forms/Buttons";
-import ChangeOrgMemberRole from "Components/OrganizationsComponents/Organization/ChangeOrgMemberRole";
+import ChangeOrgMemberRoleModal from "Components/OrganizationsComponents/Organization/ChangeOrgMemberRoleModal";
 import OrgMemberTableRow from "Components/OrganizationsComponents/Organization/OrgMemberTableRow";
 import TableComponent from "Components/CustomComponents/TableComponent";
 
@@ -82,7 +82,7 @@ const OrgMembers = () => {
 
   return (
     <Container className="py-5">
-      <ChangeOrgMemberRole
+      <ChangeOrgMemberRoleModal
         data={changeRoleFormData}
         onChange={onChangeMemberRole}
         onSubmit={onRoleChangeFormSubmit}
