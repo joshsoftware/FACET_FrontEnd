@@ -53,8 +53,8 @@ const SelectedTeststepComponent = (props) => {
                 <FormCheckBox
                   label={item.name}
                   name={item.id}
-                  value={data?.selected_testdata?.includes(item.id)}
-                  handlechange={onChangeTestdata}
+                  checked={data?.selected_testdata?.includes(item.id)}
+                  onChange={onChangeTestdata}
                 />
               </div>
             );

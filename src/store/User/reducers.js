@@ -10,6 +10,11 @@ const initialState = {
   isLoading: false,
   currentUser: { name: "" },
   users: [],
+
+  // TO-DO:
+  // This needs to be update once backend apis ready
+  // which collects data from localstorage and stores into reducer
+  isOrgOwner: true,
 };
 
 const userReducer = (state = initialState, action) => {

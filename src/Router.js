@@ -20,6 +20,9 @@ const AddNewOrganization = lazy(() =>
 const InviteUsersInOrganization = lazy(() =>
   import("containers/OrganizationContainer/OnboardOrganization/InviteUsers")
 );
+const OrgMembers = lazy(() =>
+  import("containers/OrganizationContainer/OrgMembers")
+);
 
 // project routes containers
 const ProjectOverview = lazy(() =>
@@ -108,6 +111,11 @@ export const privateRoutesConfig = [
     key: "invite-users-in-organization",
     path: routes.INVITE_ORGANIZATION_ROUTE,
     component: InviteUsersInOrganization,
+  },
+  {
+    key: "organization-members",
+    path: routes.ORG_MEMBERS_ROUTE,
+    component: OrgMembers,
   },
 ];
 

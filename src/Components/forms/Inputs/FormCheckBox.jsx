@@ -1,36 +1,51 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { Form } from "react-bootstrap";
+import PropTypes from "prop-types";
 
-const FormCheckBox = (props) => {
-  const { label, name, value, handlechange, text, className, style, disabled } =
-    props;
+const FormCheckBox = ({
+  type,
+  label,
+  name,
+  value,
+  checked,
+  onChange,
+  text,
+  className,
+  style,
+  disabled,
+  ...props
+}) => (
+  <Form.Group className={className} style={style}>
+    <Form.Check
+      type={type}
+      label={label}
+      name={name}
+      value={value}
+      checked={checked}
+      onChange={onChange}
+      disabled={disabled}
+      {...props}
+    />
+    {text && <Form.Text className="text-muted">{text}</Form.Text>}
+  </Form.Group>
+);
 
-  return (
-    <Form.Group className={className} style={style}>
-      <Form.Check
-        type="checkbox"
-        label={label}
-        name={name}
-        checked={value}
-        onChange={handlechange}
-        disabled={disabled}
-      />
-      {text && <Form.Text className="text-muted">{text}</Form.Text>}
-    </Form.Group>
-  );
+FormCheckBox.defaultProps = {
+  type: "checkbox",
 };
 
-export default FormCheckBox;
-
 FormCheckBox.propTypes = {
+  type: PropTypes.oneOf(["radio", "checkbox"]),
   label: PropTypes.string,
   name: PropTypes.string,
   id: PropTypes.any,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  handlechange: PropTypes.func,
+  checked: PropTypes.bool,
+  onChange: PropTypes.func,
   text: PropTypes.string,
   className: PropTypes.string,
   style: PropTypes.object,
   disabled: PropTypes.bool,
 };
+
+export default FormCheckBox;
