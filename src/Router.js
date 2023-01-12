@@ -84,6 +84,11 @@ export const publicRoutesConfig = [
     path: routes.LOGIN_ROUTE,
     component: LoginContainer,
   },
+  {
+    key: "accept-join-org-invitation",
+    path: routes.ACCEPT_JOIN_ORG_INVITATION,
+    component: AcceptJoinOrgInvitation,
+  },
 ];
 
 export const privateRoutesConfig = [
@@ -121,11 +126,6 @@ export const privateRoutesConfig = [
     key: "organization-members",
     path: routes.ORG_MEMBERS_ROUTE,
     component: OrgMembers,
-  },
-  {
-    key: "accept-join-org-invitation",
-    path: routes.ACCEPT_JOIN_ORG_INVITATION,
-    component: AcceptJoinOrgInvitation,
   },
 ];
 
