@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from "react";
 import { Image } from "react-bootstrap";
-import { useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 import { AuthLayout } from "Layout";
 import Signup from "Components/Auth/Signup";
@@ -10,11 +10,17 @@ import { acceptJoinOrgInvitationRequest } from "store/Organizations/actions";
 
 import { DEFAULT_ORG_AVATAR } from "constants/appConstants";
 import { SIGNUP_INITIAL_DATA } from "constants/authConstants";
+import { DASHBOARD_ROUTE } from "constants/routeConstants";
+
+const mapState = ({ orgs }) => ({
+  isSuccess: orgs.isSuccess,
+});
 
 const AcceptJoinOrgInvitation = () => {
   const dispatch = useDispatch();
 
   const { org } = useParams();
+  const { isSuccess } = useSelector(mapState);
 
   const [inviteFormData, setInviteFormData] = useState(SIGNUP_INITIAL_DATA);
 
@@ -33,6 +39,11 @@ const AcceptJoinOrgInvitation = () => {
     e.preventDefault();
     dispatch(acceptJoinOrgInvitationRequest(inviteFormData));
   };
+
+  // If accept invitation success then it will navigate to dashboard
+  if (isSuccess) {
+    return <Navigate to={DASHBOARD_ROUTE} />;
+  }
 
   return (
     <AuthLayout>
