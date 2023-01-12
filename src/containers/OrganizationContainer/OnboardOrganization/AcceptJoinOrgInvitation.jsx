@@ -16,6 +16,7 @@ const mapState = ({ orgs }) => ({
   isSuccess: orgs.isSuccess,
 });
 
+// TO-DO: need to verify token which getting from queryStrings and set email field in the state
 const AcceptJoinOrgInvitation = () => {
   const dispatch = useDispatch();
 
