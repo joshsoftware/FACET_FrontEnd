@@ -23,6 +23,11 @@ const InviteUsersInOrganization = lazy(() =>
 const OrgMembers = lazy(() =>
   import("containers/OrganizationContainer/OrgMembers")
 );
+const AcceptJoinOrgInvitation = lazy(() =>
+  import(
+    "containers/OrganizationContainer/OnboardOrganization/AcceptJoinOrgInvitation"
+  )
+);
 
 // project routes containers
 const ProjectOverview = lazy(() =>
@@ -78,6 +83,11 @@ export const publicRoutesConfig = [
     key: "login",
     path: routes.LOGIN_ROUTE,
     component: LoginContainer,
+  },
+  {
+    key: "accept-join-org-invitation",
+    path: routes.ACCEPT_JOIN_ORG_INVITATION,
+    component: AcceptJoinOrgInvitation,
   },
 ];
 

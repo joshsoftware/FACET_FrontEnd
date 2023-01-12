@@ -80,6 +80,7 @@ export const MEMBERS = {
 
 export const ORGANIZATIONS = {
   ADD_NEW_SUCCESS: "Organization created successfully!",
+  JOIN_ORG_SUCCESS: "You are now a member of the organization!",
 };
 
 export const INVITE_USERS_SUCCESS = "Invitation email has been sent to users!";

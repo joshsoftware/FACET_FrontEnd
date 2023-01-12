@@ -79,6 +79,15 @@ const organizationsReducer = (state = initialState, action) => {
     case orgConstants.DELETE_ORGANIZATION_FAILURE:
       return { ...state, isLoading: false };
 
+    case orgConstants.ACCEPT_JOIN_ORG_INVITATION_REQUEST:
+      return { ...state, isLoading: true };
+
+    case orgConstants.ACCEPT_JOIN_ORG_INVITATION_SUCCESS:
+      return { ...state, isLoading: false, isSuccess: true };
+
+    case orgConstants.ACCEPT_JOIN_ORG_INVITATION_FAILURE:
+      return { ...state, isLoading: false };
+
     case orgConstants.CLEAR_STATE:
       return initialState;
 

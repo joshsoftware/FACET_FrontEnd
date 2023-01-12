@@ -14,6 +14,7 @@ export const INVITE_ORGANIZATION_ROUTE = "/organization/invite";
 export const ORG_OVERVIEW_ROUTE = "/organization";
 export const ORG_MEMBERS_ROUTE = "/organization/members";
 export const ORG_SETTINGS_ROUTE = "/organization/settings";
+export const ACCEPT_JOIN_ORG_INVITATION = "/organization/:org/invitation";
 
 // organizations routes: TO-DO: Remove the next line
 export const ORG_PROJECTS_ROUTE = "/orgs/:org/projects";
