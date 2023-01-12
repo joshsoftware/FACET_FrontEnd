@@ -98,6 +98,19 @@ export const deleteOrganizationFailure = () => ({
   type: orgConstants.DELETE_ORGANIZATION_FAILURE,
 });
 
+export const acceptJoinOrgInvitationRequest = (data) => ({
+  type: orgConstants.ACCEPT_JOIN_ORG_INVITATION_REQUEST,
+  payload: data,
+});
+
+export const acceptJoinOrgInvitationSuccess = () => ({
+  type: orgConstants.ACCEPT_JOIN_ORG_INVITATION_SUCCESS,
+});
+
+export const acceptJoinOrgInvitationFailure = () => ({
+  type: orgConstants.ACCEPT_JOIN_ORG_INVITATION_FAILURE,
+});
+
 export const clearOrganizationsState = () => ({
   type: orgConstants.CLEAR_STATE,
 });
