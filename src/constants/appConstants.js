@@ -84,7 +84,3 @@ export const EXPECTED_OUTCOME_TABLE_HEADINGS = [
   "Value",
   "Validations",
 ];
-
-// default organization avatar
-export const DEFAULT_ORG_AVATAR =
-  "https://avatars.githubusercontent.com/u/120446282?s=40&v=4";

@@ -8,9 +8,10 @@ import Signup from "Components/Auth/Signup";
 
 import { acceptJoinOrgInvitationRequest } from "store/Organizations/actions";
 
-import { DEFAULT_ORG_AVATAR } from "constants/appConstants";
 import { SIGNUP_INITIAL_DATA } from "constants/authConstants";
 import { DASHBOARD_ROUTE } from "constants/routeConstants";
+
+import DEFAULT_ORG_AVATAR from "assets/images/defaultOrgAvatar.png";
 
 const mapState = ({ orgs }) => ({
   isSuccess: orgs.isSuccess,
@@ -51,7 +52,8 @@ const AcceptJoinOrgInvitation = () => {
       <div className="text-center">
         <Image src={DEFAULT_ORG_AVATAR} width={80} height={80} rounded />
         <h5 className="py-2 lh-base">
-          You&apos;ve been invited to the <b>{org}</b> organization.
+          {/* &#39; is used for single quotation mark  */}
+          You&#39;ve been invited to the <b>{org}</b> organization.
         </h5>
       </div>
       <Signup
