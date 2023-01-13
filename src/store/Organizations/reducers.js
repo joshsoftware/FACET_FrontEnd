@@ -47,7 +47,12 @@ const organizationsReducer = (state = initialState, action) => {
       return { ...state, isLoading: true };
 
     case orgConstants.EDIT_ORGANIZATION_SUCCESS:
-      return { ...state, isLoading: false, isSuccess: true };
+      return {
+        ...state,
+        isLoading: false,
+        organization: payload,
+        isSuccess: true,
+      };
 
     case orgConstants.EDIT_ORGANIZATION_FAILURE:
       return { ...state, isLoading: false };

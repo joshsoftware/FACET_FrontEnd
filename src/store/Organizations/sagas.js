@@ -4,6 +4,7 @@ import { apisErrorMessage } from "utils/apisErrorMessage";
 import {
   acceptJoinOrgInvitationApi,
   addOrganizationApi,
+  editOrganizationApi,
   getOrganizationApi,
   getOrganizationsApi,
   inviteUsersInOragnizationApi,
@@ -13,6 +14,8 @@ import {
   acceptJoinOrgInvitationSuccess,
   addOrganizationFailure,
   addOrganizationSuccess,
+  editOrganizationFailure,
+  editOrganizationSuccess,
   getOrganizationFailure,
   getOrganizationsFailure,
   getOrganizationsSuccess,
@@ -62,6 +65,18 @@ export function* addOrganization({ payload }) {
   }
 }
 
+export function* editOrganization({ payload }) {
+  try {
+    const response = yield call(editOrganizationApi, payload);
+    toastMessage(ORGANIZATIONS.UPDATE_PROFILE_SUCCESS);
+    yield put(editOrganizationSuccess(response));
+  } catch (error) {
+    const errorMessage = apisErrorMessage(error);
+    toastMessage(errorMessage, "error");
+    yield put(editOrganizationFailure());
+  }
+}
+
 export function* inviteUsersInOrganization({ payload }) {
   try {
     yield call(inviteUsersInOragnizationApi, payload);
@@ -91,6 +106,7 @@ export default function* organizationsSagas() {
   yield takeLatest(orgConstants.GET_ORGANIZATIONS_REQUEST, getOrganizations);
   yield takeLatest(orgConstants.GET_ORGANIZATION_REQUEST, getOrganization);
   yield takeLatest(orgConstants.ADD_ORGANIZATION_REQUEST, addOrganization);
+  yield takeLatest(orgConstants.EDIT_ORGANIZATION_REQUEST, editOrganization);
   yield takeLatest(
     orgConstants.INVITE_USERS_IN_ORGANIZATION_REQUEST,
     inviteUsersInOrganization
