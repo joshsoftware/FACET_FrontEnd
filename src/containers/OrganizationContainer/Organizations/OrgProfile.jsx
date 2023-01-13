@@ -42,7 +42,7 @@ const OrgProfile = () => {
   };
 
   // show loader if organization data is fetching and org data objectnot contains any prev data
-  const showLoader =
+  const isShowLoader =
     isLoading &&
     typeof organization === "object" &&
     !Object(organization).length;
@@ -51,7 +51,7 @@ const OrgProfile = () => {
     <Container className="py-4 col-md-5">
       <h4 className="py-2">Organization Profile</h4>
       <div className="my-3 p-4 rounded bg-white">
-        {showLoader ? (
+        {isShowLoader ? (
           <div className="w-100 text-center">
             <Loader />
           </div>
