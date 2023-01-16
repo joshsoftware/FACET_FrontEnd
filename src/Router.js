@@ -9,9 +9,6 @@ const SignUpContainer = lazy(() => import("containers/SignUpContainer"));
 // private routes containers
 const DashBoard = lazy(() => import("containers/DashBoard"));
 const Profile = lazy(() => import("containers/ProfileContainer"));
-const MyOrganizations = lazy(() =>
-  import("containers/OrganizationContainer/MyOrganizations")
-);
 const AddNewOrganization = lazy(() =>
   import(
     "containers/OrganizationContainer/OnboardOrganization/AddNewOrganization"
@@ -109,11 +106,6 @@ export const privateRoutesConfig = [
     key: "user-profile",
     path: routes.USER_PROFILE_ROUTE,
     component: Profile,
-  },
-  {
-    key: "my-organizations",
-    path: routes.MY_ORGANIZATIONS_ROUTE,
-    component: MyOrganizations,
   },
   {
     key: "add-new-organization",
