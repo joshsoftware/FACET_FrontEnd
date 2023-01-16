@@ -1,19 +1,5 @@
 import orgConstants from "./constants";
 
-export const getOrganizationsRequest = (data) => ({
-  type: orgConstants.GET_ORGANIZATIONS_REQUEST,
-  payload: data,
-});
-
-export const getOrganizationsSuccess = (data) => ({
-  type: orgConstants.GET_ORGANIZATIONS_SUCCESS,
-  payload: data,
-});
-
-export const getOrganizationsFailure = () => ({
-  type: orgConstants.GET_ORGANIZATIONS_FAILURE,
-});
-
 export const getOrganizationRequest = (data) => ({
   type: orgConstants.GET_ORGANIZATION_REQUEST,
   payload: data,

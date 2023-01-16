@@ -8,8 +8,6 @@ import organizationsData from "utils/mockdata/organizations";
 
 import { POST, SERVER_URL } from "constants/appConstants";
 
-export const getOrganizationsApi = () => organizationsData;
-
 // eslint-disable-next-line no-unused-vars
 export const getOrganizationApi = (data) => organizationsData.organizations[0];
 
