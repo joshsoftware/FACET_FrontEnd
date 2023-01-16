@@ -4,12 +4,10 @@
 // by api calls
 import { Api } from "store/apiHelper";
 
-import organizationsData from "utils/mockdata/organizations";
-
 import { POST, SERVER_URL } from "constants/appConstants";
 
-// eslint-disable-next-line no-unused-vars
-export const getOrganizationApi = (data) => organizationsData.organizations[0];
+export const getOrganizationApi = ({ organization }) =>
+  Api(`${SERVER_URL}/api/organization/${organization}`);
 
 export const addOrganizationApi = (data) =>
   Api(`${SERVER_URL}/api/organization/new`, POST, data);

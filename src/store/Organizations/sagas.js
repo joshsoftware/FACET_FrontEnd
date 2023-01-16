@@ -31,7 +31,7 @@ import orgConstants from "./constants";
 export function* getOrganization({ payload }) {
   try {
     const response = yield call(getOrganizationApi, payload);
-    yield put(getOrganizationSuccess(response));
+    yield put(getOrganizationSuccess(response.organization));
   } catch (error) {
     const errorMessage = apisErrorMessage(error);
     toastMessage(errorMessage, "error");
