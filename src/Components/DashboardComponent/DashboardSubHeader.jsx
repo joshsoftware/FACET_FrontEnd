@@ -4,7 +4,7 @@ import { Search } from "react-bootstrap-icons";
 import PropTypes from "prop-types";
 
 const DashboardSubHeader = (props) => {
-  const { setShowAddProjectModal, user, isLoggedIn } = props;
+  const { setShowAddProjectModal, isAbleToAddProject, isLoggedIn } = props;
 
   return (
     <>
@@ -21,7 +21,7 @@ const DashboardSubHeader = (props) => {
                 aria-describedby="basic-addon1"
               />
             </InputGroup>
-            {isLoggedIn && (user.is_super_admin || user.is_admin) && (
+            {isLoggedIn && isAbleToAddProject && (
               <div className="d-flex flex-wrap col-2">
                 <Button
                   className="w-100 d-flex justify-content-center align-items-center"
@@ -38,10 +38,10 @@ const DashboardSubHeader = (props) => {
   );
 };
 
-export default DashboardSubHeader;
-
 DashboardSubHeader.propTypes = {
-  setShowAddProjectModal: PropTypes.func,
-  user: PropTypes.object,
+  setShowAddProjectModal: PropTypes.func.isRequired,
+  isAbleToAddProject: PropTypes.bool,
   isLoggedIn: PropTypes.bool,
 };
+
+export default DashboardSubHeader;

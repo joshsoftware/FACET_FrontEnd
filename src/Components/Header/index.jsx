@@ -20,6 +20,7 @@ import logo from "assets/images/logo.png";
 const mapState = ({ user }) => ({
   isLoggedIn: user.isLoggedIn,
   currentUser: user.currentUser,
+  isOrgOwner: user.isOrgOwner,
   usersOptions: user.users.map((user) => ({
     label: user.name,
     value: user.id,
@@ -32,7 +33,8 @@ const Header = () => {
 
   const {
     isLoggedIn,
-    currentUser: { is_super_admin: isSuperAdmin, name: userName },
+    currentUser: { name: userName },
+    isOrgOwner,
     usersOptions,
     isUsersLoading,
   } = useSelector(mapState);
@@ -42,10 +44,10 @@ const Header = () => {
 
   // get list of users whose role is not admin
   useEffect(() => {
-    if (showAddAdminModal && isLoggedIn && isSuperAdmin) {
+    if (showAddAdminModal && isLoggedIn && isOrgOwner) {
       dispatch(getUsersRequest({ exclude: "admins" }));
     }
-  }, [isLoggedIn, isSuperAdmin, showAddAdminModal]);
+  }, [isLoggedIn, isOrgOwner, showAddAdminModal]);
 
   // toggle add admin modal
   const handleToggle = () => {
@@ -70,7 +72,7 @@ const Header = () => {
 
   return (
     <Navbar bg="dark" sticky="top" variant="dark" expand="lg">
-      {isLoggedIn && isSuperAdmin && (
+      {isLoggedIn && isOrgOwner && (
         <AddAdminModal
           show={showAddAdminModal}
           data={selectedUsers}
@@ -93,7 +95,7 @@ const Header = () => {
             <Nav.Link as={Link} to={DASHBOARD_ROUTE}>
               Home
             </Nav.Link>
-            {isLoggedIn && isSuperAdmin && (
+            {isLoggedIn && isOrgOwner && (
               <Nav.Link onClick={handleToggle}>Add Admin</Nav.Link>
             )}
           </Nav>
