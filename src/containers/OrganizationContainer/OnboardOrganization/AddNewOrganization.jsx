@@ -9,21 +9,25 @@ import {
   addOrganizationRequest,
   clearOrganizationsState,
 } from "store/Organizations/actions";
-import { buildRoute } from "utils/helper";
+import { getUserProfileRequest } from "store/User/actions";
 
-import { INVITE_ORGANIZATION_ROUTE } from "constants/routeConstants";
+import {
+  DASHBOARD_ROUTE,
+  INVITE_ORGANIZATION_ROUTE,
+} from "constants/routeConstants";
 
 const initialOrgFormData = { orgName: "", description: "", contactEmail: "" };
 
-const mapState = ({ orgs }) => ({
+const mapState = ({ orgs, user }) => ({
   isSuccess: orgs.isSuccess,
   organization: orgs.organization,
+  isOrgAssigned: !!user.currentUser?.user_organization,
 });
 
 const AddNewOrganization = () => {
   const dispatch = useDispatch();
 
-  const { isSuccess, organization } = useSelector(mapState);
+  const { isSuccess, isOrgAssigned } = useSelector(mapState);
 
   const [orgFormData, setOrgFormData] = useState(initialOrgFormData);
 
@@ -31,6 +35,11 @@ const AddNewOrganization = () => {
   useEffect(() => {
     return () => dispatch(clearOrganizationsState());
   }, []);
+
+  // fetch user profile when organization created successfully
+  useEffect(() => {
+    isSuccess && dispatch(getUserProfileRequest());
+  }, [isSuccess]);
 
   // handles and store the data into state when input changed
   const onFormDataChange = useCallback((e) => {
@@ -41,15 +50,21 @@ const AddNewOrganization = () => {
   // handle form submit action
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(addOrganizationRequest(orgFormData));
+    const { orgName, description, contactEmail } = orgFormData;
+    const formData = {
+      name: orgName,
+      description,
+      contact_email_id: contactEmail,
+    };
+    dispatch(addOrganizationRequest(formData));
   };
 
-  // if organization created successfully, navigate to invite page
-  if (isSuccess) {
-    const navigateTo = buildRoute(INVITE_ORGANIZATION_ROUTE, {
-      org: organization.orgName,
-    });
-    return <Navigate to={navigateTo} />;
+  if (isOrgAssigned && isSuccess) {
+    return <Navigate to={INVITE_ORGANIZATION_ROUTE} />;
+  }
+
+  if (isOrgAssigned) {
+    return <Navigate to={DASHBOARD_ROUTE} />;
   }
 
   return (
