@@ -11,6 +11,8 @@ export const getOrganizationApi = (data) => organizationsData.organizations[0];
 
 export const addOrganizationApi = (data) => data;
 
+export const editOrganizationApi = (data) => data;
+
 export const inviteUsersInOragnizationApi = (data) => data;
 
 export const acceptJoinOrgInvitationApi = (data) => data;
