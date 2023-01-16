@@ -10,11 +10,9 @@ const initialState = {
   isLoading: false,
   currentUser: { name: "" },
   users: [],
-
-  // TO-DO:
-  // This needs to be update once backend apis ready
-  // which collects data from localstorage and stores into reducer
-  isOrgOwner: true,
+  isPersonalAccount: false,
+  isOrgOwner: false,
+  isAdmin: false,
 };
 
 const userReducer = (state = initialState, action) => {
@@ -27,9 +25,12 @@ const userReducer = (state = initialState, action) => {
     case userConstants.SIGN_IN_SUCCESS:
       return {
         ...state,
+        currentUser: payload,
         isLoading: false,
         isLoggedIn: true,
-        currentUser: payload,
+        isOrgOwner: payload?.is_super_admin,
+        isAdmin: payload?.is_admin,
+        isPersonalAccount: payload?.account_type === "personal",
       };
 
     case userConstants.SIGN_IN_FAILURE:
@@ -51,7 +52,14 @@ const userReducer = (state = initialState, action) => {
       return { ...state, isLoading: true };
 
     case userConstants.GET_CURRENT_USER_INFO_SUCCESS:
-      return { ...state, currentUser: payload, isLoading: false };
+      return {
+        ...state,
+        currentUser: payload,
+        isLoading: false,
+        isOrgOwner: payload?.is_super_admin,
+        isAdmin: payload?.is_admin,
+        isPersonalAccount: payload?.account_type === "personal",
+      };
 
     case userConstants.GET_CURRENT_USER_INFO_FAILURE:
       return { ...state, isLoading: false };
