@@ -4,13 +4,13 @@
 // by api calls
 import { Api } from "store/apiHelper";
 
-import { GET, SERVER_URL } from "constants/appConstants";
+import { GET, PUT, SERVER_URL } from "constants/appConstants";
 
 export const getOrgMembersApi = (data) =>
   Api(`${SERVER_URL}/api/organization/members`, GET, null, data);
 
-// eslint-disable-next-line no-unused-vars
-export const changeMemberRoleApi = (data) => {};
+export const changeMemberRoleApi = (data) =>
+  Api(`${SERVER_URL}/api/organization/members/update`, PUT, data);
 
 // eslint-disable-next-line no-unused-vars
 export const removeMemberApi = (data) => {};

@@ -34,7 +34,7 @@ const orgMembersReducer = (state = initialState, action) => {
       return { ...state, isLoading: false };
 
     case orgMembersConstants.CLEAR_STATE:
-      return initialState;
+      return { ...state, isSuccess: false };
 
     default:
       return state;

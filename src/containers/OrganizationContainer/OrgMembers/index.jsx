@@ -10,9 +10,11 @@ import TableComponent from "Components/CustomComponents/TableComponent";
 
 import {
   changeMemberRoleRequest,
+  clearOrgMemberState,
   getOrgMembersRequest,
   removeMemberFromOrgRequest,
 } from "store/Organizations/OrgMembers/actions";
+import { convertRoles } from "utils/organizationHelper";
 
 import { INVITE_ORGANIZATION_ROUTE } from "constants/routeConstants";
 
@@ -22,12 +24,13 @@ const nonAdminTableHeadings = ["Member", "Role"];
 const mapState = ({ orgMembers, user }) => ({
   members: orgMembers.members,
   isOrgOwner: user.isOrgOwner,
+  isSuccess: orgMembers.isSuccess,
 });
 
 const OrgMembers = () => {
   const dispatch = useDispatch();
 
-  const { members, isOrgOwner } = useSelector(mapState);
+  const { members, isOrgOwner, isSuccess } = useSelector(mapState);
 
   const [showChangeRoleModal, setShowChangeRoleModal] = useState(false);
   const [changeRoleFormData, setChangeRoleFormData] = useState({
@@ -39,6 +42,14 @@ const OrgMembers = () => {
   useEffect(() => {
     dispatch(getOrgMembersRequest());
   }, []);
+
+  // If the role of member changed successfully then clear isSuccess flag and re-request members list
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(getOrgMembersRequest());
+    }
+    return () => dispatch(clearOrgMemberState());
+  }, [isSuccess]);
 
   // on change role of member
   const onChangeMemberRole = useCallback(
@@ -66,11 +77,12 @@ const OrgMembers = () => {
   }, []);
 
   // submit change member role form
-  // TO-DO: changes needed once api is done: send data in form of backend requires
   const onRoleChangeFormSubmit = (e) => {
     e.preventDefault();
     toggleChangeRoleModal();
-    dispatch(changeMemberRoleRequest(changeRoleFormData));
+    const { member, updatedRole } = changeRoleFormData;
+    const payload = { member, updatedRole: convertRoles(updatedRole) };
+    dispatch(changeMemberRoleRequest(payload));
   };
 
   // dispatch action to remove member from organization
