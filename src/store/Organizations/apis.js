@@ -15,6 +15,7 @@ export const addOrganizationApi = (data) =>
 export const editOrganizationApi = (data) =>
   Api(`${SERVER_URL}/api/organization/update`, PUT, data);
 
-export const inviteUsersInOragnizationApi = (data) => data;
+export const inviteUsersInOragnizationApi = (data) =>
+  Api(`${SERVER_URL}/api/organization/members/invite`, POST, data);
 
 export const acceptJoinOrgInvitationApi = (data) => data;
