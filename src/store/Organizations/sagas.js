@@ -43,7 +43,7 @@ export function* addOrganization({ payload }) {
   try {
     const response = yield call(addOrganizationApi, payload);
     toastMessage(ORGANIZATIONS.ADD_NEW_SUCCESS);
-    yield put(addOrganizationSuccess(response));
+    yield put(addOrganizationSuccess(response?.organization));
   } catch (error) {
     const errorMessage = apisErrorMessage(error);
     toastMessage(errorMessage, "error");
@@ -55,7 +55,7 @@ export function* editOrganization({ payload }) {
   try {
     const response = yield call(editOrganizationApi, payload);
     toastMessage(ORGANIZATIONS.UPDATE_PROFILE_SUCCESS);
-    yield put(editOrganizationSuccess(response));
+    yield put(editOrganizationSuccess(response?.organization));
   } catch (error) {
     const errorMessage = apisErrorMessage(error);
     toastMessage(errorMessage, "error");

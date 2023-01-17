@@ -84,7 +84,7 @@ const organizationsReducer = (state = initialState, action) => {
       return { ...state, isLoading: false };
 
     case orgConstants.CLEAR_STATE:
-      return initialState;
+      return { ...state, isSuccess: false };
 
     default:
       return state;

@@ -4,7 +4,7 @@
 // by api calls
 import { Api } from "store/apiHelper";
 
-import { POST, SERVER_URL } from "constants/appConstants";
+import { POST, PUT, SERVER_URL } from "constants/appConstants";
 
 export const getOrganizationApi = ({ organization }) =>
   Api(`${SERVER_URL}/api/organization/${organization}`);
@@ -12,7 +12,8 @@ export const getOrganizationApi = ({ organization }) =>
 export const addOrganizationApi = (data) =>
   Api(`${SERVER_URL}/api/organization/new`, POST, data);
 
-export const editOrganizationApi = (data) => data;
+export const editOrganizationApi = (data) =>
+  Api(`${SERVER_URL}/api/organization/update`, PUT, data);
 
 export const inviteUsersInOragnizationApi = (data) => data;
 

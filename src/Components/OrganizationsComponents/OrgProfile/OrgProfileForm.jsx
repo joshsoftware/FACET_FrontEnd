@@ -10,10 +10,10 @@ import { isValidEmail } from "utils/helper";
 import { DESCRIPTION, EMAIL, ORG_NAME } from "constants/userMessagesConstants";
 
 const OrgProfileForm = ({ data, onChange, onSubmit, isOrgOwner }) => {
-  const { name, description, email } = data;
+  const { name, description, contactEmail } = data;
 
   // check whether all required fields are filled or not
-  const isButtonDisabled = !name || !isValidEmail(email);
+  const isButtonDisabled = !name || !isValidEmail(contactEmail);
 
   return (
     <Form onSubmit={onSubmit}>
@@ -37,8 +37,8 @@ const OrgProfileForm = ({ data, onChange, onSubmit, isOrgOwner }) => {
       <FormInput
         label="Contact"
         type="email"
-        name="email"
-        value={email}
+        name="contactEmail"
+        value={contactEmail}
         onChange={onChange}
         placeholder={EMAIL}
         isRequired
@@ -58,7 +58,7 @@ OrgProfileForm.propTypes = {
   data: PropTypes.shape({
     name: PropTypes.string,
     description: PropTypes.string,
-    email: PropTypes.string,
+    contactEmail: PropTypes.string,
   }).isRequired,
   onChange: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,

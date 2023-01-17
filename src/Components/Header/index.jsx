@@ -11,6 +11,7 @@ import { getUsersRequest, signOutRequest } from "store/User/actions";
 import {
   DASHBOARD_ROUTE,
   LOGIN_ROUTE,
+  ORG_PROFILE_ROUTE,
   SIGNUP_ROUTE,
   USER_PROFILE_ROUTE,
 } from "constants/routeConstants";
@@ -106,8 +107,8 @@ const Header = () => {
                   <NavDropdown.Item as={Link} to={USER_PROFILE_ROUTE}>
                     My Profile
                   </NavDropdown.Item>
-                  <NavDropdown.Item as={Link}>
-                    My Organizations
+                  <NavDropdown.Item as={Link} to={ORG_PROFILE_ROUTE}>
+                    My Organization
                   </NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item

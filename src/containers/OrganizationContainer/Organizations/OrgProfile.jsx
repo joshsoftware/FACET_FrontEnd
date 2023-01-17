@@ -18,10 +18,11 @@ const OrgProfile = () => {
 
   const { organization, isOrgOwner, isLoading } = useSelector(mapState);
 
-  const [orgProfileFormData, setOrgProfileFormData] = useState(organization);
+  const [orgProfileFormData, setOrgProfileFormData] = useState({});
 
   useEffect(() => {
-    setOrgProfileFormData(organization);
+    const { name, description, contact_email_id: contactEmail } = organization;
+    setOrgProfileFormData({ name, description, contactEmail });
   }, [organization]);
 
   // handles change in the org profile form and update the state
@@ -38,7 +39,15 @@ const OrgProfile = () => {
   // handles the form submit action and dispatch the edit profile action
   const onUpdateOrgProfileFormSubmit = (e) => {
     e.preventDefault();
-    dispatch(editOrganizationRequest(orgProfileFormData));
+    const { name, description, contactEmail } = orgProfileFormData;
+    const { id } = organization;
+    const payload = {
+      id,
+      name,
+      description,
+      contact_email_id: contactEmail,
+    };
+    dispatch(editOrganizationRequest(payload));
   };
 
   // show loader if organization data is fetching and org data objectnot contains any prev data
