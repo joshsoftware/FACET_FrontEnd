@@ -37,7 +37,7 @@ const PrivateRoutes = () => {
   // then user will redirect to ADD_ORGANIZATION_ROUTE
   if (
     isLoggedIn &&
-    !organization &&
+    organization === null &&
     location.pathname !== ADD_ORGANIZATION_ROUTE
   ) {
     return <Navigate to={ADD_ORGANIZATION_ROUTE} />;
