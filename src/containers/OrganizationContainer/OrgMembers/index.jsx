@@ -87,7 +87,7 @@ const OrgMembers = () => {
 
   // dispatch action to remove member from organization
   const onRemoveMember = useCallback((member) => {
-    dispatch(removeMemberFromOrgRequest({ member }));
+    dispatch(removeMemberFromOrgRequest({ user_id: member }));
   }, []);
 
   const tableHeadings = isOrgOwner ? adminTableHeadings : nonAdminTableHeadings;
