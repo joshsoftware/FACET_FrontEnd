@@ -1,7 +1,3 @@
-// TO-DO
-// Currently this apis file functions returns mockdata
-// When Apis are available then this functions will be replaced
-// by api calls
 import { Api } from "store/apiHelper";
 
 import { POST, PUT, SERVER_URL } from "constants/appConstants";
@@ -18,4 +14,5 @@ export const editOrganizationApi = (data) =>
 export const inviteUsersInOragnizationApi = (data) =>
   Api(`${SERVER_URL}/api/organization/members/invite`, POST, data);
 
-export const acceptJoinOrgInvitationApi = (data) => data;
+export const acceptJoinOrgInvitationApi = (data) =>
+  Api(`${SERVER_URL}/api/organization/members/register`, POST, data);
