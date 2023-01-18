@@ -56,3 +56,12 @@ export const isValidEmail = (email) =>
 // helps to truncate text
 export const truncate = (text, length = 100) =>
   text?.length > length ? text.slice(0, length) + "..." : text;
+
+// helps to decode the jwt token
+export const decodeToken = (token) => {
+  try {
+    return JSON.parse(atob(token.split(".")[1]));
+  } catch (error) {
+    console.log("Unable to decode the token ", error);
+  }
+};
