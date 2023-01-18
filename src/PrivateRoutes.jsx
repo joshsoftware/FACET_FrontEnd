@@ -23,7 +23,7 @@ const PrivateRoutes = () => {
 
   useEffect(() => {
     isLoggedIn && dispatch(getUserProfileRequest());
-  }, []);
+  }, [isLoggedIn]);
 
   // fetch organization deatils if accountType is not personal
   useEffect(() => {
