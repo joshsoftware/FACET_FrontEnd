@@ -7,14 +7,14 @@ import {
   privateRoutesConfig,
   projectRoutesConfig,
   publicRoutesConfig,
-} from "Router";
+} from "routes/Router";
 
 import { ROOT_ROUTE } from "constants/routeConstants";
 
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
 
-const PrivateRoutes = lazy(() => import("./PrivateRoutes"));
+const PrivateRoutes = lazy(() => import("routes/PrivateRoutes"));
 const ProjectContainer = lazy(() => import("containers/ProjectContainer"));
 
 function App() {
