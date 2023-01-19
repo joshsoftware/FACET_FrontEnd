@@ -4,6 +4,8 @@ import userConstants from "./constants";
 
 const isTokenExist = getLocalStorage("accessToken") ? true : false;
 
+const isFacetAdmin = !!getLocalStorage("isFacetAdmin");
+
 const initialState = {
   isLoggedIn: isTokenExist,
   isSignUpSuccess: false,
@@ -13,6 +15,7 @@ const initialState = {
   isPersonalAccount: false,
   isOrgOwner: false,
   isAdmin: false,
+  isFacetAdmin: isFacetAdmin,
 };
 
 const userReducer = (state = initialState, action) => {
