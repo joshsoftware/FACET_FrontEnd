@@ -46,15 +46,9 @@ export function* signIn({ payload }) {
   }
 }
 
-export function* signUp({
-  payload: { name, email, password, confirmPassword },
-}) {
+export function* signUp({ payload }) {
   try {
-    if (password !== confirmPassword) {
-      toastMessage(USER_AUTH.PASSWORD_NOT_MATCHED, "error");
-      return;
-    }
-    yield call(signUpApi, { name, email, password });
+    yield call(signUpApi, payload);
     toastMessage(USER_AUTH.SIGNUP_SUCCESS);
     yield put(signUpSuccess());
   } catch (error) {

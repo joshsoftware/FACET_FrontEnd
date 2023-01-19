@@ -1,14 +1,12 @@
-// TO-DO
-// Currently this apis file functions returns mockdata
-// When Apis are available then this functions will be replaced
-// by api calls
-import orgMembersResponse from "utils/mockdata/orgMembers";
+import { Api } from "store/apiHelper";
 
-// eslint-disable-next-line no-unused-vars
-export const getOrgMembersApi = (data) => orgMembersResponse;
+import { DELETE, GET, PUT, SERVER_URL } from "constants/appConstants";
 
-// eslint-disable-next-line no-unused-vars
-export const changeMemberRoleApi = (data) => {};
+export const getOrgMembersApi = (data) =>
+  Api(`${SERVER_URL}/api/organization/members`, GET, null, data);
 
-// eslint-disable-next-line no-unused-vars
-export const removeMemberApi = (data) => {};
+export const changeMemberRoleApi = (data) =>
+  Api(`${SERVER_URL}/api/organization/members/update`, PUT, data);
+
+export const removeMemberApi = (data) =>
+  Api(`${SERVER_URL}/api/organization/members/remove`, DELETE, data);

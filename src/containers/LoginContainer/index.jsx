@@ -7,15 +7,24 @@ import Login from "Components/Auth/Login";
 
 import { signInRequest } from "store/User/actions";
 
+import {
+  ADD_ORGANIZATION_ROUTE,
+  DASHBOARD_ROUTE,
+} from "constants/routeConstants";
+
 const initialFormData = { email: "", password: "" };
 
 const mapState = ({ user }) => ({
   isLoggedIn: user.isLoggedIn,
+  isMemberOfOrg: !!user.currentUser?.user_organization,
+  isPersonalAccount: user.isPersonalAccount,
 });
 
 const LoginContainer = () => {
   const dispatch = useDispatch();
-  const { isLoggedIn } = useSelector(mapState);
+
+  const { isLoggedIn, isMemberOfOrg, isPersonalAccount } =
+    useSelector(mapState);
 
   const [formData, setFormData] = useState(initialFormData);
 
@@ -31,8 +40,15 @@ const LoginContainer = () => {
     dispatch(signInRequest(formData));
   };
 
+  // if user is loggedin with organization account type and none of
+  // the organization assign to user then navigate to setup organization page
+  if (isLoggedIn && !isPersonalAccount && !isMemberOfOrg) {
+    return <Navigate to={ADD_ORGANIZATION_ROUTE} />;
+  }
+
+  // if user loggedin then navigate to dashboard
   if (isLoggedIn) {
-    return <Navigate to="/dashboard" />;
+    return <Navigate to={DASHBOARD_ROUTE} />;
   }
 
   return (

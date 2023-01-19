@@ -6,7 +6,6 @@ import {
   addOrganizationApi,
   editOrganizationApi,
   getOrganizationApi,
-  getOrganizationsApi,
   inviteUsersInOragnizationApi,
 } from "./apis";
 import {
@@ -17,8 +16,6 @@ import {
   editOrganizationFailure,
   editOrganizationSuccess,
   getOrganizationFailure,
-  getOrganizationsFailure,
-  getOrganizationsSuccess,
   getOrganizationSuccess,
   inviteUsersInOrganizationFailure,
   inviteUsersInOrganizationSuccess,
@@ -31,21 +28,10 @@ import {
 } from "constants/userMessagesConstants";
 import orgConstants from "./constants";
 
-export function* getOrganizations() {
-  try {
-    const response = yield call(getOrganizationsApi);
-    yield put(getOrganizationsSuccess(response.organizations));
-  } catch (error) {
-    const errorMessage = apisErrorMessage(error);
-    toastMessage(errorMessage, "error");
-    yield put(getOrganizationsFailure());
-  }
-}
-
 export function* getOrganization({ payload }) {
   try {
     const response = yield call(getOrganizationApi, payload);
-    yield put(getOrganizationSuccess(response));
+    yield put(getOrganizationSuccess(response.organization));
   } catch (error) {
     const errorMessage = apisErrorMessage(error);
     toastMessage(errorMessage, "error");
@@ -57,7 +43,7 @@ export function* addOrganization({ payload }) {
   try {
     const response = yield call(addOrganizationApi, payload);
     toastMessage(ORGANIZATIONS.ADD_NEW_SUCCESS);
-    yield put(addOrganizationSuccess(response));
+    yield put(addOrganizationSuccess(response?.organization));
   } catch (error) {
     const errorMessage = apisErrorMessage(error);
     toastMessage(errorMessage, "error");
@@ -69,7 +55,7 @@ export function* editOrganization({ payload }) {
   try {
     const response = yield call(editOrganizationApi, payload);
     toastMessage(ORGANIZATIONS.UPDATE_PROFILE_SUCCESS);
-    yield put(editOrganizationSuccess(response));
+    yield put(editOrganizationSuccess(response?.organization));
   } catch (error) {
     const errorMessage = apisErrorMessage(error);
     toastMessage(errorMessage, "error");
@@ -103,7 +89,6 @@ export function* acceptJoinOrgInvitation({ payload }) {
 
 // watcher saga
 export default function* organizationsSagas() {
-  yield takeLatest(orgConstants.GET_ORGANIZATIONS_REQUEST, getOrganizations);
   yield takeLatest(orgConstants.GET_ORGANIZATION_REQUEST, getOrganization);
   yield takeLatest(orgConstants.ADD_ORGANIZATION_REQUEST, addOrganization);
   yield takeLatest(orgConstants.EDIT_ORGANIZATION_REQUEST, editOrganization);

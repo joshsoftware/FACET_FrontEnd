@@ -37,7 +37,15 @@ const SignUpContainer = () => {
   // on submit sign up form
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    dispatch(signUpRequest(formData));
+    const { name, username, email, password, accountType } = formData;
+    const payload = {
+      name,
+      username,
+      email,
+      password,
+      account_type: accountType,
+    };
+    dispatch(signUpRequest(payload));
   };
 
   // set account type when user click on accountTypeCard
