@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
+import AdminLayout from "Layout/facetAdminLayout";
+
 import { getUserProfileRequest } from "store/User/actions";
 
 import { DASHBOARD_ROUTE } from "constants/routeConstants";
@@ -19,7 +21,13 @@ const AdminRoutes = () => {
     isFacetAdmin && dispatch(getUserProfileRequest());
   }, [isFacetAdmin]);
 
-  return isFacetAdmin ? <Outlet /> : <Navigate to={DASHBOARD_ROUTE} />;
+  return isFacetAdmin ? (
+    <AdminLayout>
+      <Outlet />
+    </AdminLayout>
+  ) : (
+    <Navigate to={DASHBOARD_ROUTE} />
+  );
 };
 
 export default AdminRoutes;
