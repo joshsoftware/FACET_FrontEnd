@@ -4,7 +4,7 @@ import userConstants from "./constants";
 
 const isTokenExist = getLocalStorage("accessToken") ? true : false;
 
-const isFacetAdmin = !!getLocalStorage("isFacetAdmin");
+const isFacetAdmin = !!JSON.parse(getLocalStorage("isFacetAdmin"));
 
 const initialState = {
   isLoggedIn: isTokenExist,
