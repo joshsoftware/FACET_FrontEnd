@@ -77,7 +77,7 @@ const FacetAdminOrganizations = lazy(() =>
 const FacetAdminOrganizationDetails = lazy(() =>
   import("containers/facetAdmin/orgDetails")
 );
-const FacetAdminMembers = lazy(() => import("containers/facetAdmin/members"));
+const FacetAdminUsers = lazy(() => import("containers/facetAdmin/users"));
 
 const addProps = { cat: "add" };
 const editProps = { cat: "edit" };
@@ -114,8 +114,8 @@ export const adminRoutesConfig = [
   },
   {
     key: "members-list",
-    path: routes.ADMIN_MEMBERS_ROUTE,
-    component: FacetAdminMembers,
+    path: routes.ADMIN_USERS_ROUTE,
+    component: FacetAdminUsers,
   },
 ];
 

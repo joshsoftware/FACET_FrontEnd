@@ -14,7 +14,7 @@ import PropTypes from "prop-types";
 import { signOutRequest } from "store/User/actions";
 
 import {
-  ADMIN_MEMBERS_ROUTE,
+  ADMIN_USERS_ROUTE,
   ADMIN_ORGANIZATIONS_ROUTE,
 } from "constants/routeConstants";
 
@@ -33,7 +33,7 @@ const navItems = [
     title: "Users",
     activeIcon: <PeopleFill />,
     inactiveIcon: <People />,
-    link: ADMIN_MEMBERS_ROUTE,
+    link: ADMIN_USERS_ROUTE,
   },
 ];
 

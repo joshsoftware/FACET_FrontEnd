@@ -75,4 +75,4 @@ export const EXECUTE_ROUTE = `${projectRoutePrefix}/execute/:id`;
 // Facet Admin routes constants
 export const ADMIN_ORGANIZATIONS_ROUTE = "/admin/organizations";
 export const ADMIN_ORG_DETAILS_ROUTE = "/admin/organization/:id";
-export const ADMIN_MEMBERS_ROUTE = "/admin/members";
+export const ADMIN_USERS_ROUTE = "/admin/users";
