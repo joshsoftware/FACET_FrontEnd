@@ -38,7 +38,7 @@ export function* signIn({ payload }) {
   try {
     const response = yield call(signInApi, payload);
     toastMessage(USER_AUTH.LOGIN_SUCCESS);
-    yield put(signInSuccess(response.user));
+    yield put(signInSuccess(response));
   } catch (error) {
     const errorMessage = apisErrorMessage(error);
     toastMessage(errorMessage, "error");
