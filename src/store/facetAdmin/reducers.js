@@ -11,31 +11,31 @@ const adminReducer = (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
-    case facetAdminConstants.GET_ORGANIZATIONS_REQUEST:
+    case facetAdminConstants.GET_ORGANIZATIONS_ADMIN_REQUEST:
       return { ...state, isLoading: true };
 
-    case facetAdminConstants.GET_ORGANIZATIONS_SUCCESS:
+    case facetAdminConstants.GET_ORGANIZATIONS_ADMIN_SUCCESS:
       return { ...state, isLoading: false, organizations: payload };
 
-    case facetAdminConstants.GET_ORGANIZATIONS_FAILURE:
+    case facetAdminConstants.GET_ORGANIZATIONS_ADMIN_FAILURE:
       return { ...state, isLoading: false };
 
-    case facetAdminConstants.GET_ORGANIZATION_REQUEST:
+    case facetAdminConstants.GET_ORGANIZATION_ADMIN_REQUEST:
       return { ...state, isLoading: true };
 
-    case facetAdminConstants.GET_ORGANIZATION_SUCCESS:
+    case facetAdminConstants.GET_ORGANIZATION_ADMIN_SUCCESS:
       return { ...state, isLoading: false, organization: payload };
 
-    case facetAdminConstants.GET_ORGANIZATION_FAILURE:
+    case facetAdminConstants.GET_ORGANIZATION_ADMIN_FAILURE:
       return { ...state, isLoading: false };
 
-    case facetAdminConstants.GET_USERS_REQUEST:
+    case facetAdminConstants.GET_USERS_ADMIN_REQUEST:
       return { ...state, isLoading: true };
 
-    case facetAdminConstants.GET_USERS_SUCCESS:
+    case facetAdminConstants.GET_USERS_ADMIN_SUCCESS:
       return { ...state, isLoading: false, users: payload };
 
-    case facetAdminConstants.GET_USERS_FAILURE:
+    case facetAdminConstants.GET_USERS_ADMIN_FAILURE:
       return { ...state, isLoading: false };
 
     default:

@@ -50,12 +50,12 @@ export function* getUsers() {
 // Watcher saga
 export default function* adminSagas() {
   yield takeLatest(
-    facetAdminConstants.GET_ORGANIZATIONS_REQUEST,
+    facetAdminConstants.GET_ORGANIZATIONS_ADMIN_REQUEST,
     getOrganizations
   );
   yield takeLatest(
-    facetAdminConstants.GET_ORGANIZATION_REQUEST,
+    facetAdminConstants.GET_ORGANIZATION_ADMIN_REQUEST,
     getOrganization
   );
-  yield takeLatest(facetAdminConstants.GET_USERS_REQUEST, getUsers);
+  yield takeLatest(facetAdminConstants.GET_USERS_ADMIN_REQUEST, getUsers);
 }
