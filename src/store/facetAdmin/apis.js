@@ -9,4 +9,4 @@ export const getOrganizationApi = (data) =>
   Api(`${SERVER_URL}/api/superadmin/organizations/members`, GET, null, data);
 
 export const getUsersApi = () =>
-  Api(`${SERVER_URL}/api/superadmin/members`, GET);
+  Api(`${SERVER_URL}/api/superadmin/members/all`, GET);
