@@ -6,7 +6,7 @@ const OrgDetailTab = ({ data }) => {
   const { name, description, contact_email_id: contactEmail } = data;
 
   return (
-    <Container className="border border-primary py-4">
+    <Container className="py-4">
       <Col className="py-2">
         <small>
           <b>Organization Name:</b>
