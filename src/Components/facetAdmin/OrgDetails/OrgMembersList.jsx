@@ -49,7 +49,6 @@ OrgMembersList.propTypes = {
       is_super_admin: PropTypes.bool,
     })
   ).isRequired,
-  isLoading: PropTypes.bool,
 };
 
 export default OrgMembersList;

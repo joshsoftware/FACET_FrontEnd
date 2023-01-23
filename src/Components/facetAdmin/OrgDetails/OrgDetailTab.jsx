@@ -35,7 +35,6 @@ OrgDetailTab.propTypes = {
     description: PropTypes.string,
     contact_email_id: PropTypes.string,
   }).isRequired,
-  isLoading: PropTypes.bool,
 };
 
 export default OrgDetailTab;

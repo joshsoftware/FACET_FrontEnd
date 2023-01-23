@@ -3,6 +3,7 @@ import { Card, Col, Tab, Tabs } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
+import Loader from "Components/Loader";
 import OrgDetailTab from "Components/facetAdmin/OrgDetails/OrgDetailTab";
 import OrgMembersList from "Components/facetAdmin/OrgDetails/OrgMembersList";
 
@@ -29,14 +30,20 @@ const OrganizationDetails = () => {
       <h2 className="text-capitalize">{organization?.name}</h2>
       <Card className="px-4 py-3">
         <Card.Body>
-          <Tabs defaultActiveKey="details" justify>
-            <Tab eventKey="details" title="Details">
-              <OrgDetailTab data={organization} isLoading={isLoading} />
-            </Tab>
-            <Tab eventKey="members" title="Members">
-              <OrgMembersList data={members} isLoading={isLoading} />
-            </Tab>
-          </Tabs>
+          {isLoading ? (
+            <div className="w-100 text-center">
+              <Loader />
+            </div>
+          ) : (
+            <Tabs defaultActiveKey="details" justify>
+              <Tab eventKey="details" title="Details">
+                <OrgDetailTab data={organization} />
+              </Tab>
+              <Tab eventKey="members" title="Members">
+                <OrgMembersList data={members} />
+              </Tab>
+            </Tabs>
+          )}
         </Card.Body>
       </Card>
     </Col>
