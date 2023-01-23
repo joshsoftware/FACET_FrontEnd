@@ -17,7 +17,7 @@ const OrgDetailTab = ({ data }) => {
         <small>
           <b>Description:</b>
         </small>
-        <div>{description ?? "-"}</div>
+        <div>{description || "-"}</div>
       </Col>
       <Col className="py-2">
         <small>
