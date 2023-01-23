@@ -14,6 +14,8 @@ const UserTableRow = ({ data, index }) => {
     account_type: accountType,
   } = data;
 
+  const orgDetailsRoute = buildRoute(ADMIN_ORG_DETAILS_ROUTE, { id: orgId });
+
   return (
     <tr className="align-middle">
       <td>{index}</td>
@@ -23,10 +25,7 @@ const UserTableRow = ({ data, index }) => {
       </td>
       <td className="text-capitalize">{accountType}</td>
       <td>
-        <Link
-          to={buildRoute(ADMIN_ORG_DETAILS_ROUTE, { id: orgId })}
-          className="text-dark text-decoration-none"
-        >
+        <Link to={orgDetailsRoute} className="text-dark text-decoration-none">
           {orgName}
         </Link>
       </td>
