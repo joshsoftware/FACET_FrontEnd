@@ -7,7 +7,7 @@ import { buildRoute } from "utils/helper";
 import { ADMIN_ORG_DETAILS_ROUTE } from "constants/routeConstants";
 
 const OrgDetailsTableRow = ({ data, index }) => {
-  const { name, id, contact_email_id: email } = data;
+  const { name, id, contact_email_id: contactEmail } = data;
 
   // helps to build admin org details link
   const orgDetailsLink = buildRoute(ADMIN_ORG_DETAILS_ROUTE, { id });
@@ -25,7 +25,7 @@ const OrgDetailsTableRow = ({ data, index }) => {
           {id}
         </Link>
       </td>
-      <td>{email}</td>
+      <td>{contactEmail}</td>
     </tr>
   );
 };
