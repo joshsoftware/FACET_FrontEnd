@@ -8,36 +8,34 @@ import { convertRolesToStr } from "utils/organizationHelper";
 
 const tableHeadings = ["#", "Member", "Email", "Role"];
 
-const OrgMembersList = ({ data }) => {
-  return (
-    <Container className="pt-3">
-      <TableComponent headings={tableHeadings} striped className="align-middle">
-        {data?.map(
-          (
-            {
-              name,
-              username,
-              email,
-              is_admin: isAdmin,
-              is_super_admin: isSuperAdmin,
-            },
-            index
-          ) => (
-            <tr key={index}>
-              <td>{index + 1}</td>
-              <td>
-                <div>{name}</div>
-                <small className="text-muted">{username}</small>
-              </td>
-              <td>{email}</td>
-              <td>{convertRolesToStr(isSuperAdmin, isAdmin)}</td>
-            </tr>
-          )
-        )}
-      </TableComponent>
-    </Container>
-  );
-};
+const OrgMembersList = ({ data }) => (
+  <Container className="pt-3">
+    <TableComponent headings={tableHeadings} striped className="align-middle">
+      {data?.map(
+        (
+          {
+            name,
+            username,
+            email,
+            is_admin: isAdmin,
+            is_super_admin: isSuperAdmin,
+          },
+          index
+        ) => (
+          <tr key={index}>
+            <td>{index + 1}</td>
+            <td>
+              <div>{name}</div>
+              <small className="text-muted">{username}</small>
+            </td>
+            <td>{email}</td>
+            <td>{convertRolesToStr(isSuperAdmin, isAdmin)}</td>
+          </tr>
+        )
+      )}
+    </TableComponent>
+  </Container>
+);
 
 OrgMembersList.propTypes = {
   data: PropTypes.arrayOf(
