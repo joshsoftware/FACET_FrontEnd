@@ -25,9 +25,9 @@ export function* getOrganizations() {
   }
 }
 
-export function* getOrganization() {
+export function* getOrganization({ payload }) {
   try {
-    const response = yield call(getOrganizationApi);
+    const response = yield call(getOrganizationApi, payload);
     yield put(getOrganizationSuccess(response));
   } catch (error) {
     const errorMessage = apisErrorMessage(error);
