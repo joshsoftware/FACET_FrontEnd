@@ -4,17 +4,19 @@ import { ToastContainer } from "react-toastify";
 
 import Fallback from "Components/Loader/fallback";
 import {
+  adminRoutesConfig,
   privateRoutesConfig,
   projectRoutesConfig,
   publicRoutesConfig,
-} from "Router";
+} from "routes/Router";
 
 import { ROOT_ROUTE } from "constants/routeConstants";
 
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
 
-const PrivateRoutes = lazy(() => import("./PrivateRoutes"));
+const AdminRoutes = lazy(() => import("routes/AdminRoutes"));
+const PrivateRoutes = lazy(() => import("routes/PrivateRoutes"));
 const ProjectContainer = lazy(() => import("containers/ProjectContainer"));
 
 function App() {
@@ -23,6 +25,21 @@ function App() {
       <ToastContainer />
       <Suspense fallback={<Fallback />}>
         <Routes>
+          {/* Facet Admin routes */}
+          <Route path="/admin" element={<AdminRoutes />}>
+            {adminRoutesConfig.map((route) => (
+              <Route
+                key={route.key}
+                path={route.path}
+                element={
+                  <Suspense fallback={<Fallback />}>
+                    <route.component />
+                  </Suspense>
+                }
+              />
+            ))}
+          </Route>
+
           {/* authenticated routes */}
           <Route path="/" element={<PrivateRoutes />}>
             {privateRoutesConfig.map((route) => (

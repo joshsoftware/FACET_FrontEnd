@@ -70,6 +70,15 @@ const Setting = lazy(() =>
   import("containers/ProjectContainer/SettingsContainer")
 );
 
+// Facet Admin containers
+const FacetAdminOrganizations = lazy(() =>
+  import("containers/facetAdmin/organizations")
+);
+const FacetAdminOrganizationDetails = lazy(() =>
+  import("containers/facetAdmin/orgDetails")
+);
+const FacetAdminUsers = lazy(() => import("containers/facetAdmin/users"));
+
 const addProps = { cat: "add" };
 const editProps = { cat: "edit" };
 
@@ -88,6 +97,25 @@ export const publicRoutesConfig = [
     key: "accept-join-org-invitation",
     path: routes.ACCEPT_JOIN_ORG_INVITATION,
     component: AcceptJoinOrgInvitation,
+  },
+];
+
+// facet admin routes config
+export const adminRoutesConfig = [
+  {
+    key: "organizations-list",
+    path: routes.ADMIN_ORGANIZATIONS_ROUTE,
+    component: FacetAdminOrganizations,
+  },
+  {
+    key: "organization-details",
+    path: routes.ADMIN_ORG_DETAILS_ROUTE,
+    component: FacetAdminOrganizationDetails,
+  },
+  {
+    key: "members-list",
+    path: routes.ADMIN_USERS_ROUTE,
+    component: FacetAdminUsers,
   },
 ];
 

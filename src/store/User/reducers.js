@@ -4,6 +4,8 @@ import userConstants from "./constants";
 
 const isTokenExist = getLocalStorage("accessToken") ? true : false;
 
+const isFacetAdmin = !!JSON.parse(getLocalStorage("isFacetAdmin"));
+
 const initialState = {
   isLoggedIn: isTokenExist,
   isSignUpSuccess: false,
@@ -13,6 +15,7 @@ const initialState = {
   isPersonalAccount: false,
   isOrgOwner: false,
   isAdmin: false,
+  isFacetAdmin: isFacetAdmin,
 };
 
 const userReducer = (state = initialState, action) => {
@@ -25,12 +28,13 @@ const userReducer = (state = initialState, action) => {
     case userConstants.SIGN_IN_SUCCESS:
       return {
         ...state,
-        currentUser: payload,
+        currentUser: payload?.user,
         isLoading: false,
         isLoggedIn: true,
         isOrgOwner: payload?.is_super_admin,
         isAdmin: payload?.is_admin,
         isPersonalAccount: payload?.account_type === "personal",
+        isFacetAdmin: payload.is_facet_super_admin,
       };
 
     case userConstants.SIGN_IN_FAILURE:
