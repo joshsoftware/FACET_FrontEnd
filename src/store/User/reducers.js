@@ -50,7 +50,7 @@ const userReducer = (state = initialState, action) => {
       return { ...state, isLoading: false };
 
     case userConstants.SIGN_OUT_SUCCESS:
-      return { ...state, isLoggedIn: false, currentUser: {} };
+      return { ...initialState, isLoggedIn: false, isFacetAdmin: false };
 
     case userConstants.GET_CURRENT_USER_INFO_REQUEST:
       return { ...state, isLoading: true };
