@@ -28,6 +28,7 @@ const mapState = ({ user }) => ({
     value: user.id,
   })),
   isUsersLoading: user.isLoading,
+  isPersonalAccount: user.isPersonalAccount,
 });
 
 const Header = () => {
@@ -39,6 +40,7 @@ const Header = () => {
     isOrgOwner,
     usersOptions,
     isUsersLoading,
+    isPersonalAccount,
   } = useSelector(mapState);
 
   const [showAddAdminModal, setShowAddAdminModal] = useState(false);
@@ -108,12 +110,16 @@ const Header = () => {
                   <NavDropdown.Item as={Link} to={USER_PROFILE_ROUTE}>
                     My Profile
                   </NavDropdown.Item>
-                  <NavDropdown.Item as={Link} to={ORG_PROFILE_ROUTE}>
-                    My Organization
-                  </NavDropdown.Item>
-                  <NavDropdown.Item as={Link} to={ORG_MEMBERS_ROUTE}>
-                    Members
-                  </NavDropdown.Item>
+                  {!isPersonalAccount && (
+                    <>
+                      <NavDropdown.Item as={Link} to={ORG_PROFILE_ROUTE}>
+                        My Organization
+                      </NavDropdown.Item>
+                      <NavDropdown.Item as={Link} to={ORG_MEMBERS_ROUTE}>
+                        Members
+                      </NavDropdown.Item>
+                    </>
+                  )}
                   <NavDropdown.Divider />
                   <NavDropdown.Item
                     style={{ color: "red" }}

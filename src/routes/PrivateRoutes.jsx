@@ -7,19 +7,25 @@ import Header from "Components/Header";
 import { getOrganizationRequest } from "store/Organizations/actions";
 import { getUserProfileRequest } from "store/User/actions";
 
-import { ADD_ORGANIZATION_ROUTE, LOGIN_ROUTE } from "constants/routeConstants";
+import {
+  ADD_ORGANIZATION_ROUTE,
+  ADMIN_ORGANIZATIONS_ROUTE,
+  LOGIN_ROUTE,
+} from "constants/routeConstants";
 
 const mapState = ({ user }) => ({
   isLoggedIn: user.isLoggedIn,
   organization: user.currentUser?.user_organization,
   isPersonalAccount: user.isPersonalAccount,
+  isFacetAdmin: user.isFacetAdmin,
 });
 
 const PrivateRoutes = () => {
   const dispatch = useDispatch();
   const location = useLocation();
 
-  const { isLoggedIn, organization, isPersonalAccount } = useSelector(mapState);
+  const { isLoggedIn, organization, isPersonalAccount, isFacetAdmin } =
+    useSelector(mapState);
 
   useEffect(() => {
     isLoggedIn && dispatch(getUserProfileRequest());
@@ -41,6 +47,11 @@ const PrivateRoutes = () => {
     location.pathname !== ADD_ORGANIZATION_ROUTE
   ) {
     return <Navigate to={ADD_ORGANIZATION_ROUTE} />;
+  }
+
+  // if loggedin user is facet admin then redirect user to admin organizations route
+  if (isFacetAdmin) {
+    return <Navigate to={ADMIN_ORGANIZATIONS_ROUTE} />;
   }
 
   return isLoggedIn ? (
