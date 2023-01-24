@@ -1,8 +1,8 @@
 import axios from "axios";
 
 import {
+  clearLocalStorage,
   getLocalStorage,
-  removeLocalStorage,
   setLocalStorage,
 } from "utils/localStorage";
 
@@ -48,8 +48,8 @@ axiosInstance.interceptors.response.use(
 
     // If authorizations fails then perform logout
     if (isAuthorizationFailed) {
-      removeLocalStorage("accessToken");
-      removeLocalStorage("refreshToken");
+      clearLocalStorage();
+      axiosInstance.defaults.headers = {};
       window.location.href = "/login";
       return Promise.reject(error);
     }

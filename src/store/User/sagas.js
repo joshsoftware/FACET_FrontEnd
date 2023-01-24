@@ -1,5 +1,7 @@
 import { takeLatest, call, put } from "redux-saga/effects";
 
+import axiosInstance from "../../axios";
+
 import {
   changePasswordApi,
   getAllUsersApi,
@@ -23,7 +25,7 @@ import {
   updateUserProfileFailure,
   updateUserProfileSuccess,
 } from "./actions";
-import { removeLocalStorage } from "utils/localStorage";
+import { clearLocalStorage } from "utils/localStorage";
 import { apisErrorMessage } from "utils/apisErrorMessage";
 import { toastMessage } from "utils/toastMessage";
 
@@ -59,7 +61,9 @@ export function* signUp({ payload }) {
 }
 
 export function* signOut() {
-  removeLocalStorage("accessToken");
+  clearLocalStorage();
+  // following line remove authorization token from axios instance
+  axiosInstance.defaults.headers = {};
   yield put(signOutSuccess());
   toastMessage(LOGOUT_SUCCESS);
 }
