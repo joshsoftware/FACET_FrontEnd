@@ -40,6 +40,20 @@ export const removeMemberFromOrgFailure = () => ({
   type: orgMembersConstants.REMOVE_MEMBER_FROM_ORG_FAILURE,
 });
 
+export const getFilteredOrgUsersRequest = (data) => ({
+  type: orgMembersConstants.GET_FILTERED_ORG_USERS_REQUEST,
+  payload: data,
+});
+
+export const getFilteredOrgUsersSuccess = (data) => ({
+  type: orgMembersConstants.GET_FILTERED_ORG_USERS_SUCCESS,
+  payload: data,
+});
+
+export const getFilteredOrgUsersFailure = () => ({
+  type: orgMembersConstants.GET_FILTERED_ORG_USERS_FAILURE,
+});
+
 export const clearOrgMemberState = () => ({
   type: orgMembersConstants.CLEAR_STATE,
 });

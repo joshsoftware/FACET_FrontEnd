@@ -6,7 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import AddAdminModal from "Components/DashboardComponent/SuperAdmin/AddAdminModal";
 
 import { addAdminsRequest } from "store/SuperAdmin/actions";
-import { getUsersRequest, signOutRequest } from "store/User/actions";
+import { getFilteredOrgUsersRequest } from "store/Organizations/OrgMembers/actions";
+import { signOutRequest } from "store/User/actions";
 
 import {
   DASHBOARD_ROUTE,
@@ -19,11 +20,11 @@ import {
 
 import logo from "assets/images/logo.png";
 
-const mapState = ({ user }) => ({
+const mapState = ({ user, orgMembers }) => ({
   isLoggedIn: user.isLoggedIn,
   currentUser: user.currentUser,
   isOrgOwner: user.isOrgOwner,
-  usersOptions: user.users.map((user) => ({
+  usersOptions: orgMembers.filteredUsers?.map((user) => ({
     label: user.name,
     value: user.id,
   })),
@@ -49,7 +50,7 @@ const Header = () => {
   // get list of users whose role is not admin
   useEffect(() => {
     if (showAddAdminModal && isLoggedIn && isOrgOwner) {
-      dispatch(getUsersRequest({ exclude: "admins" }));
+      dispatch(getFilteredOrgUsersRequest({ exclude: "admins" }));
     }
   }, [isLoggedIn, isOrgOwner, showAddAdminModal]);
 
