@@ -39,20 +39,6 @@ export const signOutFailure = () => ({
   type: userConstants.SIGN_OUT_FAILURE,
 });
 
-export const getUsersRequest = (data) => ({
-  type: userConstants.GET_USERS_REQUEST,
-  payload: data,
-});
-
-export const getUsersSuccess = (data) => ({
-  type: userConstants.GET_USERS_SUCCESS,
-  payload: data,
-});
-
-export const getUsersFailure = () => ({
-  type: userConstants.GET_USERS_FAILURE,
-});
-
 export const getUserProfileRequest = () => ({
   type: userConstants.GET_CURRENT_USER_INFO_REQUEST,
 });
