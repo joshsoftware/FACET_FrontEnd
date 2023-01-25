@@ -2,19 +2,22 @@ import React, { useState } from "react";
 import { Card, Col, Container, Form, FormLabel } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 
+import Backdrop from "Components/Backdrop";
 import InviteMembersSelect from "Components/OrganizationsComponents/InviteUsers/InviteMembersSelect";
+import Loader from "Components/Loader";
 import { SaveButton } from "Components/forms/Buttons";
 
 import { inviteUsersInOrganizationRequest } from "store/Organizations/actions";
 
 const mapState = ({ orgs }) => ({
   organization: orgs.organization?.name,
+  isLoading: orgs.isLoading,
 });
 
 const InviteUsers = () => {
   const dispatch = useDispatch();
 
-  const { organization } = useSelector(mapState);
+  const { organization, isLoading } = useSelector(mapState);
 
   const [selectedMembers, setSelectedMembers] = useState([]);
 
@@ -35,6 +38,11 @@ const InviteUsers = () => {
       <Col md={8} className="py-5">
         <h2 className="text-center">Welcome to {organization}</h2>
         <Card className="my-4">
+          {isLoading && (
+            <Backdrop>
+              <Loader />
+            </Backdrop>
+          )}
           <Card.Body className="py-4">
             <h5>Add organization members</h5>
             <small className="text-muted">
@@ -52,6 +60,7 @@ const InviteUsers = () => {
               </div>
               <SaveButton
                 type="submit"
+                label="Send"
                 disabled={isSaveButtonDisabled}
                 className="w-100"
               />
