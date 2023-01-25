@@ -19,10 +19,6 @@ export const signUpApi = (data) => {
   return Api(`${SERVER_URL}/api/auth/signup`, POST, data);
 };
 
-export const getAllUsersApi = (data) => {
-  return Api(`${SERVER_URL}/api/auth/get_all_users`, GET, null, data);
-};
-
 export const getUserProfileApi = (data) => {
   return Api(`${SERVER_URL}/api/user/profile`, GET, null, data);
 };

@@ -3,6 +3,7 @@ import projectMembersConstants from "./constants";
 const initialState = {
   project: "",
   members: [],
+  filteredUsers: [],
   projectAdmin: null,
   isLoading: false,
 };
@@ -42,6 +43,15 @@ const projectMembersReducer = (state = initialState, action) => {
       return { ...state, isLoading: false };
 
     case projectMembersConstants.REMOVE_MEMBERS_IN_PROJECT_FAILURE:
+      return { ...state, isLoading: false };
+
+    case projectMembersConstants.GET_FILTERED_USERS_REQUEST:
+      return { ...state, isLoading: true };
+
+    case projectMembersConstants.GET_FILTERED_USERS_SUCCESS:
+      return { ...state, isLoading: false, filteredUsers: payload };
+
+    case projectMembersConstants.GET_FILTERED_USERS_FAILURE:
       return { ...state, isLoading: false };
 
     default:

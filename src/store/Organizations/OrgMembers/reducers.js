@@ -1,6 +1,11 @@
 import orgMembersConstants from "./constants";
 
-const initialState = { isLoading: false, members: [], isSuccess: false };
+const initialState = {
+  isLoading: false,
+  members: [],
+  filteredUsers: [],
+  isSuccess: false,
+};
 
 const orgMembersReducer = (state = initialState, action) => {
   const { type, payload } = action;
@@ -31,6 +36,15 @@ const orgMembersReducer = (state = initialState, action) => {
       return { ...state, isLoading: false, isSuccess: true };
 
     case orgMembersConstants.REMOVE_MEMBER_FROM_ORG_FAILURE:
+      return { ...state, isLoading: false };
+
+    case orgMembersConstants.GET_FILTERED_ORG_USERS_REQUEST:
+      return { ...state, isLoading: true };
+
+    case orgMembersConstants.GET_FILTERED_ORG_USERS_SUCCESS:
+      return { ...state, isLoading: false, filteredUsers: payload };
+
+    case orgMembersConstants.GET_FILTERED_ORG_USERS_FAILURE:
       return { ...state, isLoading: false };
 
     case orgMembersConstants.CLEAR_STATE:

@@ -4,7 +4,6 @@ import axiosInstance from "../../axios";
 
 import {
   changePasswordApi,
-  getAllUsersApi,
   getUserProfileApi,
   signInApi,
   signUpApi,
@@ -15,8 +14,6 @@ import {
   changePasswordSuccess,
   getUserProfileFailure,
   getUserProfileSuccess,
-  getUsersFailure,
-  getUsersSuccess,
   signInFailure,
   signInSuccess,
   signOutSuccess,
@@ -68,17 +65,6 @@ export function* signOut() {
   toastMessage(LOGOUT_SUCCESS);
 }
 
-export function* getAllUsers({ payload }) {
-  try {
-    const response = yield call(getAllUsersApi, payload);
-    yield put(getUsersSuccess(response.users));
-  } catch (error) {
-    const errorMessage = apisErrorMessage(error);
-    toastMessage(errorMessage, "error");
-    yield put(getUsersFailure());
-  }
-}
-
 export function* getuserProfile({ payload }) {
   try {
     const response = yield call(getUserProfileApi, payload);
@@ -119,7 +105,6 @@ export default function* userSagas() {
   yield takeLatest(userConstants.SIGN_UP_REQUEST, signUp);
   yield takeLatest(userConstants.SIGN_IN_REQUEST, signIn);
   yield takeLatest(userConstants.SIGN_OUT_REQUEST, signOut);
-  yield takeLatest(userConstants.GET_USERS_REQUEST, getAllUsers);
   yield takeLatest(userConstants.GET_CURRENT_USER_INFO_REQUEST, getuserProfile);
   yield takeLatest(
     userConstants.UPDATE_USER_PROFILE_REQUEST,

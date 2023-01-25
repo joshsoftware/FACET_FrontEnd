@@ -4,6 +4,8 @@ import { apisErrorMessage } from "utils/apisErrorMessage";
 import {
   changeMemberRoleFailure,
   changeMemberRoleSuccess,
+  getFilteredOrgUsersFailure,
+  getFilteredOrgUsersSuccess,
   getOrgMembersFailure,
   getOrgMembersSuccess,
   removeMemberFromOrgFailure,
@@ -53,6 +55,17 @@ export function* removerMemberFromOrg({ payload }) {
   }
 }
 
+export function* getFilteredOrgUsers({ payload }) {
+  try {
+    const response = yield call(getOrgMembersApi, payload);
+    yield put(getFilteredOrgUsersSuccess(response.members));
+  } catch (error) {
+    const errorMessage = apisErrorMessage(error);
+    toastMessage(errorMessage, "error");
+    yield put(getFilteredOrgUsersFailure());
+  }
+}
+
 // watcher saga
 export default function* orgMembersSagas() {
   yield takeLatest(orgMembersConstants.GET_ORG_MEMBERS_REQUEST, getOrgMembers);
@@ -63,5 +76,9 @@ export default function* orgMembersSagas() {
   yield takeLatest(
     orgMembersConstants.REMOVE_MEMBER_FROM_ORG_REQUEST,
     removerMemberFromOrg
+  );
+  yield takeLatest(
+    orgMembersConstants.GET_FILTERED_ORG_USERS_REQUEST,
+    getFilteredOrgUsers
   );
 }

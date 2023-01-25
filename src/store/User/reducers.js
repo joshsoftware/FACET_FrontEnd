@@ -86,15 +86,6 @@ const userReducer = (state = initialState, action) => {
     case userConstants.CHANGE_USER_PASSWORD_FAILURE:
       return { ...state, isLoading: false };
 
-    case userConstants.GET_USERS_REQUEST:
-      return { ...state, isLoading: true };
-
-    case userConstants.GET_USERS_SUCCESS:
-      return { ...state, isLoading: false, users: payload };
-
-    case userConstants.GET_USERS_FAILURE:
-      return { ...state, isLoading: false };
-
     case userConstants.CLEAR_USER_STATE:
       return initialState;
 
