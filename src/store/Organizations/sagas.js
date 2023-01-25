@@ -21,6 +21,7 @@ import {
   inviteUsersInOrganizationSuccess,
 } from "./actions";
 import { toastMessage } from "utils/toastMessage";
+import { uninvitedMembersToastMessage } from "utils/organizationHelper";
 
 import {
   INVITE_USERS_SUCCESS,
@@ -65,8 +66,15 @@ export function* editOrganization({ payload }) {
 
 export function* inviteUsersInOrganization({ payload }) {
   try {
-    yield call(inviteUsersInOragnizationApi, payload);
-    toastMessage(INVITE_USERS_SUCCESS);
+    const response = yield call(inviteUsersInOragnizationApi, payload);
+    if (response?.uninvited_members?.length) {
+      toastMessage(
+        uninvitedMembersToastMessage(response.uninvited_members),
+        "warning"
+      );
+    } else {
+      toastMessage(INVITE_USERS_SUCCESS);
+    }
     yield put(inviteUsersInOrganizationSuccess());
   } catch (error) {
     const errorMessage = apisErrorMessage(error);

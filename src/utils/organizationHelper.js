@@ -24,3 +24,15 @@ export const convertRolesToStr = (isSuperAdmin, isAdmin) => {
   }
   return ORG_ROLES.MEMBER;
 };
+
+// helps to create uninivited members toast message
+export const uninvitedMembersToastMessage = (data) => (
+  <>
+    <span>Users with following emails are already exists: </span>
+    <ul>
+      {data?.map((item, index) => (
+        <li key={index}>{item}</li>
+      ))}
+    </ul>
+  </>
+);
