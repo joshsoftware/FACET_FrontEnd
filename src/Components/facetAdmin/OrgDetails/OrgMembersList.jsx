@@ -14,10 +14,10 @@ const OrgMemberTableRow = ({ data, index }) => {
     username,
     email,
     is_admin: isAdmin,
-    is_super_admin: isSuperAdmin,
+    is_super_admin: isOrgOwner,
   } = data;
 
-  const role = convertRolesToStr(isSuperAdmin, isAdmin);
+  const role = convertRolesToStr(isOrgOwner, isAdmin);
 
   return (
     <tr>
