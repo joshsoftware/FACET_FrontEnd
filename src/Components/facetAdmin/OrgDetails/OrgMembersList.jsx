@@ -41,6 +41,7 @@ const OrgMembersList = ({ data }) => (
     </TableComponent>
   </Container>
 );
+
 const userPropType = {
   name: PropTypes.string,
   username: PropTypes.string,

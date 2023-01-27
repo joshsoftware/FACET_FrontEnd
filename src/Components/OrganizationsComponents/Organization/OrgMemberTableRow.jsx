@@ -28,6 +28,8 @@ const OrgMemberTableRow = ({
 
   const onChangeRoleClick = () => openChangeRoleModal(id, memberRole);
 
+  const handleRemoveMember = () => onRemoveMember(id);
+
   return (
     <tr className="align-middle">
       <td>
@@ -60,7 +62,7 @@ const OrgMemberTableRow = ({
             <NavDropdown.Item onClick={onChangeRoleClick}>
               Change Role
             </NavDropdown.Item>
-            <NavDropdown.Item onClick={() => onRemoveMember(id)}>
+            <NavDropdown.Item onClick={handleRemoveMember}>
               Remove from Organization
             </NavDropdown.Item>
           </NavDropdown>

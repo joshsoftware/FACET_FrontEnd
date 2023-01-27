@@ -78,9 +78,9 @@ const AcceptJoinOrgInvitation = () => {
       <Signup
         data={inviteFormData}
         onChange={onFormDataChange}
-        isEmailFieldDisabled={true}
         onSubmit={onAcceptInvitationFormSubmit}
         buttonText="Create and Join"
+        isEmailFieldDisabled
       />
     </AuthLayout>
   );
