@@ -69,6 +69,9 @@ const Member = lazy(() =>
 const Setting = lazy(() =>
   import("containers/ProjectContainer/SettingsContainer")
 );
+const Execute = lazy(() =>
+  import("containers/ProjectContainer/ExecuteContainer")
+);
 
 // Facet Admin containers
 const FacetAdminOrganizations = lazy(() =>
@@ -347,5 +350,10 @@ export const projectRoutesConfig = [
     key: "settings",
     path: routes.SETTING_ROUTE,
     component: Setting,
+  },
+  {
+    key: "execute",
+    path: routes.EXECUTE_ROUTE,
+    component: Execute,
   },
 ];
