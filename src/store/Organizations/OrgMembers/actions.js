@@ -54,6 +54,6 @@ export const getFilteredOrgUsersFailure = () => ({
   type: orgMembersConstants.GET_FILTERED_ORG_USERS_FAILURE,
 });
 
-export const clearOrgMemberState = () => ({
-  type: orgMembersConstants.CLEAR_STATE,
+export const resetOrgMemberState = () => ({
+  type: orgMembersConstants.RESET_ORG_MEMBER_STATE,
 });

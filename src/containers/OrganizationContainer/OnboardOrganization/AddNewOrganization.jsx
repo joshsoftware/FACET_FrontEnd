@@ -7,7 +7,7 @@ import AddNewOrganizationForm from "Components/OrganizationsComponents/onboardOr
 
 import {
   addOrganizationRequest,
-  clearOrganizationsState,
+  resetOrganizationsState,
 } from "store/Organizations/actions";
 import { getUserProfileRequest } from "store/User/actions";
 
@@ -33,7 +33,7 @@ const AddNewOrganization = () => {
 
   // clear organizations state when container renders
   useEffect(() => {
-    return () => dispatch(clearOrganizationsState());
+    return () => dispatch(resetOrganizationsState());
   }, []);
 
   // fetch user profile when organization created successfully

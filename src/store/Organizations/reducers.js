@@ -83,7 +83,7 @@ const organizationsReducer = (state = initialState, action) => {
     case orgConstants.ACCEPT_JOIN_ORG_INVITATION_FAILURE:
       return { ...state, isLoading: false };
 
-    case orgConstants.CLEAR_STATE:
+    case orgConstants.RESET_ORGANIZATION_STATE:
       return { ...state, isSuccess: false };
 
     default:

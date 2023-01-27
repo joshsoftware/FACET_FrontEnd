@@ -97,6 +97,6 @@ export const acceptJoinOrgInvitationFailure = () => ({
   type: orgConstants.ACCEPT_JOIN_ORG_INVITATION_FAILURE,
 });
 
-export const clearOrganizationsState = () => ({
-  type: orgConstants.CLEAR_STATE,
+export const resetOrganizationsState = () => ({
+  type: orgConstants.RESET_ORGANIZATION_STATE,
 });

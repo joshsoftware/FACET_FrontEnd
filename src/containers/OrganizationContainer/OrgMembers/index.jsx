@@ -10,7 +10,7 @@ import TableComponent from "Components/CustomComponents/TableComponent";
 
 import {
   changeMemberRoleRequest,
-  clearOrgMemberState,
+  resetOrgMemberState,
   getOrgMembersRequest,
   removeMemberFromOrgRequest,
 } from "store/Organizations/OrgMembers/actions";
@@ -48,7 +48,7 @@ const OrgMembers = () => {
     if (isSuccess) {
       dispatch(getOrgMembersRequest());
     }
-    return () => dispatch(clearOrgMemberState());
+    return () => dispatch(resetOrgMemberState());
   }, [isSuccess]);
 
   // on change role of member

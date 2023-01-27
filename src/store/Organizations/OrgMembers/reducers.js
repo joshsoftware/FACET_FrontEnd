@@ -47,7 +47,7 @@ const orgMembersReducer = (state = initialState, action) => {
     case orgMembersConstants.GET_FILTERED_ORG_USERS_FAILURE:
       return { ...state, isLoading: false };
 
-    case orgMembersConstants.CLEAR_STATE:
+    case orgMembersConstants.RESET_ORG_MEMBER_STATE:
       return { ...state, isSuccess: false };
 
     default:
