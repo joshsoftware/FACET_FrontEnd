@@ -2,11 +2,34 @@ import { lazy } from "react";
 
 import * as routes from "constants/routeConstants";
 
+// public routes containers
 const LoginContainer = lazy(() => import("containers/LoginContainer"));
 const SignUpContainer = lazy(() => import("containers/SignUpContainer"));
 
+// private routes containers
 const DashBoard = lazy(() => import("containers/DashBoard"));
 const Profile = lazy(() => import("containers/ProfileContainer"));
+const AddNewOrganization = lazy(() =>
+  import(
+    "containers/OrganizationContainer/OnboardOrganization/AddNewOrganization"
+  )
+);
+const InviteUsersInOrganization = lazy(() =>
+  import("containers/OrganizationContainer/OnboardOrganization/InviteUsers")
+);
+const OrgMembers = lazy(() =>
+  import("containers/OrganizationContainer/OrgMembers")
+);
+const AcceptJoinOrgInvitation = lazy(() =>
+  import(
+    "containers/OrganizationContainer/OnboardOrganization/AcceptJoinOrgInvitation"
+  )
+);
+const OrgProfile = lazy(() =>
+  import("containers/OrganizationContainer/Organizations/OrgProfile")
+);
+
+// project routes containers
 const ProjectOverview = lazy(() =>
   import("containers/ProjectContainer/ProjectOverviewContainer")
 );
@@ -50,6 +73,15 @@ const Execute = lazy(() =>
   import("containers/ProjectContainer/ExecuteContainer")
 );
 
+// Facet Admin containers
+const FacetAdminOrganizations = lazy(() =>
+  import("containers/facetAdmin/organizations")
+);
+const FacetAdminOrganizationDetails = lazy(() =>
+  import("containers/facetAdmin/orgDetails")
+);
+const FacetAdminUsers = lazy(() => import("containers/facetAdmin/users"));
+
 const addProps = { cat: "add" };
 const editProps = { cat: "edit" };
 
@@ -63,6 +95,30 @@ export const publicRoutesConfig = [
     key: "login",
     path: routes.LOGIN_ROUTE,
     component: LoginContainer,
+  },
+  {
+    key: "accept-join-org-invitation",
+    path: routes.ACCEPT_JOIN_ORG_INVITATION,
+    component: AcceptJoinOrgInvitation,
+  },
+];
+
+// facet admin routes config
+export const adminRoutesConfig = [
+  {
+    key: "organizations-list",
+    path: routes.ADMIN_ORGANIZATIONS_ROUTE,
+    component: FacetAdminOrganizations,
+  },
+  {
+    key: "organization-details",
+    path: routes.ADMIN_ORG_DETAILS_ROUTE,
+    component: FacetAdminOrganizationDetails,
+  },
+  {
+    key: "members-list",
+    path: routes.ADMIN_USERS_ROUTE,
+    component: FacetAdminUsers,
   },
 ];
 
@@ -81,6 +137,26 @@ export const privateRoutesConfig = [
     key: "user-profile",
     path: routes.USER_PROFILE_ROUTE,
     component: Profile,
+  },
+  {
+    key: "add-new-organization",
+    path: routes.ADD_ORGANIZATION_ROUTE,
+    component: AddNewOrganization,
+  },
+  {
+    key: "invite-users-in-organization",
+    path: routes.INVITE_ORGANIZATION_ROUTE,
+    component: InviteUsersInOrganization,
+  },
+  {
+    key: "organization-members",
+    path: routes.ORG_MEMBERS_ROUTE,
+    component: OrgMembers,
+  },
+  {
+    key: "organization-settings",
+    path: routes.ORG_PROFILE_ROUTE,
+    component: OrgProfile,
   },
 ];
 

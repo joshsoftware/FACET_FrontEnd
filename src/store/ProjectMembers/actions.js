@@ -39,3 +39,17 @@ export const removeMembersInProjectSuccess = () => ({
 export const removeMembersInProjectFailure = () => ({
   type: projectMembersConstants.REMOVE_MEMBERS_IN_PROJECT_FAILURE,
 });
+
+export const getFilteredUsersRequest = (data) => ({
+  type: projectMembersConstants.GET_FILTERED_USERS_REQUEST,
+  payload: data,
+});
+
+export const getFilteredUsersSuccess = (data) => ({
+  type: projectMembersConstants.GET_FILTERED_USERS_SUCCESS,
+  payload: data,
+});
+
+export const getFilteredUsersFailure = () => ({
+  type: projectMembersConstants.GET_FILTERED_USERS_FAILURE,
+});

@@ -1,8 +1,9 @@
 import { takeLatest, call, put } from "redux-saga/effects";
 
+import axiosInstance from "../../axios";
+
 import {
   changePasswordApi,
-  getAllUsersApi,
   getUserProfileApi,
   signInApi,
   signUpApi,
@@ -13,8 +14,6 @@ import {
   changePasswordSuccess,
   getUserProfileFailure,
   getUserProfileSuccess,
-  getUsersFailure,
-  getUsersSuccess,
   signInFailure,
   signInSuccess,
   signOutSuccess,
@@ -23,7 +22,7 @@ import {
   updateUserProfileFailure,
   updateUserProfileSuccess,
 } from "./actions";
-import { removeLocalStorage } from "utils/localStorage";
+import { clearLocalStorage } from "utils/localStorage";
 import { apisErrorMessage } from "utils/apisErrorMessage";
 import { toastMessage } from "utils/toastMessage";
 
@@ -38,7 +37,7 @@ export function* signIn({ payload }) {
   try {
     const response = yield call(signInApi, payload);
     toastMessage(USER_AUTH.LOGIN_SUCCESS);
-    yield put(signInSuccess(response.user));
+    yield put(signInSuccess(response));
   } catch (error) {
     const errorMessage = apisErrorMessage(error);
     toastMessage(errorMessage, "error");
@@ -46,15 +45,9 @@ export function* signIn({ payload }) {
   }
 }
 
-export function* signUp({
-  payload: { name, email, password, confirmPassword },
-}) {
+export function* signUp({ payload }) {
   try {
-    if (password !== confirmPassword) {
-      toastMessage(USER_AUTH.PASSWORD_NOT_MATCHED, "error");
-      return;
-    }
-    yield call(signUpApi, { name, email, password });
+    yield call(signUpApi, payload);
     toastMessage(USER_AUTH.SIGNUP_SUCCESS);
     yield put(signUpSuccess());
   } catch (error) {
@@ -65,20 +58,11 @@ export function* signUp({
 }
 
 export function* signOut() {
-  removeLocalStorage("accessToken");
+  clearLocalStorage();
+  // following line remove authorization token from axios instance
+  axiosInstance.defaults.headers = {};
   yield put(signOutSuccess());
   toastMessage(LOGOUT_SUCCESS);
-}
-
-export function* getAllUsers({ payload }) {
-  try {
-    const response = yield call(getAllUsersApi, payload);
-    yield put(getUsersSuccess(response.users));
-  } catch (error) {
-    const errorMessage = apisErrorMessage(error);
-    toastMessage(errorMessage, "error");
-    yield put(getUsersFailure());
-  }
 }
 
 export function* getuserProfile({ payload }) {
@@ -121,7 +105,6 @@ export default function* userSagas() {
   yield takeLatest(userConstants.SIGN_UP_REQUEST, signUp);
   yield takeLatest(userConstants.SIGN_IN_REQUEST, signIn);
   yield takeLatest(userConstants.SIGN_OUT_REQUEST, signOut);
-  yield takeLatest(userConstants.GET_USERS_REQUEST, getAllUsers);
   yield takeLatest(userConstants.GET_CURRENT_USER_INFO_REQUEST, getuserProfile);
   yield takeLatest(
     userConstants.UPDATE_USER_PROFILE_REQUEST,

@@ -3,7 +3,10 @@ import { all, call } from "redux-saga/effects";
 import endpointSagas from "./Endpoints/sagas";
 import environmentSagas from "./Environments/sagas";
 import executeSagas from "./Execute/sagas";
+import adminSagas from "./facetAdmin/sagas";
 import headerSagas from "./Headers/sagas";
+import orgMembersSagas from "./Organizations/OrgMembers/sagas";
+import organizationsSagas from "./Organizations/sagas";
 import payloadSagas from "./Payloads/sagas";
 import projectMemberSagas from "./ProjectMembers/sagas";
 import projectSagas from "./Projects/sagas";
@@ -33,5 +36,8 @@ export default function* rootSaga() {
     call(scheduleSagas),
     call(testsuiteSagas),
     call(projectMemberSagas),
+    call(organizationsSagas),
+    call(orgMembersSagas),
+    call(adminSagas),
   ]);
 }

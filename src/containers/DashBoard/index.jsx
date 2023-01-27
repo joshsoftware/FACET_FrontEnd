@@ -13,15 +13,16 @@ import { addProjectRequest, getProjectsRequest } from "store/Projects/actions";
 const initialProjectFormData = { name: "", description: "" };
 
 const mapState = ({ user, projects }) => ({
-  currentUser: user.currentUser,
   isLoggedIn: user.isLoggedIn,
   projects: projects.projects,
   isProjectsLoading: projects.isLoading,
+  isAbleToAddProject: user.isOrgOwner || user.isAdmin,
 });
 
 const DashBoard = () => {
-  let dispatch = useDispatch();
-  const { currentUser, isLoggedIn, isProjectsLoading, projects } =
+  const dispatch = useDispatch();
+
+  const { isAbleToAddProject, isLoggedIn, isProjectsLoading, projects } =
     useSelector(mapState);
 
   const [showAddProjectModal, setShowAddProjectModal] = useState(false);
@@ -29,10 +30,16 @@ const DashBoard = () => {
     initialProjectFormData
   );
 
+  useEffect(() => {
+    dispatch(getProjectsRequest());
+  }, []);
+
+  // toggles the modal
   const toggleModal = () => {
     setShowAddProjectModal(!showAddProjectModal);
   };
 
+  // handles when project form data changes
   const onChangeProjectFormData = (e) => {
     setAddProjectFormData((prevState) => ({
       ...prevState,
@@ -40,16 +47,13 @@ const DashBoard = () => {
     }));
   };
 
+  // handles submit create project form
   const handleSubmitAddProjectForm = (e) => {
     e.preventDefault();
     dispatch(addProjectRequest(addProjectFormData));
     toggleModal();
     setAddProjectFormData(initialProjectFormData);
   };
-
-  useEffect(() => {
-    dispatch(getProjectsRequest());
-  }, []);
 
   return (
     <DashboardLayout>
@@ -62,7 +66,7 @@ const DashBoard = () => {
       />
       <DashboardSubHeader
         setShowAddProjectModal={toggleModal}
-        user={currentUser}
+        isAbleToAddProject={isAbleToAddProject}
         isLoggedIn={isLoggedIn}
       />
       <ProjectsComponent data={projects} isLoading={isProjectsLoading} />

@@ -1,34 +1,47 @@
 import React, { useEffect, useState } from "react";
 import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import AddAdminModal from "Components/DashboardComponent/SuperAdmin/AddAdminModal";
 
 import { addAdminsRequest } from "store/SuperAdmin/actions";
-import { getUsersRequest, signOutRequest } from "store/User/actions";
+import { getFilteredOrgUsersRequest } from "store/Organizations/OrgMembers/actions";
+import { signOutRequest } from "store/User/actions";
+
+import {
+  DASHBOARD_ROUTE,
+  LOGIN_ROUTE,
+  ORG_MEMBERS_ROUTE,
+  ORG_PROFILE_ROUTE,
+  SIGNUP_ROUTE,
+  USER_PROFILE_ROUTE,
+} from "constants/routeConstants";
 
 import logo from "assets/images/logo.png";
 
-const mapState = ({ user }) => ({
+const mapState = ({ user, orgMembers }) => ({
   isLoggedIn: user.isLoggedIn,
   currentUser: user.currentUser,
-  usersOptions: user.users.map((user) => ({
+  isOrgOwner: user.isOrgOwner,
+  usersOptions: orgMembers.filteredUsers?.map((user) => ({
     label: user.name,
     value: user.id,
   })),
   isUsersLoading: user.isLoading,
+  isPersonalAccount: user.isPersonalAccount,
 });
 
 const Header = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const {
     isLoggedIn,
-    currentUser: { is_super_admin: isSuperAdmin, name: userName },
+    currentUser: { name: userName },
+    isOrgOwner,
     usersOptions,
     isUsersLoading,
+    isPersonalAccount,
   } = useSelector(mapState);
 
   const [showAddAdminModal, setShowAddAdminModal] = useState(false);
@@ -36,10 +49,10 @@ const Header = () => {
 
   // get list of users whose role is not admin
   useEffect(() => {
-    if (showAddAdminModal && isLoggedIn && isSuperAdmin) {
-      dispatch(getUsersRequest({ exclude: "admins" }));
+    if (showAddAdminModal && isLoggedIn && isOrgOwner) {
+      dispatch(getFilteredOrgUsersRequest({ exclude: "admins" }));
     }
-  }, [isLoggedIn, isSuperAdmin, showAddAdminModal]);
+  }, [isLoggedIn, isOrgOwner, showAddAdminModal]);
 
   // toggle add admin modal
   const handleToggle = () => {
@@ -64,7 +77,7 @@ const Header = () => {
 
   return (
     <Navbar bg="dark" sticky="top" variant="dark" expand="lg">
-      {isLoggedIn && isSuperAdmin && (
+      {isLoggedIn && isOrgOwner && (
         <AddAdminModal
           show={showAddAdminModal}
           data={selectedUsers}
@@ -77,15 +90,17 @@ const Header = () => {
       )}
       <Container fluid>
         <Navbar.Brand>
-          <Link to="/dashboard">
+          <Link to={DASHBOARD_ROUTE}>
             <img src={logo} width={100} alt="Facet" />
           </Link>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="facet-navbar-nav" />
         <Navbar.Collapse id="facet-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link onClick={() => navigate("/dashboard")}>Home</Nav.Link>
-            {isLoggedIn && isSuperAdmin && (
+            <Nav.Link as={Link} to={DASHBOARD_ROUTE}>
+              Home
+            </Nav.Link>
+            {isLoggedIn && isOrgOwner && (
               <Nav.Link onClick={handleToggle}>Add Admin</Nav.Link>
             )}
           </Nav>
@@ -93,10 +108,19 @@ const Header = () => {
             {isLoggedIn ? (
               <Nav>
                 <NavDropdown title={`Welcome, ${userName}`}>
-                  <NavDropdown.Item onClick={() => navigate("/profile")}>
+                  <NavDropdown.Item as={Link} to={USER_PROFILE_ROUTE}>
                     My Profile
                   </NavDropdown.Item>
-                  <NavDropdown.Item>My Organizations</NavDropdown.Item>
+                  {!isPersonalAccount && (
+                    <>
+                      <NavDropdown.Item as={Link} to={ORG_PROFILE_ROUTE}>
+                        My Organization
+                      </NavDropdown.Item>
+                      <NavDropdown.Item as={Link} to={ORG_MEMBERS_ROUTE}>
+                        Members
+                      </NavDropdown.Item>
+                    </>
+                  )}
                   <NavDropdown.Divider />
                   <NavDropdown.Item
                     style={{ color: "red" }}
@@ -108,10 +132,10 @@ const Header = () => {
               </Nav>
             ) : (
               <Nav>
-                <Link to="/login" className="btn btn-primary me-2">
+                <Link to={LOGIN_ROUTE} className="btn btn-primary me-2">
                   Login
                 </Link>
-                <Link to="/signup" className="btn btn-outline-primary">
+                <Link to={SIGNUP_ROUTE} className="btn btn-outline-primary">
                   Signup
                 </Link>
               </Nav>

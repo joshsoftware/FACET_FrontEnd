@@ -10,10 +10,10 @@ import { ViewComponent } from "Components/CustomComponents";
 
 import {
   addMembersInProjectRequest,
+  getFilteredUsersRequest,
   getProjectMembersRequest,
   removeMembersInProjectRequest,
 } from "store/ProjectMembers/actions";
-import { getUsersRequest } from "store/User/actions";
 
 const adminTableHeadings = ["#", "Member", "Role", "Actions"];
 const nonAdminTableHeadings = ["#", "Member", "Role"];
@@ -24,7 +24,7 @@ const mapState = ({ projectMembers, user }) => ({
   isLoading: projectMembers.isLoading,
   projectAdmin: projectMembers.projectAdmin,
   user: user.currentUser,
-  usersOptions: user.users.map((user) => ({
+  usersOptions: projectMembers.filteredUsers.map((user) => ({
     label: user.name,
     value: user.id,
   })),
@@ -59,7 +59,7 @@ const MemberContainer = () => {
   useEffect(() => {
     if (show) {
       dispatch(
-        getUsersRequest({ exclude: "projectMembers", project: projectName })
+        getFilteredUsersRequest({ exclude: "members", project: projectName })
       );
     }
     return () => setSelectedMembers([]);

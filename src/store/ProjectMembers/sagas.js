@@ -7,6 +7,8 @@ import {
 } from "./apis";
 import {
   addMembersInProjectFailure,
+  getFilteredUsersFailure,
+  getFilteredUsersSuccess,
   getProjectMembersFailure,
   getProjectMembersSuccess,
   removeMembersInProjectFailure,
@@ -52,6 +54,17 @@ export function* removeMembersInProject({ payload }) {
   }
 }
 
+export function* getFilteredUsers({ payload }) {
+  try {
+    const response = yield call(getProjectMembersApi, payload);
+    yield put(getFilteredUsersSuccess(response.members));
+  } catch (error) {
+    const errorMessage = apisErrorMessage(error);
+    toastMessage(errorMessage, "error");
+    yield put(getFilteredUsersFailure());
+  }
+}
+
 // Watcher saga
 export default function* projectMemberSagas() {
   yield takeLatest(
@@ -65,5 +78,9 @@ export default function* projectMemberSagas() {
   yield takeLatest(
     projectMembersConstants.REMOVE_MEMBERS_IN_PROJECT_REQUEST,
     removeMembersInProject
+  );
+  yield takeLatest(
+    projectMembersConstants.GET_FILTERED_USERS_REQUEST,
+    getFilteredUsers
   );
 }

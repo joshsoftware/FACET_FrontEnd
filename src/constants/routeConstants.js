@@ -8,6 +8,17 @@ export const SIGNUP_ROUTE = "/signup";
 // private route constants
 export const DASHBOARD_ROUTE = "/dashboard";
 export const USER_PROFILE_ROUTE = "/profile";
+export const MY_ORGANIZATIONS_ROUTE = "/organizations";
+export const ADD_ORGANIZATION_ROUTE = "/organization/new";
+export const INVITE_ORGANIZATION_ROUTE = "/organization/invite";
+export const ORG_OVERVIEW_ROUTE = "/organization";
+export const ORG_MEMBERS_ROUTE = "/organization/members";
+export const ORG_SETTINGS_ROUTE = "/organization/settings";
+export const ORG_PROFILE_ROUTE = "/organization/profile";
+export const ACCEPT_JOIN_ORG_INVITATION = "/organization/:org/invitation";
+
+// organizations routes: TO-DO: Remove the next line
+export const ORG_PROJECTS_ROUTE = "/orgs/:org/projects";
 
 // project routes contants
 const projectRoutePrefix = "/project/:projectName";
@@ -60,3 +71,8 @@ export const SETTING_ROUTE = `${projectRoutePrefix}/settings`;
 export const MEMBER_ROUTE = `${projectRoutePrefix}/members`;
 // execute route constants
 export const EXECUTE_ROUTE = `${projectRoutePrefix}/execute/:id`;
+
+// Facet Admin routes constants
+export const ADMIN_ORGANIZATIONS_ROUTE = "/admin/organizations";
+export const ADMIN_ORG_DETAILS_ROUTE = "/admin/organization/:id";
+export const ADMIN_USERS_ROUTE = "/admin/users";
