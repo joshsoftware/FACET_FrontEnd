@@ -3,6 +3,12 @@ export const COMMON_ERROR_MESSAGE = "Something went wrong!";
 
 // common FORM error messages
 export const ALL_FIELDS_REQUIRED = "Please fill all required fields!";
+export const EMAIL_NOT_VALID = "Please enter valid email address!";
+
+// user messages constants for placeholder
+export const ORG_NAME = "my-sample-org";
+export const DESCRIPTION = "Write Here...";
+export const EMAIL = "contact@org.com";
 
 // user message constants for toast messages after api call  succeed
 export const LOGOUT_SUCCESS = "Logout successfully!";
@@ -71,3 +77,12 @@ export const MEMBERS = {
   ADD_NEW_SUCCESS: "Members added successfully!",
   REMOVE_SUCCESS: "Member removed Successfully! ",
 };
+
+export const ORGANIZATIONS = {
+  ADD_NEW_SUCCESS: "Organization created successfully!",
+  UPDATE_PROFILE_SUCCESS: "Organization profile updated successfully!",
+  JOIN_ORG_SUCCESS: "You are now a member of the organization!",
+};
+
+export const INVITE_USERS_SUCCESS = "Invitation email has been sent to users!";
+export const CHANGE_MEMBER_ROLE_SUCCESS = "Member's role updated successfully!";

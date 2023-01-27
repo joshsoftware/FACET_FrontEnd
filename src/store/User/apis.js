@@ -9,6 +9,7 @@ export const signInApi = async (data) => {
   const res = await Api(`${SERVER_URL}/api/auth/login`, POST, data);
   setLocalStorage("accessToken", res.access_token);
   setLocalStorage("refreshToken", res.refresh_token);
+  setLocalStorage("isFacetAdmin", res.is_facet_super_admin);
   axiosInstance.defaults.headers["Authorization"] =
     "Bearer " + res.access_token;
   return res;
@@ -16,10 +17,6 @@ export const signInApi = async (data) => {
 
 export const signUpApi = (data) => {
   return Api(`${SERVER_URL}/api/auth/signup`, POST, data);
-};
-
-export const getAllUsersApi = (data) => {
-  return Api(`${SERVER_URL}/api/auth/get_all_users`, GET, null, data);
 };
 
 export const getUserProfileApi = (data) => {

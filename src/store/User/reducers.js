@@ -4,12 +4,18 @@ import userConstants from "./constants";
 
 const isTokenExist = getLocalStorage("accessToken") ? true : false;
 
+const isFacetAdmin = !!JSON.parse(getLocalStorage("isFacetAdmin"));
+
 const initialState = {
   isLoggedIn: isTokenExist,
   isSignUpSuccess: false,
   isLoading: false,
   currentUser: { name: "" },
   users: [],
+  isPersonalAccount: false,
+  isOrgOwner: false,
+  isAdmin: false,
+  isFacetAdmin: isFacetAdmin,
 };
 
 const userReducer = (state = initialState, action) => {
@@ -22,9 +28,13 @@ const userReducer = (state = initialState, action) => {
     case userConstants.SIGN_IN_SUCCESS:
       return {
         ...state,
+        currentUser: payload?.user,
         isLoading: false,
         isLoggedIn: true,
-        currentUser: payload,
+        isOrgOwner: payload?.is_super_admin,
+        isAdmin: payload?.is_admin,
+        isPersonalAccount: payload?.account_type === "personal",
+        isFacetAdmin: payload.is_facet_super_admin,
       };
 
     case userConstants.SIGN_IN_FAILURE:
@@ -40,13 +50,20 @@ const userReducer = (state = initialState, action) => {
       return { ...state, isLoading: false };
 
     case userConstants.SIGN_OUT_SUCCESS:
-      return { ...state, isLoggedIn: false, currentUser: {} };
+      return { ...initialState, isLoggedIn: false, isFacetAdmin: false };
 
     case userConstants.GET_CURRENT_USER_INFO_REQUEST:
       return { ...state, isLoading: true };
 
     case userConstants.GET_CURRENT_USER_INFO_SUCCESS:
-      return { ...state, currentUser: payload, isLoading: false };
+      return {
+        ...state,
+        currentUser: payload,
+        isLoading: false,
+        isOrgOwner: payload?.is_super_admin,
+        isAdmin: payload?.is_admin,
+        isPersonalAccount: payload?.account_type === "personal",
+      };
 
     case userConstants.GET_CURRENT_USER_INFO_FAILURE:
       return { ...state, isLoading: false };
@@ -67,15 +84,6 @@ const userReducer = (state = initialState, action) => {
       return { ...state, isLoading: false };
 
     case userConstants.CHANGE_USER_PASSWORD_FAILURE:
-      return { ...state, isLoading: false };
-
-    case userConstants.GET_USERS_REQUEST:
-      return { ...state, isLoading: true };
-
-    case userConstants.GET_USERS_SUCCESS:
-      return { ...state, isLoading: false, users: payload };
-
-    case userConstants.GET_USERS_FAILURE:
       return { ...state, isLoading: false };
 
     case userConstants.CLEAR_USER_STATE:

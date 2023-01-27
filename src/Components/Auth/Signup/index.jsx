@@ -7,8 +7,14 @@ import { SubmitButton } from "Components/forms/Buttons";
 
 import { USER_AUTH } from "constants/userMessagesConstants";
 
-const Signup = ({ data, onChange, onSubmit }) => {
-  const { name, email, password, confirmPassword } = data;
+const Signup = ({
+  data,
+  onChange,
+  onSubmit,
+  isEmailFieldDisabled,
+  buttonText,
+}) => {
+  const { name, email, username, password, confirmPassword } = data;
 
   // check whether if password and confirm password fields are matched or not
   const isPasswordMatched = password === confirmPassword;
@@ -27,12 +33,22 @@ const Signup = ({ data, onChange, onSubmit }) => {
         isRequired
       />
       <FormInput
+        label="Username"
+        type="text"
+        name="username"
+        value={username}
+        onChange={onChange}
+        placeholder="Enter Username"
+        isRequired
+      />
+      <FormInput
         label="Email"
         type="email"
         name="email"
         value={email}
         onChange={onChange}
         placeholder="Enter Email"
+        disabled={isEmailFieldDisabled}
         isRequired
       />
       <FormInput
@@ -57,7 +73,7 @@ const Signup = ({ data, onChange, onSubmit }) => {
         isRequired
       />
       <SubmitButton
-        label="SignUp"
+        label={buttonText}
         className="w-100"
         disabled={isButtonDisabled}
       />
@@ -65,15 +81,22 @@ const Signup = ({ data, onChange, onSubmit }) => {
   );
 };
 
+Signup.defaultProps = {
+  buttonText: "Sign Up",
+};
+
 Signup.propTypes = {
   data: PropTypes.shape({
     name: PropTypes.string.isRequired,
     email: PropTypes.string.isRequired,
+    username: PropTypes.string.isRequired,
     password: PropTypes.string.isRequired,
     confirmPassword: PropTypes.string.isRequired,
   }).isRequired,
   onChange: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
+  isEmailFieldDisabled: PropTypes.bool,
+  buttonText: PropTypes.string,
 };
 
 export default Signup;
