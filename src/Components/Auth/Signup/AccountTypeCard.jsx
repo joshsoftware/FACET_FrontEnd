@@ -12,12 +12,14 @@ const AccountTypeCard = ({ data, accountType, setAccountType }) => {
   const isActive =
     (!accountType && value === "personal") || accountType === value;
 
+  const handleChangeAccountType = () => setAccountType(value);
+
   return (
     <Card
       className={`h-100 pe-auto accountTypeCard ${
         isActive && "border-primary shadow"
       }`}
-      onClick={() => setAccountType(value)}
+      onClick={handleChangeAccountType}
     >
       <Card.Body className="text-center px-0 mx-0">
         <Icon size={48} className="text-secondary" />
