@@ -15,8 +15,8 @@ export const convertRoles = (role) => {
 };
 
 // helps to convert roles booleans to string form to show on the UI
-export const convertRolesToStr = (isSuperAdmin, isAdmin) => {
-  if (isSuperAdmin) {
+export const convertRolesToStr = (isOrgOwner, isAdmin) => {
+  if (isOrgOwner) {
     return ORG_ROLES.OWNER;
   }
   if (isAdmin) {
