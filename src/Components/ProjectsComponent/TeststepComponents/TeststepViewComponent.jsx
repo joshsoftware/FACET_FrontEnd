@@ -3,21 +3,19 @@ import { Accordion, Col, Row } from "react-bootstrap";
 import PropTypes from "prop-types";
 
 import { AddButton } from "Components/forms/Buttons";
-import AddNewTestdata from "./AddNewTestdata";
 import TestdataAccordionItem from "./TestdataAccordionItem";
 import { ViewComponent } from "Components/CustomComponents";
 
+import { buildRoute } from "utils/helper";
 import { convertToLocalDate } from "utils/convertToLocalDate";
+
+import { EDIT_TESTSTEP_ROUTE } from "constants/routeConstants";
 
 const TeststepViewComponent = ({
   data,
   projectName,
   testdata,
-  showAddTestdataForm,
-  toggleAddTestdataForm,
-  testdataFormData,
-  onTestdataFormChange,
-  onTestdataFormSubmit,
+  onOpenTestdataForm,
 }) => {
   const {
     id,
@@ -32,12 +30,14 @@ const TeststepViewComponent = ({
     modified_by: modifiedBy,
   } = data;
 
+  const editTeststepLink = buildRoute(EDIT_TESTSTEP_ROUTE, { projectName, id });
+
+  const onAddTestdata = () => onOpenTestdataForm();
+
   return (
     <div className="w-100">
-      <ViewComponent
-        title={name}
-        onEditLink={`/project/${projectName}/teststeps/edit/${id}`}
-      >
+      {/* TODO: improve naming convention for onEditLink */}
+      <ViewComponent title={name} onEditLink={editTeststepLink}>
         <Row>
           <Col md={6} className="pb-4">
             <small>
@@ -104,21 +104,17 @@ const TeststepViewComponent = ({
         </small>
         <Accordion>
           {testdata?.map((item, index) => (
-            <TestdataAccordionItem eventKey={index} key={index} data={item} />
+            <TestdataAccordionItem
+              eventKey={index}
+              key={index}
+              data={item}
+              onEditButtonClick={onOpenTestdataForm}
+            />
           ))}
         </Accordion>
-        {showAddTestdataForm ? (
-          <AddNewTestdata
-            data={testdataFormData}
-            onChange={onTestdataFormChange}
-            onSubmit={onTestdataFormSubmit}
-            handleClose={toggleAddTestdataForm}
-          />
-        ) : (
-          <div className="d-flex justify-content-center py-2">
-            <AddButton size="sm" handleClick={toggleAddTestdataForm} />
-          </div>
-        )}
+        <div className="d-flex justify-content-center py-2">
+          <AddButton size="sm" handleClick={onAddTestdata} />
+        </div>
       </ViewComponent>
     </div>
   );
@@ -140,11 +136,7 @@ TeststepViewComponent.propTypes = {
   }).isRequired,
   projectName: PropTypes.string.isRequired,
   testdata: PropTypes.arrayOf(PropTypes.object).isRequired,
-  showAddTestdataForm: PropTypes.bool,
-  toggleAddTestdataForm: PropTypes.func.isRequired,
-  testdataFormData: PropTypes.object.isRequired,
-  onTestdataFormChange: PropTypes.func.isRequired,
-  onTestdataFormSubmit: PropTypes.func.isRequired,
+  onOpenTestdataForm: PropTypes.func.isRequired,
 };
 
 export default TeststepViewComponent;

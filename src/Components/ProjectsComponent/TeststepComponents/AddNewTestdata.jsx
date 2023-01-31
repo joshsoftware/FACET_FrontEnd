@@ -11,18 +11,31 @@ import KeyValuePairsFormField from "Components/forms/KeyValuePairsFormField";
 
 import { ConvertToSlug } from "utils";
 
-const AddNewTestdata = ({ data, onChange, onSubmit, handleClose }) => {
-  const { name, parameters, payload, expectedOutcome, selectedExpOutcome } =
-    data;
+const AddNewTestdata = ({ data, onChange, onSubmit, onClose }) => {
+  const {
+    isEditForm,
+    name,
+    parameters,
+    payload,
+    expectedOutcome,
+    selectedExpOutcome,
+  } = data;
 
-  const expectedOutcomeOptions = expectedOutcome.map((expOutcome) => ({
-    label: expOutcome.name,
-    value: expOutcome.id,
-  }));
+  // if the form is to the edit testdata then select component is hidden
+  // so the expectedOutcomeOptions is not required for that case
+  const expectedOutcomeOptions = !isEditForm
+    ? expectedOutcome.map((expOutcome) => ({
+        label: expOutcome.name,
+        value: expOutcome.id,
+      }))
+    : null;
 
-  const activeExpectedOutcome = expectedOutcome?.find(
-    (ele) => ele.id === selectedExpOutcome?.value
-  )?.expected_outcome;
+  // if the request for edit the testdata then directly pass the expectedOutcome as it was selected expected outcome
+  // if the request is to create testdata then it filter out selected expected outcome field from list of expected outcomes
+  const activeExpectedOutcome = isEditForm
+    ? expectedOutcome
+    : expectedOutcome?.find((ele) => ele.id === selectedExpOutcome?.value)
+        ?.expected_outcome;
 
   const [showPayloadInJsonFormat, setShowPayloadInJsonFormat] = useState(false);
 
@@ -46,17 +59,25 @@ const AddNewTestdata = ({ data, onChange, onSubmit, handleClose }) => {
   const onParameterFieldsChange = (result) => onChange("parameters", result);
 
   // handles expected outcome fields change
+  // if the form is to edit the testdata then directly store result in expectedOutcome field
   const onExpectedOutcomeFieldsChange = (result) => {
-    let expOutcome = expectedOutcome;
-    expOutcome.find(
-      (ele) => ele.id === selectedExpOutcome?.value
-    ).expectedOutcome = result;
-    onChange("expectedOutcome", expOutcome);
+    if (isEditForm) {
+      onChange("expectedOutcome", result);
+    } else {
+      let expOutcome = expectedOutcome;
+      expOutcome.find(
+        (ele) => ele.id === selectedExpOutcome?.value
+      ).expectedOutcome = result;
+      onChange("expectedOutcome", expOutcome);
+    }
   };
 
   // bottom info text for name field
   const nameBottomInfoText =
     name && `Your testdata will be created as ${ConvertToSlug(name)}`;
+
+  // check whether if expected outcome table show or not
+  const isShowExpOutcomeTable = isEditForm || selectedExpOutcome;
 
   return (
     <div className="bg-light border rounded p-3">
@@ -98,22 +119,28 @@ const AddNewTestdata = ({ data, onChange, onSubmit, handleClose }) => {
             onChangeText={onPayloadFieldsChange}
           />
         </div>
-        <FormSelect
-          label="Select Exp. Outcome"
-          options={expectedOutcomeOptions}
-          value={selectedExpOutcome}
-          name="selectedExpOutcome"
-          onChange={onSelectChange}
-          isRequired
-        />
-        {selectedExpOutcome && (
+        {!isEditForm ? (
+          <FormSelect
+            label="Select Exp. Outcome"
+            options={expectedOutcomeOptions}
+            value={selectedExpOutcome}
+            name="selectedExpOutcome"
+            onChange={onSelectChange}
+            isRequired
+          />
+        ) : (
+          <label className="mt-2">
+            Expected Outcome<span className="text-danger">*</span>
+          </label>
+        )}
+        {isShowExpOutcomeTable && (
           <ExpectedOutcomeTable
             data={activeExpectedOutcome}
             onchange={onExpectedOutcomeFieldsChange}
           />
         )}
         <div className="d-flex justify-content-end mt-3">
-          <DeleteButton size="sm" className="mx-1" handleClick={handleClose} />
+          <DeleteButton size="sm" className="mx-1" handleClick={onClose} />
           <SaveButton size="sm" />
         </div>
       </Form>
@@ -123,6 +150,8 @@ const AddNewTestdata = ({ data, onChange, onSubmit, handleClose }) => {
 
 AddNewTestdata.propTypes = {
   data: PropTypes.shape({
+    isEditForm: PropTypes.bool,
+    id: PropTypes.string,
     name: PropTypes.string,
     parameters: PropTypes.object,
     payload: PropTypes.object,
@@ -131,7 +160,7 @@ AddNewTestdata.propTypes = {
   }).isRequired,
   onChange: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  handleClose: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
 };
 
 export default AddNewTestdata;

@@ -2,6 +2,7 @@ import React from "react";
 import { Accordion, Col, Row } from "react-bootstrap";
 import PropTypes from "prop-types";
 
+import { EditButton } from "Components/forms/Buttons";
 import JSONView from "Components/JSONView";
 import TableComponent from "Components/CustomComponents/TableComponent";
 
@@ -10,7 +11,7 @@ import {
   PARAMETERS_TABLE_HEADINGS,
 } from "constants/appConstants";
 
-const TestdataAccordionItem = ({ eventKey, data }) => {
+const TestdataAccordionItem = ({ eventKey, data, onEditButtonClick }) => {
   const { name, parameters, payload, expected_outcome: expectedOutcome } = data;
 
   return (
@@ -68,6 +69,7 @@ const TestdataAccordionItem = ({ eventKey, data }) => {
             </TableComponent>
           </Col>
         </Row>
+        <EditButton handleClick={() => onEditButtonClick(data)} />
       </Accordion.Body>
     </Accordion.Item>
   );
@@ -81,6 +83,7 @@ TestdataAccordionItem.propTypes = {
     payload: PropTypes.object.isRequired,
     expected_outcome: PropTypes.arrayOf(PropTypes.object).isRequired,
   }).isRequired,
+  onEditButtonClick: PropTypes.func.isRequired,
 };
 
 export default TestdataAccordionItem;
