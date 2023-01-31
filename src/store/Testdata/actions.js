@@ -26,3 +26,20 @@ export const addTestdataSuccess = () => ({
 export const addTestdataFailure = () => ({
   type: testdataConstants.GET_TESTDATA_FAILURE,
 });
+
+export const editTestdataRequest = (data) => ({
+  type: testdataConstants.EDIT_TESTDATA_REQUEST,
+  payload: data,
+});
+
+export const editTestdataSuccess = () => ({
+  type: testdataConstants.EDIT_TESTDATA_SUCCESS,
+});
+
+export const editTestdataFailure = () => ({
+  type: testdataConstants.EDIT_TESTDATA_FAILURE,
+});
+
+export const clearTestdataState = () => ({
+  type: testdataConstants.CLEAR_TESTDATA_STATE,
+});
