@@ -86,7 +86,7 @@ const AddNewTestdata = ({ data, onChange, onSubmit, onClose }) => {
   const isSaveDisabled = !name || (!isEditForm && !selectedExpOutcome);
 
   return (
-    <Form onSubmit={onSubmit}>
+    <Form onSubmit={onSubmit} className="w-100">
       <ViewComponent
         type="save"
         onBack={onClose}
