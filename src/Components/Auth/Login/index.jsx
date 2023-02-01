@@ -1,6 +1,5 @@
 import React from "react";
 import { Form } from "react-bootstrap";
-import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
 import FormInput from "Components/forms/Inputs/FormInput";
@@ -31,9 +30,10 @@ const Login = ({ data, onChange, onSubmit }) => {
         onChange={onChange}
         isRequired
       />
-      <div className="mb-3 w-100 text-end fs-6 fst-italic">
+      {/* As APIs for this not available, it disabled for now */}
+      {/* <div className="mb-3 w-100 text-end fs-6 fst-italic">
         <Link to="">Forgot Password?</Link>
-      </div>
+      </div> */}
       <SubmitButton
         label="Login"
         className="w-100"
