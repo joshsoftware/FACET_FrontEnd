@@ -19,7 +19,9 @@ import organizationsReducer from "./Organizations/reducers";
 import orgMembersReducer from "./Organizations/OrgMembers/reducers";
 import adminReducer from "./facetAdmin/reducers";
 
-const rootReducer = combineReducers({
+import userConstants from "./User/constants";
+
+const appReducer = combineReducers({
   user: userReducer,
   projects: projectReducer,
   environments: environmentReducer,
@@ -39,5 +41,13 @@ const rootReducer = combineReducers({
   orgMembers: orgMembersReducer,
   admin: adminReducer,
 });
+
+const rootReducer = (state, action) => {
+  if (action.type === userConstants.SIGN_IN_SUCCESS) {
+    return appReducer(undefined, action);
+  }
+
+  return appReducer(state, action);
+};
 
 export default rootReducer;
