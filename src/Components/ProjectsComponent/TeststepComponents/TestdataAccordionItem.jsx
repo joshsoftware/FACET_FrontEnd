@@ -1,8 +1,8 @@
 import React from "react";
 import { Accordion, Col, Row } from "react-bootstrap";
+import { PencilSquare } from "react-bootstrap-icons";
 import PropTypes from "prop-types";
 
-import { EditButton } from "Components/forms/Buttons";
 import JSONView from "Components/JSONView";
 import TableComponent from "Components/CustomComponents/TableComponent";
 
@@ -16,7 +16,15 @@ const TestdataAccordionItem = ({ eventKey, data, onEditButtonClick }) => {
 
   return (
     <Accordion.Item eventKey={eventKey}>
-      <Accordion.Header>{name}</Accordion.Header>
+      <Accordion.Header>
+        <div className="w-100 d-flex justify-content-between">
+          {name}
+          <PencilSquare
+            className="me-3"
+            onClick={() => onEditButtonClick(data)}
+          />
+        </div>
+      </Accordion.Header>
       <Accordion.Body>
         <Row>
           <Col md={6}>
@@ -69,7 +77,6 @@ const TestdataAccordionItem = ({ eventKey, data, onEditButtonClick }) => {
             </TableComponent>
           </Col>
         </Row>
-        <EditButton handleClick={() => onEditButtonClick(data)} />
       </Accordion.Body>
     </Accordion.Item>
   );

@@ -99,9 +99,10 @@ const TeststepViewComponent = ({
       </ViewComponent>
 
       <ViewComponent disabledHeader>
-        <small>
-          <b>TestData</b>
-        </small>
+        <div className="d-flex justify-content-between algn-items-center pb-3">
+          <b>Testdata</b>
+          <AddButton size="sm" handleClick={onAddTestdata} label="Add New" />
+        </div>
         <Accordion>
           {testdata?.map((item, index) => (
             <TestdataAccordionItem
@@ -112,9 +113,6 @@ const TeststepViewComponent = ({
             />
           ))}
         </Accordion>
-        <div className="d-flex justify-content-center py-2">
-          <AddButton size="sm" handleClick={onAddTestdata} />
-        </div>
       </ViewComponent>
     </div>
   );
