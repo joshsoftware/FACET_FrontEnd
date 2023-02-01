@@ -65,6 +65,11 @@ const SignUpContainer = () => {
     return <Navigate to={LOGIN_ROUTE} />;
   }
 
+  const signupTitle =
+    formData.accountType === "organization"
+      ? "Create an enterprise account"
+      : "Create an individual account";
+
   return (
     <AuthLayout>
       {!formData.accountType ? (
@@ -84,7 +89,7 @@ const SignUpContainer = () => {
         </>
       ) : (
         <>
-          <h5 className="fw-bold">Sign Up</h5>
+          <h5 className="fw-bold">{signupTitle}</h5>
           <Signup
             data={formData}
             onChange={handleOnChange}
