@@ -14,15 +14,14 @@ import {
 const TestdataAccordionItem = ({ eventKey, data, onEditButtonClick }) => {
   const { name, parameters, payload, expected_outcome: expectedOutcome } = data;
 
+  const handleEditTestdata = () => onEditButtonClick(data);
+
   return (
     <Accordion.Item eventKey={eventKey}>
       <Accordion.Header>
         <div className="w-100 d-flex justify-content-between">
           {name}
-          <PencilSquare
-            className="me-3"
-            onClick={() => onEditButtonClick(data)}
-          />
+          <PencilSquare className="me-3" onClick={handleEditTestdata} />
         </div>
       </Accordion.Header>
       <Accordion.Body>
