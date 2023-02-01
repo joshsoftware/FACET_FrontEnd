@@ -9,7 +9,7 @@ import {
   addOrganizationRequest,
   resetOrganizationsState,
 } from "store/Organizations/actions";
-import { getUserProfileRequest } from "store/User/actions";
+import { getUserProfileRequest, signOutRequest } from "store/User/actions";
 
 import {
   DASHBOARD_ROUTE,
@@ -20,16 +20,21 @@ const initialOrgFormData = { orgName: "", description: "", contactEmail: "" };
 
 const mapState = ({ orgs, user }) => ({
   isSuccess: orgs.isSuccess,
-  organization: orgs.organization,
   isOrgAssigned: !!user.currentUser?.user_organization,
+  isError: orgs.isError,
 });
 
 const AddNewOrganization = () => {
   const dispatch = useDispatch();
 
-  const { isSuccess, isOrgAssigned } = useSelector(mapState);
+  const { isSuccess, isOrgAssigned, isError } = useSelector(mapState);
 
   const [orgFormData, setOrgFormData] = useState(initialOrgFormData);
+
+  // if user fails to create organization signout user because system deletes the currentUser
+  useEffect(() => {
+    isError && dispatch(signOutRequest());
+  }, [isError]);
 
   // clear organizations state when container renders
   useEffect(() => {
