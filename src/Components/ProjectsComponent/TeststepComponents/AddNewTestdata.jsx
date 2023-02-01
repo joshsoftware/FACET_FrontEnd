@@ -160,10 +160,10 @@ const AddNewTestdata = ({ data, onChange, onSubmit, onClose }) => {
 AddNewTestdata.propTypes = {
   data: PropTypes.shape({
     isEditForm: PropTypes.bool,
-    id: PropTypes.string,
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     name: PropTypes.string,
     parameters: PropTypes.object,
-    payload: PropTypes.object,
+    payload: PropTypes.string,
     expectedOutcome: PropTypes.arrayOf(PropTypes.object),
     selectedExpOutcome: PropTypes.object,
   }).isRequired,

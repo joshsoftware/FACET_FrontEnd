@@ -116,5 +116,5 @@ ViewComponent.propTypes = {
   rightChildrens: PropTypes.element,
   title: PropTypes.string,
   type: PropTypes.string,
-  onBack: PropTypes.func.isRequired,
+  onBack: PropTypes.func,
 };
