@@ -1,5 +1,6 @@
 import React from "react";
 import { Accordion, Col, Row } from "react-bootstrap";
+import { PencilSquare } from "react-bootstrap-icons";
 import PropTypes from "prop-types";
 
 import JSONView from "Components/JSONView";
@@ -10,12 +11,19 @@ import {
   PARAMETERS_TABLE_HEADINGS,
 } from "constants/appConstants";
 
-const TestdataAccordionItem = ({ eventKey, data }) => {
+const TestdataAccordionItem = ({ eventKey, data, onEditButtonClick }) => {
   const { name, parameters, payload, expected_outcome: expectedOutcome } = data;
+
+  const handleEditTestdata = () => onEditButtonClick(data);
 
   return (
     <Accordion.Item eventKey={eventKey}>
-      <Accordion.Header>{name}</Accordion.Header>
+      <Accordion.Header>
+        <div className="w-100 d-flex justify-content-between">
+          {name}
+          <PencilSquare className="me-3" onClick={handleEditTestdata} />
+        </div>
+      </Accordion.Header>
       <Accordion.Body>
         <Row>
           <Col md={6}>
@@ -81,6 +89,7 @@ TestdataAccordionItem.propTypes = {
     payload: PropTypes.object.isRequired,
     expected_outcome: PropTypes.arrayOf(PropTypes.object).isRequired,
   }).isRequired,
+  onEditButtonClick: PropTypes.func.isRequired,
 };
 
 export default TestdataAccordionItem;

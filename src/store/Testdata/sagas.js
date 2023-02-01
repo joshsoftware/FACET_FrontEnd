@@ -1,8 +1,10 @@
 import { call, put, takeLatest } from "redux-saga/effects";
 
-import { addTestdataApi, getTestdatasApi } from "./apis";
+import { addTestdataApi, editTestdataApi, getTestdatasApi } from "./apis";
 import {
   addTestdataFailure,
+  editTestdataFailure,
+  editTestdataSuccess,
   getTestdataFailure,
   getTestdataSuccess,
 } from "./actions";
@@ -35,8 +37,21 @@ export function* addTestdata({ payload }) {
   }
 }
 
+export function* editTestdata({ payload }) {
+  try {
+    yield call(editTestdataApi, payload);
+    toastMessage(TESTDATA.UPDATE_SUCCESS);
+    yield put(editTestdataSuccess());
+  } catch (error) {
+    const errorMessage = apisErrorMessage(error);
+    toastMessage(errorMessage, "error");
+    yield put(editTestdataFailure());
+  }
+}
+
 // Watcher sagas
 export default function* testdataSagas() {
   yield takeLatest(testdataConstants.GET_TESTDATA_REQUEST, getTestdatas);
   yield takeLatest(testdataConstants.ADD_TESTDATA_REQUEST, addTestdata);
+  yield takeLatest(testdataConstants.EDIT_TESTDATA_REQUEST, editTestdata);
 }
