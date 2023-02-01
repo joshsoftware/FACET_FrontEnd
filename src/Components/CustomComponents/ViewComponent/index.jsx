@@ -23,6 +23,7 @@ const ViewComponent = (props) => {
     rightChildrens,
     title,
     type,
+    onBack,
   } = props;
 
   let navigate = useNavigate();
@@ -43,6 +44,10 @@ const ViewComponent = (props) => {
     };
   }, []);
 
+  const handleBack = () => {
+    onBack ? onBack() : navigate(-1);
+  };
+
   return (
     <div className="w-100">
       {!disabledHeader && (
@@ -56,7 +61,7 @@ const ViewComponent = (props) => {
               <span
                 className="d-flex align-items-center"
                 style={{ cursor: "pointer", width: "fit-content" }}
-                onClick={() => navigate(-1)}
+                onClick={handleBack}
               >
                 <ArrowLeft />
                 Back
@@ -111,4 +116,5 @@ ViewComponent.propTypes = {
   rightChildrens: PropTypes.element,
   title: PropTypes.string,
   type: PropTypes.string,
+  onBack: PropTypes.func.isRequired,
 };

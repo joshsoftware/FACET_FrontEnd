@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { Form } from "react-bootstrap";
 import PropTypes from "prop-types";
 
-import { DeleteButton, SaveButton } from "Components/forms/Buttons";
 import Editor from "Components/Editor";
 import ExpectedOutcomeTable from "../ExpectedOutcomeTable";
 import FormInput from "Components/forms/Inputs/FormInput";
 import FormSelect from "Components/forms/Inputs/FormSelect";
 import KeyValuePairsFormField from "Components/forms/KeyValuePairsFormField";
+import { ViewComponent } from "Components/CustomComponents";
 
 import { ConvertToSlug } from "utils";
 
@@ -79,9 +79,21 @@ const AddNewTestdata = ({ data, onChange, onSubmit, onClose }) => {
   // check whether if expected outcome table show or not
   const isShowExpOutcomeTable = isEditForm || selectedExpOutcome;
 
+  // view component title
+  const viewComponentTitle = isEditForm ? name : "Add New Testdata";
+
+  // check whether the required fields are filled or not
+  const isSaveDisabled = !name || (!isEditForm && !selectedExpOutcome);
+
   return (
-    <div className="bg-light border rounded p-3">
-      <Form onSubmit={onSubmit}>
+    <Form onSubmit={onSubmit}>
+      <ViewComponent
+        type="save"
+        onBack={onClose}
+        title={viewComponentTitle}
+        // TODO: naming convention for onSaveDisabled need to be improved
+        onSaveDisabled={isSaveDisabled}
+      >
         <FormInput
           label="Name"
           name="name"
@@ -90,6 +102,7 @@ const AddNewTestdata = ({ data, onChange, onSubmit, onClose }) => {
           onChange={handleInputChange}
           isRequired
           text={nameBottomInfoText}
+          disabled={isEditForm}
         />
         <div className="mb-3">
           <label className="mb-2">Parameters</label>
@@ -139,12 +152,8 @@ const AddNewTestdata = ({ data, onChange, onSubmit, onClose }) => {
             onchange={onExpectedOutcomeFieldsChange}
           />
         )}
-        <div className="d-flex justify-content-end mt-3">
-          <DeleteButton size="sm" className="mx-1" handleClick={onClose} />
-          <SaveButton size="sm" />
-        </div>
-      </Form>
-    </div>
+      </ViewComponent>
+    </Form>
   );
 };
 

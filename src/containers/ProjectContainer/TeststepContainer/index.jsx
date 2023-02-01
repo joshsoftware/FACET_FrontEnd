@@ -97,7 +97,10 @@ const TeststepContainer = ({ cat }) => {
       setSelectedItem(teststeps.filter((ele) => ele.id == id)[0] || {});
       dispatch(getTestdataRequest({ teststep: id }));
     }
-    return () => setSelectedItem({});
+    return () => {
+      setIsShowAddTestdataForm(false);
+      setSelectedItem({});
+    };
   }, [teststeps, id]);
 
   // set teststep form data for selected teststep when cat is edit
