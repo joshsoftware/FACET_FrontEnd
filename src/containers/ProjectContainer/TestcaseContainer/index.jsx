@@ -194,7 +194,7 @@ const TestcaseContainer = (props) => {
     if (cat === "add") {
       dispatch(addTestcasesRequest(formDataToSubmit));
     } else {
-      dispatch(editTestcasesRequest({ id, ...formDataToSubmit }));
+      dispatch(editTestcasesRequest({ ...formDataToSubmit, id }));
     }
   };
 
