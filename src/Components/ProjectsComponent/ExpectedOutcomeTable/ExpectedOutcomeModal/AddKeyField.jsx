@@ -1,14 +1,17 @@
-import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import { Col, Row } from "react-bootstrap";
 import { Check2Circle, Infinity } from "react-bootstrap-icons";
-import { toast } from "react-toastify";
+import PropTypes from "prop-types";
 
-import { hasWhiteSpace } from "utils";
 import { CustomModal } from "Components/CustomComponents";
 import { NextButton } from "Components/forms/Buttons";
 import FormInput from "Components/forms/Inputs/FormInput";
 import FieldBox from "./components/FieldBox";
+
+import { hasWhiteSpace } from "utils";
+import { toastMessage } from "utils/toastMessage";
+
+import { ALL_FIELDS_REQUIRED } from "constants/userMessagesConstants";
 
 const INITIAL_VALUE = {
   name: "",
@@ -31,7 +34,7 @@ const AddKeyField = ({ data, onSuccess }) => {
       formData.name.length === 0 ||
       (formData.type !== "exact" && formData.type !== "dynamic")
     ) {
-      toast.error("Fill All the Fields!");
+      toastMessage(ALL_FIELDS_REQUIRED, "error");
     } else {
       onSuccess({ name: formData.name, isExact: formData.type === "exact" });
       setFormData(INITIAL_VALUE);
@@ -88,7 +91,7 @@ const AddKeyField = ({ data, onSuccess }) => {
                   }}
                   // handleClick={() => onchangeType("dynamic")}
                 />
-                <small className="text-muted">Comming Soon</small>
+                <small className="text-muted">Coming Soon</small>
               </Col>
             </Row>
           }

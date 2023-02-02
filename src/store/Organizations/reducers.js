@@ -4,6 +4,7 @@ const initialState = {
   isLoading: false,
   organization: {},
   isSuccess: false,
+  isError: false,
 };
 
 const organizationsReducer = (state = initialState, action) => {
@@ -31,7 +32,7 @@ const organizationsReducer = (state = initialState, action) => {
       };
 
     case orgConstants.ADD_ORGANIZATION_FAILURE:
-      return { ...state, isLoading: false };
+      return { ...state, isLoading: false, isError: true };
 
     case orgConstants.EDIT_ORGANIZATION_REQUEST:
       return { ...state, isLoading: true };
