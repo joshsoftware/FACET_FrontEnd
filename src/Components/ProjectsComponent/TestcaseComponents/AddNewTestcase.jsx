@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Form } from "react-bootstrap";
-import { X } from "react-bootstrap-icons";
+import { X as CancelIcon } from "react-bootstrap-icons";
 import PropTypes from "prop-types";
 
 import AddTeststepsModal from "./components/AddTeststepsModal";
@@ -101,7 +101,7 @@ const AddNewTestcase = (props) => {
                   className="bg-secondary badge mb-1 me-1 rounded text-light d-flex justify-content-between align-items-center p-0"
                 >
                   <label className="ps-2 pe-1 py-1">{stepName}</label>
-                  <X
+                  <CancelIcon
                     className="h-100 cancel-button rounded"
                     size={16}
                     role="button"
