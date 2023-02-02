@@ -1,22 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
+import { Container, Dropdown, Nav, Navbar } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import AddAdminModal from "Components/DashboardComponent/SuperAdmin/AddAdminModal";
 
 import { addAdminsRequest } from "store/SuperAdmin/actions";
+import { convertRolesToStr } from "utils/organizationHelper";
 import { getFilteredOrgUsersRequest } from "store/Organizations/OrgMembers/actions";
 import { signOutRequest } from "store/User/actions";
 
 import {
   DASHBOARD_ROUTE,
-  LOGIN_ROUTE,
   ORG_MEMBERS_ROUTE,
   ORG_PROFILE_ROUTE,
-  SIGNUP_ROUTE,
   USER_PROFILE_ROUTE,
 } from "constants/routeConstants";
+import { ORG_ROLES } from "constants/roleConstants";
 
 import logo from "assets/images/logo.png";
 
@@ -37,7 +37,7 @@ const Header = () => {
 
   const {
     isLoggedIn,
-    currentUser: { name: userName },
+    currentUser: { name: userName, is_admin: isProjectAdmin },
     isOrgOwner,
     usersOptions,
     isUsersLoading,
@@ -65,7 +65,6 @@ const Header = () => {
 
   // sets selected users
   const handleChangeAdminFormData = (value) => {
-    console.log(value);
     setSelectedUsers(value);
   };
 
@@ -74,6 +73,13 @@ const Header = () => {
     dispatch(addAdminsRequest({ admin: selectedUsers.map((e) => e.value) }));
     handleToggle();
   };
+
+  // get role strings of user
+  const role = convertRolesToStr(isOrgOwner, isProjectAdmin);
+
+  // check whether role is visible or not to user, visible only if
+  // account_type is organization and user is not the normal member
+  const isShowRole = !isPersonalAccount && role !== ORG_ROLES.MEMBER;
 
   return (
     <Navbar bg="dark" sticky="top" variant="dark" expand="lg">
@@ -104,43 +110,37 @@ const Header = () => {
               <Nav.Link onClick={handleToggle}>Add Admin</Nav.Link>
             )}
           </Nav>
-          <>
-            {isLoggedIn ? (
-              <Nav>
-                <NavDropdown title={`Welcome, ${userName}`}>
-                  <NavDropdown.Item as={Link} to={USER_PROFILE_ROUTE}>
-                    My Profile
-                  </NavDropdown.Item>
-                  {!isPersonalAccount && (
-                    <>
-                      <NavDropdown.Item as={Link} to={ORG_PROFILE_ROUTE}>
-                        My Organization
-                      </NavDropdown.Item>
-                      <NavDropdown.Item as={Link} to={ORG_MEMBERS_ROUTE}>
-                        Members
-                      </NavDropdown.Item>
-                    </>
-                  )}
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item
-                    style={{ color: "red" }}
-                    onClick={handleLogout}
-                  >
-                    Logout
-                  </NavDropdown.Item>
-                </NavDropdown>
-              </Nav>
-            ) : (
-              <Nav>
-                <Link to={LOGIN_ROUTE} className="btn btn-primary me-2">
-                  Login
-                </Link>
-                <Link to={SIGNUP_ROUTE} className="btn btn-outline-primary">
-                  Signup
-                </Link>
-              </Nav>
-            )}
-          </>
+          {isLoggedIn && (
+            <Dropdown>
+              <Dropdown.Toggle
+                as={Link}
+                to="#"
+                className="text-light text-decoration-none d-flex align-items-center"
+              >
+                <div className="pe-2 d-flex flex-column align-items-end text-light">
+                  <div>{userName}</div>
+                  {isShowRole && <small>{role}</small>}
+                </div>
+              </Dropdown.Toggle>
+              <Dropdown.Menu align="end">
+                <Dropdown.Item as={Link} to={USER_PROFILE_ROUTE}>
+                  My Profile
+                </Dropdown.Item>
+                {!isPersonalAccount && (
+                  <>
+                    <Dropdown.Item as={Link} to={ORG_PROFILE_ROUTE}>
+                      My Organization
+                    </Dropdown.Item>
+                    <Dropdown.Item as={Link} to={ORG_MEMBERS_ROUTE}>
+                      Members
+                    </Dropdown.Item>
+                  </>
+                )}
+                <Dropdown.Divider />
+                <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          )}
         </Navbar.Collapse>
       </Container>
     </Navbar>
