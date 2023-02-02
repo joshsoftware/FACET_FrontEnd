@@ -11,6 +11,25 @@ import { ConvertToSlug } from "utils";
 
 import "./style.css";
 
+const TeststepBadge = ({ stepName, onDeleteSelectedTeststep, index }) => {
+  const onRemoveTeststep = () => onDeleteSelectedTeststep(index);
+
+  return (
+    <div
+      key={index}
+      className="bg-secondary badge mb-1 me-1 rounded text-light d-flex justify-content-between align-items-center p-0"
+    >
+      <label className="ps-2 pe-1 py-1">{stepName}</label>
+      <CancelIcon
+        className="h-100 cancel-button rounded"
+        size={16}
+        role="button"
+        onClick={onRemoveTeststep}
+      />
+    </div>
+  );
+};
+
 const AddNewTestcase = (props) => {
   const {
     cat,
@@ -96,18 +115,12 @@ const AddNewTestcase = (props) => {
             </label>
             <div className="background-secondary w-100 py-3 px-3 rounded d-flex">
               {teststeps?.map(({ name: stepName }, index) => (
-                <div
+                <TeststepBadge
                   key={index}
-                  className="bg-secondary badge mb-1 me-1 rounded text-light d-flex justify-content-between align-items-center p-0"
-                >
-                  <label className="ps-2 pe-1 py-1">{stepName}</label>
-                  <CancelIcon
-                    className="h-100 cancel-button rounded"
-                    size={16}
-                    role="button"
-                    onClick={() => onDeleteSelectedTeststep(index)}
-                  />
-                </div>
+                  stepName={stepName}
+                  index={index}
+                  onDeleteSelectedTeststep={onDeleteSelectedTeststep}
+                />
               ))}
               <small
                 className={`text-success px-3 w-100 ${
@@ -124,6 +137,12 @@ const AddNewTestcase = (props) => {
       </Form>
     )
   );
+};
+
+TeststepBadge.propTypes = {
+  stepName: PropTypes.string.isRequired,
+  index: PropTypes.number.isRequired,
+  onDeleteSelectedTeststep: PropTypes.func.isRequired,
 };
 
 AddNewTestcase.propTypes = {
