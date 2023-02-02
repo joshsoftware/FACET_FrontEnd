@@ -1,0 +1,8 @@
+.cancel-button {
+  cursor: pointer;
+  overflow: hidden !important;
+}
+.cancel-button:hover {
+  background-color: #842029;
+  overflow: hidden !important;
+}

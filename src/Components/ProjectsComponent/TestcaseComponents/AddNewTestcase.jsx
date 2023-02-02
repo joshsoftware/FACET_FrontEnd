@@ -1,16 +1,15 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
 import { Form } from "react-bootstrap";
+import { X } from "react-bootstrap-icons";
+import PropTypes from "prop-types";
 
-import { ViewComponent } from "Components/CustomComponents";
-import {
-  FormInput,
-  // FormSelect
-} from "Components/forms/Inputs";
-// import DragDropComponent from 'Components/DragDropComponent';
-import { ConvertToSlug } from "utils";
 import AddTeststepsModal from "./components/AddTeststepsModal";
-import BadgeComponent from "Components/BadgeComponent/index";
+import { ViewComponent } from "Components/CustomComponents";
+import { FormInput } from "Components/forms/Inputs";
+
+import { ConvertToSlug } from "utils";
+
+import "./style.css";
 
 const AddNewTestcase = (props) => {
   const {
@@ -26,7 +25,10 @@ const AddNewTestcase = (props) => {
     onSubmit,
     onTestdataChangeInSelectedTeststep,
     teststepsOptions,
+    onDeleteSelectedTeststep,
   } = props;
+
+  const { name, description, arrayOfTeststeps: teststeps } = data;
 
   const [showteststepModal, setShowteststepModal] = useState(false);
 
@@ -38,12 +40,19 @@ const AddNewTestcase = (props) => {
     setShowteststepModal(!showteststepModal);
   };
 
+  const isSaveDisabled = !name || !teststeps?.length;
+
   return (
     !isLoading &&
     typeof data === "object" &&
     Object.entries(data).length && (
       <Form className="w-100" onSubmit={onSubmit}>
-        <ViewComponent title="Add New" type="save" onSave={onSubmit}>
+        <ViewComponent
+          title="Add New"
+          type="save"
+          onSave={onSubmit}
+          onSaveDisabled={isSaveDisabled}
+        >
           <AddTeststepsModal
             show={showteststepModal}
             onClose={toggleTeststepModal}
@@ -77,30 +86,32 @@ const AddNewTestcase = (props) => {
             label="Description"
             placeholder="Write short description here..."
             name="description"
-            value={data.description}
+            value={description}
             onChange={handleChange}
           />
 
-          {/* TO DO: Create a button to open modal */}
           <div>
             <label>
               Teststeps<span className="text-danger">*</span>
             </label>
-            <div className="background-secondary w-100 py-3 px-3 rounded">
-              {selectedTeststeps?.map((step, index) => {
-                return (
-                  <BadgeComponent
-                    key={index}
-                    bg="secondary"
-                    label={step.name}
-                    className="py-2 px-3 me-2"
+            <div className="background-secondary w-100 py-3 px-3 rounded d-flex">
+              {teststeps?.map(({ name: stepName }, index) => (
+                <div
+                  key={index}
+                  className="bg-secondary badge mb-1 me-1 rounded text-light d-flex justify-content-between align-items-center p-0"
+                >
+                  <label className="ps-2 pe-1 py-1">{stepName}</label>
+                  <X
+                    className="h-100 cancel-button rounded"
+                    size={16}
+                    role="button"
+                    onClick={() => onDeleteSelectedTeststep(index)}
                   />
-                );
-              })}
+                </div>
+              ))}
               <small
-                className={`text-success px-3 ${
-                  selectedTeststeps?.length === 0 &&
-                  "d-flex justify-content-center"
+                className={`text-success px-3 w-100 ${
+                  !teststeps?.length && "d-flex justify-content-center"
                 }`}
                 role="button"
                 onClick={toggleTeststepModal}
@@ -115,11 +126,13 @@ const AddNewTestcase = (props) => {
   );
 };
 
-export default AddNewTestcase;
-
 AddNewTestcase.propTypes = {
   cat: PropTypes.string,
-  data: PropTypes.object,
+  data: PropTypes.shape({
+    name: PropTypes.string,
+    description: PropTypes.string,
+    arrayOfTeststeps: PropTypes.array,
+  }).isRequired,
   isLoading: PropTypes.bool,
   selectedTeststeps: PropTypes.array,
   onchange: PropTypes.func,
@@ -130,4 +143,7 @@ AddNewTestcase.propTypes = {
   teststepsOptions: PropTypes.objectOf(PropTypes.array),
   onTestdataChangeInSelectedTeststep: PropTypes.func,
   onAddTeststepDataSave: PropTypes.func,
+  onDeleteSelectedTeststep: PropTypes.func.isRequired,
 };
+
+export default AddNewTestcase;

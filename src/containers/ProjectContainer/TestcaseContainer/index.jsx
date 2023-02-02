@@ -35,7 +35,7 @@ const mapState = ({ testcases, environments, execute, teststeps }) => ({
 const INITIAL_TESTCASE_FORM_DATA = {
   name: "",
   description: "",
-  array_of_teststeps: [],
+  arrayOfTeststeps: [],
 };
 
 const TestcaseContainer = (props) => {
@@ -102,13 +102,8 @@ const TestcaseContainer = (props) => {
       id: selectedItem?.id || INITIAL_TESTCASE_FORM_DATA.id,
       description:
         selectedItem?.description || INITIAL_TESTCASE_FORM_DATA.description,
-      array_of_teststeps:
-        selectedItem?.teststeps?.map((e) => {
-          return {
-            teststep: e.id,
-            testdata: e.selected_testdata,
-          };
-        }) || INITIAL_TESTCASE_FORM_DATA.array_of_teststeps,
+      arrayOfTeststeps:
+        selectedItem?.teststeps || INITIAL_TESTCASE_FORM_DATA.arrayOfTeststeps,
     }));
     setSelectedTeststeps(selectedItem?.teststeps || []);
   }, [selectedItem]);
@@ -132,6 +127,17 @@ const TestcaseContainer = (props) => {
       });
       return fields;
     });
+  };
+
+  const onDeleteSelectedTeststep = (selectedIndex) => {
+    let updatedTeststeps = selectedTeststeps.filter(function (_value, index) {
+      return index !== selectedIndex;
+    });
+    setSelectedTeststeps(updatedTeststeps);
+    setTestcaseFormData((prevState) => ({
+      ...prevState,
+      arrayOfTeststeps: updatedTeststeps,
+    }));
   };
 
   const onSelectedTeststepsChange = (value) => {
@@ -159,12 +165,7 @@ const TestcaseContainer = (props) => {
   const onAddTeststepDataSave = () => {
     setTestcaseFormData((prevState) => ({
       ...prevState,
-      array_of_teststeps: selectedTeststeps?.map((e) => {
-        return {
-          teststep: e.id,
-          testdata: e.selected_testdata,
-        };
-      }),
+      arrayOfTeststeps: selectedTeststeps,
     }));
   };
 
@@ -177,10 +178,23 @@ const TestcaseContainer = (props) => {
 
   const handleSubmitTestcaseFormData = (e) => {
     e.preventDefault();
+    const { id, name, project, description, arrayOfTeststeps } =
+      testcaseFormData;
+
+    const formDataToSubmit = {
+      name,
+      project,
+      description,
+      array_of_teststeps: arrayOfTeststeps.map((teststep) => ({
+        teststep: teststep.id,
+        testdata: teststep.selected_testdata,
+      })),
+    };
+
     if (cat === "add") {
-      dispatch(addTestcasesRequest(testcaseFormData));
+      dispatch(addTestcasesRequest(formDataToSubmit));
     } else {
-      dispatch(editTestcasesRequest(testcaseFormData));
+      dispatch(editTestcasesRequest({ id, ...formDataToSubmit }));
     }
   };
 
@@ -218,6 +232,7 @@ const TestcaseContainer = (props) => {
             onTestdataChangeInSelectedTeststep={
               onTestdataChangeInSelectedTeststep
             }
+            onDeleteSelectedTeststep={onDeleteSelectedTeststep}
           />
         ) : (
           showViewComponent && (
