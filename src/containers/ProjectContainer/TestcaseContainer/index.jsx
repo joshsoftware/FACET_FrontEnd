@@ -78,35 +78,46 @@ const TestcaseContainer = (props) => {
   }, [testcases, id]);
 
   useEffect(() => {
-    setOptions({
-      initialOptions: teststeps,
-      updatedOptions: teststeps,
-    });
-  }, [teststeps]);
+    if (cat) {
+      setOptions({
+        initialOptions: teststeps,
+        updatedOptions: teststeps,
+      });
+    }
+  }, [teststeps, cat]);
 
   useEffect(() => {
-    let diff = GetDiffOfArrayOfObjects(
-      options.initialOptions,
-      selectedTeststeps
-    );
-    setOptions((prevState) => ({
-      ...prevState,
-      updatedOptions: diff,
-    }));
-  }, [selectedTeststeps]);
+    if (cat) {
+      let diff = GetDiffOfArrayOfObjects(
+        options.initialOptions,
+        selectedTeststeps
+      );
+      setOptions((prevState) => ({
+        ...prevState,
+        updatedOptions: diff,
+      }));
+    }
+  }, [selectedTeststeps, cat]);
 
   useEffect(() => {
-    setTestcaseFormData((prevState) => ({
-      ...prevState,
-      name: selectedItem?.name || INITIAL_TESTCASE_FORM_DATA.name,
-      id: selectedItem?.id || INITIAL_TESTCASE_FORM_DATA.id,
-      description:
-        selectedItem?.description || INITIAL_TESTCASE_FORM_DATA.description,
-      arrayOfTeststeps:
-        selectedItem?.teststeps || INITIAL_TESTCASE_FORM_DATA.arrayOfTeststeps,
-    }));
-    setSelectedTeststeps(selectedItem?.teststeps || []);
-  }, [selectedItem]);
+    if (cat) {
+      setTestcaseFormData((prevState) => ({
+        ...prevState,
+        name: selectedItem?.name || INITIAL_TESTCASE_FORM_DATA.name,
+        id: selectedItem?.id || INITIAL_TESTCASE_FORM_DATA.id,
+        description:
+          selectedItem?.description || INITIAL_TESTCASE_FORM_DATA.description,
+        arrayOfTeststeps:
+          selectedItem?.teststeps ||
+          INITIAL_TESTCASE_FORM_DATA.arrayOfTeststeps,
+      }));
+      setSelectedTeststeps(selectedItem?.teststeps || []);
+    }
+    return () => {
+      setTestcaseFormData(INITIAL_TESTCASE_FORM_DATA);
+      setSelectedTeststeps([]);
+    };
+  }, [selectedItem, cat]);
 
   const handleExecute = (testcase, environment) => {
     dispatch(
