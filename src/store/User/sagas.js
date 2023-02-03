@@ -63,6 +63,8 @@ export function* signOut() {
   axiosInstance.defaults.headers = {};
   yield put(signOutSuccess());
   toastMessage(LOGOUT_SUCCESS);
+  // TODO: This is temporary solution to avoid redirection of user, need to find out stable solution
+  window.location.reload();
 }
 
 export function* getuserProfile({ payload }) {
