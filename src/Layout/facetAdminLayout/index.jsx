@@ -45,7 +45,7 @@ const AdminLayout = ({ children }) => {
 
   return (
     <Container fluid className="px-0 d-flex flex-row">
-      <Nav className="col-md-12 d-none d-md-block sidebar sidenav bg-dark">
+      <Nav className="col-md-12 d-none d-md-block sidenav bg-dark">
         <div className="h-100 d-flex flex-column justify-content-between">
           <div>
             <div className="w-100 border-secondary border-bottom px-3 mb-3">
