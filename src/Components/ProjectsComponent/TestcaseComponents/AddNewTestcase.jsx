@@ -17,15 +17,17 @@ const TeststepBadge = ({ stepName, onDeleteSelectedTeststep, index }) => {
   return (
     <div
       key={index}
-      className="bg-secondary badge mb-1 me-1 rounded text-light d-flex justify-content-between align-items-center p-0"
+      className="bg-secondary badge mb-1 me-1 rounded text-light p-0 m-0 h-100"
     >
-      <label className="ps-2 pe-1 py-1">{stepName}</label>
-      <CancelIcon
-        className="h-100 cancel-button rounded"
-        size={16}
-        role="button"
-        onClick={onRemoveTeststep}
-      />
+      <div className="d-flex justify-content-center align-items-center h-100">
+        <label className="ps-2 pe-1 py-1">{stepName}</label>
+        <CancelIcon
+          className="h-100 cancel-button rounded"
+          size={16}
+          role="button"
+          onClick={onRemoveTeststep}
+        />
+      </div>
     </div>
   );
 };
@@ -113,7 +115,7 @@ const AddNewTestcase = (props) => {
             <label>
               Teststeps<span className="text-danger">*</span>
             </label>
-            <div className="background-secondary w-100 py-3 px-3 rounded d-flex">
+            <div className="background-secondary py-3 px-3 rounded">
               {teststeps?.map(({ name: stepName }, index) => (
                 <TeststepBadge
                   key={index}
