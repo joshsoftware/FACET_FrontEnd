@@ -1,18 +1,19 @@
-import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import PropTypes from "prop-types";
+
+import {
+  AddNewHeader,
+  HeaderViewComponent,
+} from "Components/ProjectsComponent/HeaderComponents";
+import { SubComponentsNav } from "Components/ProjectsComponent";
 
 import {
   addHeadersRequest,
   editHeadersRequest,
   getHeadersRequest,
 } from "store/Headers/actions";
-import { SubComponentsNav } from "Components/ProjectsComponent";
-import {
-  AddNewHeader,
-  HeaderViewComponent,
-} from "Components/ProjectsComponent/HeaderComponents";
 
 const mapState = ({ headers }) => ({
   headers: headers.headers,
@@ -25,8 +26,8 @@ const INITIAL_FORM_DATA = {
 };
 
 const HeaderContainer = (props) => {
-  let dispatch = useDispatch();
-  let navigate = useNavigate();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { cat } = props;
   const { projectName, id } = useParams();
@@ -48,16 +49,30 @@ const HeaderContainer = (props) => {
     }
   }, [headers, id]);
 
+  // if edit formdata is active then set headersFoemData
+  useEffect(() => {
+    if (cat === "edit" && selectedItem) {
+      const { name, header, id: headerId } = selectedItem;
+      setHeadersFormData((prevState) => ({
+        ...prevState,
+        name: name || "",
+        header: { ...header },
+        id: headerId || INITIAL_FORM_DATA.id,
+      }));
+    }
+    return () => setHeadersFormData({ ...INITIAL_FORM_DATA });
+  }, [selectedItem, cat]);
+
   const onFormDataChange = (e) => {
-    setHeadersFormData((p) => ({
-      ...p,
+    setHeadersFormData((prevState) => ({
+      ...prevState,
       [e.target.name]: e.target.value,
     }));
   };
 
   const onKeyValuePairsChange = (result) => {
-    setHeadersFormData((p) => ({
-      ...p,
+    setHeadersFormData((prevState) => ({
+      ...prevState,
       header: result,
     }));
   };
@@ -70,15 +85,6 @@ const HeaderContainer = (props) => {
       dispatch(addHeadersRequest(headersFormData));
     }
   };
-
-  useEffect(() => {
-    setHeadersFormData((p) => ({
-      ...p,
-      name: selectedItem?.name || "",
-      header: selectedItem?.header || {},
-      id: selectedItem?.id || INITIAL_FORM_DATA.id,
-    }));
-  }, [selectedItem]);
 
   return (
     <>
@@ -109,8 +115,8 @@ const HeaderContainer = (props) => {
   );
 };
 
-export default HeaderContainer;
-
 HeaderContainer.propTypes = {
   cat: PropTypes.string,
 };
+
+export default HeaderContainer;

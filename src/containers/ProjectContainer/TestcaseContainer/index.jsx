@@ -189,12 +189,11 @@ const TestcaseContainer = (props) => {
 
   const handleSubmitTestcaseFormData = (e) => {
     e.preventDefault();
-    const { id, name, project, description, arrayOfTeststeps } =
-      testcaseFormData;
+    const { id, name, description, arrayOfTeststeps } = testcaseFormData;
 
     const formDataToSubmit = {
       name,
-      project,
+      project: projectName,
       description,
       array_of_teststeps: arrayOfTeststeps.map((teststep) => ({
         teststep: teststep.id,
