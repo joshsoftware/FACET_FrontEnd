@@ -51,6 +51,8 @@ axiosInstance.interceptors.response.use(
       clearLocalStorage();
       axiosInstance.defaults.headers = {};
       window.location.href = "/login";
+      // TODO: This is temporary solution to avoid redirection of user, need to find out stable solution
+      window.location.reload();
       return Promise.reject(error);
     }
 

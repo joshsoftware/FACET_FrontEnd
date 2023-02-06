@@ -9,7 +9,7 @@ const TeststepAccordionItem = ({ item }) => {
     endpoint,
     header,
     payload,
-    selected_testdata: selectedTestdata,
+    testdata,
   } = item;
 
   return (
@@ -45,7 +45,7 @@ const TeststepAccordionItem = ({ item }) => {
             <small>
               <b>No. Of Testdata</b>
             </small>
-            <div>{selectedTestdata?.length}</div>
+            <div>{testdata?.length}</div>
           </Col>
         </Row>
       </Accordion.Body>
@@ -60,7 +60,7 @@ TeststepAccordionItem.propTypes = {
     endpoint: PropTypes.shape({ name: PropTypes.string }).isRequired,
     header: PropTypes.shape({ name: PropTypes.string }).isRequired,
     payload: PropTypes.shape({ name: PropTypes.string }).isRequired,
-    selected_testdata: PropTypes.array.isRequired,
+    testdata: PropTypes.array.isRequired,
   }).isRequired,
 };
 
