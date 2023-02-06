@@ -25,16 +25,28 @@ const AddNewTeststep = ({
   // on select field change
   const onSelectChange = (value, { name }) => onChange(name, value);
 
+  // check whether all form fields are filled or not, if not then disabled the submit button
+  const isSaveButtonDisabled =
+    !name || !method || !endpoint || !header || !payload;
+
+  const nameInputBottomTextMsg =
+    !!name.length && `Your teststep will be created as ${ConvertToSlug(name)}`;
+
   return (
     <Form className="w-100" onSubmit={onSubmit}>
-      <ViewComponent title="Add New" type="save" onSave={onSubmit}>
+      <ViewComponent
+        title="Add New"
+        type="save"
+        onSave={onSubmit}
+        onSaveDisabled={isSaveButtonDisabled}
+      >
         <FormInput
           label="Name"
           placeholder="Name"
           name="name"
           value={name}
           onChange={onFieldChange}
-          text={name && `Your teststep will created as ${ConvertToSlug(name)}`}
+          text={nameInputBottomTextMsg}
           disabled={cat === "edit"}
           isRequired
         />
