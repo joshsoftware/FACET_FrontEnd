@@ -116,18 +116,14 @@ const AddNewPayload = ({ cat, data, isLoading, onchange, handleSubmit }) => {
               Expected Outcomes<span className="text-danger">*</span>
             </label>
             <Accordion>
-              {expectedOutcome?.map((item, index) => {
-                return (
-                  <ExpOutcomeAccordion
-                    data={item}
-                    key={index}
-                    eventKey={index}
-                    onChange={(res) =>
-                      onExpectedOutcomeFieldsChange(index, res)
-                    }
-                  />
-                );
-              })}
+              {expectedOutcome?.map((item, index) => (
+                <ExpOutcomeAccordion
+                  data={item}
+                  key={index}
+                  eventKey={index}
+                  onChange={(res) => onExpectedOutcomeFieldsChange(index, res)}
+                />
+              ))}
             </Accordion>
             {isExpectedOutcomeForm ? (
               <AddExpOutcomeForm

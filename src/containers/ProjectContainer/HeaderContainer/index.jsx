@@ -26,8 +26,8 @@ const INITIAL_FORM_DATA = {
 };
 
 const HeaderContainer = (props) => {
-  let dispatch = useDispatch();
-  let navigate = useNavigate();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { cat } = props;
   const { projectName, id } = useParams();
@@ -53,8 +53,8 @@ const HeaderContainer = (props) => {
   useEffect(() => {
     if (cat === "edit" && selectedItem) {
       const { name, header, id: headerId } = selectedItem;
-      setHeadersFormData((p) => ({
-        ...p,
+      setHeadersFormData((prevState) => ({
+        ...prevState,
         name: name || "",
         header: { ...header },
         id: headerId || INITIAL_FORM_DATA.id,
@@ -64,15 +64,15 @@ const HeaderContainer = (props) => {
   }, [selectedItem, cat]);
 
   const onFormDataChange = (e) => {
-    setHeadersFormData((p) => ({
-      ...p,
+    setHeadersFormData((prevState) => ({
+      ...prevState,
       [e.target.name]: e.target.value,
     }));
   };
 
   const onKeyValuePairsChange = (result) => {
-    setHeadersFormData((p) => ({
-      ...p,
+    setHeadersFormData((prevState) => ({
+      ...prevState,
       header: result,
     }));
   };
