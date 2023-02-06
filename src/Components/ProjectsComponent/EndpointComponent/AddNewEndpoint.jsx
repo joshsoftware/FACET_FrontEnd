@@ -1,37 +1,46 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { Form } from "react-bootstrap";
+import PropTypes from "prop-types";
 
-import { ViewComponent } from "Components/CustomComponents";
 import { FormInput } from "Components/forms/Inputs";
+import { ViewComponent } from "Components/CustomComponents";
+
 import { ConvertToSlug } from "utils";
 
-const AddNewEndpoint = (props) => {
-  const { cat, data, isLoading, onchange, handleSubmit } = props;
+const AddNewEndpoint = ({ cat, data, isLoading, onchange, handleSubmit }) => {
+  const { name, endpoint } = data;
+
+  // check whether all form fields are filled or not, if not then disabled the submit button
+  const isSaveButtonDisabled = !name.length || !endpoint.length;
+
+  const nameInputBottomTextMsg =
+    !!name.length && `Your endpoint will be created as ${ConvertToSlug(name)}`;
 
   return (
     !isLoading &&
     data && (
       <Form onSubmit={handleSubmit} className="w-100">
-        <ViewComponent title="Add New" type="save" onSave={handleSubmit}>
+        <ViewComponent
+          title="Add New"
+          type="save"
+          onSave={handleSubmit}
+          onSaveDisabled={isSaveButtonDisabled}
+        >
           <FormInput
             label="Name"
             placeholder="Name"
             name="name"
-            value={data.name}
+            value={name}
             onChange={onchange}
             isRequired
             disabled={cat === "edit"}
-            text={
-              data.name.length !== 0 &&
-              `Your endpoint will created as ${ConvertToSlug(data.name)}`
-            }
+            text={nameInputBottomTextMsg}
           />
           <FormInput
             label="Endpoint"
             placeholder="Endpoint"
             name="endpoint"
-            value={data.endpoint}
+            value={endpoint}
             onChange={onchange}
             isRequired
           />
@@ -41,14 +50,13 @@ const AddNewEndpoint = (props) => {
   );
 };
 
-export default AddNewEndpoint;
-
 AddNewEndpoint.propTypes = {
-  cat: PropTypes.oneOf(["add", "edit"]),
-  data: PropTypes.object,
+  cat: PropTypes.oneOf(["add", "edit"]).isRequired,
+  data: PropTypes.shape({ name: PropTypes.string, endpoint: PropTypes.string })
+    .isRequired,
   isLoading: PropTypes.bool,
-  onchange: PropTypes.func,
-  handleSubmit: PropTypes.func,
+  onchange: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
 };
 
 AddNewEndpoint.defaultProp = {
@@ -57,3 +65,5 @@ AddNewEndpoint.defaultProp = {
     endpoint: "",
   },
 };
+
+export default AddNewEndpoint;

@@ -1,19 +1,19 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
 import { Accordion, Form } from "react-bootstrap";
+import PropTypes from "prop-types";
 
+import { AddButton } from "Components/forms/Buttons";
+import AddExpOutcomeForm from "./components/AddExpOutcomeForm";
 import Editor from "Components/Editor";
+import ExpOutcomeAccordion from "./components/ExpOutcomeAccordion";
 import FormInput from "Components/forms/Inputs/FormInput";
 import KeyValuePairsFormField from "Components/forms/KeyValuePairsFormField";
 import { ViewComponent } from "Components/CustomComponents";
+
 import { ConvertToSlug, IsValidJson } from "utils";
 
-import ExpOutcomeAccordion from "./components/ExpOutcomeAccordion";
-import AddExpOutcomeForm from "./components/AddExpOutcomeForm";
-import { AddButton } from "Components/forms/Buttons/index";
-
-const AddNewPayload = (props) => {
-  const { cat, data, isLoading, onchange, handleSubmit } = props;
+const AddNewPayload = ({ cat, data, isLoading, onchange, handleSubmit }) => {
+  const { name, parameters, payload, expected_outcome: expectedOutcome } = data;
 
   const [showPayloadInJsonFormat, setShowPayloadInJsonFormat] = useState(false);
   const [showAddExpOutForm, setShowAddExpOutForm] = useState(false);
@@ -28,13 +28,13 @@ const AddNewPayload = (props) => {
 
   const onExpectedOutcomeFieldsChange = (index, result) => {
     // update according to new functionalities
-    let newResults = [...data.expected_outcome];
+    let newResults = [...expectedOutcome];
     newResults[index] = result;
     onchange("expected_outcome", newResults);
   };
 
   const onAddNewExpOutcomeEntry = (res) => {
-    let newResults = [...data.expected_outcome];
+    let newResults = [...expectedOutcome];
     newResults.push(res);
     onchange("expected_outcome", newResults);
   };
@@ -42,6 +42,21 @@ const AddNewPayload = (props) => {
   const onParameterFieldsChange = (result) => {
     onchange("parameters", result);
   };
+
+  const toggleExpOutcomeForm = () => setShowAddExpOutForm(!showAddExpOutForm);
+
+  const toggleJsonFormInEditor = () =>
+    setShowPayloadInJsonFormat(!showPayloadInJsonFormat);
+
+  // check whether all required form fields are filled or not, if not then disabled the submit button
+  const isSaveButtonDisabled =
+    !name.length || !IsValidJson(payload) || !expectedOutcome.length;
+
+  const nameInputBottomTextMsg =
+    !!name.length && `Your payload will be created as ${ConvertToSlug(name)}`;
+
+  const isExpectedOutcomeForm =
+    showAddExpOutForm || expectedOutcome?.length === 0;
 
   return (
     !isLoading &&
@@ -51,27 +66,24 @@ const AddNewPayload = (props) => {
           title="Add New"
           type="save"
           onSave={handleSubmit}
-          onSaveDisabled={data.name.length === 0 || !IsValidJson(data.payload)}
+          onSaveDisabled={isSaveButtonDisabled}
         >
           <FormInput
             label="Name"
             placeholder="Name"
             name="name"
-            value={data.name}
+            value={name}
             onChange={onFormDataChange}
             disabled={cat === "edit"}
             isRequired
-            text={
-              data.name.length !== 0 &&
-              `Your payload will created as ${ConvertToSlug(data.name)}`
-            }
+            text={nameInputBottomTextMsg}
           />
           <FormInput
             name="parameters"
             label="Parameters"
             element={
               <KeyValuePairsFormField
-                data={data.parameters}
+                data={parameters}
                 setData={onParameterFieldsChange}
               />
             }
@@ -84,16 +96,14 @@ const AddNewPayload = (props) => {
                   type="switch"
                   label="Json Format"
                   value={showPayloadInJsonFormat}
-                  onChange={() =>
-                    setShowPayloadInJsonFormat(!showPayloadInJsonFormat)
-                  }
+                  onChange={toggleJsonFormInEditor}
                 />
               </div>
             }
             element={
               <>
                 <Editor
-                  text={data?.payload}
+                  text={payload}
                   mode={showPayloadInJsonFormat ? "code" : "tree"}
                   indentation={4}
                   onChangeText={onPayloadFieldsChange}
@@ -106,30 +116,23 @@ const AddNewPayload = (props) => {
               Expected Outcomes<span className="text-danger">*</span>
             </label>
             <Accordion>
-              {data?.expected_outcome?.map((item, index) => {
-                return (
-                  <ExpOutcomeAccordion
-                    data={item}
-                    key={index}
-                    eventKey={index}
-                    onChange={(res) =>
-                      onExpectedOutcomeFieldsChange(index, res)
-                    }
-                  />
-                );
-              })}
+              {expectedOutcome?.map((item, index) => (
+                <ExpOutcomeAccordion
+                  data={item}
+                  key={index}
+                  eventKey={index}
+                  onChange={(res) => onExpectedOutcomeFieldsChange(index, res)}
+                />
+              ))}
             </Accordion>
-            {showAddExpOutForm || data?.expected_outcome?.length === 0 ? (
+            {isExpectedOutcomeForm ? (
               <AddExpOutcomeForm
                 onSave={onAddNewExpOutcomeEntry}
-                onClose={() => setShowAddExpOutForm(false)}
+                onClose={toggleExpOutcomeForm}
               />
             ) : (
               <div className="text-center my-1">
-                <AddButton
-                  size="sm"
-                  handleClick={() => setShowAddExpOutForm(true)}
-                />
+                <AddButton size="sm" handleClick={toggleExpOutcomeForm} />
               </div>
             )}
           </div>
@@ -139,12 +142,17 @@ const AddNewPayload = (props) => {
   );
 };
 
-export default AddNewPayload;
-
 AddNewPayload.propTypes = {
-  cat: PropTypes.oneOf(["add", "edit"]),
-  data: PropTypes.object,
+  cat: PropTypes.oneOf(["add", "edit"]).isRequired,
+  data: PropTypes.shape({
+    name: PropTypes.string,
+    parameters: PropTypes.object,
+    payload: PropTypes.object,
+    expected_outcome: PropTypes.array,
+  }).isRequired,
   isLoading: PropTypes.bool,
-  onchange: PropTypes.func,
-  handleSubmit: PropTypes.func,
+  onchange: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
 };
+
+export default AddNewPayload;
