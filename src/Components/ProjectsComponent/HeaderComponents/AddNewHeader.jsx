@@ -1,45 +1,54 @@
-import PropTypes from "prop-types";
 import React from "react";
 import { Form } from "react-bootstrap";
+import PropTypes from "prop-types";
 
-import { ViewComponent } from "Components/CustomComponents";
 import { FormInput } from "Components/forms/Inputs";
 import KeyValuePairsFormField from "Components/forms/KeyValuePairsFormField";
+import { ViewComponent } from "Components/CustomComponents";
+
 import { ConvertToSlug } from "utils";
 
-const AddNewHeader = (props) => {
-  const {
-    cat,
-    isLoading,
-    data,
-    onchange,
-    onKeyValuePairsChange,
-    handleSubmit,
-  } = props;
+const AddNewHeader = ({
+  cat,
+  isLoading,
+  data,
+  onchange,
+  onKeyValuePairsChange,
+  handleSubmit,
+}) => {
+  const { name, header } = data;
+
+  // check whether all form fields are filled or not, if not then disabled the submit button
+  const isSaveButtonDisabled = !name.length || !Object.entries(header).length;
+
+  const nameInputBottomTextMsg =
+    !!name.length && `Your header will be created as ${ConvertToSlug(name)}`;
 
   return (
     !isLoading &&
     data && (
       <Form onSubmit={handleSubmit} className="w-100">
-        <ViewComponent title="Add New" type="save" onSave={handleSubmit}>
+        <ViewComponent
+          title="Add New"
+          type="save"
+          onSave={handleSubmit}
+          onSaveDisabled={isSaveButtonDisabled}
+        >
           <FormInput
             label="Name"
             placeholder="Name"
             name="name"
-            value={data.name}
+            value={name}
             onChange={onchange}
             isRequired
             disabled={cat === "edit"}
-            text={
-              data.name.length !== 0 &&
-              `Your header will created as ${ConvertToSlug(data.name)}`
-            }
+            text={nameInputBottomTextMsg}
           />
           <FormInput
             label="Header"
             element={
               <KeyValuePairsFormField
-                data={data.header}
+                data={header}
                 setData={onKeyValuePairsChange}
               />
             }
@@ -51,15 +60,16 @@ const AddNewHeader = (props) => {
   );
 };
 
-export default AddNewHeader;
-
 AddNewHeader.propTypes = {
-  cat: PropTypes.oneOf(["add", "edit"]),
+  cat: PropTypes.oneOf(["add", "edit"]).isRequired,
   isLoading: PropTypes.bool,
-  data: PropTypes.object,
-  onchange: PropTypes.func,
-  onKeyValuePairsChange: PropTypes.func,
-  handleSubmit: PropTypes.func,
+  data: PropTypes.shape({
+    name: PropTypes.string,
+    header: PropTypes.object,
+  }).isRequired,
+  onchange: PropTypes.func.isRequired,
+  onKeyValuePairsChange: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
 };
 
 AddNewHeader.defaultProp = {
@@ -68,3 +78,5 @@ AddNewHeader.defaultProp = {
     header: {},
   },
 };
+
+export default AddNewHeader;
