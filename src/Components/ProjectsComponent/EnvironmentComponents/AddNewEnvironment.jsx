@@ -2,8 +2,9 @@ import React from "react";
 import { Form } from "react-bootstrap";
 import PropTypes from "prop-types";
 
-import { ViewComponent } from "Components/CustomComponents";
 import { FormInput } from "Components/forms/Inputs";
+import { ViewComponent } from "Components/CustomComponents";
+
 import { ConvertToSlug } from "utils";
 
 const AddNewEnvironment = ({
