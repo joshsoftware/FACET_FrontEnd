@@ -1,11 +1,24 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { Card, Form } from "react-bootstrap";
-import { FormInput } from "../../forms/Inputs";
-import { SaveButton } from "../../forms/Buttons";
+import PropTypes from "prop-types";
 
-const ChangeProjectNameBox = (props) => {
-  const { project, formData, onchange, handleSubmit } = props;
+import FormInput from "Components/forms/Inputs/FormInput";
+import { SaveButton } from "Components/forms/Buttons";
+
+import { ConvertToSlug } from "utils";
+
+const ChangeProjectNameBox = ({
+  project,
+  formData,
+  onChange,
+  handleSubmit,
+}) => {
+  const { is_project_admin: isProjectAdmin } = project;
+  const { project: currProjName, newProjName } = formData;
+
+  // check whether form is able to submit or not
+  const isSaveButtonDisabled =
+    !isProjectAdmin || newProjName.length === 0 || currProjName === newProjName;
 
   return (
     <Card>
@@ -20,34 +33,30 @@ const ChangeProjectNameBox = (props) => {
           </div>
           <FormInput
             name="newProjName"
-            value={formData.newProjName}
-            onChange={onchange}
-            text={`Project name will updated as ${formData.newProjName}`}
-            disabled={!project.is_project_admin}
+            value={newProjName}
+            onChange={onChange}
+            text={`Project name will updated as ${ConvertToSlug(newProjName)}`}
+            disabled={!isProjectAdmin}
           />
         </Card.Body>
         <Card.Footer className="d-flex justify-content-end">
-          <SaveButton
-            onClick={handleSubmit}
-            disabled={
-              !project.is_project_admin ||
-              formData.newProjName.length === 0 ||
-              formData.project === formData.newProjName
-            }
-          />
+          <SaveButton onClick={handleSubmit} disabled={isSaveButtonDisabled} />
         </Card.Footer>
       </Form>
     </Card>
   );
 };
 
-export default ChangeProjectNameBox;
-
 ChangeProjectNameBox.propTypes = {
-  project: PropTypes.object.isRequired,
-  formData: PropTypes.objectOf(PropTypes.string),
+  project: PropTypes.shape({
+    is_project_admin: PropTypes.bool,
+  }).isRequired,
+  formData: PropTypes.shape({
+    project: PropTypes.string,
+    newProjName: PropTypes.string,
+  }).isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  onchange: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
 };
 
 ChangeProjectNameBox.defaultProps = {
@@ -56,3 +65,5 @@ ChangeProjectNameBox.defaultProps = {
     newProjName: "",
   },
 };
+
+export default ChangeProjectNameBox;

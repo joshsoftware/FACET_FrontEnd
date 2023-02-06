@@ -7,12 +7,14 @@ import {
   ChangeProjectNameBox,
   DeleteProjectBox,
 } from "Components/ProjectsComponent/SettingsComponent";
+import Loader from "Components/Loader";
 
 import {
   deleteProjectRequest,
   getProjectRequest,
   updateProjectNameRequest,
 } from "store/Projects/actions";
+import { ConvertToSlug } from "utils";
 
 const mapState = ({ user, projects }) => ({
   user: user.currentUser,
@@ -58,7 +60,12 @@ const SettingsContainer = () => {
 
   const handleSubmitChangeNameForm = (e) => {
     e.preventDefault();
-    dispatch(updateProjectNameRequest(changeNameFormData));
+    dispatch(
+      updateProjectNameRequest({
+        ...changeNameFormData,
+        newProjName: ConvertToSlug(changeNameFormData.newProjName),
+      })
+    );
   };
 
   const handleDelete = () => {
@@ -90,13 +97,17 @@ const SettingsContainer = () => {
         </div>
       </div>
 
-      {!isLoading && (
+      {isLoading ? (
+        <div className="d-flex justify-content-center align-items-center">
+          <Loader />
+        </div>
+      ) : (
         <>
           <ChangeProjectNameBox
             user={user}
             project={currentProject}
             formData={changeNameFormData}
-            onchange={onChangeName}
+            onChange={onChangeName}
             handleSubmit={handleSubmitChangeNameForm}
           />
           <DeleteProjectBox
