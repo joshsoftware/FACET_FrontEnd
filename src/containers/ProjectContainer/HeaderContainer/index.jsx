@@ -60,8 +60,9 @@ const HeaderContainer = (props) => {
         id: headerId || INITIAL_FORM_DATA.id,
       }));
     }
-    return () => setHeadersFormData({ ...INITIAL_FORM_DATA });
-  }, [selectedItem, cat]);
+    return () =>
+      setHeadersFormData({ ...INITIAL_FORM_DATA, project: projectName });
+  }, [selectedItem, cat, projectName]);
 
   const onFormDataChange = (e) => {
     setHeadersFormData((prevState) => ({
