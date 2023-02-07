@@ -47,12 +47,21 @@ const AddTeststepsModal = ({
     e.preventDefault();
   };
 
+  // check whether all teststeps have atleast one testdata selected
+  const isSaveButtonDisabled =
+    !selectedTeststeps.length ||
+    !!selectedTeststeps?.find(
+      ({ selected_testdata: selectedTestdata }) =>
+        selectedTestdata?.length === 0
+    );
+
   return (
     <CustomModal
       show={show}
       onClose={onClose}
       size="lg"
       title="Edit Teststeps in Testcase"
+      scrollable
     >
       <CustomModal.Body>
         <Row>
@@ -98,14 +107,14 @@ const AddTeststepsModal = ({
         </Row>
       </CustomModal.Body>
       <CustomModal.Footer>
-        <SaveButton handleClick={onSave} />
+        <SaveButton handleClick={onSave} disabled={isSaveButtonDisabled} />
       </CustomModal.Footer>
     </CustomModal>
   );
 };
 
 AddTeststepsModal.propTypes = {
-  teststepsOptions: PropTypes.objectOf({
+  teststepsOptions: PropTypes.shape({
     updatedOptions: PropTypes.array.isRequired,
   }).isRequired,
   onSelectedTeststepsChange: PropTypes.func.isRequired,
