@@ -50,7 +50,10 @@ const AddTeststepsModal = ({
   // check whether all teststeps have atleast one testdata selected
   const isSaveButtonDisabled =
     !selectedTeststeps.length ||
-    !!selectedTeststeps?.find((item) => item.selected_testdata?.length === 0);
+    !!selectedTeststeps?.find(
+      ({ selected_testdata: selectedTestdata }) =>
+        selectedTestdata?.length === 0
+    );
 
   return (
     <CustomModal
