@@ -75,7 +75,9 @@ const SettingsContainer = () => {
 
   useEffect(() => {
     if (isSuccess && changeNameFormData.newProjName.length !== 0) {
-      navigate(`/project/${changeNameFormData.newProjName}/settings`);
+      navigate(
+        `/project/${ConvertToSlug(changeNameFormData.newProjName)}/settings`
+      );
     }
   }, [isSuccess]);
 
