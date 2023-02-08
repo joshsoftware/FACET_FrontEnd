@@ -57,7 +57,8 @@ const DashBoard = () => {
   };
 
   // handles change search query input field
-  const onChangeSearchQuery = (e) => setSearchQuery(e.target.value);
+  const onChangeSearchQuery = (e) =>
+    setSearchQuery(e.target.value?.toLowerCase());
 
   // filters projects on basis of searchQuery
   const filteredProjects = useMemo(
@@ -80,6 +81,7 @@ const DashBoard = () => {
       <DashboardSubHeader
         setShowAddProjectModal={toggleModal}
         onChangeSearchQuery={onChangeSearchQuery}
+        searchQuery={searchQuery}
         isAbleToAddProject={isAbleToAddProject}
         isLoggedIn={isLoggedIn}
       />

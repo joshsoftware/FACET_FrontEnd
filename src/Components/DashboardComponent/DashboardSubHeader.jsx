@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 const DashboardSubHeader = ({
   isLoggedIn,
   isAbleToAddProject,
+  searchQuery,
   setShowAddProjectModal,
   onChangeSearchQuery,
 }) => (
@@ -21,6 +22,7 @@ const DashboardSubHeader = ({
             aria-label="Search Projects"
             aria-describedby="basic-addon1"
             onChange={onChangeSearchQuery}
+            value={searchQuery}
           />
         </InputGroup>
         {isLoggedIn && isAbleToAddProject && (
@@ -40,6 +42,7 @@ const DashboardSubHeader = ({
 
 DashboardSubHeader.propTypes = {
   setShowAddProjectModal: PropTypes.func.isRequired,
+  searchQuery: PropTypes.string.isRequired,
   isAbleToAddProject: PropTypes.bool,
   isLoggedIn: PropTypes.bool,
   onChangeSearchQuery: PropTypes.func.isRequired,
