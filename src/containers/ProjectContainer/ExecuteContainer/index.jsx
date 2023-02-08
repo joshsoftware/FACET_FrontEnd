@@ -7,6 +7,10 @@ import ExecuteComponent from "Components/ProjectsComponent/ExecuteComponent";
 import Loader from "Components/Loader";
 import { ViewComponent } from "Components/CustomComponents";
 
+import { buildRoute } from "utils/helper";
+
+import { TESTCASE_ROUTE, TESTSUITE_ROUTE } from "constants/routeConstants";
+
 const mapState = ({ execute }) => ({
   results: execute.results,
   data: execute.data,
@@ -15,7 +19,7 @@ const mapState = ({ execute }) => ({
 });
 
 const ExecuteContainer = () => {
-  const { projectName, id } = useParams();
+  const { projectName, type, id } = useParams();
   const {
     results: { result: resultsList, result_id: reportId },
     data: { name: reportName, fields },
@@ -23,12 +27,19 @@ const ExecuteContainer = () => {
     isError,
   } = useSelector(mapState);
 
-  const isReport =
+  // check whether data like reportName and fields are available
+  const isInvalidData =
     !isLoading && (isError || !reportName?.length || !fields?.length);
 
-  return isReport ? (
-    <Navigate to={`/project/${projectName}/testcases/${id}`} />
-  ) : (
+  // if the data coming from testcase or testsuite container is invalid or not present
+  // then it will redirect to the previous page
+  if (isInvalidData) {
+    const redirectTo = type === "testsuite" ? TESTSUITE_ROUTE : TESTCASE_ROUTE;
+    const navigateToParentPage = buildRoute(redirectTo, { projectName, id });
+    return <Navigate to={navigateToParentPage} />;
+  }
+
+  return (
     <div className="w-100 position-relative">
       {isLoading && (
         <Backdrop>
