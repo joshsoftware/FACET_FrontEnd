@@ -107,7 +107,7 @@ const SelectedTeststepComponent = ({
           ) : (
             !isAtleastOneTestdataSelected && (
               <small className="text-danger">
-                Select at least one testdata.
+                Select at least one testdata
               </small>
             )
           )}
