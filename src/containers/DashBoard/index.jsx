@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
@@ -60,9 +60,13 @@ const DashBoard = () => {
   const onChangeSearchQuery = (e) => setSearchQuery(e.target.value);
 
   // filters projects on basis of searchQuery
-  const filteredProjects = searchQuery
-    ? projects.filter((project) => project.name?.includes(searchQuery))
-    : projects;
+  const filteredProjects = useMemo(
+    () =>
+      searchQuery
+        ? projects.filter((project) => project.name?.includes(searchQuery))
+        : projects,
+    [searchQuery, projects]
+  );
 
   return (
     <DashboardLayout>
