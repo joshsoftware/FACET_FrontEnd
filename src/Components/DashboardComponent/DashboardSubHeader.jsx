@@ -7,6 +7,7 @@ const DashboardSubHeader = ({
   isLoggedIn,
   isAbleToAddProject,
   setShowAddProjectModal,
+  onChangeSearchQuery,
 }) => (
   <div className="d-flex flex-items-start align-items-center pb-2 border-bottom border-dark">
     <div className="col-12">
@@ -19,6 +20,7 @@ const DashboardSubHeader = ({
             placeholder="Search Projects..."
             aria-label="Search Projects"
             aria-describedby="basic-addon1"
+            onChange={onChangeSearchQuery}
           />
         </InputGroup>
         {isLoggedIn && isAbleToAddProject && (
@@ -40,6 +42,7 @@ DashboardSubHeader.propTypes = {
   setShowAddProjectModal: PropTypes.func.isRequired,
   isAbleToAddProject: PropTypes.bool,
   isLoggedIn: PropTypes.bool,
+  onChangeSearchQuery: PropTypes.func.isRequired,
 };
 
 export default DashboardSubHeader;

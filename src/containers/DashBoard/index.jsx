@@ -29,6 +29,7 @@ const DashBoard = () => {
   const [addProjectFormData, setAddProjectFormData] = useState(
     initialProjectFormData
   );
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     dispatch(getProjectsRequest());
@@ -55,6 +56,14 @@ const DashBoard = () => {
     setAddProjectFormData(initialProjectFormData);
   };
 
+  // handles change search query input field
+  const onChangeSearchQuery = (e) => setSearchQuery(e.target.value);
+
+  // filters projects on basis of searchQuery
+  const filteredProjects = searchQuery
+    ? projects.filter((project) => project.name?.includes(searchQuery))
+    : projects;
+
   return (
     <DashboardLayout>
       <AddProjectModal
@@ -66,10 +75,14 @@ const DashBoard = () => {
       />
       <DashboardSubHeader
         setShowAddProjectModal={toggleModal}
+        onChangeSearchQuery={onChangeSearchQuery}
         isAbleToAddProject={isAbleToAddProject}
         isLoggedIn={isLoggedIn}
       />
-      <ProjectsComponent data={projects} isLoading={isProjectsLoading} />
+      <ProjectsComponent
+        data={filteredProjects}
+        isLoading={isProjectsLoading}
+      />
     </DashboardLayout>
   );
 };
