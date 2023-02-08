@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
@@ -29,6 +29,7 @@ const DashBoard = () => {
   const [addProjectFormData, setAddProjectFormData] = useState(
     initialProjectFormData
   );
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     dispatch(getProjectsRequest());
@@ -55,6 +56,18 @@ const DashBoard = () => {
     setAddProjectFormData(initialProjectFormData);
   };
 
+  // handles change search query input field
+  const onChangeSearchQuery = (e) => setSearchQuery(e.target.value);
+
+  // filters projects on basis of searchQuery
+  const filteredProjects = useMemo(
+    () =>
+      searchQuery
+        ? projects.filter((project) => project.name?.includes(searchQuery))
+        : projects,
+    [searchQuery, projects]
+  );
+
   return (
     <DashboardLayout>
       <AddProjectModal
@@ -66,10 +79,17 @@ const DashBoard = () => {
       />
       <DashboardSubHeader
         setShowAddProjectModal={toggleModal}
+        onChangeSearchQuery={onChangeSearchQuery}
         isAbleToAddProject={isAbleToAddProject}
         isLoggedIn={isLoggedIn}
       />
-      <ProjectsComponent data={projects} isLoading={isProjectsLoading} />
+      <ProjectsComponent
+        data={filteredProjects}
+        searchQuery={searchQuery}
+        onAddProjectModalOpens={toggleModal}
+        isLoading={isProjectsLoading}
+        isAbleToAddProject={isAbleToAddProject}
+      />
     </DashboardLayout>
   );
 };
