@@ -1,5 +1,5 @@
-import React from "react";
-import { Navigate, useParams } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import Backdrop from "Components/Backdrop";
@@ -19,6 +19,8 @@ const mapState = ({ execute }) => ({
 });
 
 const ExecuteContainer = () => {
+  const navigate = useNavigate();
+
   const { projectName, type, id } = useParams();
   const {
     results: { result: resultsList, result_id: reportId },
@@ -33,11 +35,14 @@ const ExecuteContainer = () => {
 
   // if the data coming from testcase or testsuite container is invalid or not present
   // then it will redirect to the previous page
-  if (isInvalidData) {
-    const redirectTo = type === "testsuite" ? TESTSUITE_ROUTE : TESTCASE_ROUTE;
-    const navigateToParentPage = buildRoute(redirectTo, { projectName, id });
-    return <Navigate to={navigateToParentPage} />;
-  }
+  useEffect(() => {
+    if (isInvalidData) {
+      const redirectTo =
+        type === "testsuite" ? TESTSUITE_ROUTE : TESTCASE_ROUTE;
+      const navigateToParentPage = buildRoute(redirectTo, { projectName, id });
+      navigate(navigateToParentPage);
+    }
+  }, [isInvalidData]);
 
   return (
     <div className="w-100 position-relative">
