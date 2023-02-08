@@ -2,7 +2,9 @@ import React from "react";
 import { Navigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 
+import Backdrop from "Components/Backdrop";
 import ExecuteComponent from "Components/ProjectsComponent/ExecuteComponent";
+import Loader from "Components/Loader";
 import { ViewComponent } from "Components/CustomComponents";
 
 const mapState = ({ execute }) => ({
@@ -27,7 +29,12 @@ const ExecuteContainer = () => {
   return isReport ? (
     <Navigate to={`/project/${projectName}/testcases/${id}`} />
   ) : (
-    <div className="w-100">
+    <div className="w-100 position-relative">
+      {isLoading && (
+        <Backdrop>
+          <Loader />
+        </Backdrop>
+      )}
       <ViewComponent title={reportName} disabledBtns>
         {fields?.map((item, index) => (
           <ExecuteComponent
