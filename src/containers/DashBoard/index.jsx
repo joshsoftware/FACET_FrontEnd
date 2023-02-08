@@ -81,7 +81,10 @@ const DashBoard = () => {
       />
       <ProjectsComponent
         data={filteredProjects}
+        searchQuery={searchQuery}
+        onAddProjectModalOpens={toggleModal}
         isLoading={isProjectsLoading}
+        isAbleToAddProject={isAbleToAddProject}
       />
     </DashboardLayout>
   );
