@@ -16,9 +16,12 @@ import {
   editTestcasesRequest,
   getTestcasesRequest,
 } from "store/Testcases/actions";
+import { buildRoute } from "utils/helper";
 import { GetDiffOfArrayOfObjects } from "utils";
 import { getEnvironmentsRequest } from "store/Environments/actions";
 import { getTeststepsRequest } from "store/Teststeps/actions";
+
+import { EXECUTE_ROUTE } from "constants/routeConstants";
 
 const mapState = ({ testcases, environments, execute, teststeps }) => ({
   testcases: testcases.testcases,
@@ -128,7 +131,12 @@ const TestcaseContainer = (props) => {
         level: "testcase",
       })
     );
-    navigate(`/project/${projectName}/execute/${testcase}`);
+    const executionRouteUrl = buildRoute(EXECUTE_ROUTE, {
+      projectName,
+      type: "testcase",
+      id: testcase,
+    });
+    navigate(executionRouteUrl);
   };
 
   const onRemoveSelectedTeststep = (selectedIndex) => {

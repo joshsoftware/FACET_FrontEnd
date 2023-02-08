@@ -70,7 +70,7 @@ export const SETTING_ROUTE = `${projectRoutePrefix}/settings`;
 // members route constants
 export const MEMBER_ROUTE = `${projectRoutePrefix}/members`;
 // execute route constants
-export const EXECUTE_ROUTE = `${projectRoutePrefix}/execute/:id`;
+export const EXECUTE_ROUTE = `${projectRoutePrefix}/execute/:type/:id`;
 
 // Facet Admin routes constants
 export const ADMIN_ORGANIZATIONS_ROUTE = "/admin/organizations";

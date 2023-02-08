@@ -4,6 +4,10 @@ import { BoxArrowUpRight } from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
+import { buildRoute } from "utils/helper";
+
+import { REPORT_ROUTE } from "constants/routeConstants";
+
 const ExecuteComponent = ({ isExecute, results, data, project, reportId }) => {
   const { name: itemName } = data;
   const resultInstance =
@@ -29,7 +33,7 @@ const ExecuteComponent = ({ isExecute, results, data, project, reportId }) => {
   };
 
   const redirectToReportUrl = isExecute
-    ? `/project/${project}/reports/${reportId}`
+    ? buildRoute(REPORT_ROUTE, { projectName: project, reportId })
     : "";
 
   return (
@@ -41,10 +45,14 @@ const ExecuteComponent = ({ isExecute, results, data, project, reportId }) => {
         <span>{itemName}</span>
         {isExecute && <BoxArrowUpRight className="mx-2" />}
       </Link>
-      <Badge bg="success" className="mx-1">
-        {numOfPassedFields} Pass
-      </Badge>
-      <Badge bg="danger">{numOfFailedFields} Fail</Badge>
+      {isExecute && (
+        <>
+          <Badge bg="success" className="mx-1">
+            {numOfPassedFields} Pass
+          </Badge>
+          <Badge bg="danger">{numOfFailedFields} Fail</Badge>
+        </>
+      )}
     </Card>
   );
 };

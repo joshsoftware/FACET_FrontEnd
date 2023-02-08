@@ -13,11 +13,13 @@ import {
   editTestsuiteRequest,
   getTestsuitesRequest,
 } from "store/Testsuites/actions";
+import { buildRoute } from "utils/helper";
 import { getEnvironmentsRequest } from "store/Environments/actions";
 import { getTestcasesRequest } from "store/Testcases/actions";
 import { toastMessage } from "utils/toastMessage";
 
 import { ALL_FIELDS_REQUIRED } from "constants/userMessagesConstants";
+import { EXECUTE_ROUTE } from "constants/routeConstants";
 import { INITIAL_TESTSUITE_FORM_DATA } from "constants/appConstants";
 
 const mapState = ({ testsuites, testcases, environments }) => ({
@@ -137,7 +139,12 @@ const TestsuiteContainer = ({ cat }) => {
         level: "testsuite",
       })
     );
-    navigate(`/project/${projectName}/execute/${testsuite}`);
+    const executionRouteUrl = buildRoute(EXECUTE_ROUTE, {
+      projectName,
+      type: "testsuite",
+      id: testsuite,
+    });
+    navigate(executionRouteUrl);
   };
 
   const showViewComponent =
