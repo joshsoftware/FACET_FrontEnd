@@ -9,26 +9,24 @@ const TableComponent = ({
   striped,
   bordered,
   ...props
-}) => {
-  return (
-    <Table
-      className="text-break"
-      striped={striped}
-      bordered={bordered}
-      size={size}
-      {...props}
-    >
-      <thead>
-        <tr>
-          {headings?.map((th, index) => {
-            return <th key={index}>{th}</th>;
-          })}
-        </tr>
-      </thead>
-      <tbody>{children}</tbody>
-    </Table>
-  );
-};
+}) => (
+  <Table
+    className="text-break"
+    striped={striped}
+    bordered={bordered}
+    size={size}
+    {...props}
+  >
+    <thead>
+      <tr>
+        {headings?.map((tableHeading, index) => (
+          <th key={index}>{tableHeading}</th>
+        ))}
+      </tr>
+    </thead>
+    <tbody>{children}</tbody>
+  </Table>
+);
 
 TableComponent.propTypes = {
   children: PropTypes.oneOfType([
