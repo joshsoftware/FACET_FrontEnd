@@ -20,7 +20,7 @@ import { ORG_ROLES } from "constants/roleConstants";
 
 import logo from "assets/images/logo.png";
 
-const mapState = ({ user, orgMembers }) => ({
+const mapState = ({ user, orgMembers, orgs }) => ({
   isLoggedIn: user.isLoggedIn,
   currentUser: user.currentUser,
   isOrgOwner: user.isOrgOwner,
@@ -30,6 +30,7 @@ const mapState = ({ user, orgMembers }) => ({
   })),
   isUsersLoading: user.isLoading,
   isPersonalAccount: user.isPersonalAccount,
+  orgName: orgs.organization?.name,
 });
 
 const Header = () => {
@@ -42,6 +43,7 @@ const Header = () => {
     usersOptions,
     isUsersLoading,
     isPersonalAccount,
+    orgName,
   } = useSelector(mapState);
 
   const [showAddAdminModal, setShowAddAdminModal] = useState(false);
@@ -99,6 +101,11 @@ const Header = () => {
           <Link to={DASHBOARD_ROUTE}>
             <Image src={logo} height={36} title="Facet" alt="Facet" />
           </Link>
+          {!isPersonalAccount && (
+            <span className="ps-3" style={{ maxWidth: "100px" }}>
+              {orgName}
+            </span>
+          )}
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="facet-navbar-nav" />
         <Navbar.Collapse id="facet-navbar-nav">

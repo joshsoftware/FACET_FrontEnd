@@ -34,7 +34,7 @@ const ProjectsComponent = ({
     "You are not assigned to any project"
   );
 
-  const isProjectsAvailable = data.length && !isLoading;
+  const isProjectsAvailable = !!data.length && !isLoading;
 
   const projectContainerClasses = classNames("py-2", {
     "w-100": !isProjectsAvailable,
@@ -43,7 +43,7 @@ const ProjectsComponent = ({
 
   return (
     <>
-      <h3 className="pt-3">Projects</h3>
+      {isProjectsAvailable && <h3 className="pt-3">Projects</h3>}
       <div className={projectContainerClasses}>
         {isLoading ? (
           <>
