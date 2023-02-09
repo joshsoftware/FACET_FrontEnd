@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Card, Col, Container, Form, FormLabel } from "react-bootstrap";
+import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import Backdrop from "Components/Backdrop";
@@ -9,6 +10,8 @@ import { SaveButton } from "Components/forms/Buttons";
 
 import { inviteUsersInOrganizationRequest } from "store/Organizations/actions";
 
+import { DASHBOARD_ROUTE } from "constants/routeConstants";
+
 const mapState = ({ orgs }) => ({
   organization: orgs.organization?.name,
   isLoading: orgs.isLoading,
@@ -16,6 +19,7 @@ const mapState = ({ orgs }) => ({
 
 const InviteUsers = () => {
   const dispatch = useDispatch();
+  const { state } = useLocation();
 
   const { organization, isLoading } = useSelector(mapState);
 
@@ -65,6 +69,11 @@ const InviteUsers = () => {
                 className="w-100"
               />
             </Form>
+            {state?.isFirstTimeVisit && (
+              <div className="pt-3 text-center">
+                <Link to={DASHBOARD_ROUTE}>Skip</Link>
+              </div>
+            )}
           </Card.Body>
         </Card>
       </Col>
