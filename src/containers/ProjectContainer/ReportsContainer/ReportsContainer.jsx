@@ -11,7 +11,7 @@ import { ViewComponent } from "Components/CustomComponents";
 import { getReportsRequest } from "store/Reports/actions";
 
 const tableHeadings = [
-  "#",
+  "Report Id",
   "Name",
   "Type",
   "Status",
