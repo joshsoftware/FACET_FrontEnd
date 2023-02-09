@@ -1,4 +1,5 @@
 import React from "react";
+import classNames from "classnames";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 
@@ -33,47 +34,51 @@ const ProjectsComponent = ({
     "You are not assigned to any project"
   );
 
+  const isProjectsAvailable = data.length && !isLoading;
+
+  const projectContainerClasses = classNames("py-2", {
+    "w-100": !isProjectsAvailable,
+    "project-container": isProjectsAvailable,
+  });
+
   return (
-    <div
-      className={`${
-        data.length === 0 && !isLoading ? "w-100" : "project-container"
-      } py-4`}
-    >
-      {isLoading ? (
-        <>
-          <ProjectBoxSkeleton />
-          <ProjectBoxSkeleton />
-          <ProjectBoxSkeleton />
-          <ProjectBoxSkeleton />
-        </>
-      ) : data.length === 0 ? (
-        <div className="d-flex justify-content-center align-items-center">
-          <div className="text-center">
-            <img src={NotFound} className="not-found-icon" />
-            <h4>No Projects Found!</h4>
-            <p className="mb-1">{noProjectFoundSubtitle}</p>
-            {isAbleToAddProject && (
-              <AddButton
-                size="sm"
-                className="mt-0"
-                label="Add New Project"
-                handleClick={onAddProjectModalOpens}
-              />
-            )}
+    <>
+      <h3 className="pt-3">Projects</h3>
+      <div className={projectContainerClasses}>
+        {isLoading ? (
+          <>
+            <ProjectBoxSkeleton />
+            <ProjectBoxSkeleton />
+            <ProjectBoxSkeleton />
+            <ProjectBoxSkeleton />
+          </>
+        ) : data.length === 0 ? (
+          <div className="d-flex justify-content-center align-items-center">
+            <div className="text-center">
+              <img src={NotFound} className="not-found-icon" />
+              <h4>No Projects Found!</h4>
+              <p className="mb-1">{noProjectFoundSubtitle}</p>
+              {isAbleToAddProject && (
+                <AddButton
+                  size="sm"
+                  className="mt-0"
+                  label="Add New Project"
+                  handleClick={onAddProjectModalOpens}
+                />
+              )}
+            </div>
           </div>
-        </div>
-      ) : (
-        data.map((item, index) => {
-          return (
+        ) : (
+          data.map((item, index) => (
             <ProjectBox
               key={index}
               data={item}
               onClick={() => onNavigate(`/project/${item.name}`)}
             />
-          );
-        })
-      )}
-    </div>
+          ))
+        )}
+      </div>
+    </>
   );
 };
 
