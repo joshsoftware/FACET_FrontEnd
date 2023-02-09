@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container, Dropdown, Nav, Navbar } from "react-bootstrap";
+import { Container, Dropdown, Image, Nav, Navbar } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -97,7 +97,7 @@ const Header = () => {
       <Container fluid>
         <Navbar.Brand>
           <Link to={DASHBOARD_ROUTE}>
-            <img src={logo} width={100} alt="Facet" />
+            <Image src={logo} height={36} title="Facet" alt="Facet" />
           </Link>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="facet-navbar-nav" />
