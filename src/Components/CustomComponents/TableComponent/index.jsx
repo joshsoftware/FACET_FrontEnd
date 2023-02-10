@@ -1,6 +1,6 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { Table } from "react-bootstrap";
+import PropTypes from "prop-types";
 
 const TableComponent = ({
   children,
@@ -9,27 +9,34 @@ const TableComponent = ({
   striped,
   bordered,
   ...props
-}) => {
-  return (
-    <Table striped={striped} bordered={bordered} size={size} {...props}>
-      <thead>
-        <tr>
-          {headings?.map((th, index) => {
-            return <th key={index}>{th}</th>;
-          })}
-        </tr>
-      </thead>
-      <tbody>{children}</tbody>
-    </Table>
-  );
-};
-
-export default TableComponent;
+}) => (
+  <Table
+    className="text-break"
+    striped={striped}
+    bordered={bordered}
+    size={size}
+    {...props}
+  >
+    <thead>
+      <tr>
+        {headings?.map((tableHeading, index) => (
+          <th key={index}>{tableHeading}</th>
+        ))}
+      </tr>
+    </thead>
+    <tbody>{children}</tbody>
+  </Table>
+);
 
 TableComponent.propTypes = {
-  children: PropTypes.arrayOf(PropTypes.element),
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
   headings: PropTypes.arrayOf(PropTypes.string),
   size: PropTypes.string,
   striped: PropTypes.bool,
   bordered: PropTypes.bool,
 };
+
+export default TableComponent;
