@@ -26,7 +26,7 @@ const AddAdminModal = ({
         isLoading={isUsersLoading}
         isDisabled={isUsersLoading}
       />
-      <SaveButton handleClick={onSubmit} />
+      <SaveButton handleClick={onSubmit} disabled={!data?.length} />
     </CustomModal.Body>
   </CustomModal>
 );

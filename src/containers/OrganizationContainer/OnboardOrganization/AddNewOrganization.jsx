@@ -65,7 +65,12 @@ const AddNewOrganization = () => {
   };
 
   if (isOrgAssigned && isSuccess) {
-    return <Navigate to={INVITE_ORGANIZATION_ROUTE} />;
+    return (
+      <Navigate
+        to={INVITE_ORGANIZATION_ROUTE}
+        state={{ isFirstTimeVisit: true }}
+      />
+    );
   }
 
   if (isOrgAssigned) {
