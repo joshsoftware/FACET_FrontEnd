@@ -6,7 +6,7 @@ import FormInput from "Components/forms/Inputs/FormInput";
 import FormSelect from "Components/forms/Inputs/FormSelect";
 import { ViewComponent } from "Components/CustomComponents";
 
-import ConvertToSlug from "utils/ConvertToSlug";
+import convertToSlug from "utils/convertToSlug";
 import { formTitle } from "utils/helper";
 
 const AddNewTestsuite = ({
@@ -27,7 +27,7 @@ const AddNewTestsuite = ({
   const isSaveButtonDisabled = !name || testcases?.length === 0;
 
   const nameBottomInfoText =
-    name && `Your testsuite will be created as ${ConvertToSlug(name)}`;
+    name && `Your testsuite will be created as ${convertToSlug(name)}`;
 
   return (
     <Form className="w-100">

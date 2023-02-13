@@ -10,7 +10,7 @@ import FormInput from "Components/forms/Inputs/FormInput";
 import KeyValuePairsFormField from "Components/forms/KeyValuePairsFormField";
 import { ViewComponent } from "Components/CustomComponents";
 
-import { ConvertToSlug, IsValidJson } from "utils";
+import { convertToSlug, IsValidJson } from "utils";
 
 const AddNewPayload = ({ cat, data, isLoading, onchange, handleSubmit }) => {
   const { name, parameters, payload, expected_outcome: expectedOutcome } = data;
@@ -53,7 +53,7 @@ const AddNewPayload = ({ cat, data, isLoading, onchange, handleSubmit }) => {
     !name.length || !IsValidJson(payload) || !expectedOutcome.length;
 
   const nameInputBottomTextMsg =
-    !!name.length && `Your payload will be created as ${ConvertToSlug(name)}`;
+    !!name.length && `Your payload will be created as ${convertToSlug(name)}`;
 
   const isExpectedOutcomeForm =
     showAddExpOutForm || expectedOutcome?.length === 0;

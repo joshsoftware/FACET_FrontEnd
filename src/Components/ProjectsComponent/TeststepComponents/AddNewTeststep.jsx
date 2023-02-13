@@ -6,7 +6,7 @@ import FormInput from "Components/forms/Inputs/FormInput";
 import FormSelect from "Components/forms/Inputs/FormSelect";
 import { ViewComponent } from "Components/CustomComponents";
 
-import { ConvertToSlug } from "utils";
+import { convertToSlug } from "utils";
 
 const AddNewTeststep = ({
   cat,
@@ -30,7 +30,7 @@ const AddNewTeststep = ({
     !name || !method || !endpoint || !header || !payload;
 
   const nameInputBottomTextMsg =
-    !!name.length && `Your teststep will be created as ${ConvertToSlug(name)}`;
+    !!name.length && `Your teststep will be created as ${convertToSlug(name)}`;
 
   return (
     <Form className="w-100" onSubmit={onSubmit}>

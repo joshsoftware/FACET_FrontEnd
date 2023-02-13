@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { FormInput } from "Components/forms/Inputs";
 import { ViewComponent } from "Components/CustomComponents";
 
-import { ConvertToSlug } from "utils";
+import { convertToSlug } from "utils";
 
 const AddNewEnvironment = ({
   cat,
@@ -21,7 +21,7 @@ const AddNewEnvironment = ({
 
   const nameInputBottomTextMsg =
     !!name.length &&
-    `Your environment will be created as ${ConvertToSlug(name)}`;
+    `Your environment will be created as ${convertToSlug(name)}`;
 
   return (
     !isLoading &&

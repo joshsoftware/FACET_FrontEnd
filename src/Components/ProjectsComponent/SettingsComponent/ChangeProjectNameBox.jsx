@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import FormInput from "Components/forms/Inputs/FormInput";
 import { SaveButton } from "Components/forms/Buttons";
 
-import { ConvertToSlug } from "utils";
+import { convertToSlug } from "utils";
 
 const ChangeProjectNameBox = ({
   project,
@@ -35,7 +35,7 @@ const ChangeProjectNameBox = ({
             name="newProjName"
             value={newProjName}
             onChange={onChange}
-            text={`Project name will updated as ${ConvertToSlug(newProjName)}`}
+            text={`Project name will updated as ${convertToSlug(newProjName)}`}
             disabled={!isProjectAdmin}
           />
         </Card.Body>

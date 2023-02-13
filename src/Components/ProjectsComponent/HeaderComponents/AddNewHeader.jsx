@@ -6,7 +6,7 @@ import { FormInput } from "Components/forms/Inputs";
 import KeyValuePairsFormField from "Components/forms/KeyValuePairsFormField";
 import { ViewComponent } from "Components/CustomComponents";
 
-import { ConvertToSlug } from "utils";
+import { convertToSlug } from "utils";
 
 const AddNewHeader = ({
   cat,
@@ -22,7 +22,7 @@ const AddNewHeader = ({
   const isSaveButtonDisabled = !name.length || !Object.entries(header).length;
 
   const nameInputBottomTextMsg =
-    !!name.length && `Your header will be created as ${ConvertToSlug(name)}`;
+    !!name.length && `Your header will be created as ${convertToSlug(name)}`;
 
   return (
     !isLoading &&

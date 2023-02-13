@@ -9,7 +9,7 @@ import FormSelect from "Components/forms/Inputs/FormSelect";
 import KeyValuePairsFormField from "Components/forms/KeyValuePairsFormField";
 import { ViewComponent } from "Components/CustomComponents";
 
-import { ConvertToSlug } from "utils";
+import { convertToSlug } from "utils";
 
 const AddNewTestdata = ({ data, onChange, onSubmit, onClose }) => {
   const {
@@ -74,7 +74,7 @@ const AddNewTestdata = ({ data, onChange, onSubmit, onClose }) => {
 
   // bottom info text for name field
   const nameBottomInfoText =
-    name && `Your testdata will be created as ${ConvertToSlug(name)}`;
+    name && `Your testdata will be created as ${convertToSlug(name)}`;
 
   // check whether if expected outcome table show or not
   const isShowExpOutcomeTable = isEditForm || selectedExpOutcome;

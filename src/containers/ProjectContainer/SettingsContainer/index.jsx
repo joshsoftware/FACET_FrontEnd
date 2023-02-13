@@ -14,7 +14,7 @@ import {
   getProjectRequest,
   updateProjectNameRequest,
 } from "store/Projects/actions";
-import { ConvertToSlug } from "utils";
+import { convertToSlug } from "utils";
 
 const mapState = ({ user, projects }) => ({
   user: user.currentUser,
@@ -63,7 +63,7 @@ const SettingsContainer = () => {
     dispatch(
       updateProjectNameRequest({
         ...changeNameFormData,
-        newProjName: ConvertToSlug(changeNameFormData.newProjName),
+        newProjName: convertToSlug(changeNameFormData.newProjName),
       })
     );
   };
@@ -76,7 +76,7 @@ const SettingsContainer = () => {
   useEffect(() => {
     if (isSuccess && changeNameFormData.newProjName.length !== 0) {
       navigate(
-        `/project/${ConvertToSlug(changeNameFormData.newProjName)}/settings`
+        `/project/${convertToSlug(changeNameFormData.newProjName)}/settings`
       );
     }
   }, [isSuccess]);
