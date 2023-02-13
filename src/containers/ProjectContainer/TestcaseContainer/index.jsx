@@ -17,7 +17,7 @@ import {
   getTestcasesRequest,
 } from "store/Testcases/actions";
 import { buildRoute } from "utils/helper";
-import { GetDiffOfArrayOfObjects } from "utils";
+import { getDiffOfArrayOfObjects } from "utils";
 import { getEnvironmentsRequest } from "store/Environments/actions";
 import { getTeststepsRequest } from "store/Teststeps/actions";
 
@@ -91,7 +91,7 @@ const TestcaseContainer = (props) => {
 
   useEffect(() => {
     if (cat) {
-      let diff = GetDiffOfArrayOfObjects(
+      let diff = getDiffOfArrayOfObjects(
         options.initialOptions,
         selectedTeststeps
       );
