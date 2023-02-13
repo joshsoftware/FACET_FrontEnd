@@ -1,6 +1,6 @@
 import axiosInstance from "../axios";
 
-export const Api = async (url, method, data, params) => {
+export const apiClient = async (url, method, data, params) => {
   try {
     const res = await axiosInstance({
       url: url,
