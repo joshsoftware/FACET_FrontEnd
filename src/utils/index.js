@@ -1,6 +1,6 @@
 import convertToSlug from "./convertToSlug";
 import getDiffOfArrayOfObjects from "./getDiffOfArrayOfObjects";
-import IsValidJson from "./IsValidJson";
+import isValidJson from "./isValidJson";
 import hasWhiteSpace from "./hasWhiteSpace";
 
-export { convertToSlug, getDiffOfArrayOfObjects, IsValidJson, hasWhiteSpace };
+export { convertToSlug, getDiffOfArrayOfObjects, isValidJson, hasWhiteSpace };
