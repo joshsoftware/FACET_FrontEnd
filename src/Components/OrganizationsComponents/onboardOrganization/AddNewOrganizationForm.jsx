@@ -5,7 +5,8 @@ import PropTypes from "prop-types";
 import FormInput from "Components/forms/Inputs/FormInput";
 import { SaveButton } from "Components/forms/Buttons";
 
-import ConvertToSlug from "utils/ConvertToSlug";
+import convertToSlug from "utils/convertToSlug";
+
 import { DESCRIPTION, EMAIL, ORG_NAME } from "constants/userMessagesConstants";
 
 const AddNewOrganizationForm = ({ data, onChange, onSubmit }) => {
@@ -16,7 +17,7 @@ const AddNewOrganizationForm = ({ data, onChange, onSubmit }) => {
     () =>
       orgName ? (
         <>
-          Your organization will be created as <b>{ConvertToSlug(orgName)}</b>
+          Your organization will be created as <b>{convertToSlug(orgName)}</b>
         </>
       ) : (
         "Organization name must be unique."

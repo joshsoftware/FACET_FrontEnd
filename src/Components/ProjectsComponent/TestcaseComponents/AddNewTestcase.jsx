@@ -7,7 +7,7 @@ import AddTeststepsModal from "./components/AddTeststepsModal";
 import { ViewComponent } from "Components/CustomComponents";
 import { FormInput } from "Components/forms/Inputs";
 
-import { ConvertToSlug } from "utils";
+import { convertToSlug } from "utils";
 
 import "./style.css";
 
@@ -95,7 +95,7 @@ const AddNewTestcase = (props) => {
             onChange={handleChange}
             text={
               data.name.length !== 0
-                ? `Your testcase will created as ${ConvertToSlug(data.name)}`
+                ? `Your testcase will created as ${convertToSlug(data.name)}`
                 : ""
             }
             isRequired

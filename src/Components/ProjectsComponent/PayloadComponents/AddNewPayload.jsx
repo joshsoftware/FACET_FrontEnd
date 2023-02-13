@@ -10,7 +10,7 @@ import FormInput from "Components/forms/Inputs/FormInput";
 import KeyValuePairsFormField from "Components/forms/KeyValuePairsFormField";
 import { ViewComponent } from "Components/CustomComponents";
 
-import { ConvertToSlug, IsValidJson } from "utils";
+import { convertToSlug, isValidJson } from "utils";
 
 const AddNewPayload = ({ cat, data, isLoading, onchange, handleSubmit }) => {
   const { name, parameters, payload, expected_outcome: expectedOutcome } = data;
@@ -50,10 +50,10 @@ const AddNewPayload = ({ cat, data, isLoading, onchange, handleSubmit }) => {
 
   // check whether all required form fields are filled or not, if not then disabled the submit button
   const isSaveButtonDisabled =
-    !name.length || !IsValidJson(payload) || !expectedOutcome.length;
+    !name.length || !isValidJson(payload) || !expectedOutcome.length;
 
   const nameInputBottomTextMsg =
-    !!name.length && `Your payload will be created as ${ConvertToSlug(name)}`;
+    !!name.length && `Your payload will be created as ${convertToSlug(name)}`;
 
   const isExpectedOutcomeForm =
     showAddExpOutForm || expectedOutcome?.length === 0;
