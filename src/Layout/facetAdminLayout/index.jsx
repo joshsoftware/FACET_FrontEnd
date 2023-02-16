@@ -48,8 +48,13 @@ const AdminLayout = ({ children }) => {
       <Nav className="col-md-12 d-none d-md-block sidenav bg-dark">
         <div className="h-100 d-flex flex-column justify-content-between">
           <div>
-            <div className="w-100 border-secondary border-bottom px-3 mb-3">
-              <Image src={FACET_LOGO} className="w-100 py-2 px-4" alt="FACET" />
+            <div className="w-100 border-secondary border-bottom px-3 mb-3 d-flex justify-content-center">
+              <Image
+                src={FACET_LOGO}
+                height={80}
+                className="py-2 px-4"
+                alt="FACET"
+              />
             </div>
             <div className="px-3">
               {navItems.map(
