@@ -26,7 +26,7 @@ const TeststepReportDetails = ({ data, onOpenOutcomeModal }) => {
   );
 
   return (
-    <ViewComponent disabledBtns title={name} rightChildrens={rightChildrens}>
+    <ViewComponent hideBtns title={name} rightChildrens={rightChildrens}>
       <Row>
         <Col md={6}>
           <small>
