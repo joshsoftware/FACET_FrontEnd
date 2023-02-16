@@ -37,6 +37,9 @@ const AddExpOutcomeForm = ({ onSave, onClose }) => {
     onClose();
   };
 
+  const handleChangeExpectedOutcome = (res) =>
+    handleChange("expectedOutcome", res);
+
   return (
     <div className="bg-light border rounded p-3">
       <Form onSubmit={handleSubmit}>
@@ -54,7 +57,7 @@ const AddExpOutcomeForm = ({ onSave, onClose }) => {
           element={
             <ExpectedOutcomeTable
               data={formData?.expectedOutcome}
-              onchange={(res) => handleChange("expectedOutcome", res)}
+              onchange={handleChangeExpectedOutcome}
             />
           }
         />
