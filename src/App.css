@@ -1,9 +1,10 @@
 .App {
-  font-family: "Poppins", sans-serif;
+  font-family: "Roboto", sans-serif;
   height: 100vh;
 }
 * {
   box-sizing: border-box;
+  font-size: 15px;
 }
 
 .report-results {
