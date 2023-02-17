@@ -17,7 +17,7 @@ const ScheduleViewComponent = (props) => {
     !isLoading && (
       <ViewComponent
         title="Schedule Testcases"
-        disabledBtns
+        hideBtns
         rightChildrens={
           <AddButton label="Schedule Testcase" handleClick={AddNew} />
         }
@@ -70,10 +70,10 @@ const ScheduleViewComponent = (props) => {
   );
 };
 
-export default ScheduleViewComponent;
-
 ScheduleViewComponent.propTypes = {
   data: PropTypes.array,
   isLoading: PropTypes.bool,
   onNavigate: PropTypes.func,
 };
+
+export default ScheduleViewComponent;
