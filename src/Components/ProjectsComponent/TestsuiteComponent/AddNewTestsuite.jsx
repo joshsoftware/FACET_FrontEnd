@@ -35,7 +35,7 @@ const AddNewTestsuite = ({
         title={formTitle(cat)}
         type="save"
         onSave={onSubmit}
-        onSaveDisabled={isSaveButtonDisabled}
+        isSaveDisabled={isSaveButtonDisabled}
       >
         <FormInput
           label="Name"
