@@ -31,7 +31,7 @@ const AddNewEnvironment = ({
           title="Add New"
           type="save"
           onSave={handleSubmit}
-          onSaveDisabled={isSaveButtonDisabled}
+          isSaveDisabled={isSaveButtonDisabled}
         >
           <FormInput
             label="Name"

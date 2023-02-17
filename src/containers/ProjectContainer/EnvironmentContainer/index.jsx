@@ -18,6 +18,7 @@ import { buildRoute } from "utils/helper";
 
 import {
   ADD_ENVIRONMENT_ROUTE,
+  EDIT_ENVIRONMENT_ROUTE,
   ENVIRONMENTS_ROUTE,
 } from "constants/routeConstants";
 
@@ -81,6 +82,14 @@ const EnvironmentContainer = ({ cat }) => {
     }));
   }, [selectedItem]);
 
+  const redirectToEditEnvironmentForm = useCallback(() => {
+    const editFormRoute = buildRoute(EDIT_ENVIRONMENT_ROUTE, {
+      projectName,
+      id,
+    });
+    navigate(editFormRoute);
+  }, [projectName, id]);
+
   const navigateToAddEnvironment = useCallback(() => {
     const addEnvironmentRoute = buildRoute(ADD_ENVIRONMENT_ROUTE, {
       projectName,
@@ -89,6 +98,12 @@ const EnvironmentContainer = ({ cat }) => {
   }, [projectName]);
 
   const environmentBaseURL = buildRoute(ENVIRONMENTS_ROUTE, { projectName });
+
+  // check whether environment selected or not, if selected then shows the viewComponent
+  const isShowViewComponent =
+    typeof selectedItem === "object" &&
+    Object.entries(selectedItem).length !== 0 &&
+    !isLoading;
 
   return (
     <>
@@ -108,11 +123,12 @@ const EnvironmentContainer = ({ cat }) => {
           handleSubmit={handleSubmit}
         />
       ) : (
-        <EnvironmentViewComponent
-          isLoading={isLoading}
-          data={selectedItem}
-          projectName={projectName}
-        />
+        isShowViewComponent && (
+          <EnvironmentViewComponent
+            data={selectedItem}
+            onEditButtonClick={redirectToEditEnvironmentForm}
+          />
+        )
       )}
     </>
   );
