@@ -23,6 +23,7 @@ import { getTeststepsRequest } from "store/Teststeps/actions";
 
 import {
   ADD_TESTCASE_ROUTE,
+  EDIT_TESTCASE_ROUTE,
   EXECUTE_ROUTE,
   TESTCASES_ROUTE,
 } from "constants/routeConstants";
@@ -45,13 +46,12 @@ const INITIAL_TESTCASE_FORM_DATA = {
   arrayOfTeststeps: [],
 };
 
-const TestcaseContainer = (props) => {
+const TestcaseContainer = ({ cat }) => {
   // TO-Do:
   // needs to refactor this container and it's component with add comments wherever necessary
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { cat } = props;
   const { projectName, id } = useParams();
   const {
     testcases,
@@ -225,9 +225,17 @@ const TestcaseContainer = (props) => {
     navigate(addTestcaseRoute);
   }, [projectName]);
 
+  const navigateToEditTestcase = useCallback(() => {
+    const editTestcaseRoute = buildRoute(EDIT_TESTCASE_ROUTE, {
+      projectName,
+      id,
+    });
+    navigate(editTestcaseRoute);
+  }, [projectName, id]);
+
   const testcaseBaseURL = buildRoute(TESTCASES_ROUTE, { projectName });
 
-  const showViewComponent =
+  const isShowViewComponent =
     typeof selectedItem === "object" &&
     Object.entries(selectedItem).length !== 0 &&
     !isLoading;
@@ -262,7 +270,7 @@ const TestcaseContainer = (props) => {
             onDeleteSelectedTeststep={onDeleteSelectedTeststep}
           />
         ) : (
-          showViewComponent && (
+          isShowViewComponent && (
             <TestcaseViewComponent
               isLoading={isLoading}
               data={selectedItem}
@@ -270,6 +278,7 @@ const TestcaseContainer = (props) => {
               environments={environments}
               isEnvironmentsLoading={isEnvironmentsLoading}
               handleExecute={handleExecute}
+              onEditButtonClick={navigateToEditTestcase}
             />
           )
         )}
