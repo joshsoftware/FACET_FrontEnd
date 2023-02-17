@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -19,7 +19,11 @@ import { getTestcasesRequest } from "store/Testcases/actions";
 import { toastMessage } from "utils/toastMessage";
 
 import { ALL_FIELDS_REQUIRED } from "constants/userMessagesConstants";
-import { EXECUTE_ROUTE } from "constants/routeConstants";
+import {
+  ADD_TESTSUITE_ROUTE,
+  EXECUTE_ROUTE,
+  TESTSUITES_ROUTE,
+} from "constants/routeConstants";
 import { INITIAL_TESTSUITE_FORM_DATA } from "constants/appConstants";
 
 const mapState = ({ testsuites, testcases, environments }) => ({
@@ -147,6 +151,13 @@ const TestsuiteContainer = ({ cat }) => {
     navigate(executionRouteUrl);
   };
 
+  const navigateToAddTestsuite = useCallback(() => {
+    const addTestsuiteRoute = buildRoute(ADD_TESTSUITE_ROUTE, { projectName });
+    navigate(addTestsuiteRoute);
+  }, [projectName]);
+
+  const testsuiteBaseURL = buildRoute(TESTSUITES_ROUTE, { projectName });
+
   const showViewComponent =
     typeof selectedItem === "object" &&
     Object.entries(selectedItem).length !== 0 &&
@@ -158,8 +169,8 @@ const TestsuiteContainer = ({ cat }) => {
         title="Testsuites"
         data={testsuites}
         isLoading={isLoading}
-        onAddBtnClick={() => navigate(`/project/${projectName}/testsuites/new`)}
-        onSelectItemUrl={`/project/${projectName}/testsuites`}
+        onAddBtnClick={navigateToAddTestsuite}
+        componentBaseUrl={testsuiteBaseURL}
       />
       {cat ? (
         <AddNewTestsuite

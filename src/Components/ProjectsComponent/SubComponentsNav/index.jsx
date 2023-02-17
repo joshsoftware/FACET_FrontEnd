@@ -13,7 +13,7 @@ const SubComponentsNav = ({
   data,
   isLoading,
   onAddBtnClick,
-  onSelectItemUrl,
+  componentBaseUrl,
 }) => {
   const { id } = useParams();
 
@@ -41,7 +41,7 @@ const SubComponentsNav = ({
                   key={index}
                 >
                   <Link
-                    to={`${onSelectItemUrl}/${item.id}`}
+                    to={`${componentBaseUrl}/${item.id}`}
                     className="nav-link sidebar-link"
                   >
                     {item.name}
@@ -63,7 +63,7 @@ SubComponentsNav.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
   isLoading: PropTypes.bool,
   onAddBtnClick: PropTypes.func.isRequired,
-  onSelectItemUrl: PropTypes.string.isRequired,
+  componentBaseUrl: PropTypes.string.isRequired,
 };
 
 export default SubComponentsNav;

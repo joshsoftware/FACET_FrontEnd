@@ -300,7 +300,7 @@ const TeststepContainer = ({ cat }) => {
         data={teststeps}
         isLoading={isLoading}
         onAddBtnClick={navigateToAddNewTeststep}
-        onSelectItemUrl={teststepsURL}
+        componentBaseUrl={teststepsURL}
       />
       {cat ? (
         <AddNewTeststep

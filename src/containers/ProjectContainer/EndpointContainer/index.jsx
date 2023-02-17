@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -16,7 +16,11 @@ import {
 } from "store/Endpoints/actions";
 import { buildRoute } from "utils/helper";
 
-import { EDIT_ENDPOINT_ROUTE } from "constants/routeConstants";
+import {
+  ADD_ENDPOINT_ROUTE,
+  EDIT_ENDPOINT_ROUTE,
+  ENDPOINTS_ROUTE,
+} from "constants/routeConstants";
 
 const mapState = ({ endpoints }) => ({
   endpoints: endpoints.endpoints,
@@ -84,6 +88,15 @@ const EndpointContainer = ({ cat }) => {
     navigate(editFormRoute);
   };
 
+  const navigateToAddEndpoint = useCallback(() => {
+    const addEndpointRoute = buildRoute(ADD_ENDPOINT_ROUTE, {
+      projectName,
+    });
+    navigate(addEndpointRoute);
+  }, [projectName]);
+
+  const endpointBaseURL = buildRoute(ENDPOINTS_ROUTE, { projectName });
+
   // check whether endpoint selected or not, if selected then shows the viewComponent
   const isShowViewComponent =
     typeof selectedItem === "object" &&
@@ -96,8 +109,8 @@ const EndpointContainer = ({ cat }) => {
         title="Endpoints"
         data={endpoints}
         isLoading={isLoading}
-        onAddBtnClick={() => navigate(`/project/${projectName}/endpoints/new`)}
-        onSelectItemUrl={`/project/${projectName}/endpoints`}
+        onAddBtnClick={navigateToAddEndpoint}
+        componentBaseUrl={endpointBaseURL}
       />
       {cat ? (
         <AddNewEndpoint

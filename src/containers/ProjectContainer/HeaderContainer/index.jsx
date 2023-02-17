@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -14,6 +14,9 @@ import {
   editHeadersRequest,
   getHeadersRequest,
 } from "store/Headers/actions";
+import { buildRoute } from "utils/helper";
+
+import { ADD_HEADER_ROUTE, HEADERS_ROUTE } from "constants/routeConstants";
 
 const mapState = ({ headers }) => ({
   headers: headers.headers,
@@ -25,11 +28,10 @@ const INITIAL_FORM_DATA = {
   header: {},
 };
 
-const HeaderContainer = (props) => {
+const HeaderContainer = ({ cat }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { cat } = props;
   const { projectName, id } = useParams();
   const { headers, isLoading } = useSelector(mapState);
 
@@ -87,14 +89,21 @@ const HeaderContainer = (props) => {
     }
   };
 
+  const navigateToAddHeader = useCallback(() => {
+    const addHeaderRoute = buildRoute(ADD_HEADER_ROUTE, { projectName });
+    navigate(addHeaderRoute);
+  }, [projectName]);
+
+  const headerBaseURL = buildRoute(HEADERS_ROUTE, { projectName });
+
   return (
     <>
       <SubComponentsNav
         title="Headers"
         data={headers}
         isLoading={isLoading}
-        onAddBtnClick={() => navigate(`/project/${projectName}/headers/new`)}
-        onSelectItemUrl={`/project/${projectName}/headers`}
+        onAddBtnClick={navigateToAddHeader}
+        componentBaseUrl={headerBaseURL}
       />
       {cat ? (
         <AddNewHeader
