@@ -38,7 +38,7 @@ const AddNewTeststep = ({
         title="Add New"
         type="save"
         onSave={onSubmit}
-        onSaveDisabled={isSaveButtonDisabled}
+        isSaveDisabled={isSaveButtonDisabled}
       >
         <FormInput
           label="Name"
