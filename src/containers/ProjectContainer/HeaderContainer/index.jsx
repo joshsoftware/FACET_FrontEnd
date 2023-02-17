@@ -16,7 +16,11 @@ import {
 } from "store/Headers/actions";
 import { buildRoute } from "utils/helper";
 
-import { ADD_HEADER_ROUTE, HEADERS_ROUTE } from "constants/routeConstants";
+import {
+  ADD_HEADER_ROUTE,
+  EDIT_HEADER_ROUTE,
+  HEADERS_ROUTE,
+} from "constants/routeConstants";
 
 const mapState = ({ headers }) => ({
   headers: headers.headers,
@@ -89,12 +93,23 @@ const HeaderContainer = ({ cat }) => {
     }
   };
 
+  const redirectToEditHeaderForm = useCallback(() => {
+    const editFormRoute = buildRoute(EDIT_HEADER_ROUTE, { projectName, id });
+    navigate(editFormRoute);
+  }, [projectName, id]);
+
   const navigateToAddHeader = useCallback(() => {
     const addHeaderRoute = buildRoute(ADD_HEADER_ROUTE, { projectName });
     navigate(addHeaderRoute);
   }, [projectName]);
 
   const headerBaseURL = buildRoute(HEADERS_ROUTE, { projectName });
+
+  // check whether header selected or not, if selected then shows the viewComponent
+  const isShowViewComponent =
+    typeof selectedItem === "object" &&
+    Object.entries(selectedItem).length !== 0 &&
+    !isLoading;
 
   return (
     <>
@@ -115,11 +130,12 @@ const HeaderContainer = ({ cat }) => {
           handleSubmit={handleSubmit}
         />
       ) : (
-        <HeaderViewComponent
-          isLoading={isLoading}
-          data={selectedItem}
-          projectName={projectName}
-        />
+        isShowViewComponent && (
+          <HeaderViewComponent
+            data={selectedItem}
+            onEditButtonClick={redirectToEditHeaderForm}
+          />
+        )
       )}
     </>
   );
