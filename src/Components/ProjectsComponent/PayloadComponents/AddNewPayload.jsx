@@ -66,7 +66,7 @@ const AddNewPayload = ({ cat, data, isLoading, onchange, handleSubmit }) => {
           title="Add New"
           type="save"
           onSave={handleSubmit}
-          onSaveDisabled={isSaveButtonDisabled}
+          isSaveDisabled={isSaveButtonDisabled}
         >
           <FormInput
             label="Name"

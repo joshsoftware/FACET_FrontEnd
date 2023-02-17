@@ -17,7 +17,11 @@ import {
 import { buildRoute } from "utils/helper";
 
 import { INITIAL_PAYLOAD_FORM_DATA } from "constants/appConstants";
-import { ADD_PAYLOAD_ROUTE, PAYLOADS_ROUTE } from "constants/routeConstants";
+import {
+  ADD_PAYLOAD_ROUTE,
+  EDIT_PAYLOAD_ROUTE,
+  PAYLOADS_ROUTE,
+} from "constants/routeConstants";
 
 const mapState = ({ payloads }) => ({
   payloads: payloads.payloads,
@@ -91,12 +95,23 @@ const PayloadContainer = ({ cat }) => {
     }));
   }, [selectedItem]);
 
+  const redirectToEditEndpointForm = useCallback(() => {
+    const editFormRoute = buildRoute(EDIT_PAYLOAD_ROUTE, { projectName, id });
+    navigate(editFormRoute);
+  }, [projectName, id]);
+
   const navigateToAddPayload = useCallback(() => {
     const addPayloadRoute = buildRoute(ADD_PAYLOAD_ROUTE, { projectName });
     navigate(addPayloadRoute);
   }, [projectName]);
 
   const payloadBaseURL = buildRoute(PAYLOADS_ROUTE, { projectName });
+
+  // check whether payload selected or not, if selected then shows the viewComponent
+  const isShowViewComponent =
+    typeof selectedItem === "object" &&
+    Object.entries(selectedItem).length !== 0 &&
+    !isLoading;
 
   return (
     <>
@@ -116,11 +131,12 @@ const PayloadContainer = ({ cat }) => {
           handleSubmit={handleSubmit}
         />
       ) : (
-        <PayloadViewComponent
-          isLoading={isLoading}
-          data={selectedItem}
-          projectName={projectName}
-        />
+        isShowViewComponent && (
+          <PayloadViewComponent
+            data={selectedItem}
+            onEditButtonClick={redirectToEditEndpointForm}
+          />
+        )
       )}
     </>
   );
