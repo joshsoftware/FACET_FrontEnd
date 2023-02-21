@@ -96,12 +96,12 @@ const SubNav = () => {
       </h3>
       <hr className="mx-2 mb-0" />
       <div className="sidebar-items-container overflow-auto">
-        {SubNavItems.map((item, index) => {
-          return <SubNavItem key={index} item={item} />;
-        })}
+        {SubNavItems.map((item, index) => (
+          <SubNavItem key={index} item={item} />
+        ))}
       </div>
     </Nav>
   );
 };
 
-export default SubNav;
+export default React.memo(SubNav);
