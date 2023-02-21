@@ -2,11 +2,14 @@ import React from "react";
 import { Accordion, Col, Row } from "react-bootstrap";
 import PropTypes from "prop-types";
 
+import ExpOutcomeAccordionItem from "./ExpOutcomeAccordionItem";
 import JSONView from "Components/JSONView";
 import { TableComponent } from "Components/CustomComponents";
 import { ViewComponent } from "Components/CustomComponents";
 
 import { convertToLocalDate } from "utils/convertToLocalDate";
+
+import { PARAMETERS_TABLE_HEADINGS } from "constants/appConstants";
 
 const PayloadViewComponent = ({ data, onEditButtonClick }) => {
   const {
@@ -37,16 +40,14 @@ const PayloadViewComponent = ({ data, onEditButtonClick }) => {
             striped
             bordered
             size="sm"
-            headings={["Key", "Value"]}
+            headings={PARAMETERS_TABLE_HEADINGS}
           >
-            {Object.entries(parameters || {}).map(([key, val], index) => {
-              return (
-                <tr key={index}>
-                  <td>{key}</td>
-                  <td>{val}</td>
-                </tr>
-              );
-            })}
+            {Object.entries(parameters || {}).map(([key, val], index) => (
+              <tr key={index}>
+                <td>{key}</td>
+                <td>{val}</td>
+              </tr>
+            ))}
           </TableComponent>
         </Col>
         <Col md={6} className="pb-4">
@@ -60,48 +61,9 @@ const PayloadViewComponent = ({ data, onEditButtonClick }) => {
             <b>Expected Outcome</b>
           </small>
           <Accordion>
-            {expectedOutcome?.map((item, ind) => {
-              return (
-                <Accordion.Item key={ind} eventKey={ind}>
-                  <Accordion.Header>{item.name}</Accordion.Header>
-                  <Accordion.Body>
-                    <TableComponent
-                      striped
-                      bordered
-                      headings={[
-                        "#",
-                        "Name",
-                        "Type",
-                        "isExact",
-                        "Value",
-                        "Validations",
-                      ]}
-                    >
-                      {item?.expected_outcome?.map((itemData, index) => {
-                        return (
-                          <tr key={index}>
-                            <td>{index + 1}</td>
-                            <td>{itemData.name}</td>
-                            <td>{itemData.type}</td>
-                            <td>{itemData.isExact ? "Yes" : "No"}</td>
-                            <td>{itemData.value || "-"}</td>
-                            <td>
-                              <pre className="mb-0">
-                                {JSON.stringify(
-                                  itemData.validations,
-                                  null,
-                                  2
-                                ) || "-"}
-                              </pre>
-                            </td>
-                          </tr>
-                        );
-                      })}
-                    </TableComponent>
-                  </Accordion.Body>
-                </Accordion.Item>
-              );
-            })}
+            {expectedOutcome?.map((item, ind) => (
+              <ExpOutcomeAccordionItem key={ind} item={item} eventKey={ind} />
+            ))}
           </Accordion>
         </Col>
         <Col md={6} className="pb-4">

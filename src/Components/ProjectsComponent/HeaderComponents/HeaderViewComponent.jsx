@@ -7,6 +7,8 @@ import TableComponent from "Components/CustomComponents/TableComponent";
 
 import { convertToLocalDate } from "utils/convertToLocalDate";
 
+const headerTableHeadings = ["#", "Property", "Value"];
+
 const HeaderViewComponent = ({ data, onEditButtonClick }) => {
   const {
     name,
@@ -32,21 +34,14 @@ const HeaderViewComponent = ({ data, onEditButtonClick }) => {
           <small>
             <b>Header</b>
           </small>
-          <TableComponent
-            striped
-            bordered
-            hover
-            headings={["#", "Property", "Value"]}
-          >
-            {Object.entries(header || {}).map(([key, value], index) => {
-              return (
-                <tr key={index}>
-                  <td>{index + 1}</td>
-                  <td>{key}</td>
-                  <td>{value}</td>
-                </tr>
-              );
-            })}
+          <TableComponent striped bordered hover headings={headerTableHeadings}>
+            {Object.entries(header || {}).map(([key, value], index) => (
+              <tr key={index}>
+                <td>{index + 1}</td>
+                <td>{key}</td>
+                <td>{value}</td>
+              </tr>
+            ))}
           </TableComponent>
         </Col>
       </Row>
