@@ -14,3 +14,6 @@
 .jsoneditor-menu > button {
   opacity: 1 !important;
 }
+.ace-jsoneditor.ace_editor {
+  font-size: 15px !important;
+}
