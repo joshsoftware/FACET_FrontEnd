@@ -8,9 +8,12 @@ import Editor from "Components/Editor";
 import ExpOutcomeAccordion from "./components/ExpOutcomeAccordion";
 import FormInput from "Components/forms/Inputs/FormInput";
 import KeyValuePairsFormField from "Components/forms/KeyValuePairsFormField";
+import Loader from "Components/Loader";
 import { ViewComponent } from "Components/CustomComponents";
 
 import { convertToSlug, isValidJson } from "utils";
+
+import { NAME_FIELD_MAX_LENGTH } from "constants/appConstants";
 
 const AddNewPayload = ({ cat, data, isLoading, onchange, handleSubmit }) => {
   const { name, parameters, payload, expected_outcome: expectedOutcome } = data;
@@ -23,7 +26,9 @@ const AddNewPayload = ({ cat, data, isLoading, onchange, handleSubmit }) => {
   };
 
   const onPayloadFieldsChange = (result) => {
-    onchange("payload", result);
+    if (JSON.parse(result)) {
+      onchange("payload", result);
+    }
   };
 
   const onExpectedOutcomeFieldsChange = (index, result) => {
@@ -48,9 +53,13 @@ const AddNewPayload = ({ cat, data, isLoading, onchange, handleSubmit }) => {
   const toggleJsonFormInEditor = () =>
     setShowPayloadInJsonFormat(!showPayloadInJsonFormat);
 
+  const isEditForm = cat === "edit";
   // check whether all required form fields are filled or not, if not then disabled the submit button
   const isSaveButtonDisabled =
-    !name.length || !isValidJson(payload) || !expectedOutcome.length;
+    isLoading ||
+    !name.length ||
+    !isValidJson(payload) ||
+    !expectedOutcome.length;
 
   const nameInputBottomTextMsg =
     !!name.length && `Your payload will be created as ${convertToSlug(name)}`;
@@ -58,39 +67,42 @@ const AddNewPayload = ({ cat, data, isLoading, onchange, handleSubmit }) => {
   const isExpectedOutcomeForm =
     showAddExpOutForm || expectedOutcome?.length === 0;
 
+  const viewComponentTitle = isEditForm ? name : "Add New Payload";
+
+  const editorMode = showPayloadInJsonFormat ? "code" : "tree";
+
   return (
-    !isLoading &&
-    data && (
-      <Form onSubmit={handleSubmit} className="w-100">
-        <ViewComponent
-          title="Add New"
-          type="save"
-          onSave={handleSubmit}
-          isSaveDisabled={isSaveButtonDisabled}
-        >
-          <FormInput
-            label="Name"
-            placeholder="Name"
-            name="name"
-            value={name}
-            onChange={onFormDataChange}
-            disabled={cat === "edit"}
-            isRequired
-            text={nameInputBottomTextMsg}
-          />
-          <FormInput
-            name="parameters"
-            label="Parameters"
-            element={
+    <Form onSubmit={handleSubmit} className="w-100">
+      <ViewComponent
+        title={viewComponentTitle}
+        type="save"
+        onSave={handleSubmit}
+        isSaveDisabled={isSaveButtonDisabled}
+      >
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <>
+            <FormInput
+              label="Name"
+              placeholder="Name"
+              name="name"
+              value={name}
+              onChange={onFormDataChange}
+              disabled={isEditForm}
+              maxLength={NAME_FIELD_MAX_LENGTH}
+              text={nameInputBottomTextMsg}
+              isRequired
+            />
+            <div className="mb-2">
+              <label className="mb-2">Parameters</label>
               <KeyValuePairsFormField
                 data={parameters}
                 setData={onParameterFieldsChange}
               />
-            }
-          />
-          <FormInput
-            label={
-              <div className="d-flex justify-content-between align-items-center">
+            </div>
+            <div className="mb-3">
+              <label className="d-flex justify-content-between align-items-center mb-2">
                 <span>Payload</span>
                 <Form.Check
                   type="switch"
@@ -98,47 +110,43 @@ const AddNewPayload = ({ cat, data, isLoading, onchange, handleSubmit }) => {
                   value={showPayloadInJsonFormat}
                   onChange={toggleJsonFormInEditor}
                 />
-              </div>
-            }
-            element={
-              <>
-                <Editor
-                  text={payload}
-                  mode={showPayloadInJsonFormat ? "code" : "tree"}
-                  indentation={4}
-                  onChangeText={onPayloadFieldsChange}
-                />
-              </>
-            }
-          />
-          <div>
-            <label>
-              Expected Outcomes<span className="text-danger">*</span>
-            </label>
-            <Accordion>
-              {expectedOutcome?.map((item, index) => (
-                <ExpOutcomeAccordion
-                  data={item}
-                  key={index}
-                  eventKey={index}
-                  onChange={(res) => onExpectedOutcomeFieldsChange(index, res)}
-                />
-              ))}
-            </Accordion>
-            {isExpectedOutcomeForm ? (
-              <AddExpOutcomeForm
-                onSave={onAddNewExpOutcomeEntry}
-                onClose={toggleExpOutcomeForm}
+              </label>
+              <Editor
+                text={payload}
+                mode={editorMode}
+                indentation={4}
+                onChangeText={onPayloadFieldsChange}
               />
-            ) : (
-              <div className="text-center my-1">
-                <AddButton size="sm" handleClick={toggleExpOutcomeForm} />
-              </div>
-            )}
-          </div>
-        </ViewComponent>
-      </Form>
-    )
+            </div>
+            <div>
+              <label>
+                Expected Outcomes<span className="text-danger">*</span>
+              </label>
+              <Accordion>
+                {expectedOutcome?.map((item, index) => (
+                  <ExpOutcomeAccordion
+                    data={item}
+                    key={index}
+                    eventKey={index}
+                    onChange={onExpectedOutcomeFieldsChange}
+                  />
+                ))}
+              </Accordion>
+              {isExpectedOutcomeForm ? (
+                <AddExpOutcomeForm
+                  onSave={onAddNewExpOutcomeEntry}
+                  onClose={toggleExpOutcomeForm}
+                />
+              ) : (
+                <div className="text-center my-1">
+                  <AddButton size="sm" handleClick={toggleExpOutcomeForm} />
+                </div>
+              )}
+            </div>
+          </>
+        )}
+      </ViewComponent>
+    </Form>
   );
 };
 
