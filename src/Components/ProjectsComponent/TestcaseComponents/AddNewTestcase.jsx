@@ -70,7 +70,7 @@ const AddNewTestcase = (props) => {
   const nameInputBottomTextMsg =
     !!name.length && `Your testcase will be created as ${convertToSlug(name)}`;
 
-  const viewComponentTitle = isEditForm ? name : "Add New Endpoint";
+  const viewComponentTitle = isEditForm ? name : "Add New Testcase";
 
   return (
     <Form className="w-100" onSubmit={onSubmit}>
