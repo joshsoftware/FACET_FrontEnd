@@ -15,6 +15,8 @@ import { useLocation, useParams } from "react-router-dom";
 
 import SubNavItem from "./SubNavItem";
 
+import { truncate } from "utils/helper";
+
 import "./style.css";
 
 const SubNav = () => {
@@ -89,15 +91,17 @@ const SubNav = () => {
 
   return (
     <Nav className="col-md-12 d-none d-md-block sidebar bg-dark text-light overflow-auto">
-      <h3 className="sidebar-item text-uppercase text-break">{projectName}</h3>
-      <hr className="mx-2" />
+      <h3 className="sidebar-item text-uppercase text-break">
+        {truncate(projectName, 12)}
+      </h3>
+      <hr className="mx-2 mb-0" />
       <div className="sidebar-items-container overflow-auto">
-        {SubNavItems.map((item, index) => {
-          return <SubNavItem key={index} item={item} />;
-        })}
+        {SubNavItems.map((item, index) => (
+          <SubNavItem key={index} item={item} />
+        ))}
       </div>
     </Nav>
   );
 };
 
-export default SubNav;
+export default React.memo(SubNav);

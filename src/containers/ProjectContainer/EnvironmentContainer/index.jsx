@@ -1,18 +1,26 @@
-import PropTypes from "prop-types";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import PropTypes from "prop-types";
 
+import {
+  AddNewEnvironment,
+  EnvironmentViewComponent,
+} from "Components/ProjectsComponent/EnvironmentComponents";
 import { SubComponentsNav } from "Components/ProjectsComponent";
+
 import {
   addEnvironmentsRequest,
   editEnvironmentsRequest,
   getEnvironmentsRequest,
 } from "store/Environments/actions";
+import { buildRoute } from "utils/helper";
+
 import {
-  AddNewEnvironment,
-  EnvironmentViewComponent,
-} from "Components/ProjectsComponent/EnvironmentComponents";
+  ADD_ENVIRONMENT_ROUTE,
+  EDIT_ENVIRONMENT_ROUTE,
+  ENVIRONMENTS_ROUTE,
+} from "constants/routeConstants";
 
 const mapState = ({ environments }) => ({
   environments: environments.environments,
@@ -24,11 +32,10 @@ const INITIAL_FORM_DATA = {
   url: "",
 };
 
-const EnvironmentContainer = (props) => {
-  let dispatch = useDispatch();
-  let navigate = useNavigate();
+const EnvironmentContainer = ({ cat }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const { cat } = props;
   const { projectName, id } = useParams();
   const { environments, isLoading } = useSelector(mapState);
 
@@ -75,16 +82,37 @@ const EnvironmentContainer = (props) => {
     }));
   }, [selectedItem]);
 
+  const redirectToEditEnvironmentForm = useCallback(() => {
+    const editFormRoute = buildRoute(EDIT_ENVIRONMENT_ROUTE, {
+      projectName,
+      id,
+    });
+    navigate(editFormRoute);
+  }, [projectName, id]);
+
+  const navigateToAddEnvironment = useCallback(() => {
+    const addEnvironmentRoute = buildRoute(ADD_ENVIRONMENT_ROUTE, {
+      projectName,
+    });
+    navigate(addEnvironmentRoute);
+  }, [projectName]);
+
+  const environmentBaseURL = buildRoute(ENVIRONMENTS_ROUTE, { projectName });
+
+  // check whether environment selected or not, if selected then shows the viewComponent
+  const isShowViewComponent =
+    typeof selectedItem === "object" &&
+    Object.entries(selectedItem).length !== 0 &&
+    !isLoading;
+
   return (
     <>
       <SubComponentsNav
         title="Environments"
         data={environments}
         isLoading={isLoading}
-        onAddBtnClick={() =>
-          navigate(`/project/${projectName}/environments/new`)
-        }
-        onSelectItemUrl={`/project/${projectName}/environments`}
+        onAddBtnClick={navigateToAddEnvironment}
+        componentBaseUrl={environmentBaseURL}
       />
       {cat ? (
         <AddNewEnvironment
@@ -95,18 +123,19 @@ const EnvironmentContainer = (props) => {
           handleSubmit={handleSubmit}
         />
       ) : (
-        <EnvironmentViewComponent
-          isLoading={isLoading}
-          data={selectedItem}
-          projectName={projectName}
-        />
+        isShowViewComponent && (
+          <EnvironmentViewComponent
+            data={selectedItem}
+            onEditButtonClick={redirectToEditEnvironmentForm}
+          />
+        )
       )}
     </>
   );
 };
 
-export default EnvironmentContainer;
-
 EnvironmentContainer.propTypes = {
   cat: PropTypes.string,
 };
+
+export default EnvironmentContainer;

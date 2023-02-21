@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import PropTypes from "prop-types";
 
 import AddNewTestcase from "Components/ProjectsComponent/TestcaseComponents/AddNewTestcase";
 import { SubComponentsNav } from "Components/ProjectsComponent";
@@ -17,11 +17,16 @@ import {
   getTestcasesRequest,
 } from "store/Testcases/actions";
 import { buildRoute } from "utils/helper";
-import { GetDiffOfArrayOfObjects } from "utils";
+import { getDiffOfArrayOfObjects } from "utils";
 import { getEnvironmentsRequest } from "store/Environments/actions";
 import { getTeststepsRequest } from "store/Teststeps/actions";
 
-import { EXECUTE_ROUTE } from "constants/routeConstants";
+import {
+  ADD_TESTCASE_ROUTE,
+  EDIT_TESTCASE_ROUTE,
+  EXECUTE_ROUTE,
+  TESTCASES_ROUTE,
+} from "constants/routeConstants";
 
 const mapState = ({ testcases, environments, execute, teststeps }) => ({
   testcases: testcases.testcases,
@@ -41,13 +46,12 @@ const INITIAL_TESTCASE_FORM_DATA = {
   arrayOfTeststeps: [],
 };
 
-const TestcaseContainer = (props) => {
+const TestcaseContainer = ({ cat }) => {
   // TO-Do:
   // needs to refactor this container and it's component with add comments wherever necessary
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { cat } = props;
   const { projectName, id } = useParams();
   const {
     testcases,
@@ -91,7 +95,7 @@ const TestcaseContainer = (props) => {
 
   useEffect(() => {
     if (cat) {
-      let diff = GetDiffOfArrayOfObjects(
+      let diff = getDiffOfArrayOfObjects(
         options.initialOptions,
         selectedTeststeps
       );
@@ -216,7 +220,22 @@ const TestcaseContainer = (props) => {
     }
   };
 
-  const showViewComponent =
+  const navigateToAddTestcase = useCallback(() => {
+    const addTestcaseRoute = buildRoute(ADD_TESTCASE_ROUTE, { projectName });
+    navigate(addTestcaseRoute);
+  }, [projectName]);
+
+  const navigateToEditTestcase = useCallback(() => {
+    const editTestcaseRoute = buildRoute(EDIT_TESTCASE_ROUTE, {
+      projectName,
+      id,
+    });
+    navigate(editTestcaseRoute);
+  }, [projectName, id]);
+
+  const testcaseBaseURL = buildRoute(TESTCASES_ROUTE, { projectName });
+
+  const isShowViewComponent =
     typeof selectedItem === "object" &&
     Object.entries(selectedItem).length !== 0 &&
     !isLoading;
@@ -228,10 +247,8 @@ const TestcaseContainer = (props) => {
           title="Testcases"
           data={testcases}
           isLoading={isLoading}
-          onAddBtnClick={() =>
-            navigate(`/project/${projectName}/testcases/new`)
-          }
-          onSelectItemUrl={`/project/${projectName}/testcases`}
+          onAddBtnClick={navigateToAddTestcase}
+          componentBaseUrl={testcaseBaseURL}
         />
         {cat ? (
           <AddNewTestcase
@@ -253,7 +270,7 @@ const TestcaseContainer = (props) => {
             onDeleteSelectedTeststep={onDeleteSelectedTeststep}
           />
         ) : (
-          showViewComponent && (
+          isShowViewComponent && (
             <TestcaseViewComponent
               isLoading={isLoading}
               data={selectedItem}
@@ -261,6 +278,7 @@ const TestcaseContainer = (props) => {
               environments={environments}
               isEnvironmentsLoading={isEnvironmentsLoading}
               handleExecute={handleExecute}
+              onEditButtonClick={navigateToEditTestcase}
             />
           )
         )}

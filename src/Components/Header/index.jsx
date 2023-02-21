@@ -18,6 +18,8 @@ import {
 } from "constants/routeConstants";
 import { ORG_ROLES } from "constants/roleConstants";
 
+import "./style.css";
+
 import logo from "assets/images/logo.png";
 
 const mapState = ({ user, orgMembers, orgs }) => ({
@@ -84,7 +86,13 @@ const Header = () => {
   const isShowRole = !isPersonalAccount && role !== ORG_ROLES.MEMBER;
 
   return (
-    <Navbar bg="dark" sticky="top" variant="dark" expand="lg">
+    <Navbar
+      bg="dark"
+      sticky="top"
+      variant="dark"
+      expand="lg"
+      className="navbarContainer"
+    >
       {isLoggedIn && isOrgOwner && (
         <AddAdminModal
           show={showAddAdminModal}

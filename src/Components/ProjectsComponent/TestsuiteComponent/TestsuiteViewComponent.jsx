@@ -14,9 +14,9 @@ const TestsuiteViewComponent = ({
   environments,
   isEnvLoading,
   handleExecute,
+  onEditButtonClick,
 }) => {
   const {
-    id: testsuiteId,
     name,
     testcases,
     created_at: createdAt,
@@ -27,10 +27,7 @@ const TestsuiteViewComponent = ({
 
   return (
     <div className="w-100">
-      <ViewComponent
-        title={name}
-        onEditLink={`/project/${projectName}/testsuites/edit/${testsuiteId}`}
-      >
+      <ViewComponent title={name} onEdit={onEditButtonClick}>
         <Row>
           <Col md={6} className="py-2">
             <small>
@@ -105,6 +102,7 @@ TestsuiteViewComponent.propTypes = {
   environments: PropTypes.array,
   isEnvLoading: PropTypes.bool,
   handleExecute: PropTypes.func.isRequired,
+  onEditButtonClick: PropTypes.func.isRequired,
 };
 
 export default React.memo(TestsuiteViewComponent);

@@ -1,32 +1,34 @@
 import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import { Card } from "react-bootstrap";
 import { ArrowLeft } from "react-bootstrap-icons";
+import { Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
 
 import {
   // DeleteButton,
   EditButton,
   SaveButton,
 } from "Components/forms/Buttons";
+
 import "./style.css";
 
 const ViewComponent = (props) => {
   const {
     children,
-    disabledBtns,
-    disabledHeader,
+    hideBtns,
+    hideHeader,
     // onDelete,
-    onEditLink,
+    onEdit,
     onSave,
-    onSaveDisabled,
+    isSaveDisabled,
     rightChildrens,
     title,
     type,
     onBack,
   } = props;
 
-  let navigate = useNavigate();
+  const navigate = useNavigate();
+
   const [isSticky, setIsSticky] = useState(false);
 
   const toggleSticky = () => {
@@ -50,7 +52,7 @@ const ViewComponent = (props) => {
 
   return (
     <div className="w-100">
-      {!disabledHeader && (
+      {!hideHeader && (
         <div
           className={`mt-4 px-5 d-flex justify-content-between align-items-center viewcomponent-header ${
             isSticky && "sticky-component-header"
@@ -63,31 +65,28 @@ const ViewComponent = (props) => {
                 style={{ cursor: "pointer", width: "fit-content" }}
                 onClick={handleBack}
               >
-                <ArrowLeft />
+                <ArrowLeft className="me-1" />
                 Back
               </span>
             </div>
             <h2>{title}</h2>
           </div>
-          {!disabledBtns && (
+          {!hideBtns && (
             <div className="d-flex justify-content-between align-items-center">
               {type === "save" ? (
-                <SaveButton handleClick={onSave} disabled={onSaveDisabled} />
+                <SaveButton handleClick={onSave} disabled={isSaveDisabled} />
               ) : (
                 <>
-                  <EditButton
-                    className="mx-2"
-                    handleClick={() => navigate(onEditLink)}
-                  />
+                  <EditButton className="mx-2" handleClick={onEdit} />
                   {/* <DeleteButton 
-                                        handleClick={onDelete} 
-                                        disabled 
-                                    /> */}
+                      handleClick={onDelete} 
+                      disabled 
+                  /> */}
                 </>
               )}
             </div>
           )}
-          {disabledBtns && rightChildrens}
+          {hideBtns && rightChildrens}
         </div>
       )}
 
@@ -100,21 +99,21 @@ const ViewComponent = (props) => {
   );
 };
 
-export default ViewComponent;
-
 ViewComponent.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.element),
     PropTypes.element,
   ]),
-  disabledBtns: PropTypes.bool,
-  disabledHeader: PropTypes.bool,
+  hideBtns: PropTypes.bool,
+  hideHeader: PropTypes.bool,
   onDelete: PropTypes.func,
-  onEditLink: PropTypes.string,
+  onEdit: PropTypes.func,
   onSave: PropTypes.func,
-  onSaveDisabled: PropTypes.bool,
+  isSaveDisabled: PropTypes.bool,
   rightChildrens: PropTypes.element,
   title: PropTypes.string,
   type: PropTypes.string,
   onBack: PropTypes.func,
 };
+
+export default ViewComponent;

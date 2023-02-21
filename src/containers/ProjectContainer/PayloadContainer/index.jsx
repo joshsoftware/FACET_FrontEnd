@@ -1,30 +1,37 @@
-import PropTypes from "prop-types";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import PropTypes from "prop-types";
 
+import {
+  AddNewPayload,
+  PayloadViewComponent,
+} from "Components/ProjectsComponent/PayloadComponents";
 import { SubComponentsNav } from "Components/ProjectsComponent";
+
 import {
   addPayloadsRequest,
   editPayloadsRequest,
   getPayloadsRequest,
 } from "store/Payloads/actions";
-import {
-  AddNewPayload,
-  PayloadViewComponent,
-} from "Components/ProjectsComponent/PayloadComponents";
+import { buildRoute } from "utils/helper";
+
 import { INITIAL_PAYLOAD_FORM_DATA } from "constants/appConstants";
+import {
+  ADD_PAYLOAD_ROUTE,
+  EDIT_PAYLOAD_ROUTE,
+  PAYLOADS_ROUTE,
+} from "constants/routeConstants";
 
 const mapState = ({ payloads }) => ({
   payloads: payloads.payloads,
   isLoading: payloads.isLoading,
 });
 
-const PayloadContainer = (props) => {
-  let dispatch = useDispatch();
-  let navigate = useNavigate();
+const PayloadContainer = ({ cat }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const { cat } = props;
   const { projectName, id } = useParams();
   const { payloads, isLoading } = useSelector(mapState);
 
@@ -88,14 +95,32 @@ const PayloadContainer = (props) => {
     }));
   }, [selectedItem]);
 
+  const redirectToEditEndpointForm = useCallback(() => {
+    const editFormRoute = buildRoute(EDIT_PAYLOAD_ROUTE, { projectName, id });
+    navigate(editFormRoute);
+  }, [projectName, id]);
+
+  const navigateToAddPayload = useCallback(() => {
+    const addPayloadRoute = buildRoute(ADD_PAYLOAD_ROUTE, { projectName });
+    navigate(addPayloadRoute);
+  }, [projectName]);
+
+  const payloadBaseURL = buildRoute(PAYLOADS_ROUTE, { projectName });
+
+  // check whether payload selected or not, if selected then shows the viewComponent
+  const isShowViewComponent =
+    typeof selectedItem === "object" &&
+    Object.entries(selectedItem).length !== 0 &&
+    !isLoading;
+
   return (
     <>
       <SubComponentsNav
         title="Payloads"
         data={payloads}
         isLoading={isLoading}
-        onAddBtnClick={() => navigate(`/project/${projectName}/payloads/new`)}
-        onSelectItemUrl={`/project/${projectName}/payloads`}
+        onAddBtnClick={navigateToAddPayload}
+        componentBaseUrl={payloadBaseURL}
       />
       {cat ? (
         <AddNewPayload
@@ -106,18 +131,19 @@ const PayloadContainer = (props) => {
           handleSubmit={handleSubmit}
         />
       ) : (
-        <PayloadViewComponent
-          isLoading={isLoading}
-          data={selectedItem}
-          projectName={projectName}
-        />
+        isShowViewComponent && (
+          <PayloadViewComponent
+            data={selectedItem}
+            onEditButtonClick={redirectToEditEndpointForm}
+          />
+        )
       )}
     </>
   );
 };
 
-export default PayloadContainer;
-
 PayloadContainer.propTypes = {
   cat: PropTypes.oneOf(["add", "edit"]),
 };
+
+export default PayloadContainer;

@@ -10,13 +10,12 @@ import { convertToLocalDate } from "utils/convertToLocalDate";
 
 const TestcaseViewComponent = ({
   data,
-  projectName,
   environments,
   isEnvironmentsLoading,
   handleExecute,
+  onEditButtonClick,
 }) => {
   const {
-    id: testcaseId,
     name: testcaseName,
     description,
     teststeps,
@@ -28,10 +27,7 @@ const TestcaseViewComponent = ({
 
   return (
     <div className="w-100">
-      <ViewComponent
-        title={testcaseName}
-        onEditLink={`/project/${projectName}/testcases/edit/${testcaseId}`}
-      >
+      <ViewComponent title={testcaseName} onEdit={onEditButtonClick}>
         <Row>
           <Col md={6} className="py-2">
             <small>
@@ -110,6 +106,7 @@ TestcaseViewComponent.propTypes = {
   environments: PropTypes.array,
   isEnvironmentsLoading: PropTypes.bool,
   handleExecute: PropTypes.func.isRequired,
+  onEditButtonClick: PropTypes.func.isRequired,
 };
 
 export default React.memo(TestcaseViewComponent);
