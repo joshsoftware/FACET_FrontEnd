@@ -317,6 +317,7 @@ const TeststepContainer = ({ cat }) => {
       {cat ? (
         <AddNewTeststep
           cat={cat}
+          isLoading={isLoading}
           data={teststepFormData}
           onChange={handleFormDataChange}
           endpointOptions={endpointOptions}
