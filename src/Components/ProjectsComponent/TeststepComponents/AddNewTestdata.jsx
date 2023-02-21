@@ -91,8 +91,7 @@ const AddNewTestdata = ({ data, onChange, onSubmit, onClose }) => {
         type="save"
         onBack={onClose}
         title={viewComponentTitle}
-        // TODO: naming convention for onSaveDisabled need to be improved
-        onSaveDisabled={isSaveDisabled}
+        isSaveDisabled={isSaveDisabled}
       >
         <FormInput
           label="Name"

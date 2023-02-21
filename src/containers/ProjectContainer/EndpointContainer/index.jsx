@@ -1,18 +1,26 @@
-import PropTypes from "prop-types";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import PropTypes from "prop-types";
 
 import { SubComponentsNav } from "Components/ProjectsComponent";
 import {
   AddNewEndpoint,
   EndpointViewComponent,
 } from "Components/ProjectsComponent/EndpointComponent";
+
 import {
   addEndpointsRequest,
   editEndpointsRequest,
   getEndpointsRequest,
 } from "store/Endpoints/actions";
+import { buildRoute } from "utils/helper";
+
+import {
+  ADD_ENDPOINT_ROUTE,
+  EDIT_ENDPOINT_ROUTE,
+  ENDPOINTS_ROUTE,
+} from "constants/routeConstants";
 
 const mapState = ({ endpoints }) => ({
   endpoints: endpoints.endpoints,
@@ -24,11 +32,10 @@ const INITIAL_FORM_DATA = {
   endpoint: "",
 };
 
-const EndpointContainer = (props) => {
-  let dispatch = useDispatch();
-  let navigate = useNavigate();
+const EndpointContainer = ({ cat }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const { cat } = props;
   const { projectName, id } = useParams();
   const { endpoints, isLoading } = useSelector(mapState);
 
@@ -51,9 +58,10 @@ const EndpointContainer = (props) => {
   }, [endpoints, id]);
 
   const onFormDataChange = (e) => {
-    setEndpointFormData((p) => ({
-      ...p,
-      [e.target.name]: e.target.value,
+    const { name, value } = e.target;
+    setEndpointFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
     }));
   };
 
@@ -67,13 +75,33 @@ const EndpointContainer = (props) => {
   };
 
   useEffect(() => {
-    setEndpointFormData((p) => ({
-      ...p,
+    setEndpointFormData((prevState) => ({
+      ...prevState,
       name: selectedItem?.name || "",
       endpoint: selectedItem?.endpoint || "",
       id: selectedItem?.id || INITIAL_FORM_DATA.id,
     }));
   }, [selectedItem]);
+
+  const redirectToEditEndpointForm = () => {
+    const editFormRoute = buildRoute(EDIT_ENDPOINT_ROUTE, { projectName, id });
+    navigate(editFormRoute);
+  };
+
+  const navigateToAddEndpoint = useCallback(() => {
+    const addEndpointRoute = buildRoute(ADD_ENDPOINT_ROUTE, {
+      projectName,
+    });
+    navigate(addEndpointRoute);
+  }, [projectName]);
+
+  const endpointBaseURL = buildRoute(ENDPOINTS_ROUTE, { projectName });
+
+  // check whether endpoint selected or not, if selected then shows the viewComponent
+  const isShowViewComponent =
+    typeof selectedItem === "object" &&
+    Object.entries(selectedItem).length !== 0 &&
+    !isLoading;
 
   return (
     <>
@@ -81,8 +109,8 @@ const EndpointContainer = (props) => {
         title="Endpoints"
         data={endpoints}
         isLoading={isLoading}
-        onAddBtnClick={() => navigate(`/project/${projectName}/endpoints/new`)}
-        onSelectItemUrl={`/project/${projectName}/endpoints`}
+        onAddBtnClick={navigateToAddEndpoint}
+        componentBaseUrl={endpointBaseURL}
       />
       {cat ? (
         <AddNewEndpoint
@@ -93,18 +121,20 @@ const EndpointContainer = (props) => {
           handleSubmit={handleSubmit}
         />
       ) : (
-        <EndpointViewComponent
-          isLoading={isLoading}
-          data={selectedItem}
-          projectName={projectName}
-        />
+        isShowViewComponent && (
+          <EndpointViewComponent
+            data={selectedItem}
+            projectName={projectName}
+            onEditButtonClick={redirectToEditEndpointForm}
+          />
+        )
       )}
     </>
   );
 };
 
-export default EndpointContainer;
-
 EndpointContainer.propTypes = {
   cat: PropTypes.oneOf(["add", "edit"]),
 };
+
+export default EndpointContainer;

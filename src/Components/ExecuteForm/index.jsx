@@ -22,7 +22,7 @@ const ExecuteForm = ({
   const onExecute = () => handleExecute(data?.id, selectedEnv.value);
 
   return (
-    <ViewComponent disabledHeader>
+    <ViewComponent hideHeader>
       <small>
         <b>Execute {label}</b>
       </small>

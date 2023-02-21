@@ -110,7 +110,7 @@ const MemberContainer = () => {
             <AddButton label="Add Member" handleClick={toggleModal} />
           )}
         </div>
-        <ViewComponent disabledHeader>
+        <ViewComponent hideHeader>
           <TableComponent striped headings={tableHeadings}>
             {!isLoading &&
               members.map((item, index) => (

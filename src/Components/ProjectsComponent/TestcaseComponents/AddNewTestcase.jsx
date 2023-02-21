@@ -72,7 +72,7 @@ const AddNewTestcase = (props) => {
           title="Add New"
           type="save"
           onSave={onSubmit}
-          onSaveDisabled={isSaveDisabled}
+          isSaveDisabled={isSaveDisabled}
         >
           <AddTeststepsModal
             show={showteststepModal}

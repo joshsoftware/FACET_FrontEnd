@@ -52,7 +52,7 @@ const AddNewSchedule = ({ isLoading, data, onChange, onSubmit, options }) => {
           title="Schedule New Testcase"
           type="save"
           onSave={onSubmit}
-          onSaveDisabled={isSaveButtonDisabled}
+          isSaveDisabled={isSaveButtonDisabled}
         >
           <Row>
             <FormSelect

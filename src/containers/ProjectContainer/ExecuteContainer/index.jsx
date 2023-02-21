@@ -51,7 +51,7 @@ const ExecuteContainer = () => {
           <Loader />
         </Backdrop>
       )}
-      <ViewComponent title={reportName} disabledBtns>
+      <ViewComponent title={reportName} hideBtns>
         {fields?.map((item, index) => (
           <ExecuteComponent
             key={index}

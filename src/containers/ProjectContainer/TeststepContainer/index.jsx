@@ -31,7 +31,11 @@ import {
   HTTP_METHODS_OPTIONS,
 } from "constants/appConstants";
 import { ALL_FIELDS_REQUIRED } from "constants/userMessagesConstants";
-import { ADD_TESTSTEP_ROUTE, TESTSTEPS_ROUTE } from "constants/routeConstants";
+import {
+  ADD_TESTSTEP_ROUTE,
+  EDIT_TESTSTEP_ROUTE,
+  TESTSTEPS_ROUTE,
+} from "constants/routeConstants";
 
 const mapState = ({ endpoints, headers, payloads, teststeps, testdata }) => ({
   isLoading: teststeps.isLoading,
@@ -281,6 +285,14 @@ const TeststepContainer = ({ cat }) => {
     [selectedItem]
   );
 
+  const navigateToEditTeststep = useCallback(() => {
+    const editTeststepRoute = buildRoute(EDIT_TESTSTEP_ROUTE, {
+      projectName,
+      id,
+    });
+    navigate(editTeststepRoute);
+  }, [projectName, id]);
+
   // helps to navigate add new teststep form page
   const navigateToAddNewTeststep = () =>
     navigate(buildRoute(ADD_TESTSTEP_ROUTE, { projectName }));
@@ -300,7 +312,7 @@ const TeststepContainer = ({ cat }) => {
         data={teststeps}
         isLoading={isLoading}
         onAddBtnClick={navigateToAddNewTeststep}
-        onSelectItemUrl={teststepsURL}
+        componentBaseUrl={teststepsURL}
       />
       {cat ? (
         <AddNewTeststep
@@ -328,6 +340,7 @@ const TeststepContainer = ({ cat }) => {
             projectName={projectName}
             testdata={testdata}
             onOpenTestdataForm={onOpenTestdataForm}
+            onEditButtonClick={navigateToEditTeststep}
           />
         )
       )}

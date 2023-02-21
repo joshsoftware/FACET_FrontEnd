@@ -47,7 +47,7 @@ const ReportsContainer = () => {
 
   return (
     <>
-      <ViewComponent disabledBtns title="Reports">
+      <ViewComponent hideBtns title="Reports">
         {!isLoading && reports.length === 0 ? (
           <NoResultsFound
             btnLabel="Run New Testcase"

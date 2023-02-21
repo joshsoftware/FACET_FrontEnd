@@ -6,19 +6,15 @@ import { AddButton } from "Components/forms/Buttons";
 import TestdataAccordionItem from "./TestdataAccordionItem";
 import { ViewComponent } from "Components/CustomComponents";
 
-import { buildRoute } from "utils/helper";
 import { convertToLocalDate } from "utils/convertToLocalDate";
-
-import { EDIT_TESTSTEP_ROUTE } from "constants/routeConstants";
 
 const TeststepViewComponent = ({
   data,
-  projectName,
   testdata,
   onOpenTestdataForm,
+  onEditButtonClick,
 }) => {
   const {
-    id,
     name,
     method,
     endpoint,
@@ -30,14 +26,11 @@ const TeststepViewComponent = ({
     modified_by: modifiedBy,
   } = data;
 
-  const editTeststepLink = buildRoute(EDIT_TESTSTEP_ROUTE, { projectName, id });
-
   const onAddTestdata = () => onOpenTestdataForm();
 
   return (
     <div className="w-100">
-      {/* TODO: improve naming convention for onEditLink */}
-      <ViewComponent title={name} onEditLink={editTeststepLink}>
+      <ViewComponent title={name} onEdit={onEditButtonClick}>
         <Row>
           <Col md={6} className="pb-4">
             <small>
@@ -98,7 +91,7 @@ const TeststepViewComponent = ({
         </Row>
       </ViewComponent>
 
-      <ViewComponent disabledHeader>
+      <ViewComponent hideHeader>
         <div className="d-flex justify-content-between algn-items-center pb-3">
           <b>Testdata</b>
           <AddButton size="sm" handleClick={onAddTestdata} label="Add New" />
@@ -135,6 +128,7 @@ TeststepViewComponent.propTypes = {
   projectName: PropTypes.string.isRequired,
   testdata: PropTypes.arrayOf(PropTypes.object).isRequired,
   onOpenTestdataForm: PropTypes.func.isRequired,
+  onEditButtonClick: PropTypes.func.isRequired,
 };
 
 export default TeststepViewComponent;

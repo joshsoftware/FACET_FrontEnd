@@ -24,7 +24,7 @@ const ReportDetails = ({
   );
 
   return (
-    <ViewComponent disabledBtns title={name} rightChildrens={rightChildrens}>
+    <ViewComponent hideBtns title={name} rightChildrens={rightChildrens}>
       {level === "testcase" ? (
         data.map((item, index) => (
           <ReportTeststepCard
