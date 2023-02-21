@@ -2,13 +2,11 @@ import React from "react";
 import { Spinner } from "react-bootstrap";
 import PropTypes from "prop-types";
 
-const Loader = (props) => {
-  return (
-    <div>
-      <Spinner {...props} />
-    </div>
-  );
-};
+const Loader = (props) => (
+  <div className="text-center">
+    <Spinner {...props} />
+  </div>
+);
 
 Loader.propTypes = {
   animation: PropTypes.oneOf(["border", "grow"]),
