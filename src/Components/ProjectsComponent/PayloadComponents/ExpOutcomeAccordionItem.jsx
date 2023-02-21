@@ -23,7 +23,7 @@ const ExpOutcomeAccordionItem = ({ item, eventKey }) => {
               <tr key={index}>
                 <td>{index + 1}</td>
                 <td>{fieldName}</td>
-                <td>{type}</td>
+                <td className="text-capitalize">{type}</td>
                 <td>{isExact ? "Yes" : "No"}</td>
                 <td>{value || "-"}</td>
                 <td>
