@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 
 import FormInput from "Components/forms/Inputs/FormInput";
 import FormSelect from "Components/forms/Inputs/FormSelect";
-import Loader from "Components/Loader";
 import { ViewComponent } from "Components/CustomComponents";
 
 import convertToSlug from "utils/convertToSlug";
@@ -42,33 +41,28 @@ const AddNewTestsuite = ({
         title={viewComponentTitle}
         type="save"
         onSave={onSubmit}
+        isLoading={isLoading}
         isSaveDisabled={isSaveButtonDisabled}
       >
-        {isLoading ? (
-          <Loader />
-        ) : (
-          <>
-            <FormInput
-              label="Name"
-              placeholder="Name"
-              name="name"
-              value={name}
-              onChange={onInputChange}
-              text={nameBottomInfoText}
-              maxLength={NAME_FIELD_MAX_LENGTH}
-              isRequired
-            />
-            <FormSelect
-              label="Testcases"
-              name="testcases"
-              options={testcasesOptions}
-              value={testcases}
-              onChange={onSelectChange}
-              isRequired
-              isMulti
-            />
-          </>
-        )}
+        <FormInput
+          label="Name"
+          placeholder="Name"
+          name="name"
+          value={name}
+          onChange={onInputChange}
+          text={nameBottomInfoText}
+          maxLength={NAME_FIELD_MAX_LENGTH}
+          isRequired
+        />
+        <FormSelect
+          label="Testcases"
+          name="testcases"
+          options={testcasesOptions}
+          value={testcases}
+          onChange={onSelectChange}
+          isRequired
+          isMulti
+        />
       </ViewComponent>
     </Form>
   );

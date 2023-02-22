@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 
 import { FormInput } from "Components/forms/Inputs";
 import KeyValuePairsFormField from "Components/forms/KeyValuePairsFormField";
-import Loader from "Components/Loader";
 import { ViewComponent } from "Components/CustomComponents";
 
 import { convertToSlug } from "utils";
@@ -38,34 +37,29 @@ const AddNewHeader = ({
         title={viewComponentTitle}
         type="save"
         onSave={handleSubmit}
+        isLoading={isLoading}
         isSaveDisabled={isSaveButtonDisabled}
       >
-        {isLoading ? (
-          <Loader />
-        ) : (
-          <>
-            <FormInput
-              label="Name"
-              placeholder="Name"
-              name="name"
-              value={name}
-              onChange={onchange}
-              disabled={isEditForm}
-              maxLength={NAME_FIELD_MAX_LENGTH}
-              text={nameInputBottomTextMsg}
-              isRequired
-            />
-            <div>
-              <label className="mb-2">
-                Header<span className="text-danger">*</span>
-              </label>
-              <KeyValuePairsFormField
-                data={header}
-                setData={onKeyValuePairsChange}
-              />
-            </div>
-          </>
-        )}
+        <FormInput
+          label="Name"
+          placeholder="Name"
+          name="name"
+          value={name}
+          onChange={onchange}
+          disabled={isEditForm}
+          maxLength={NAME_FIELD_MAX_LENGTH}
+          text={nameInputBottomTextMsg}
+          isRequired
+        />
+        <div>
+          <label className="mb-2">
+            Header<span className="text-danger">*</span>
+          </label>
+          <KeyValuePairsFormField
+            data={header}
+            setData={onKeyValuePairsChange}
+          />
+        </div>
       </ViewComponent>
     </Form>
   );

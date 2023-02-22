@@ -5,13 +5,13 @@ import PropTypes from "prop-types";
 
 import AddTeststepsModal from "./components/AddTeststepsModal";
 import { FormInput } from "Components/forms/Inputs";
-import Loader from "Components/Loader";
 import { ViewComponent } from "Components/CustomComponents";
 
 import { convertToSlug } from "utils";
 
-import "./style.css";
 import { NAME_FIELD_MAX_LENGTH } from "constants/appConstants";
+
+import "./style.css";
 
 const TeststepBadge = ({ stepName, onDeleteSelectedTeststep, index }) => {
   const onRemoveTeststep = () => onDeleteSelectedTeststep(index);
@@ -78,72 +78,66 @@ const AddNewTestcase = (props) => {
         title={viewComponentTitle}
         type="save"
         onSave={onSubmit}
+        isLoading={isLoading}
         isSaveDisabled={isSaveDisabled}
       >
-        {isLoading ? (
-          <Loader />
-        ) : (
-          <>
-            <AddTeststepsModal
-              show={showteststepModal}
-              onClose={toggleTeststepModal}
-              teststepsOptions={teststepsOptions}
-              onSelectedTeststepsChange={onSelectedTeststepsChange}
-              selectedTeststeps={selectedTeststeps}
-              onAddTeststepDataSave={onAddTeststepDataSave}
-              onRemoveSelectedTeststep={onRemoveSelectedTeststep}
-              onSelectedTeststepOrderChange={onSelectedTeststepOrderChange}
-              onTestdataChangeInSelectedTeststep={
-                onTestdataChangeInSelectedTeststep
-              }
-            />
-            <FormInput
-              label="Name"
-              placeholder="Name"
-              name="name"
-              value={name}
-              onChange={handleChange}
-              text={nameInputBottomTextMsg}
-              disabled={isEditForm}
-              maxLength={NAME_FIELD_MAX_LENGTH}
-              isRequired
-            />
-            <FormInput
-              type="textarea"
-              rows={2}
-              label="Description"
-              placeholder="Write short description here..."
-              name="description"
-              value={description}
-              onChange={handleChange}
-            />
+        <AddTeststepsModal
+          show={showteststepModal}
+          onClose={toggleTeststepModal}
+          teststepsOptions={teststepsOptions}
+          onSelectedTeststepsChange={onSelectedTeststepsChange}
+          selectedTeststeps={selectedTeststeps}
+          onAddTeststepDataSave={onAddTeststepDataSave}
+          onRemoveSelectedTeststep={onRemoveSelectedTeststep}
+          onSelectedTeststepOrderChange={onSelectedTeststepOrderChange}
+          onTestdataChangeInSelectedTeststep={
+            onTestdataChangeInSelectedTeststep
+          }
+        />
+        <FormInput
+          label="Name"
+          placeholder="Name"
+          name="name"
+          value={name}
+          onChange={handleChange}
+          text={nameInputBottomTextMsg}
+          maxLength={NAME_FIELD_MAX_LENGTH}
+          isRequired
+        />
+        <FormInput
+          type="textarea"
+          rows={2}
+          label="Description"
+          placeholder="Write short description here..."
+          name="description"
+          value={description}
+          onChange={handleChange}
+        />
 
-            <div>
-              <label>
-                Teststeps<span className="text-danger">*</span>
-              </label>
-              <div className="background-secondary py-3 px-3 rounded">
-                {teststeps?.map(({ name: stepName }, index) => (
-                  <TeststepBadge
-                    key={index}
-                    stepName={stepName}
-                    index={index}
-                    onDeleteSelectedTeststep={onDeleteSelectedTeststep}
-                  />
-                ))}
-                <small
-                  className={`text-success px-3 w-100 ${
-                    !teststeps?.length && "d-flex justify-content-center"
-                  }`}
-                  role="button"
-                  onClick={toggleTeststepModal}
-                >
-                  + Add More
-                </small>
-              </div>
-            </div>
-          </>
-        )}
+        <div>
+          <label>
+            Teststeps<span className="text-danger">*</span>
+          </label>
+          <div className="background-secondary py-3 px-3 rounded">
+            {teststeps?.map(({ name: stepName }, index) => (
+              <TeststepBadge
+                key={index}
+                stepName={stepName}
+                index={index}
+                onDeleteSelectedTeststep={onDeleteSelectedTeststep}
+              />
+            ))}
+            <small
+              className={`text-success px-3 w-100 ${
+                !teststeps?.length && "d-flex justify-content-center"
+              }`}
+              role="button"
+              onClick={toggleTeststepModal}
+            >
+              + Add More
+            </small>
+          </div>
+        </div>
       </ViewComponent>
     </Form>
   );

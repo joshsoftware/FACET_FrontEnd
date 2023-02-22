@@ -9,6 +9,8 @@ import {
   EditButton,
   SaveButton,
 } from "Components/forms/Buttons";
+import Backdrop from "Components/Backdrop";
+import Loader from "Components/Loader";
 
 import "./style.css";
 
@@ -25,6 +27,7 @@ const ViewComponent = (props) => {
     title,
     type,
     onBack,
+    isLoading,
   } = props;
 
   const navigate = useNavigate();
@@ -91,8 +94,13 @@ const ViewComponent = (props) => {
       )}
 
       <div className="px-5 py-3">
-        <Card className="w-100 p-3">
-          <Card.Body>{children}</Card.Body>
+        <Card className="w-100 overflow-hidden">
+          {isLoading && (
+            <Backdrop>
+              <Loader />
+            </Backdrop>
+          )}
+          <Card.Body className="m-3">{children}</Card.Body>
         </Card>
       </div>
     </div>
@@ -114,6 +122,7 @@ ViewComponent.propTypes = {
   title: PropTypes.string,
   type: PropTypes.string,
   onBack: PropTypes.func,
+  isLoading: PropTypes.bool,
 };
 
 export default ViewComponent;

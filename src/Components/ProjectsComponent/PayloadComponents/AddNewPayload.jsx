@@ -8,7 +8,6 @@ import Editor from "Components/Editor";
 import ExpOutcomeAccordion from "./components/ExpOutcomeAccordion";
 import FormInput from "Components/forms/Inputs/FormInput";
 import KeyValuePairsFormField from "Components/forms/KeyValuePairsFormField";
-import Loader from "Components/Loader";
 import { ViewComponent } from "Components/CustomComponents";
 
 import { convertToSlug, isValidJson } from "utils";
@@ -77,74 +76,69 @@ const AddNewPayload = ({ cat, data, isLoading, onchange, handleSubmit }) => {
         title={viewComponentTitle}
         type="save"
         onSave={handleSubmit}
+        isLoading={isLoading}
         isSaveDisabled={isSaveButtonDisabled}
       >
-        {isLoading ? (
-          <Loader />
-        ) : (
-          <>
-            <FormInput
-              label="Name"
-              placeholder="Name"
-              name="name"
-              value={name}
-              onChange={onFormDataChange}
-              disabled={isEditForm}
-              maxLength={NAME_FIELD_MAX_LENGTH}
-              text={nameInputBottomTextMsg}
-              isRequired
+        <FormInput
+          label="Name"
+          placeholder="Name"
+          name="name"
+          value={name}
+          onChange={onFormDataChange}
+          disabled={isEditForm}
+          maxLength={NAME_FIELD_MAX_LENGTH}
+          text={nameInputBottomTextMsg}
+          isRequired
+        />
+        <div className="mb-2">
+          <label className="mb-2">Parameters</label>
+          <KeyValuePairsFormField
+            data={parameters}
+            setData={onParameterFieldsChange}
+          />
+        </div>
+        <div className="mb-3">
+          <label className="d-flex justify-content-between align-items-center mb-2">
+            <span>Payload</span>
+            <Form.Check
+              type="switch"
+              label="Json Format"
+              value={showPayloadInJsonFormat}
+              onChange={toggleJsonFormInEditor}
             />
-            <div className="mb-2">
-              <label className="mb-2">Parameters</label>
-              <KeyValuePairsFormField
-                data={parameters}
-                setData={onParameterFieldsChange}
+          </label>
+          <Editor
+            text={payload}
+            mode={editorMode}
+            indentation={4}
+            onChangeText={onPayloadFieldsChange}
+          />
+        </div>
+        <div>
+          <label>
+            Expected Outcomes<span className="text-danger">*</span>
+          </label>
+          <Accordion>
+            {expectedOutcome?.map((item, index) => (
+              <ExpOutcomeAccordion
+                data={item}
+                key={index}
+                eventKey={index}
+                onChange={onExpectedOutcomeFieldsChange}
               />
+            ))}
+          </Accordion>
+          {isExpectedOutcomeForm ? (
+            <AddExpOutcomeForm
+              onSave={onAddNewExpOutcomeEntry}
+              onClose={toggleExpOutcomeForm}
+            />
+          ) : (
+            <div className="text-center my-1">
+              <AddButton size="sm" handleClick={toggleExpOutcomeForm} />
             </div>
-            <div className="mb-3">
-              <label className="d-flex justify-content-between align-items-center mb-2">
-                <span>Payload</span>
-                <Form.Check
-                  type="switch"
-                  label="Json Format"
-                  value={showPayloadInJsonFormat}
-                  onChange={toggleJsonFormInEditor}
-                />
-              </label>
-              <Editor
-                text={payload}
-                mode={editorMode}
-                indentation={4}
-                onChangeText={onPayloadFieldsChange}
-              />
-            </div>
-            <div>
-              <label>
-                Expected Outcomes<span className="text-danger">*</span>
-              </label>
-              <Accordion>
-                {expectedOutcome?.map((item, index) => (
-                  <ExpOutcomeAccordion
-                    data={item}
-                    key={index}
-                    eventKey={index}
-                    onChange={onExpectedOutcomeFieldsChange}
-                  />
-                ))}
-              </Accordion>
-              {isExpectedOutcomeForm ? (
-                <AddExpOutcomeForm
-                  onSave={onAddNewExpOutcomeEntry}
-                  onClose={toggleExpOutcomeForm}
-                />
-              ) : (
-                <div className="text-center my-1">
-                  <AddButton size="sm" handleClick={toggleExpOutcomeForm} />
-                </div>
-              )}
-            </div>
-          </>
-        )}
+          )}
+        </div>
       </ViewComponent>
     </Form>
   );

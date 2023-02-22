@@ -3,7 +3,6 @@ import { Form } from "react-bootstrap";
 import PropTypes from "prop-types";
 
 import { FormInput } from "Components/forms/Inputs";
-import Loader from "Components/Loader";
 import { ViewComponent } from "Components/CustomComponents";
 
 import { convertToSlug } from "utils";
@@ -29,33 +28,28 @@ const AddNewEndpoint = ({ cat, data, isLoading, onchange, handleSubmit }) => {
         title={viewComponentTitle}
         type="save"
         onSave={handleSubmit}
+        isLoading={isLoading}
         isSaveDisabled={isSaveButtonDisabled}
       >
-        {isLoading ? (
-          <Loader />
-        ) : (
-          <>
-            <FormInput
-              label="Name"
-              placeholder="Name"
-              name="name"
-              value={name}
-              onChange={onchange}
-              maxLength={NAME_FIELD_MAX_LENGTH}
-              text={nameInputBottomTextMsg}
-              disabled={isEditForm}
-              isRequired
-            />
-            <FormInput
-              label="Endpoint"
-              placeholder="Endpoint"
-              name="endpoint"
-              value={endpoint}
-              onChange={onchange}
-              isRequired
-            />
-          </>
-        )}
+        <FormInput
+          label="Name"
+          placeholder="Name"
+          name="name"
+          value={name}
+          onChange={onchange}
+          maxLength={NAME_FIELD_MAX_LENGTH}
+          text={nameInputBottomTextMsg}
+          disabled={isEditForm}
+          isRequired
+        />
+        <FormInput
+          label="Endpoint"
+          placeholder="Endpoint"
+          name="endpoint"
+          value={endpoint}
+          onChange={onchange}
+          isRequired
+        />
       </ViewComponent>
     </Form>
   );

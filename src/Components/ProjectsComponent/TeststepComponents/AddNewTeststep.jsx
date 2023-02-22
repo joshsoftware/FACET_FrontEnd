@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 
 import FormInput from "Components/forms/Inputs/FormInput";
 import FormSelect from "Components/forms/Inputs/FormSelect";
-import Loader from "Components/Loader";
 import { ViewComponent } from "Components/CustomComponents";
 
 import { convertToSlug } from "utils";
@@ -46,57 +45,52 @@ const AddNewTeststep = ({
         title={viewComponentTitle}
         type="save"
         onSave={onSubmit}
+        isLoading={isLoading}
         isSaveDisabled={isSaveButtonDisabled}
       >
-        {isLoading ? (
-          <Loader />
-        ) : (
-          <>
-            <FormInput
-              label="Name"
-              placeholder="Name"
-              name="name"
-              value={name}
-              onChange={onFieldChange}
-              text={nameInputBottomTextMsg}
-              disabled={isEditForm}
-              maxLength={NAME_FIELD_MAX_LENGTH}
-              isRequired
-            />
-            <FormSelect
-              label="Method"
-              name="method"
-              options={methodOptions}
-              value={method}
-              onChange={onSelectChange}
-              isRequired
-            />
-            <FormSelect
-              label="Endpoint"
-              name="endpoint"
-              options={endpointOptions}
-              value={endpoint}
-              onChange={onSelectChange}
-              isRequired
-            />
-            <FormSelect
-              label="Header"
-              name="header"
-              options={headerOptions}
-              value={header}
-              onChange={onSelectChange}
-              isRequired
-            />
-            <FormSelect
-              label="Payload"
-              name="payload"
-              options={payloadOptions}
-              value={payload}
-              onChange={onSelectChange}
-              isRequired
-            />
-          </>
-        )}
+        <FormInput
+          label="Name"
+          placeholder="Name"
+          name="name"
+          value={name}
+          onChange={onFieldChange}
+          text={nameInputBottomTextMsg}
+          disabled={isEditForm}
+          maxLength={NAME_FIELD_MAX_LENGTH}
+          isRequired
+        />
+        <FormSelect
+          label="Method"
+          name="method"
+          options={methodOptions}
+          value={method}
+          onChange={onSelectChange}
+          isRequired
+        />
+        <FormSelect
+          label="Endpoint"
+          name="endpoint"
+          options={endpointOptions}
+          value={endpoint}
+          onChange={onSelectChange}
+          isRequired
+        />
+        <FormSelect
+          label="Header"
+          name="header"
+          options={headerOptions}
+          value={header}
+          onChange={onSelectChange}
+          isRequired
+        />
+        <FormSelect
+          label="Payload"
+          name="payload"
+          options={payloadOptions}
+          value={payload}
+          onChange={onSelectChange}
+          isRequired
+        />
       </ViewComponent>
     </Form>
   );
