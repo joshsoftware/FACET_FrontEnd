@@ -41,7 +41,7 @@ const AddNewTestcase = (props) => {
     isLoading,
     selectedTeststeps,
     onAddTeststepDataSave,
-    onchange,
+    onChange,
     onRemoveSelectedTeststep,
     onSelectedTeststepOrderChange,
     onSelectedTeststepsChange,
@@ -58,7 +58,7 @@ const AddNewTestcase = (props) => {
   const isEditForm = cat === "edit";
 
   const handleChange = (e) => {
-    onchange(e.target.name, e.target.value);
+    onChange(e.target.name, e.target.value);
   };
 
   const toggleTeststepModal = () => {
@@ -158,7 +158,7 @@ AddNewTestcase.propTypes = {
   }).isRequired,
   isLoading: PropTypes.bool,
   selectedTeststeps: PropTypes.array,
-  onchange: PropTypes.func,
+  onChange: PropTypes.func,
   onRemoveSelectedTeststep: PropTypes.func,
   onSelectedTeststepOrderChange: PropTypes.func,
   onSelectedTeststepsChange: PropTypes.func,

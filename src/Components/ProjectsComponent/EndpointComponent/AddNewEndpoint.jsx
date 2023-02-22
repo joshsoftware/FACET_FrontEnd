@@ -9,7 +9,7 @@ import { convertToSlug } from "utils";
 
 import { NAME_FIELD_MAX_LENGTH } from "constants/appConstants";
 
-const AddNewEndpoint = ({ cat, data, isLoading, onchange, handleSubmit }) => {
+const AddNewEndpoint = ({ cat, data, isLoading, onChange, handleSubmit }) => {
   const { name, endpoint } = data;
 
   const isEditForm = cat === "edit";
@@ -36,7 +36,7 @@ const AddNewEndpoint = ({ cat, data, isLoading, onchange, handleSubmit }) => {
           placeholder="Name"
           name="name"
           value={name}
-          onChange={onchange}
+          onChange={onChange}
           maxLength={NAME_FIELD_MAX_LENGTH}
           text={nameInputBottomTextMsg}
           disabled={isEditForm}
@@ -47,7 +47,7 @@ const AddNewEndpoint = ({ cat, data, isLoading, onchange, handleSubmit }) => {
           placeholder="Endpoint"
           name="endpoint"
           value={endpoint}
-          onChange={onchange}
+          onChange={onChange}
           isRequired
         />
       </ViewComponent>
@@ -60,7 +60,7 @@ AddNewEndpoint.propTypes = {
   data: PropTypes.shape({ name: PropTypes.string, endpoint: PropTypes.string })
     .isRequired,
   isLoading: PropTypes.bool,
-  onchange: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
 };
 

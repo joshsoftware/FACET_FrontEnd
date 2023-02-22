@@ -13,7 +13,7 @@ const AddNewEnvironment = ({
   cat,
   data,
   isLoading,
-  onchange,
+  onChange,
   handleSubmit,
 }) => {
   const { name, url } = data;
@@ -43,7 +43,7 @@ const AddNewEnvironment = ({
           placeholder="Name"
           name="name"
           value={name}
-          onChange={onchange}
+          onChange={onChange}
           disabled={isEditForm}
           text={nameInputBottomTextMsg}
           maxLength={NAME_FIELD_MAX_LENGTH}
@@ -54,7 +54,7 @@ const AddNewEnvironment = ({
           placeholder="Enter URL"
           name="url"
           value={url}
-          onChange={onchange}
+          onChange={onChange}
           type="url"
           isRequired
         />
@@ -68,7 +68,7 @@ AddNewEnvironment.propTypes = {
   data: PropTypes.shape({ name: PropTypes.string, url: PropTypes.string })
     .isRequired,
   isLoading: PropTypes.bool,
-  onchange: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
 };
 

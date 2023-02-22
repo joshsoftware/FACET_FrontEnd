@@ -14,19 +14,19 @@ import { convertToSlug, isValidJson } from "utils";
 
 import { NAME_FIELD_MAX_LENGTH } from "constants/appConstants";
 
-const AddNewPayload = ({ cat, data, isLoading, onchange, handleSubmit }) => {
+const AddNewPayload = ({ cat, data, isLoading, onChange, handleSubmit }) => {
   const { name, parameters, payload, expected_outcome: expectedOutcome } = data;
 
   const [showPayloadInJsonFormat, setShowPayloadInJsonFormat] = useState(false);
   const [showAddExpOutForm, setShowAddExpOutForm] = useState(false);
 
   const onFormDataChange = (e) => {
-    onchange(e.target.name, e.target.value);
+    onChange(e.target.name, e.target.value);
   };
 
   const onPayloadFieldsChange = (result) => {
     if (JSON.parse(result)) {
-      onchange("payload", result);
+      onChange("payload", result);
     }
   };
 
@@ -34,17 +34,17 @@ const AddNewPayload = ({ cat, data, isLoading, onchange, handleSubmit }) => {
     // update according to new functionalities
     let newResults = [...expectedOutcome];
     newResults[index] = result;
-    onchange("expected_outcome", newResults);
+    onChange("expected_outcome", newResults);
   };
 
   const onAddNewExpOutcomeEntry = (res) => {
     let newResults = [...expectedOutcome];
     newResults.push(res);
-    onchange("expected_outcome", newResults);
+    onChange("expected_outcome", newResults);
   };
 
   const onParameterFieldsChange = (result) => {
-    onchange("parameters", result);
+    onChange("parameters", result);
   };
 
   const toggleExpOutcomeForm = () => setShowAddExpOutForm(!showAddExpOutForm);
@@ -153,7 +153,7 @@ AddNewPayload.propTypes = {
     expected_outcome: PropTypes.array,
   }).isRequired,
   isLoading: PropTypes.bool,
-  onchange: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
 };
 

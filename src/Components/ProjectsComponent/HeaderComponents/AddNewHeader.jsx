@@ -14,7 +14,7 @@ const AddNewHeader = ({
   cat,
   isLoading,
   data,
-  onchange,
+  onChange,
   onKeyValuePairsChange,
   handleSubmit,
 }) => {
@@ -45,7 +45,7 @@ const AddNewHeader = ({
           placeholder="Name"
           name="name"
           value={name}
-          onChange={onchange}
+          onChange={onChange}
           disabled={isEditForm}
           maxLength={NAME_FIELD_MAX_LENGTH}
           text={nameInputBottomTextMsg}
@@ -72,7 +72,7 @@ AddNewHeader.propTypes = {
     name: PropTypes.string,
     header: PropTypes.object,
   }).isRequired,
-  onchange: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
   onKeyValuePairsChange: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
 };

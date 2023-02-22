@@ -127,7 +127,7 @@ const PayloadContainer = ({ cat }) => {
           cat={cat}
           isLoading={isLoading}
           data={payloadsFormData}
-          onchange={onPayloadFormDataChange}
+          onChange={onPayloadFormDataChange}
           handleSubmit={handleSubmit}
         />
       ) : (

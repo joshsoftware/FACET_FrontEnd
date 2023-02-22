@@ -117,7 +117,7 @@ const EndpointContainer = ({ cat }) => {
           cat={cat}
           isLoading={isLoading}
           data={endpointFormData}
-          onchange={onFormDataChange}
+          onChange={onFormDataChange}
           handleSubmit={handleSubmit}
         />
       ) : (
