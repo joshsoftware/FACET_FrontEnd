@@ -12,6 +12,10 @@ import {
 import Backdrop from "Components/Backdrop";
 import Loader from "Components/Loader";
 
+import { truncate } from "utils/helper";
+
+import { NAME_FIELD_MAX_LENGTH } from "constants/appConstants";
+
 import "./style.css";
 
 const ViewComponent = (props) => {
@@ -72,15 +76,22 @@ const ViewComponent = (props) => {
                 Back
               </span>
             </div>
-            <h2>{title}</h2>
+            <h2 title={title}>{truncate(title, NAME_FIELD_MAX_LENGTH - 2)}</h2>
           </div>
           {!hideBtns && (
             <div className="d-flex justify-content-between align-items-center">
               {type === "save" ? (
-                <SaveButton handleClick={onSave} disabled={isSaveDisabled} />
+                <SaveButton
+                  handleClick={onSave}
+                  disabled={isSaveDisabled}
+                  className="d-flex justify-content-between align-items-center"
+                />
               ) : (
                 <>
-                  <EditButton className="mx-2" handleClick={onEdit} />
+                  <EditButton
+                    className="mx-2 d-flex justify-content-between align-items-center"
+                    handleClick={onEdit}
+                  />
                   {/* <DeleteButton 
                       handleClick={onDelete} 
                       disabled 
