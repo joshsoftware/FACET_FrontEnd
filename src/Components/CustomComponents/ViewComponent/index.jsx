@@ -94,7 +94,7 @@ const ViewComponent = (props) => {
       )}
 
       <div className="px-5 py-3">
-        <Card className="w-100 overflow-hidden">
+        <Card className="w-100">
           {isLoading && (
             <Backdrop>
               <Loader />
