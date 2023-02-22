@@ -4,10 +4,12 @@ import { X as CancelIcon } from "react-bootstrap-icons";
 import PropTypes from "prop-types";
 
 import AddTeststepsModal from "./components/AddTeststepsModal";
-import { ViewComponent } from "Components/CustomComponents";
 import { FormInput } from "Components/forms/Inputs";
+import { ViewComponent } from "Components/CustomComponents";
 
 import { convertToSlug } from "utils";
+
+import { NAME_FIELD_MAX_LENGTH } from "constants/appConstants";
 
 import "./style.css";
 
@@ -39,7 +41,7 @@ const AddNewTestcase = (props) => {
     isLoading,
     selectedTeststeps,
     onAddTeststepDataSave,
-    onchange,
+    onChange,
     onRemoveSelectedTeststep,
     onSelectedTeststepOrderChange,
     onSelectedTeststepsChange,
@@ -53,91 +55,91 @@ const AddNewTestcase = (props) => {
 
   const [showteststepModal, setShowteststepModal] = useState(false);
 
+  const isEditForm = cat === "edit";
+
   const handleChange = (e) => {
-    onchange(e.target.name, e.target.value);
+    onChange(e.target.name, e.target.value);
   };
 
   const toggleTeststepModal = () => {
     setShowteststepModal(!showteststepModal);
   };
 
-  const isSaveDisabled = !name || !teststeps?.length;
+  const isSaveDisabled = isLoading || !name || !teststeps?.length;
+
+  const nameInputBottomTextMsg =
+    !!name.length && `Your testcase will be created as ${convertToSlug(name)}`;
+
+  const viewComponentTitle = isEditForm ? name : "Add New Testcase";
 
   return (
-    !isLoading &&
-    typeof data === "object" &&
-    Object.entries(data).length && (
-      <Form className="w-100" onSubmit={onSubmit}>
-        <ViewComponent
-          title="Add New"
-          type="save"
-          onSave={onSubmit}
-          isSaveDisabled={isSaveDisabled}
-        >
-          <AddTeststepsModal
-            show={showteststepModal}
-            onClose={toggleTeststepModal}
-            teststepsOptions={teststepsOptions}
-            onSelectedTeststepsChange={onSelectedTeststepsChange}
-            selectedTeststeps={selectedTeststeps}
-            onAddTeststepDataSave={onAddTeststepDataSave}
-            onRemoveSelectedTeststep={onRemoveSelectedTeststep}
-            onSelectedTeststepOrderChange={onSelectedTeststepOrderChange}
-            onTestdataChangeInSelectedTeststep={
-              onTestdataChangeInSelectedTeststep
-            }
-          />
-          <FormInput
-            label="Name"
-            placeholder="Name"
-            name="name"
-            value={data.name}
-            onChange={handleChange}
-            text={
-              data.name.length !== 0
-                ? `Your testcase will created as ${convertToSlug(data.name)}`
-                : ""
-            }
-            isRequired
-            disabled={cat === "edit"}
-          />
-          <FormInput
-            type="textarea"
-            rows={2}
-            label="Description"
-            placeholder="Write short description here..."
-            name="description"
-            value={description}
-            onChange={handleChange}
-          />
+    <Form className="w-100" onSubmit={onSubmit}>
+      <ViewComponent
+        title={viewComponentTitle}
+        type="save"
+        onSave={onSubmit}
+        isLoading={isLoading}
+        isSaveDisabled={isSaveDisabled}
+      >
+        <AddTeststepsModal
+          show={showteststepModal}
+          onClose={toggleTeststepModal}
+          teststepsOptions={teststepsOptions}
+          onSelectedTeststepsChange={onSelectedTeststepsChange}
+          selectedTeststeps={selectedTeststeps}
+          onAddTeststepDataSave={onAddTeststepDataSave}
+          onRemoveSelectedTeststep={onRemoveSelectedTeststep}
+          onSelectedTeststepOrderChange={onSelectedTeststepOrderChange}
+          onTestdataChangeInSelectedTeststep={
+            onTestdataChangeInSelectedTeststep
+          }
+        />
+        <FormInput
+          label="Name"
+          placeholder="Name"
+          name="name"
+          value={name}
+          onChange={handleChange}
+          text={nameInputBottomTextMsg}
+          maxLength={NAME_FIELD_MAX_LENGTH}
+          isRequired
+        />
+        <FormInput
+          type="textarea"
+          rows={2}
+          label="Description"
+          placeholder="Write short description here..."
+          name="description"
+          value={description}
+          onChange={handleChange}
+        />
 
-          <div>
-            <label>
-              Teststeps<span className="text-danger">*</span>
-            </label>
-            <div className="background-secondary py-3 px-3 rounded">
-              {teststeps?.map(({ name: stepName }, index) => (
-                <TeststepBadge
-                  key={index}
-                  stepName={stepName}
-                  index={index}
-                  onDeleteSelectedTeststep={onDeleteSelectedTeststep}
-                />
-              ))}
-              <small
-                className={`text-success px-3 w-100 ${
-                  !teststeps?.length && "d-flex justify-content-center"
-                }`}
-                role="button"
-                onClick={toggleTeststepModal}
-              >
-                + Add More
-              </small>
-            </div>
+        <div>
+          <label>
+            Teststeps<span className="text-danger">*</span>
+          </label>
+          <div className="background-secondary py-3 px-3 rounded">
+            {teststeps?.map(({ name: stepName }, index) => (
+              <TeststepBadge
+                key={index}
+                stepName={stepName}
+                index={index}
+                onDeleteSelectedTeststep={onDeleteSelectedTeststep}
+              />
+            ))}
+            <small
+              className={`text-success px-3 w-100 ${
+                !teststeps?.length && "d-flex justify-content-center"
+              }`}
+              role="button"
+              onClick={toggleTeststepModal}
+            >
+              + Add More
+            </small>
           </div>
-        </ViewComponent>
-      </Form>
-    )
+        </div>
+      </ViewComponent>
+    </Form>
   );
 };
 
@@ -156,7 +158,7 @@ AddNewTestcase.propTypes = {
   }).isRequired,
   isLoading: PropTypes.bool,
   selectedTeststeps: PropTypes.array,
-  onchange: PropTypes.func,
+  onChange: PropTypes.func,
   onRemoveSelectedTeststep: PropTypes.func,
   onSelectedTeststepOrderChange: PropTypes.func,
   onSelectedTeststepsChange: PropTypes.func,

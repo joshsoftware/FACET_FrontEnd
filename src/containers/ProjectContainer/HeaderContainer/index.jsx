@@ -125,7 +125,7 @@ const HeaderContainer = ({ cat }) => {
           cat={cat}
           isLoading={isLoading}
           data={headersFormData}
-          onchange={onFormDataChange}
+          onChange={onFormDataChange}
           onKeyValuePairsChange={onKeyValuePairsChange}
           handleSubmit={handleSubmit}
         />

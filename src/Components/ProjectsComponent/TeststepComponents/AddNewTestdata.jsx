@@ -11,6 +11,8 @@ import { ViewComponent } from "Components/CustomComponents";
 
 import { convertToSlug } from "utils";
 
+import { NAME_FIELD_MAX_LENGTH } from "constants/appConstants";
+
 const AddNewTestdata = ({ data, onChange, onSubmit, onClose }) => {
   const {
     isEditForm,
@@ -99,9 +101,10 @@ const AddNewTestdata = ({ data, onChange, onSubmit, onClose }) => {
           placeholder="Name"
           value={name}
           onChange={handleInputChange}
-          isRequired
           text={nameBottomInfoText}
+          maxLength={NAME_FIELD_MAX_LENGTH}
           disabled={isEditForm}
+          isRequired
         />
         <div className="mb-3">
           <label className="mb-2">Parameters</label>

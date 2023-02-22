@@ -119,7 +119,7 @@ const EnvironmentContainer = ({ cat }) => {
           cat={cat}
           isLoading={isLoading}
           data={envFormData}
-          onchange={onFormDataChange}
+          onChange={onFormDataChange}
           handleSubmit={handleSubmit}
         />
       ) : (

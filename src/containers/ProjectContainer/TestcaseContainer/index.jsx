@@ -258,7 +258,7 @@ const TestcaseContainer = ({ cat }) => {
             teststepsOptions={options}
             selectedTeststeps={selectedTeststeps}
             onAddTeststepDataSave={onAddTeststepDataSave}
-            onchange={handleTestcaseFormDataChange}
+            onChange={handleTestcaseFormDataChange}
             onRemoveSelectedTeststep={onRemoveSelectedTeststep}
             onReorderSelectedTeststeps={onReorderSelectedTeststeps}
             onSelectedTeststepOrderChange={setSelectedTeststeps}

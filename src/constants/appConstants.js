@@ -84,3 +84,6 @@ export const EXPECTED_OUTCOME_TABLE_HEADINGS = [
   "Value",
   "Validations",
 ];
+
+// set maximum length for input name field
+export const NAME_FIELD_MAX_LENGTH = 50;
