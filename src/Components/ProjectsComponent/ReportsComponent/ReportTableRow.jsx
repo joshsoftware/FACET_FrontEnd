@@ -7,6 +7,9 @@ import BadgeComponent from "Components/BadgeComponent";
 
 import { convertToLocalDate } from "utils/convertToLocalDate";
 import { getReportDetails } from "utils/reportsHelper";
+import { truncate } from "utils/helper";
+
+import { NAME_FIELD_MAX_LENGTH } from "constants/appConstants";
 
 const ReportTableRow = ({ data, projectName }) => {
   const {
@@ -29,8 +32,12 @@ const ReportTableRow = ({ data, projectName }) => {
         </Link>
       </td>
       <td>
-        <Link to={redirectToReport} className="text-decoration-none text-dark">
-          {name}
+        <Link
+          to={redirectToReport}
+          title={name}
+          className="text-decoration-none text-dark"
+        >
+          {truncate(name, NAME_FIELD_MAX_LENGTH)}
         </Link>
       </td>
       <td className="text-capitalize">{level}</td>

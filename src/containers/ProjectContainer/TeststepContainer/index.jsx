@@ -294,8 +294,10 @@ const TeststepContainer = ({ cat }) => {
   }, [projectName, id]);
 
   // helps to navigate add new teststep form page
-  const navigateToAddNewTeststep = () =>
-    navigate(buildRoute(ADD_TESTSTEP_ROUTE, { projectName }));
+  const navigateToAddNewTeststep = useCallback(
+    () => navigate(buildRoute(ADD_TESTSTEP_ROUTE, { projectName })),
+    [projectName]
+  );
 
   // create teststep url
   const teststepsURL = buildRoute(TESTSTEPS_ROUTE, { projectName });
@@ -317,6 +319,7 @@ const TeststepContainer = ({ cat }) => {
       {cat ? (
         <AddNewTeststep
           cat={cat}
+          isLoading={isLoading}
           data={teststepFormData}
           onChange={handleFormDataChange}
           endpointOptions={endpointOptions}

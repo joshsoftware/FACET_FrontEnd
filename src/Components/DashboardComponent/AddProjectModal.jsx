@@ -1,13 +1,15 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { Form } from "react-bootstrap";
+import PropTypes from "prop-types";
 
-import { CustomModal } from "../CustomComponents";
-import { CloseButton, SaveButton } from "../forms/Buttons";
-import { FormInput } from "../forms/Inputs";
+import { CustomModal } from "Components/CustomComponents";
+import { CloseButton, SaveButton } from "Components/forms/Buttons";
+import { FormInput } from "Components/forms/Inputs";
 
-const AddProjectModal = (props) => {
-  const { data, onChange, onSubmit, show, handleClose } = props;
+import { NAME_FIELD_MAX_LENGTH } from "constants/appConstants";
+
+const AddProjectModal = ({ data, onChange, onSubmit, show, handleClose }) => {
+  const { name, description } = data;
 
   return (
     <CustomModal show={show} onClose={handleClose} title="Add New Project">
@@ -16,35 +18,39 @@ const AddProjectModal = (props) => {
           <FormInput
             label="Name"
             placeholder="Enter Name"
-            isRequired
             name="name"
-            value={data.name}
+            value={name}
             onChange={onChange}
+            maxLength={NAME_FIELD_MAX_LENGTH}
+            isRequired
           />
           <FormInput
             label="Description"
             placeholder="Write Description"
             name="description"
-            value={data.description}
+            value={description}
             onChange={onChange}
             type="textarea"
           />
         </CustomModal.Body>
         <CustomModal.Footer>
           <CloseButton handleClick={handleClose} />
-          <SaveButton disabled={data.name.length === 0} />
+          <SaveButton disabled={!name.length} />
         </CustomModal.Footer>
       </Form>
     </CustomModal>
   );
 };
 
-export default AddProjectModal;
-
 AddProjectModal.propTypes = {
-  data: PropTypes.objectOf(PropTypes.string),
+  data: PropTypes.shape({
+    name: PropTypes.string,
+    description: PropTypes.string,
+  }).isRequired,
   show: PropTypes.bool,
-  handleClose: PropTypes.func,
-  onChange: PropTypes.func,
-  onSubmit: PropTypes.func,
+  handleClose: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
 };
+
+export default AddProjectModal;

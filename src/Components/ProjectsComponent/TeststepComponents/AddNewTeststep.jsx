@@ -8,17 +8,22 @@ import { ViewComponent } from "Components/CustomComponents";
 
 import { convertToSlug } from "utils";
 
+import { NAME_FIELD_MAX_LENGTH } from "constants/appConstants";
+
 const AddNewTeststep = ({
   cat,
   data,
   onSubmit,
   onChange,
+  isLoading,
   methodOptions,
   endpointOptions,
   payloadOptions,
   headerOptions,
 }) => {
   const { name, method, endpoint, header, payload } = data;
+
+  const isEditForm = cat === "edit";
 
   // on input field change
   const onFieldChange = (e) => onChange(e.target.name, e.target.value);
@@ -27,17 +32,20 @@ const AddNewTeststep = ({
 
   // check whether all form fields are filled or not, if not then disabled the submit button
   const isSaveButtonDisabled =
-    !name || !method || !endpoint || !header || !payload;
+    isLoading || !name || !method || !endpoint || !header || !payload;
 
   const nameInputBottomTextMsg =
     !!name.length && `Your teststep will be created as ${convertToSlug(name)}`;
 
+  const viewComponentTitle = isEditForm ? name : "Add New Teststep";
+
   return (
     <Form className="w-100" onSubmit={onSubmit}>
       <ViewComponent
-        title="Add New"
+        title={viewComponentTitle}
         type="save"
         onSave={onSubmit}
+        isLoading={isLoading}
         isSaveDisabled={isSaveButtonDisabled}
       >
         <FormInput
@@ -47,7 +55,8 @@ const AddNewTeststep = ({
           value={name}
           onChange={onFieldChange}
           text={nameInputBottomTextMsg}
-          disabled={cat === "edit"}
+          disabled={isEditForm}
+          maxLength={NAME_FIELD_MAX_LENGTH}
           isRequired
         />
         <FormSelect
@@ -89,6 +98,7 @@ const AddNewTeststep = ({
 
 AddNewTeststep.propTypes = {
   cat: PropTypes.oneOf(["add", "edit"]).isRequired,
+  isLoading: PropTypes.bool,
   data: PropTypes.object.isRequired,
   onSubmit: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,

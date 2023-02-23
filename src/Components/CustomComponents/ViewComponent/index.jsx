@@ -9,6 +9,12 @@ import {
   EditButton,
   SaveButton,
 } from "Components/forms/Buttons";
+import Backdrop from "Components/Backdrop";
+import Loader from "Components/Loader";
+
+import { truncate } from "utils/helper";
+
+import { NAME_FIELD_MAX_LENGTH } from "constants/appConstants";
 
 import "./style.css";
 
@@ -25,6 +31,7 @@ const ViewComponent = (props) => {
     title,
     type,
     onBack,
+    isLoading,
   } = props;
 
   const navigate = useNavigate();
@@ -69,15 +76,22 @@ const ViewComponent = (props) => {
                 Back
               </span>
             </div>
-            <h2>{title}</h2>
+            <h2 title={title}>{truncate(title, NAME_FIELD_MAX_LENGTH - 2)}</h2>
           </div>
           {!hideBtns && (
             <div className="d-flex justify-content-between align-items-center">
               {type === "save" ? (
-                <SaveButton handleClick={onSave} disabled={isSaveDisabled} />
+                <SaveButton
+                  handleClick={onSave}
+                  disabled={isSaveDisabled}
+                  className="d-flex justify-content-between align-items-center"
+                />
               ) : (
                 <>
-                  <EditButton className="mx-2" handleClick={onEdit} />
+                  <EditButton
+                    className="mx-2 d-flex justify-content-between align-items-center"
+                    handleClick={onEdit}
+                  />
                   {/* <DeleteButton 
                       handleClick={onDelete} 
                       disabled 
@@ -91,8 +105,13 @@ const ViewComponent = (props) => {
       )}
 
       <div className="px-5 py-3">
-        <Card className="w-100 p-3">
-          <Card.Body>{children}</Card.Body>
+        <Card className="w-100">
+          {isLoading && (
+            <Backdrop>
+              <Loader />
+            </Backdrop>
+          )}
+          <Card.Body className="m-3">{children}</Card.Body>
         </Card>
       </div>
     </div>
@@ -114,6 +133,7 @@ ViewComponent.propTypes = {
   title: PropTypes.string,
   type: PropTypes.string,
   onBack: PropTypes.func,
+  isLoading: PropTypes.bool,
 };
 
 export default ViewComponent;

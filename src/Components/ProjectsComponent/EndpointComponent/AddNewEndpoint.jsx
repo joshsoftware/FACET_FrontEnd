@@ -7,46 +7,51 @@ import { ViewComponent } from "Components/CustomComponents";
 
 import { convertToSlug } from "utils";
 
-const AddNewEndpoint = ({ cat, data, isLoading, onchange, handleSubmit }) => {
+import { NAME_FIELD_MAX_LENGTH } from "constants/appConstants";
+
+const AddNewEndpoint = ({ cat, data, isLoading, onChange, handleSubmit }) => {
   const { name, endpoint } = data;
 
+  const isEditForm = cat === "edit";
+
   // check whether all form fields are filled or not, if not then disabled the submit button
-  const isSaveButtonDisabled = !name.length || !endpoint.length;
+  const isSaveButtonDisabled = isLoading || !name.length || !endpoint.length;
 
   const nameInputBottomTextMsg =
     !!name.length && `Your endpoint will be created as ${convertToSlug(name)}`;
 
+  const viewComponentTitle = isEditForm ? name : "Add New Endpoint";
+
   return (
-    !isLoading &&
-    data && (
-      <Form onSubmit={handleSubmit} className="w-100">
-        <ViewComponent
-          title="Add New"
-          type="save"
-          onSave={handleSubmit}
-          isSaveDisabled={isSaveButtonDisabled}
-        >
-          <FormInput
-            label="Name"
-            placeholder="Name"
-            name="name"
-            value={name}
-            onChange={onchange}
-            isRequired
-            disabled={cat === "edit"}
-            text={nameInputBottomTextMsg}
-          />
-          <FormInput
-            label="Endpoint"
-            placeholder="Endpoint"
-            name="endpoint"
-            value={endpoint}
-            onChange={onchange}
-            isRequired
-          />
-        </ViewComponent>
-      </Form>
-    )
+    <Form onSubmit={handleSubmit} className="w-100">
+      <ViewComponent
+        title={viewComponentTitle}
+        type="save"
+        onSave={handleSubmit}
+        isLoading={isLoading}
+        isSaveDisabled={isSaveButtonDisabled}
+      >
+        <FormInput
+          label="Name"
+          placeholder="Name"
+          name="name"
+          value={name}
+          onChange={onChange}
+          maxLength={NAME_FIELD_MAX_LENGTH}
+          text={nameInputBottomTextMsg}
+          disabled={isEditForm}
+          isRequired
+        />
+        <FormInput
+          label="Endpoint"
+          placeholder="Endpoint"
+          name="endpoint"
+          value={endpoint}
+          onChange={onChange}
+          isRequired
+        />
+      </ViewComponent>
+    </Form>
   );
 };
 
@@ -55,7 +60,7 @@ AddNewEndpoint.propTypes = {
   data: PropTypes.shape({ name: PropTypes.string, endpoint: PropTypes.string })
     .isRequired,
   isLoading: PropTypes.bool,
-  onchange: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
 };
 
