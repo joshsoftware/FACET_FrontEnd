@@ -11,14 +11,8 @@ const DeleteConfirmationModal = ({
   handleClose,
   onDelete,
 }) => (
-  <CustomModal
-    show={show}
-    title={title ? title : "Are You Sure?"}
-    onClose={handleClose}
-  >
-    <CustomModal.Body>
-      {text ? text : "Are you sure you want to DELETE this item?"}
-    </CustomModal.Body>
+  <CustomModal show={show} title={title} onClose={handleClose}>
+    <CustomModal.Body>{text}</CustomModal.Body>
     <CustomModal.Footer>
       <CloseButton label="Cancel" handleClick={handleClose} />
       <DeleteButton handleClick={onDelete} />
@@ -32,6 +26,11 @@ DeleteConfirmationModal.propTypes = {
   handleClose: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   text: PropTypes.oneOfType([PropTypes.string, PropTypes.element]).isRequired,
+};
+
+DeleteConfirmationModal.defaultProps = {
+  title: "Are You Sure?",
+  text: "Are you sure you want to DELETE this item?",
 };
 
 export default DeleteConfirmationModal;
