@@ -22,10 +22,10 @@ const DeleteConfirmationModal = ({
 
 DeleteConfirmationModal.propTypes = {
   show: PropTypes.bool,
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   handleClose: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
-  text: PropTypes.oneOfType([PropTypes.string, PropTypes.element]).isRequired,
+  text: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
 };
 
 DeleteConfirmationModal.defaultProps = {
