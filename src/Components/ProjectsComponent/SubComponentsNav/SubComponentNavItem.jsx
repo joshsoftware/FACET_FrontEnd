@@ -19,7 +19,7 @@ const SubComponentNavItem = ({ itemId, name, componentBaseUrl }) => {
         to={`${componentBaseUrl}/${itemId}`}
         className="nav-link sidebar-link"
       >
-        {truncate(name, 25)}
+        {truncate(name, 23)}
       </Link>
     </Nav.Item>
   );
