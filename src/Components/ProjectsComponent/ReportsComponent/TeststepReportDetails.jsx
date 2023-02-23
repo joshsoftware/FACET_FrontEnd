@@ -7,7 +7,7 @@ import PassFailBadges from "Components/ProjectsComponent/PassFailBadges";
 import TestdataReportDetails from "./TestdataReportDetails";
 import ViewComponent from "Components/CustomComponents/ViewComponent";
 
-const TeststepReportDetails = ({ data, onOpenOutcomeModal }) => {
+const TeststepReportDetails = ({ data, onOpenOutcomeModal, onBack }) => {
   const {
     name,
     endpoint,
@@ -26,7 +26,12 @@ const TeststepReportDetails = ({ data, onOpenOutcomeModal }) => {
   );
 
   return (
-    <ViewComponent hideBtns title={name} rightChildrens={rightChildrens}>
+    <ViewComponent
+      hideBtns
+      title={name}
+      rightChildrens={rightChildrens}
+      onBack={onBack}
+    >
       <Row>
         <Col md={6}>
           <small>
@@ -74,6 +79,7 @@ TeststepReportDetails.propTypes = {
     testcaseName: PropTypes.string.isRequired,
   }).isRequired,
   onOpenOutcomeModal: PropTypes.func.isRequired,
+  onBack: PropTypes.func.isRequired,
 };
 
 export default TeststepReportDetails;
