@@ -51,28 +51,6 @@ const reportsReducer = (state = initialState, action) => {
     case reportsConstants.GET_REPORT_FAILURE:
       return { ...state, isReportLoading: false };
 
-    case reportsConstants.GET_TESTSTEP_OF_REPORT_REQUEST:
-      return {
-        ...state,
-        isTeststepReportLoading: true,
-        showTeststepReport: false,
-      };
-
-    case reportsConstants.GET_TESTSTEP_OF_REPORT_SUCCESS:
-      return {
-        ...state,
-        isTeststepReportLoading: false,
-        teststepReport: payload,
-        showTeststepReport: true,
-      };
-
-    case reportsConstants.GET_TESTSTEP_OF_REPORT_FAILURE:
-      return {
-        ...state,
-        isTeststepReportLoading: false,
-        showTeststepReport: false,
-      };
-
     case reportsConstants.ADD_COMMENT_REQUEST:
       return { ...state, isAddCommentLoading: true };
 
