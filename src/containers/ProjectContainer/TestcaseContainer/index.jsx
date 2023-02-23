@@ -17,7 +17,7 @@ import {
   getTestcasesRequest,
 } from "store/Testcases/actions";
 import { buildRoute } from "utils/helper";
-import { getDiffOfArrayOfObjects } from "utils";
+import { convertToSlug, getDiffOfArrayOfObjects } from "utils";
 import { getEnvironmentsRequest } from "store/Environments/actions";
 import { getTeststepsRequest } from "store/Teststeps/actions";
 
@@ -204,7 +204,7 @@ const TestcaseContainer = ({ cat }) => {
     const { id, name, description, arrayOfTeststeps } = testcaseFormData;
 
     const formDataToSubmit = {
-      name,
+      name: convertToSlug(name),
       project: projectName,
       description,
       array_of_teststeps: arrayOfTeststeps.map((teststep) => ({
