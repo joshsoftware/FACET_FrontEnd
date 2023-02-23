@@ -17,7 +17,7 @@ const TableComponent = ({
     size={size}
     {...props}
   >
-    <thead>
+    <thead className="align-middle">
       <tr>
         {headings?.map((tableHeading, index) => (
           <th key={index}>{tableHeading}</th>

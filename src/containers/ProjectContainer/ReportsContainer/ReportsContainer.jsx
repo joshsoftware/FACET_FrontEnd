@@ -59,7 +59,12 @@ const ReportsContainer = () => {
             next={fetchMoreReports}
             hasMore={reports.length !== totalResults}
           >
-            <TableComponent striped bordered headings={tableHeadings}>
+            <TableComponent
+              striped
+              bordered
+              headings={tableHeadings}
+              className="align-middle"
+            >
               {reports.map((item, index) => (
                 <ReportTableRow
                   key={index}
