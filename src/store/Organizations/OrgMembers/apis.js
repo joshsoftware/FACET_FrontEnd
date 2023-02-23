@@ -6,7 +6,7 @@ export const getOrgMembersApi = (data) =>
   apiClient(`${SERVER_URL}/api/organization/members`, GET, null, data);
 
 export const changeMemberRoleApi = (data) =>
-  apiClient(`${SERVER_URL}/api/organization/members/update`, PUT, data);
+  apiClient(`${SERVER_URL}/api/organization/members`, PUT, data);
 
 export const removeMemberApi = (data) =>
-  apiClient(`${SERVER_URL}/api/organization/members/remove`, DELETE, data);
+  apiClient(`${SERVER_URL}/api/organization/members`, DELETE, data);

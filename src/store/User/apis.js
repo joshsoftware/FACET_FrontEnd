@@ -2,7 +2,7 @@ import { apiClient } from "store/apiHelper";
 
 import axiosInstance from "../../axios";
 
-import { GET, PATCH, POST, SERVER_URL } from "constants/appConstants";
+import { GET, PATCH, POST, PUT, SERVER_URL } from "constants/appConstants";
 import { setLocalStorage } from "utils/localStorage";
 
 export const signInApi = async (data) => {
@@ -24,9 +24,9 @@ export const getUserProfileApi = (data) => {
 };
 
 export const updateUserProfileApi = (data) => {
-  return apiClient(`${SERVER_URL}/api/user/profile/update`, PATCH, data);
+  return apiClient(`${SERVER_URL}/api/user/profile`, PATCH, data);
 };
 
 export const changePasswordApi = (data) => {
-  return apiClient(`${SERVER_URL}/api/user/change-password`, POST, data);
+  return apiClient(`${SERVER_URL}/api/user/password`, PUT, data);
 };

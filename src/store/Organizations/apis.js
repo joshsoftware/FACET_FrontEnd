@@ -6,10 +6,10 @@ export const getOrganizationApi = ({ organization }) =>
   apiClient(`${SERVER_URL}/api/organization/${organization}`);
 
 export const addOrganizationApi = (data) =>
-  apiClient(`${SERVER_URL}/api/organization/new`, POST, data);
+  apiClient(`${SERVER_URL}/api/organization`, POST, data);
 
 export const editOrganizationApi = (data) =>
-  apiClient(`${SERVER_URL}/api/organization/update`, PUT, data);
+  apiClient(`${SERVER_URL}/api/organization`, PUT, data);
 
 export const inviteUsersInOragnizationApi = (data) =>
   apiClient(`${SERVER_URL}/api/organization/members/invite`, POST, data);
