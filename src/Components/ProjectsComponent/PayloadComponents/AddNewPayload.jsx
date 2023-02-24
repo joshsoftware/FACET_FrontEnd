@@ -41,6 +41,9 @@ const AddNewPayload = ({ cat, data, isLoading, onChange, handleSubmit }) => {
     onChange("expected_outcome", newResults);
   };
 
+  // handles save new expected outcome
+  // if name of incoming fields in already present into the expectedOutcomes
+  // then show error and do not save the new entry
   const onAddNewExpOutcomeEntry = (res) => {
     const isExpectedOutcomeExist = expectedOutcome?.find(
       (expOutcome) => expOutcome.name === res.name
