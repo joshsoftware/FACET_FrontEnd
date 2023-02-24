@@ -27,7 +27,7 @@ const AddMembersInProject = ({
         isLoading={isLoading}
         isDisabled={isDisabled}
       />
-      <SaveButton handleClick={onSubmit} />
+      <SaveButton handleClick={onSubmit} disabled={!value?.length} />
     </CustomModal.Body>
   </CustomModal>
 );

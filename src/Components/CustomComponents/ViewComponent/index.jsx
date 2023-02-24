@@ -76,7 +76,9 @@ const ViewComponent = (props) => {
                 Back
               </span>
             </div>
-            <h2 title={title}>{truncate(title, NAME_FIELD_MAX_LENGTH - 4)}</h2>
+            <h2 title={title} className="text-break">
+              {truncate(title, NAME_FIELD_MAX_LENGTH - 4)}
+            </h2>
           </div>
           {!hideBtns && (
             <div className="d-flex justify-content-between align-items-center">
