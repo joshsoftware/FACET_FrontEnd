@@ -18,8 +18,8 @@ const DeleteProjectBox = ({ project, handleDelete }) => {
 
   const modalBodyText = (
     <>
-      Are you sure you want to DELETE the{" "}
-      <span className="fw-bold">project/{project.name}</span> project?
+      Are you sure you want to DELETE the project{" "}
+      <span className="fw-bold">{project.name}</span>?
     </>
   );
 
@@ -38,8 +38,8 @@ const DeleteProjectBox = ({ project, handleDelete }) => {
             <h3>Delete Project</h3>
             <small>
               This action cannot be undone. This will permanently delete the{" "}
-              <span className="fw-bold">project/{project.name}</span> project,
-              its testsuites, testcases, reports, templates, and remove all
+              <span className="fw-bold">{project.name}</span> project, its
+              testsuites, testcases, reports, templates, and remove all
               collaborator associations.
             </small>
           </div>
