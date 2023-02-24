@@ -14,6 +14,7 @@ import {
   getTestsuitesRequest,
 } from "store/Testsuites/actions";
 import { buildRoute } from "utils/helper";
+import { convertToSlug } from "utils";
 import { getEnvironmentsRequest } from "store/Environments/actions";
 import { getTestcasesRequest } from "store/Testcases/actions";
 import { toastMessage } from "utils/toastMessage";
@@ -113,9 +114,9 @@ const TestsuiteContainer = ({ cat }) => {
     } else {
       testcasesFD = testcasesFD.map((testcase) => testcase.value);
 
-      let formPayload = {
+      const formPayload = {
         project: projectName,
-        name: testsuiteName,
+        name: convertToSlug(testsuiteName),
         array_of_testcases: testcasesFD,
       };
 

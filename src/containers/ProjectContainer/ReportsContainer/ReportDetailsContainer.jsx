@@ -5,7 +5,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import {
   addCommentRequest,
   getReportDetailRequest,
-  getTeststepReportRequest,
 } from "store/Reports/actions";
 import ReportDetails from "Components/ProjectsComponent/ReportsComponent/ReportDetails";
 import TestFieldCommentModal from "Components/ProjectsComponent/ReportsComponent/TestFieldCommentModal";
@@ -40,13 +39,7 @@ const ReportDetailsContainer = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { projectName, reportId } = useParams();
-  const {
-    reportDetail,
-    level,
-    isReportLoading,
-    showTeststepReport,
-    teststepReport,
-  } = useSelector(mapState);
+  const { reportDetail, level, isReportLoading } = useSelector(mapState);
 
   // getReportDetails returns destructuring of results based on level
   const { name, passedFields, failedFields, reportData } = getReportDetails(
@@ -58,6 +51,7 @@ const ReportDetailsContainer = () => {
   const [selectedCommentField, setSelectedCommentField] = useState(
     initialSelectedCommentField
   );
+  const [teststepReport, setTeststepReport] = useState(null);
 
   useEffect(() => {
     if (reportId) {
@@ -66,7 +60,7 @@ const ReportDetailsContainer = () => {
   }, [reportId]);
 
   const onTeststepCardClick = (selectedTeststep) => {
-    dispatch(getTeststepReportRequest({ teststep: selectedTeststep }));
+    setTeststepReport(selectedTeststep);
   };
 
   const onOpenOutcomeModal = (fieldData) => {
@@ -141,6 +135,8 @@ const ReportDetailsContainer = () => {
     );
   };
 
+  const onBackFromTeststepReport = () => setTeststepReport(null);
+
   // navigate to reports page when reportDeatil not available
   if (!isReportLoading && Object.entries(reportDetail).length === 0) {
     navigate(`/project/${projectName}/reports`);
@@ -157,9 +153,10 @@ const ReportDetailsContainer = () => {
           onCommentFormSubmit={onCommentFormSubmit}
         />
       )}
-      {showTeststepReport ? (
+      {teststepReport ? (
         <TeststepReportDetails
           data={teststepReport}
+          onBack={onBackFromTeststepReport}
           onOpenOutcomeModal={onOpenOutcomeModal}
         />
       ) : (

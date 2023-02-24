@@ -8,7 +8,10 @@ import ExpectedOutcomeTable from "Components/ProjectsComponent/ExpectedOutcomeTa
 
 import { convertToSlug } from "utils";
 
-import { EXPECTED_OUTCOME_TEMPLATE } from "constants/appConstants";
+import {
+  EXPECTED_OUTCOME_TEMPLATE,
+  NAME_FIELD_MAX_LENGTH,
+} from "constants/appConstants";
 
 const AddExpOutcomeForm = ({ onSave, onClose }) => {
   const [formData, setFormData] = useState({
@@ -37,6 +40,11 @@ const AddExpOutcomeForm = ({ onSave, onClose }) => {
     onClose();
   };
 
+  const onInputFieldsChange = (e) => {
+    const { name, value } = e.target;
+    handleChange(name, value);
+  };
+
   const handleChangeExpectedOutcome = (res) =>
     handleChange("expectedOutcome", res);
 
@@ -47,9 +55,10 @@ const AddExpOutcomeForm = ({ onSave, onClose }) => {
           label={"Name"}
           name="name"
           value={formData.name}
-          onChange={(e) => handleChange(e.target.name, e.target.value)}
+          onChange={onInputFieldsChange}
           placeholder="Name"
           text={nameInputBottomTextMsg}
+          maxLength={NAME_FIELD_MAX_LENGTH}
           isRequired
         />
         <FormInput
