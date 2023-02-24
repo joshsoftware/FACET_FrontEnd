@@ -22,7 +22,7 @@ const AddNewPayload = ({ cat, data, isLoading, onChange, handleSubmit }) => {
   const isEditForm = cat === "edit";
 
   const [showPayloadInJsonFormat, setShowPayloadInJsonFormat] = useState(false);
-  const [showAddExpOutForm, setShowAddExpOutForm] = useState(!isEditForm);
+  const [isShowAddExpOutForm, setIsShowAddExpOutForm] = useState(!isEditForm);
 
   const onFormDataChange = (e) => {
     onChange(e.target.name, e.target.value);
@@ -63,7 +63,7 @@ const AddNewPayload = ({ cat, data, isLoading, onChange, handleSubmit }) => {
   };
 
   const toggleExpOutcomeForm = () =>
-    setShowAddExpOutForm((prevState) => !prevState);
+    setIsShowAddExpOutForm((prevState) => !prevState);
 
   const toggleJsonFormInEditor = () =>
     setShowPayloadInJsonFormat(!showPayloadInJsonFormat);
@@ -140,7 +140,7 @@ const AddNewPayload = ({ cat, data, isLoading, onChange, handleSubmit }) => {
               />
             ))}
           </Accordion>
-          {showAddExpOutForm ? (
+          {isShowAddExpOutForm ? (
             <AddExpOutcomeForm
               onSave={onAddNewExpOutcomeEntry}
               onClose={toggleExpOutcomeForm}
