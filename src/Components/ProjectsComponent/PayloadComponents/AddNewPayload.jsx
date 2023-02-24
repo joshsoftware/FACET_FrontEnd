@@ -46,7 +46,7 @@ const AddNewPayload = ({ cat, data, isLoading, onChange, handleSubmit }) => {
   // then show error and do not save the new entry
   const onAddNewExpOutcomeEntry = (res) => {
     const isExpectedOutcomeExist = expectedOutcome?.find(
-      (expOutcome) => expOutcome.name === res.name
+      (expOutcome) => expOutcome.name === convertToSlug(res?.name)
     );
     if (isExpectedOutcomeExist) {
       toastMessage(EXPECTED_OUTCOME.NAME_ALREADY_EXIST, "error");
