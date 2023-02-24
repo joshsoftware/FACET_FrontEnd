@@ -11,14 +11,18 @@ import KeyValuePairsFormField from "Components/forms/KeyValuePairsFormField";
 import { ViewComponent } from "Components/CustomComponents";
 
 import { convertToSlug, isValidJson } from "utils";
+import { toastMessage } from "utils/toastMessage";
 
+import { EXPECTED_OUTCOME } from "constants/userMessagesConstants";
 import { NAME_FIELD_MAX_LENGTH } from "constants/appConstants";
 
 const AddNewPayload = ({ cat, data, isLoading, onChange, handleSubmit }) => {
   const { name, parameters, payload, expected_outcome: expectedOutcome } = data;
 
+  const isEditForm = cat === "edit";
+
   const [showPayloadInJsonFormat, setShowPayloadInJsonFormat] = useState(false);
-  const [showAddExpOutForm, setShowAddExpOutForm] = useState(false);
+  const [showAddExpOutForm, setShowAddExpOutForm] = useState(!isEditForm);
 
   const onFormDataChange = (e) => {
     onChange(e.target.name, e.target.value);
@@ -38,21 +42,29 @@ const AddNewPayload = ({ cat, data, isLoading, onChange, handleSubmit }) => {
   };
 
   const onAddNewExpOutcomeEntry = (res) => {
+    const isExpectedOutcomeExist = expectedOutcome?.find(
+      (expOutcome) => expOutcome.name === res.name
+    );
+    if (isExpectedOutcomeExist) {
+      toastMessage(EXPECTED_OUTCOME.NAME_ALREADY_EXIST, "error");
+      return;
+    }
     let newResults = [...expectedOutcome];
     newResults.push(res);
     onChange("expected_outcome", newResults);
+    toggleExpOutcomeForm();
   };
 
   const onParameterFieldsChange = (result) => {
     onChange("parameters", result);
   };
 
-  const toggleExpOutcomeForm = () => setShowAddExpOutForm(!showAddExpOutForm);
+  const toggleExpOutcomeForm = () =>
+    setShowAddExpOutForm((prevState) => !prevState);
 
   const toggleJsonFormInEditor = () =>
     setShowPayloadInJsonFormat(!showPayloadInJsonFormat);
 
-  const isEditForm = cat === "edit";
   // check whether all required form fields are filled or not, if not then disabled the submit button
   const isSaveButtonDisabled =
     isLoading ||
@@ -62,9 +74,6 @@ const AddNewPayload = ({ cat, data, isLoading, onChange, handleSubmit }) => {
 
   const nameInputBottomTextMsg =
     !!name.length && `Your payload will be created as ${convertToSlug(name)}`;
-
-  const isExpectedOutcomeForm =
-    showAddExpOutForm || expectedOutcome?.length === 0;
 
   const viewComponentTitle = isEditForm ? name : "Add New Payload";
 
@@ -128,10 +137,11 @@ const AddNewPayload = ({ cat, data, isLoading, onChange, handleSubmit }) => {
               />
             ))}
           </Accordion>
-          {isExpectedOutcomeForm ? (
+          {showAddExpOutForm ? (
             <AddExpOutcomeForm
               onSave={onAddNewExpOutcomeEntry}
               onClose={toggleExpOutcomeForm}
+              isDisabledDeleteButton={!expectedOutcome?.length}
             />
           ) : (
             <div className="text-center my-1">
