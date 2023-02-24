@@ -48,6 +48,11 @@ export const PAYLOADS = {
   UPDATE_SUCCESS: "Payload updated successfully!",
 };
 
+export const EXPECTED_OUTCOME = {
+  NAME_ALREADY_EXIST:
+    "Expected outcome with given name already exist in the payload!",
+};
+
 export const HEADERS = {
   ADD_NEW_SUCCESS: "Header added successfully!",
   UPDATE_SUCCESS: "Header updated successfully!",

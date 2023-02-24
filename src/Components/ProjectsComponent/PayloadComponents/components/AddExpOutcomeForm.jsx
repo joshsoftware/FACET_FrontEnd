@@ -13,7 +13,7 @@ import {
   NAME_FIELD_MAX_LENGTH,
 } from "constants/appConstants";
 
-const AddExpOutcomeForm = ({ onSave, onClose }) => {
+const AddExpOutcomeForm = ({ onSave, onClose, isDisabledDeleteButton }) => {
   const [formData, setFormData] = useState({
     name: "",
     expectedOutcome: [EXPECTED_OUTCOME_TEMPLATE],
@@ -21,7 +21,7 @@ const AddExpOutcomeForm = ({ onSave, onClose }) => {
 
   const nameInputBottomTextMsg =
     !!formData.name.length &&
-    `Your endpoint will be created as ${convertToSlug(formData.name)}`;
+    `Your expected outcome will be created as ${convertToSlug(formData.name)}`;
 
   const handleChange = (name, value) => {
     setFormData((prevState) => ({
@@ -33,11 +33,10 @@ const AddExpOutcomeForm = ({ onSave, onClose }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const updatedFormData = {
-      name: formData.name,
+      name: convertToSlug(formData.name),
       expected_outcome: formData.expectedOutcome,
     };
     onSave(updatedFormData);
-    onClose();
   };
 
   const onInputFieldsChange = (e) => {
@@ -71,9 +70,14 @@ const AddExpOutcomeForm = ({ onSave, onClose }) => {
           }
         />
         <div className="d-flex justify-content-end">
-          <DeleteButton size={"sm"} className="mx-1" handleClick={onClose} />
+          <DeleteButton
+            size="sm"
+            className="mx-1"
+            handleClick={onClose}
+            disabled={isDisabledDeleteButton}
+          />
           <SaveButton
-            size={"sm"}
+            size="sm"
             handleClick={handleSubmit}
             type="button"
             disabled={!formData.name.length}
@@ -87,6 +91,7 @@ const AddExpOutcomeForm = ({ onSave, onClose }) => {
 AddExpOutcomeForm.propTypes = {
   onSave: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
+  isDisabledDeleteButton: PropTypes.bool,
 };
 
 export default AddExpOutcomeForm;
