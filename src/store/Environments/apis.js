@@ -6,9 +6,9 @@ export const getEnvironmentsApi = (data) => {
 };
 
 export const addEnvironmentApi = (data) => {
-  return apiClient(`${SERVER_URL}/api/environments/new`, POST, data);
+  return apiClient(`${SERVER_URL}/api/environments`, POST, data);
 };
 
 export const editEnvironmentApi = (data) => {
-  return apiClient(`${SERVER_URL}/api/environments/update`, PUT, data);
+  return apiClient(`${SERVER_URL}/api/environments`, PUT, data);
 };
