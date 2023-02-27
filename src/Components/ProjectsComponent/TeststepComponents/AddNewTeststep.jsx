@@ -81,6 +81,7 @@ const AddNewTeststep = ({
           options={headerOptions}
           value={header}
           onChange={onSelectChange}
+          menuPlacement="top"
           isRequired
         />
         <FormSelect
@@ -89,6 +90,7 @@ const AddNewTeststep = ({
           options={payloadOptions}
           value={payload}
           onChange={onSelectChange}
+          menuPlacement="top"
           isRequired
         />
       </ViewComponent>
