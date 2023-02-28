@@ -23,3 +23,7 @@
 .background-secondary {
   background: #e2e3e5;
 }
+button span {
+  word-break: normal !important;
+  word-wrap: normal !important;
+}
