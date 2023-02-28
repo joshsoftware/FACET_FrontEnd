@@ -12,6 +12,9 @@ import {
 } from "store/Schedule/actions";
 import { getTestcasesRequest } from "store/Testcases/actions";
 import { getEnvironmentsRequest } from "store/Environments/actions";
+import { buildRoute } from "utils/helper";
+
+import { ADD_SCHEDULE_ROUTE } from "constants/routeConstants";
 
 const mapState = ({ schedules, testcases, environments, testsuites }) => ({
   isLoading: schedules.isLoading,
@@ -119,6 +122,12 @@ const ScheduleContainer = ({ cat }) => {
     dispatch(addScheduleRequest(formDataToSchedule));
   };
 
+  // navigate to cchedule form to create a new entry
+  const navigateToScheduleForm = () => {
+    const scheduleFormRoute = buildRoute(ADD_SCHEDULE_ROUTE, { projectName });
+    navigate(scheduleFormRoute);
+  };
+
   return (
     <div className="w-100">
       {cat ? (
@@ -134,11 +143,12 @@ const ScheduleContainer = ({ cat }) => {
           environmentOptions={environmentOptions}
         />
       ) : (
-        <ScheduleViewComponent
-          data={scheduledCases}
-          isLoading={isLoading}
-          onNavigate={navigate}
-        />
+        !isLoading && (
+          <ScheduleViewComponent
+            data={scheduledCases}
+            navigateToScheduleForm={navigateToScheduleForm}
+          />
+        )
       )}
     </div>
   );
