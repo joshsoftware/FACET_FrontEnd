@@ -14,6 +14,10 @@ import {
   editHeadersRequest,
   getHeadersRequest,
 } from "store/Headers/actions";
+import {
+  convertArrayToObject,
+  convertToKeyValuePairsArray,
+} from "utils/helpers/keyValuePairs";
 import { buildRoute } from "utils/helper";
 
 import {
@@ -29,7 +33,7 @@ const mapState = ({ headers }) => ({
 
 const INITIAL_FORM_DATA = {
   name: "",
-  header: {},
+  header: [{ key: "", value: "" }],
 };
 
 const HeaderContainer = ({ cat }) => {
@@ -59,10 +63,11 @@ const HeaderContainer = ({ cat }) => {
   useEffect(() => {
     if (cat === "edit" && selectedItem) {
       const { name, header, id: headerId } = selectedItem;
+      const headerData = convertToKeyValuePairsArray(header);
       setHeadersFormData((prevState) => ({
         ...prevState,
         name: name || "",
-        header: { ...header },
+        header: headerData,
         id: headerId || INITIAL_FORM_DATA.id,
       }));
     }
@@ -86,10 +91,14 @@ const HeaderContainer = ({ cat }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const headersData = {
+      ...headersFormData,
+      header: convertArrayToObject(headersFormData.header),
+    };
     if (cat === "edit") {
-      dispatch(editHeadersRequest(headersFormData));
+      dispatch(editHeadersRequest(headersData));
     } else {
-      dispatch(addHeadersRequest(headersFormData));
+      dispatch(addHeadersRequest(headersData));
     }
   };
 
