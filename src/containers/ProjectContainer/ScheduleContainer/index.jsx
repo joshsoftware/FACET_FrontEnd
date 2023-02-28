@@ -13,23 +13,27 @@ import {
 import { getTestcasesRequest } from "store/Testcases/actions";
 import { getEnvironmentsRequest } from "store/Environments/actions";
 
-const mapState = ({ schedules, testcases, environments }) => ({
+const mapState = ({ schedules, testcases, environments, testsuites }) => ({
   isLoading: schedules.isLoading,
   scheduledCases: schedules.scheduledCases,
-  options: {
-    testcases: testcases.testcases.map((testcase) => ({
-      label: testcase.name,
-      value: testcase.id,
-    })),
-    environments: environments.environments.map((environment) => ({
-      label: environment.name,
-      value: environment.id,
-    })),
-  },
+  testcaseOptions: testcases.testcases.map((testcase) => ({
+    label: testcase.name,
+    value: testcase.id,
+  })),
+  testsuiteOptions: testsuites.testsuites.map((testcase) => ({
+    label: testcase.name,
+    value: testcase.id,
+  })),
+  environmentOptions: environments.environments.map((environment) => ({
+    label: environment.name,
+    value: environment.id,
+  })),
 });
 
 const initialScheduleFormData = {
+  level: null,
   testcase: null,
+  testsuite: null,
   environment: null,
   startDateTime: "",
   frequencyType: "",
@@ -50,7 +54,13 @@ const ScheduleContainer = ({ cat }) => {
   const navigate = useNavigate();
 
   const { projectName } = useParams();
-  const { isLoading, scheduledCases, options } = useSelector(mapState);
+  const {
+    isLoading,
+    scheduledCases,
+    testcaseOptions,
+    testsuiteOptions,
+    environmentOptions,
+  } = useSelector(mapState);
 
   const [addNewScheduleFormData, setAddNewScheduleFormData] = useState(
     initialScheduleFormData
@@ -78,25 +88,35 @@ const ScheduleContainer = ({ cat }) => {
   const handleFormDataSubmit = (e) => {
     e.preventDefault();
     const {
+      level,
       frequencyType,
       frequencyValue,
       testcase,
+      testsuite,
       environment,
+      startDateTime,
+      endDateTime,
       ...otherFormData
     } = addNewScheduleFormData;
 
-    dispatch(
-      addScheduleRequest({
-        ...otherFormData,
-        environment: environment?.value,
-        testcase: testcase?.value,
-        startDateTime: new Date(otherFormData.startDateTime).getTime() / 1000,
-        endDateTime: new Date(otherFormData.endDateTime).getTime() / 1000,
-        frequency: frequencyValue,
-        frequency_type: frequencyType,
-        project: projectName,
-      })
-    );
+    let formDataToSchedule = {
+      ...otherFormData,
+      level,
+      environment: environment?.value,
+      startDateTime: new Date(startDateTime).getTime() / 1000,
+      endDateTime: new Date(endDateTime).getTime() / 1000,
+      frequency: frequencyValue,
+      frequency_type: frequencyType,
+      project: projectName,
+    };
+
+    if (level === "testcase") {
+      formDataToSchedule["testcase"] = testcase?.value;
+    } else if (level === "testsuite") {
+      formDataToSchedule["testuite"] = testsuite?.value;
+    }
+
+    dispatch(addScheduleRequest(formDataToSchedule));
   };
 
   return (
@@ -109,7 +129,9 @@ const ScheduleContainer = ({ cat }) => {
           data={addNewScheduleFormData}
           onChange={handleFormDataChange}
           onSubmit={handleFormDataSubmit}
-          options={options}
+          testcaseOptions={testcaseOptions}
+          testsuiteOptions={testsuiteOptions}
+          environmentOptions={environmentOptions}
         />
       ) : (
         <ScheduleViewComponent
