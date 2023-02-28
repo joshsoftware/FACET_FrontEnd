@@ -33,13 +33,15 @@ const mapState = ({ reports }) => ({
   isReportLoading: reports.isReportLoading,
   showTeststepReport: reports.showTeststepReport,
   teststepReport: reports.teststepReport,
+  environment: reports.report?.environment?.url,
 });
 
 const ReportDetailsContainer = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { projectName, reportId } = useParams();
-  const { reportDetail, level, isReportLoading } = useSelector(mapState);
+  const { reportDetail, level, environment, isReportLoading } =
+    useSelector(mapState);
 
   // getReportDetails returns destructuring of results based on level
   const { name, passedFields, failedFields, reportData } = getReportDetails(
@@ -156,6 +158,7 @@ const ReportDetailsContainer = () => {
       {teststepReport ? (
         <TeststepReportDetails
           data={teststepReport}
+          environment={environment}
           onBack={onBackFromTeststepReport}
           onOpenOutcomeModal={onOpenOutcomeModal}
         />

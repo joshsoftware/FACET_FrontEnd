@@ -7,7 +7,12 @@ import PassFailBadges from "Components/ProjectsComponent/PassFailBadges";
 import TestdataReportDetails from "./TestdataReportDetails";
 import ViewComponent from "Components/CustomComponents/ViewComponent";
 
-const TeststepReportDetails = ({ data, onOpenOutcomeModal, onBack }) => {
+const TeststepReportDetails = ({
+  data,
+  onOpenOutcomeModal,
+  environment,
+  onBack,
+}) => {
   const {
     name,
     endpoint,
@@ -37,7 +42,7 @@ const TeststepReportDetails = ({ data, onOpenOutcomeModal, onBack }) => {
           <small>
             <b>Endpoint</b>
           </small>
-          <div>{endpoint}</div>
+          <div>{environment + endpoint}</div>
         </Col>
         <Col md={6}>
           <small>
@@ -80,6 +85,7 @@ TeststepReportDetails.propTypes = {
   }).isRequired,
   onOpenOutcomeModal: PropTypes.func.isRequired,
   onBack: PropTypes.func.isRequired,
+  environment: PropTypes.string.isRequired,
 };
 
 export default TeststepReportDetails;
