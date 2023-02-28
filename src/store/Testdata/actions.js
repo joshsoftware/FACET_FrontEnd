@@ -20,11 +20,11 @@ export const addTestdataRequest = (data) => ({
 });
 
 export const addTestdataSuccess = () => ({
-  type: testdataConstants.GET_TESTDATA_SUCCESS,
+  type: testdataConstants.ADD_TESTDATA_SUCCESS,
 });
 
 export const addTestdataFailure = () => ({
-  type: testdataConstants.GET_TESTDATA_FAILURE,
+  type: testdataConstants.ADD_TESTDATA_FAILURE,
 });
 
 export const editTestdataRequest = (data) => ({
