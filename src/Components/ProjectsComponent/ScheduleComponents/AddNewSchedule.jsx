@@ -142,7 +142,6 @@ const AddNewSchedule = ({
                 ))}
               </div>
             </div>
-
             {frequencyType === "custom" && (
               <div className="col-md-12 alert-secondary rounded py-2 mb-3">
                 <SetCustomTimeInput
@@ -151,7 +150,6 @@ const AddNewSchedule = ({
                 />
               </div>
             )}
-
             {frequencyType && (
               <>
                 <FormInput
