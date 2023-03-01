@@ -42,6 +42,9 @@ const AddNewSchedule = ({
   // on FormSelect Changes
   const onSelectChange = (value, { name }) => onChange(name, value);
 
+  // helps to change frequency value
+  const onChangeFrequencyValue = (value) => onChange("frequencyValue", value);
+
   // it checks whether all entries of form filled or not, if not it will disable the save button
   // testcase and evironment is object if selected otherwise it will be null
   const isSaveButtonDisabled =
@@ -61,7 +64,7 @@ const AddNewSchedule = ({
       >
         <Row className="mb-3">
           <label className="mb-2">
-            Select the component you want to execute{" "}
+            Select the component you want to schedule{" "}
             <span className="text-danger">*</span>
           </label>
           <div className="d-flex">
@@ -144,7 +147,7 @@ const AddNewSchedule = ({
               <div className="col-md-12 alert-secondary rounded py-2 mb-3">
                 <SetCustomTimeInput
                   value={frequencyValue}
-                  handleChange={(value) => onChange("frequencyValue", value)}
+                  handleChange={onChangeFrequencyValue}
                 />
               </div>
             )}

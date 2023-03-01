@@ -18,22 +18,18 @@ const ScheduleTableRow = ({
 }) => {
   const name = level === "testcase" ? testcase : testsuite;
 
+  const frequencyValue =
+    frequencyType === "custom"
+      ? frequency.days + "d:" + frequency.hours + "h:" + frequency.minutes + "m"
+      : frequencyType;
+
   return (
     <tr>
       <td>{index + 1}</td>
       <td title={name}>{truncate(name, 20)}</td>
       <td className="text-capitalize">{level}</td>
       <td title={environment}>{truncate(environment, 20)}</td>
-      <td className="text-capitalize">
-        {frequencyType === "custom"
-          ? frequency.days +
-            "d:" +
-            frequency.hours +
-            "h:" +
-            frequency.minutes +
-            "m"
-          : frequencyType}
-      </td>
+      <td className="text-capitalize">{frequencyValue}</td>
       <td>{convertToLocalDate(createdAt)}</td>
       <td className="text-capitalize">{status}</td>
       <td>{scheduledBy}</td>
