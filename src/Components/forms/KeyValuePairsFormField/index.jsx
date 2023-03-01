@@ -16,8 +16,7 @@ const KeyValuePairsFormField = ({ data, onChange }) => {
   };
 
   const onRemoveField = (index) => {
-    let values = [...data];
-    values.splice(index, 1);
+    const values = data?.filter((_, currentIndex) => currentIndex !== index);
     onChange(values);
   };
 
