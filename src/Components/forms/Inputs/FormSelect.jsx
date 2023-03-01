@@ -34,6 +34,7 @@ const FormSelect = ({
         placeholder={placeholder}
         isLoading={isLoading}
         isDisabled={isDisabled}
+        maxMenuHeight={172}
         {...props}
       />
       {text && <Form.Text className="text-muted">{text}</Form.Text>}
