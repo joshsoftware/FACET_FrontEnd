@@ -8,9 +8,11 @@ import ScheduleViewComponent from "Components/ProjectsComponent/ScheduleComponen
 
 import {
   addScheduleRequest,
-  getAllSchedulesRequest,
+  getSchedulesRequest,
+  resetScheduleSuccess,
 } from "store/Schedule/actions";
 import { getTestcasesRequest } from "store/Testcases/actions";
+import { getTestsuitesRequest } from "store/Testsuites/actions";
 import { getEnvironmentsRequest } from "store/Environments/actions";
 import { buildRoute } from "utils/helper";
 
@@ -18,6 +20,7 @@ import { ADD_SCHEDULE_ROUTE } from "constants/routeConstants";
 
 const mapState = ({ schedules, testcases, environments, testsuites }) => ({
   isLoading: schedules.isLoading,
+  isSuccess: schedules.isSuccess,
   scheduledCases: schedules.scheduledCases,
   testcaseOptions: testcases.testcases.map((testcase) => ({
     label: testcase.name,
@@ -59,6 +62,7 @@ const ScheduleContainer = ({ cat }) => {
   const { projectName } = useParams();
   const {
     isLoading,
+    isSuccess,
     scheduledCases,
     testcaseOptions,
     testsuiteOptions,
@@ -70,18 +74,27 @@ const ScheduleContainer = ({ cat }) => {
   );
 
   useEffect(() => {
-    dispatch(getAllSchedulesRequest({ project: projectName }));
+    dispatch(getSchedulesRequest({ project: projectName }));
   }, [projectName]);
 
   // fetch testcases and environments when cat changes
   useEffect(() => {
     if (cat) {
       dispatch(getTestcasesRequest({ project: projectName }));
+      dispatch(getTestsuitesRequest({ project: projectName }));
       dispatch(getEnvironmentsRequest({ project: projectName }));
     }
 
     return () => setAddNewScheduleFormData(initialScheduleFormData);
   }, [projectName, cat]);
+
+  // refetch schedules once isSuccess becomes true
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(getSchedulesRequest({ project: projectName }));
+    }
+    return () => resetScheduleSuccess();
+  }, [isSuccess]);
 
   // on form data change
   const handleFormDataChange = (name, value) =>
@@ -116,7 +129,7 @@ const ScheduleContainer = ({ cat }) => {
     if (level === "testcase") {
       formDataToSchedule["testcase"] = testcase?.value;
     } else if (level === "testsuite") {
-      formDataToSchedule["testuite"] = testsuite?.value;
+      formDataToSchedule["testsuite"] = testsuite?.value;
     }
 
     dispatch(addScheduleRequest(formDataToSchedule));

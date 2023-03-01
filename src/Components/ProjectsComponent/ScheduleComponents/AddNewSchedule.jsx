@@ -45,10 +45,9 @@ const AddNewSchedule = ({
   // it checks whether all entries of form filled or not, if not it will disable the save button
   // testcase and evironment is object if selected otherwise it will be null
   const isSaveButtonDisabled =
-    !testcase ||
+    !level ||
+    (level === "testcase" ? !testcase : !testsuite) ||
     !environment ||
-    !Object.keys(testcase)?.length ||
-    !Object.keys(environment)?.length ||
     !frequencyType ||
     !startDateTime;
 
