@@ -1,85 +1,79 @@
-import React, { useMemo } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 
 import { ViewComponent } from "Components/CustomComponents";
 import { AddButton } from "Components/forms/Buttons";
 import NoResultsFound from "Components/NoResultsFound";
-import TableComponent from "Components/CustomComponents/TableComponent";
+import TableComponent from "Components/CustomComponents/TableComponent/index";
 
-import ScheduleTableRow from "./components/ScheduleTableRow";
+const ScheduleViewComponent = (props) => {
+  const { data, isLoading, onNavigate } = props;
 
-const tableHeadings = [
-  "#",
-  "Name",
-  "Type",
-  "Environment",
-  "Frequency",
-  "Created on",
-  "Status",
-  "Scheduled By",
-];
-
-const ScheduleViewComponent = ({ data, navigateToScheduleForm }) => {
-  const viewComponentRight = useMemo(
-    () => (
-      <AddButton label="Schedule New" handleClick={navigateToScheduleForm} />
-    ),
-    [navigateToScheduleForm]
-  );
+  const AddNew = () => {
+    onNavigate("new");
+  };
 
   return (
-    <ViewComponent
-      title="Schedule Testcases"
-      hideBtns
-      rightChildrens={viewComponentRight}
-    >
-      {!data.length ? (
-        <NoResultsFound
-          btnLabel="Schedule New Testcase/Testsuite"
-          btnOnclick={navigateToScheduleForm}
-        />
-      ) : (
-        <TableComponent striped bordered headings={tableHeadings}>
-          {data.map(
-            (
-              {
-                level,
-                testcase,
-                testsuite,
-                environment,
-                frequency,
-                status,
-                frequency_type: frequencyType,
-                created_at: createdAt,
-                scheduled_by: scheduledBy,
-              },
-              index
-            ) => (
-              <ScheduleTableRow
-                key={index}
-                index={index}
-                level={level}
-                testcase={testcase}
-                testsuite={testsuite}
-                environment={environment}
-                frequency={frequency}
-                status={status}
-                frequencyType={frequencyType}
-                createdAt={createdAt}
-                scheduledBy={scheduledBy}
-              />
-            )
-          )}
-        </TableComponent>
-      )}
-    </ViewComponent>
+    !isLoading && (
+      <ViewComponent
+        title="Schedule Testcases"
+        hideBtns
+        rightChildrens={
+          <AddButton label="Schedule Testcase" handleClick={AddNew} />
+        }
+      >
+        {data.length === 0 ? (
+          <NoResultsFound
+            btnLabel="Schedule New Testcase"
+            btnOnclick={AddNew}
+          />
+        ) : (
+          <TableComponent
+            striped
+            bordered
+            headings={[
+              "#",
+              "Testcase",
+              "Environment",
+              "Frequency",
+              "Created on",
+              "Status",
+              "Scheduled By",
+            ]}
+          >
+            {data.map((item, index) => {
+              return (
+                <tr key={index}>
+                  <td>{index + 1}</td>
+                  <td>{item.testcase}</td>
+                  <td>{item.environment}</td>
+                  <td className="text-capitalize">
+                    {item.frequency_type === "custom"
+                      ? item.frequency.days +
+                        "d:" +
+                        item.frequency.hours +
+                        "h:" +
+                        item.frequency.minutes +
+                        "m"
+                      : item.frequency_type}
+                  </td>
+                  <td>{item.created_at}</td>
+                  <td className="text-capitalize">{item.status}</td>
+                  <td>{item.scheduled_by}</td>
+                </tr>
+              );
+            })}
+          </TableComponent>
+        )}
+      </ViewComponent>
+    )
   );
 };
 
 ScheduleViewComponent.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.object).isRequired,
+  data: PropTypes.array,
   isLoading: PropTypes.bool,
-  navigateToScheduleForm: PropTypes.func.isRequired,
+  onNavigate: PropTypes.func,
 };
 
 export default ScheduleViewComponent;

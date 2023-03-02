@@ -1,17 +1,17 @@
 import scheduleConstants from "./constants";
 
-export const getSchedulesRequest = (data) => ({
-  type: scheduleConstants.GET_SCHEDULES_REQUEST,
+export const getAllSchedulesRequest = (data) => ({
+  type: scheduleConstants.GET_SCHEDULE_TESTCASE_REQUEST,
   payload: data,
 });
 
-export const getSchedulesSuccess = (data) => ({
-  type: scheduleConstants.GET_SCHEDULES_SUCCESS,
+export const getAllSchedulesSuccess = (data) => ({
+  type: scheduleConstants.GET_SCHEDULE_TESTCASE_SUCCESS,
   payload: data,
 });
 
-export const getSchedulesFailure = () => ({
-  type: scheduleConstants.GET_SCHEDULES_FAILURE,
+export const getAllSchedulesFailure = () => ({
+  type: scheduleConstants.GET_SCHEDULE_TESTCASE_FAILURE,
 });
 
 export const addScheduleRequest = (data) => ({
@@ -25,8 +25,4 @@ export const addScheduleSuccess = () => ({
 
 export const addScheduleFailure = () => ({
   type: scheduleConstants.ADD_SCHEDULE_FAILURE,
-});
-
-export const resetScheduleSuccess = () => ({
-  type: scheduleConstants.RESET_SCHEDULE_SUCCESS,
 });
