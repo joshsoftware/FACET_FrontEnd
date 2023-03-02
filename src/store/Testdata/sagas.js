@@ -3,6 +3,7 @@ import { call, put, takeLatest } from "redux-saga/effects";
 import { addTestdataApi, editTestdataApi, getTestdatasApi } from "./apis";
 import {
   addTestdataFailure,
+  addTestdataSuccess,
   editTestdataFailure,
   editTestdataSuccess,
   getTestdataFailure,
@@ -29,7 +30,7 @@ export function* addTestdata({ payload }) {
   try {
     yield call(addTestdataApi, payload);
     toastMessage(TESTDATA.ADD_NEW_SUCCESS);
-    yield call(getTestdatas, { payload: { teststep: payload.teststep } });
+    yield put(addTestdataSuccess());
   } catch (error) {
     const errorMessage = apisErrorMessage(error);
     toastMessage(errorMessage, "error");

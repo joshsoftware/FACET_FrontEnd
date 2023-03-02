@@ -52,16 +52,16 @@ export const INITIAL_TESTDATA_FORM_DATA = {
   teststep: "",
   name: "",
   payload: JSON.stringify({}),
-  parameters: { "": "" },
+  parameters: [{ "": "" }],
   selectedExpOutcome: null,
   expectedOutcome: [],
 };
 
 export const INITIAL_PAYLOAD_FORM_DATA = {
   name: "",
-  parameters: { "": "" },
+  parameters: [{ "": "" }],
   payload: JSON.stringify({}),
-  expected_outcome: [],
+  expectedOutcome: [],
 };
 
 export const INITIAL_TESTSUITE_FORM_DATA = {

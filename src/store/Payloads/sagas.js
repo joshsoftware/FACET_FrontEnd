@@ -3,7 +3,9 @@ import { call, put, takeLatest } from "redux-saga/effects";
 import { addPayloadApi, editPayloadApi, getPayloadsApi } from "./apis";
 import {
   addPayloadsFailure,
+  addPayloadsSuccess,
   editPayloadsFailure,
+  editPayloadsSuccess,
   getPayloadsFailure,
   getPayloadsSuccess,
 } from "./actions";
@@ -28,7 +30,7 @@ export function* addPayload({ payload }) {
   try {
     yield call(addPayloadApi, payload);
     toastMessage(PAYLOADS.ADD_NEW_SUCCESS);
-    yield call(getPayloads, { payload: { project: payload.project } });
+    yield put(addPayloadsSuccess());
   } catch (error) {
     const errorMessage = apisErrorMessage(error);
     toastMessage(errorMessage, "error");
@@ -40,7 +42,7 @@ export function* editPayload({ payload }) {
   try {
     yield call(editPayloadApi, payload);
     toastMessage(PAYLOADS.UPDATE_SUCCESS);
-    yield call(getPayloads, { payload: { project: payload.project } });
+    yield put(editPayloadsSuccess());
   } catch (error) {
     const errorMessage = apisErrorMessage(error);
     toastMessage(errorMessage, "error");

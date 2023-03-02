@@ -17,7 +17,7 @@ import { EXPECTED_OUTCOME } from "constants/userMessagesConstants";
 import { NAME_FIELD_MAX_LENGTH } from "constants/appConstants";
 
 const AddNewPayload = ({ cat, data, isLoading, onChange, handleSubmit }) => {
-  const { name, parameters, payload, expected_outcome: expectedOutcome } = data;
+  const { name, parameters, payload, expectedOutcome } = data;
 
   const isEditForm = cat === "edit";
 
@@ -38,7 +38,7 @@ const AddNewPayload = ({ cat, data, isLoading, onChange, handleSubmit }) => {
     // update according to new functionalities
     let newResults = [...expectedOutcome];
     newResults[index] = result;
-    onChange("expected_outcome", newResults);
+    onChange("expectedOutcome", newResults);
   };
 
   // handles save new expected outcome
@@ -54,7 +54,7 @@ const AddNewPayload = ({ cat, data, isLoading, onChange, handleSubmit }) => {
     }
     let newResults = [...expectedOutcome];
     newResults.push(res);
-    onChange("expected_outcome", newResults);
+    onChange("expectedOutcome", newResults);
     toggleExpOutcomeForm();
   };
 
@@ -106,7 +106,7 @@ const AddNewPayload = ({ cat, data, isLoading, onChange, handleSubmit }) => {
           <label className="mb-2">Parameters</label>
           <KeyValuePairsFormField
             data={parameters}
-            setData={onParameterFieldsChange}
+            onChange={onParameterFieldsChange}
           />
         </div>
         <div className="mb-3">
@@ -161,9 +161,11 @@ AddNewPayload.propTypes = {
   cat: PropTypes.oneOf(["add", "edit"]).isRequired,
   data: PropTypes.shape({
     name: PropTypes.string,
-    parameters: PropTypes.object,
+    parameters: PropTypes.arrayOf(
+      PropTypes.shape({ key: PropTypes.string, value: PropTypes.string })
+    ),
     payload: PropTypes.object,
-    expected_outcome: PropTypes.array,
+    expectedOutcome: PropTypes.array,
   }).isRequired,
   isLoading: PropTypes.bool,
   onChange: PropTypes.func.isRequired,

@@ -110,7 +110,7 @@ const AddNewTestdata = ({ data, onChange, onSubmit, onClose }) => {
           <label className="mb-2">Parameters</label>
           <KeyValuePairsFormField
             data={parameters}
-            setData={onParameterFieldsChange}
+            onChange={onParameterFieldsChange}
           />
         </div>
         <div className="mb-3">
@@ -164,7 +164,9 @@ AddNewTestdata.propTypes = {
     isEditForm: PropTypes.bool,
     id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     name: PropTypes.string,
-    parameters: PropTypes.object,
+    parameters: PropTypes.arrayOf(
+      PropTypes.shape({ key: PropTypes.string, value: PropTypes.string })
+    ),
     payload: PropTypes.string,
     expectedOutcome: PropTypes.arrayOf(PropTypes.object),
     selectedExpOutcome: PropTypes.object,

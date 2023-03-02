@@ -52,3 +52,7 @@ export const deletePayloadsSuccess = () => ({
 export const deletePayloadsFailure = () => ({
   type: payloadConstants.DELETE_PAYLOADS_FAILURE,
 });
+
+export const resetPayloadSuccessAction = () => ({
+  type: payloadConstants.RESET_PAYLOAD_SUCCESS,
+});

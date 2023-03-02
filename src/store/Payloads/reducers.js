@@ -1,6 +1,6 @@
 import payloadConstants from "./constants";
 
-const initialState = { isLoading: false, payloads: [] };
+const initialState = { isLoading: false, payloads: [], isSuccess: false };
 
 const payloadReducer = (state = initialState, action) => {
   const { type, payload } = action;
@@ -19,7 +19,7 @@ const payloadReducer = (state = initialState, action) => {
       return { ...state, isLoading: true };
 
     case payloadConstants.ADD_PAYLOADS_SUCCESS:
-      return { ...state, isLoading: false };
+      return { ...state, isLoading: false, isSuccess: true };
 
     case payloadConstants.ADD_PAYLOADS_FAILURE:
       return { ...state, isLoading: false };
@@ -28,10 +28,13 @@ const payloadReducer = (state = initialState, action) => {
       return { ...state, isLoading: true };
 
     case payloadConstants.EDIT_PAYLOADS_SUCCESS:
-      return { ...state, isLoading: false };
+      return { ...state, isLoading: false, isSuccess: true };
 
     case payloadConstants.EDIT_PAYLOADS_FAILURE:
       return { ...state, isLoading: false };
+
+    case payloadConstants.RESET_PAYLOAD_SUCCESS:
+      return { ...state, isSuccess: false };
 
     default:
       return state;
