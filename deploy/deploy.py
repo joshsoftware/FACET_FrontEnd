@@ -33,7 +33,7 @@ set('hosts', ['stage-facet.joshsoftware.com'])
 
 # Settings - application
 
-set('deploy_to', '/data/www/frontend2')
+set('deploy_to', '/data/www/frontend')
 set('repository', 'git@github.com:joshsoftware/FACET_FrontEnd.git')
 set('branch', 'staging')
 
