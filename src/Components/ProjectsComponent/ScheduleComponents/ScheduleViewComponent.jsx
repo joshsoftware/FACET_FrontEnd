@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 
 import { ViewComponent } from "Components/CustomComponents";
@@ -20,8 +20,11 @@ const tableHeadings = [
 ];
 
 const ScheduleViewComponent = ({ data, navigateToScheduleForm }) => {
-  const viewComponentRight = (
-    <AddButton label="Schedule New" handleClick={navigateToScheduleForm} />
+  const viewComponentRight = useMemo(
+    () => (
+      <AddButton label="Schedule New" handleClick={navigateToScheduleForm} />
+    ),
+    [navigateToScheduleForm]
   );
 
   return (

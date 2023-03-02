@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -135,11 +135,11 @@ const ScheduleContainer = ({ cat }) => {
     dispatch(addScheduleRequest(formDataToSchedule));
   };
 
-  // navigate to cchedule form to create a new entry
-  const navigateToScheduleForm = () => {
+  // navigate to schedule form to create a new entry
+  const navigateToScheduleForm = useCallback(() => {
     const scheduleFormRoute = buildRoute(ADD_SCHEDULE_ROUTE, { projectName });
     navigate(scheduleFormRoute);
-  };
+  }, []);
 
   return (
     <div className="w-100">
