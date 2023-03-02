@@ -13,7 +13,12 @@ import {
   addPayloadsRequest,
   editPayloadsRequest,
   getPayloadsRequest,
+  resetPayloadSuccessAction,
 } from "store/Payloads/actions";
+import {
+  convertArrayToObject,
+  convertToKeyValuePairsArray,
+} from "utils/helpers/keyValuePairs";
 import { buildRoute } from "utils/helper";
 
 import { INITIAL_PAYLOAD_FORM_DATA } from "constants/appConstants";
@@ -26,6 +31,7 @@ import {
 const mapState = ({ payloads }) => ({
   payloads: payloads.payloads,
   isLoading: payloads.isLoading,
+  isSuccess: payloads.isSuccess,
 });
 
 const PayloadContainer = ({ cat }) => {
@@ -33,7 +39,7 @@ const PayloadContainer = ({ cat }) => {
   const navigate = useNavigate();
 
   const { projectName, id } = useParams();
-  const { payloads, isLoading } = useSelector(mapState);
+  const { payloads, isLoading, isSuccess } = useSelector(mapState);
 
   const [selectedItem, setSelectedItem] = useState({});
   const [payloadsFormData, setPayloadsFormData] = useState({
@@ -45,55 +51,84 @@ const PayloadContainer = ({ cat }) => {
     dispatch(getPayloadsRequest({ project: projectName }));
   }, [projectName]);
 
+  // If the isSuccess flag is true then clear isSuccess flag and re-request payloads
   useEffect(() => {
-    if (payloads) {
-      setSelectedItem(payloads.filter((e) => e.id == id)[0]);
+    if (isSuccess) {
+      dispatch(getPayloadsRequest({ project: projectName }));
     }
+    return () => resetPayloadSuccessAction();
+  }, [isSuccess, projectName]);
+
+  // sets selected Item from payloads when id presents
+  useEffect(() => {
+    if (payloads && id) {
+      setSelectedItem(payloads.filter((payload) => payload.id == id)[0] ?? {});
+    }
+    return () => setSelectedItem({});
   }, [payloads, id]);
+
+  // If selected payload is valid then sets payload formData
+  useEffect(() => {
+    const isValidPayload =
+      typeof selectedItem === "object" &&
+      !Array.isArray(selectedItem) &&
+      selectedItem !== null &&
+      Object.entries(selectedItem).length;
+
+    if (isValidPayload) {
+      let {
+        name,
+        parameters,
+        payload,
+        expected_outcome: expectedOutcome,
+        id,
+      } = selectedItem;
+
+      id = id ?? "";
+      name = name ?? INITIAL_PAYLOAD_FORM_DATA.name;
+      parameters = convertToKeyValuePairsArray(parameters);
+      payload = JSON.stringify(payload) ?? INITIAL_PAYLOAD_FORM_DATA.payload;
+      expectedOutcome =
+        expectedOutcome ?? INITIAL_PAYLOAD_FORM_DATA.expectedOutcome;
+
+      setPayloadsFormData((prevState) => ({
+        ...prevState,
+        id,
+        name,
+        parameters,
+        payload,
+        expectedOutcome,
+      }));
+    }
+
+    return () => setPayloadsFormData({ ...INITIAL_PAYLOAD_FORM_DATA });
+  }, [selectedItem]);
 
   const onPayloadFormDataChange = (key, value) => {
     // Accepts key and value of formData
-    setPayloadsFormData((p) => ({
-      ...p,
+    setPayloadsFormData((prevState) => ({
+      ...prevState,
       [key]: value,
     }));
   };
 
+  // handles the submit payload form event
   const handleSubmit = (e) => {
     e.preventDefault();
+    const { name, id, payload, parameters, expectedOutcome } = payloadsFormData;
+    const formDataToSubmit = {
+      name,
+      project: projectName,
+      payload: JSON.parse(payload),
+      parameters: convertArrayToObject(parameters),
+      expected_outcome: expectedOutcome,
+    };
     if (cat === "add") {
-      dispatch(
-        addPayloadsRequest({
-          ...payloadsFormData,
-          payload: JSON.parse(payloadsFormData.payload),
-        })
-      );
+      dispatch(addPayloadsRequest(formDataToSubmit));
     } else if (cat === "edit") {
-      dispatch(
-        editPayloadsRequest({
-          ...payloadsFormData,
-          parameters: payloadsFormData.parameters,
-          payload: JSON.parse(payloadsFormData.payload),
-        })
-      );
+      dispatch(editPayloadsRequest({ ...formDataToSubmit, id }));
     }
   };
-
-  useEffect(() => {
-    setPayloadsFormData((p) => ({
-      ...p,
-      name: selectedItem?.name || INITIAL_PAYLOAD_FORM_DATA.name,
-      parameters:
-        selectedItem?.parameters || INITIAL_PAYLOAD_FORM_DATA.parameters,
-      payload:
-        JSON.stringify(selectedItem?.payload) ||
-        INITIAL_PAYLOAD_FORM_DATA.payload,
-      expected_outcome:
-        selectedItem?.expected_outcome ||
-        INITIAL_PAYLOAD_FORM_DATA.expected_outcome,
-      id: selectedItem?.id || INITIAL_PAYLOAD_FORM_DATA.id,
-    }));
-  }, [selectedItem]);
 
   const redirectToEditEndpointForm = useCallback(() => {
     const editFormRoute = buildRoute(EDIT_PAYLOAD_ROUTE, { projectName, id });

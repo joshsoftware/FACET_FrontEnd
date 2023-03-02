@@ -57,7 +57,7 @@ const AddNewHeader = ({
           </label>
           <KeyValuePairsFormField
             data={header}
-            setData={onKeyValuePairsChange}
+            onChange={onKeyValuePairsChange}
           />
         </div>
       </ViewComponent>
@@ -70,7 +70,9 @@ AddNewHeader.propTypes = {
   isLoading: PropTypes.bool,
   data: PropTypes.shape({
     name: PropTypes.string,
-    header: PropTypes.object,
+    header: PropTypes.arrayOf(
+      PropTypes.shape({ key: PropTypes.string, value: PropTypes.string })
+    ),
   }).isRequired,
   onChange: PropTypes.func.isRequired,
   onKeyValuePairsChange: PropTypes.func.isRequired,
@@ -80,7 +82,7 @@ AddNewHeader.propTypes = {
 AddNewHeader.defaultProp = {
   data: {
     name: "",
-    header: {},
+    header: [{ key: "", value: "" }],
   },
 };
 

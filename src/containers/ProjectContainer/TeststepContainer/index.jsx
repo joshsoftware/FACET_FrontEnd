@@ -20,6 +20,10 @@ import {
   getTeststepsRequest,
 } from "store/Teststeps/actions";
 import { buildRoute } from "utils/helper";
+import {
+  convertArrayToObject,
+  convertToKeyValuePairsArray,
+} from "utils/helpers/keyValuePairs";
 import { getEndpointsRequest } from "store/Endpoints/actions";
 import { getHeadersRequest } from "store/Headers/actions";
 import { getPayloadsRequest } from "store/Payloads/actions";
@@ -213,7 +217,7 @@ const TeststepContainer = ({ cat }) => {
         const formDataToSubmit = {
           name,
           teststep,
-          parameters,
+          parameters: convertArrayToObject(parameters),
           payload: JSON.parse(payload),
           expected_outcome,
         };
@@ -254,7 +258,7 @@ const TeststepContainer = ({ cat }) => {
           id: testdataId,
           teststep,
           name,
-          parameters,
+          parameters: convertToKeyValuePairsArray(parameters),
           payload: JSON.stringify(payload),
           expectedOutcome,
           isEditForm: true,
@@ -264,7 +268,6 @@ const TeststepContainer = ({ cat }) => {
         const {
           teststep: initialTDId,
           name: initialTDName,
-          parameters: initialTDParams,
           payload: initialTDPayload,
           expectedOutcome: initialTDExpOutcome,
           selectedExpOutcome: initialTDSelectedExpOutcome,
@@ -274,8 +277,8 @@ const TeststepContainer = ({ cat }) => {
           ...prevState,
           name: initialTDName,
           teststep: teststepId || initialTDId,
-          payload: JSON.stringify(payload?.payload || initialTDPayload),
-          parameters: payload?.parameters || initialTDParams,
+          payload: JSON.stringify(payload?.payload) || initialTDPayload,
+          parameters: convertToKeyValuePairsArray(payload?.parameters),
           expectedOutcome: payload?.expected_outcome || initialTDExpOutcome,
           selectedExpOutcome: initialTDSelectedExpOutcome,
         }));
