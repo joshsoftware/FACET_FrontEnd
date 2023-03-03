@@ -1,5 +1,19 @@
 // helps to convert array of objects to object
 
+// helps to check duplicate key exists in array of object
+// @params: [{key: "key1", value: "value1"}]
+// @response: boolean
+export const isSameKeyExist = (pairs = []) => {
+  const keys = [];
+  for (const pair of pairs) {
+    if (keys.includes(pair.key)) {
+      return true;
+    }
+    keys.push(pair.key);
+  }
+  return false;
+};
+
 // @params: [{key: "key1", value: "value1"}]
 // @response: {key1: "value1"}
 export const convertArrayToObject = (data = []) => {

@@ -17,14 +17,17 @@ import {
 import {
   convertArrayToObject,
   convertToKeyValuePairsArray,
+  isSameKeyExist,
 } from "utils/helpers/keyValuePairs";
 import { buildRoute } from "utils/helper";
+import { toastMessage } from "utils/toastMessage";
 
 import {
   ADD_HEADER_ROUTE,
   EDIT_HEADER_ROUTE,
   HEADERS_ROUTE,
 } from "constants/routeConstants";
+import { HEADERS_DUPLICATE_KEY_ERROR } from "constants/userMessagesConstants";
 
 const mapState = ({ headers }) => ({
   headers: headers.headers,
@@ -91,9 +94,15 @@ const HeaderContainer = ({ cat }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const { header, ...restHeadersData } = headersFormData;
+    // if multiple headers with same key exists then show toast error
+    if (isSameKeyExist(header)) {
+      toastMessage(HEADERS_DUPLICATE_KEY_ERROR, "error");
+      return;
+    }
     const headersData = {
-      ...headersFormData,
-      header: convertArrayToObject(headersFormData.header),
+      ...restHeadersData,
+      header: convertArrayToObject(header),
     };
     if (cat === "edit") {
       dispatch(editHeadersRequest(headersData));

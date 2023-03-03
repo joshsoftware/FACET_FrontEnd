@@ -18,8 +18,10 @@ import {
 import {
   convertArrayToObject,
   convertToKeyValuePairsArray,
+  isSameKeyExist,
 } from "utils/helpers/keyValuePairs";
 import { buildRoute } from "utils/helper";
+import { toastMessage } from "utils/toastMessage";
 
 import { INITIAL_PAYLOAD_FORM_DATA } from "constants/appConstants";
 import {
@@ -27,6 +29,7 @@ import {
   EDIT_PAYLOAD_ROUTE,
   PAYLOADS_ROUTE,
 } from "constants/routeConstants";
+import { PARAMETERS_DUPLICATE_KEY_ERROR } from "constants/userMessagesConstants";
 
 const mapState = ({ payloads }) => ({
   payloads: payloads.payloads,
@@ -116,6 +119,12 @@ const PayloadContainer = ({ cat }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const { name, id, payload, parameters, expectedOutcome } = payloadsFormData;
+
+    // If the parameters with same key exist then show toast error
+    if (isSameKeyExist(parameters)) {
+      toastMessage(PARAMETERS_DUPLICATE_KEY_ERROR, "error");
+      return;
+    }
     const formDataToSubmit = {
       name,
       project: projectName,
