@@ -6,8 +6,9 @@ import KeyValuePairField from "./KeyValuePairField";
 
 const KeyValuePairsFormField = ({ data, onChange }) => {
   const handleChange = (name, value, index) => {
-    const values = [...data];
-    values[index][name] = value;
+    const values = data?.map((field, currentIndex) =>
+      index === currentIndex ? { ...field, [name]: value } : field
+    );
     onChange(values);
   };
 
