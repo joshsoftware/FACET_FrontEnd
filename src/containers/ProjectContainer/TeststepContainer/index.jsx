@@ -23,6 +23,7 @@ import { buildRoute } from "utils/helper";
 import {
   convertArrayToObject,
   convertToKeyValuePairsArray,
+  isSameKeyExist,
 } from "utils/helpers/keyValuePairs";
 import { getEndpointsRequest } from "store/Endpoints/actions";
 import { getHeadersRequest } from "store/Headers/actions";
@@ -34,7 +35,10 @@ import {
   INITIAL_TESTDATA_FORM_DATA,
   HTTP_METHODS_OPTIONS,
 } from "constants/appConstants";
-import { ALL_FIELDS_REQUIRED } from "constants/userMessagesConstants";
+import {
+  ALL_FIELDS_REQUIRED,
+  PARAMETERS_DUPLICATE_KEY_ERROR,
+} from "constants/userMessagesConstants";
 import {
   ADD_TESTSTEP_ROUTE,
   EDIT_TESTSTEP_ROUTE,
@@ -203,6 +207,12 @@ const TeststepContainer = ({ cat }) => {
         selectedExpOutcome,
         isEditForm,
       } = testdataFormData;
+
+      // If the parameters with same key exist then show toast error
+      if (isSameKeyExist(parameters)) {
+        toastMessage(PARAMETERS_DUPLICATE_KEY_ERROR, "error");
+        return;
+      }
 
       // if the request for edit the testdata then directly pass the expectedOutcome as it was selected expected outcome
       // if the request is to create testdata then it filter out selected expected outcome field from list of expected outcomes
