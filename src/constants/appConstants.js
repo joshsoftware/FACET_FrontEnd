@@ -87,3 +87,5 @@ export const EXPECTED_OUTCOME_TABLE_HEADINGS = [
 
 // set maximum length for input name field
 export const NAME_FIELD_MAX_LENGTH = 50;
+
+export const DATE_TIME_FORMAT = "DD/MM/YYYY hh:mm A";
