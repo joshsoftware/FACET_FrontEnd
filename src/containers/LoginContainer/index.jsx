@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
+import { Form } from "react-bootstrap";
 import { Link, Navigate } from "react-router-dom";
+import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
+import * as yup from "yup";
 
 import { AuthLayout } from "Layout";
-import Login from "Components/Auth/Login";
+import Input from "Components/forms/Inputs/Input";
+import Button from "Components/forms/Button";
 
 import { signInRequest } from "store/User/actions";
 
@@ -11,10 +15,22 @@ import {
   ADD_ORGANIZATION_ROUTE,
   DASHBOARD_ROUTE,
 } from "constants/routeConstants";
+import { EMAIL_REGEX } from "constants/appConstants";
+import { EMAIL_NOT_VALID } from "constants/userMessagesConstants";
 
-const initialFormData = { email: "", password: "" };
+const validationSchema = yup.object({
+  email: yup
+    .string()
+    .matches(EMAIL_REGEX, EMAIL_NOT_VALID)
+    .required("Email is required"),
+  password: yup
+    .string()
+    .min(4, "The password must be at least 4 characters long.")
+    .required("Password is required"),
+});
 
 const mapState = ({ user }) => ({
+  isLoading: user.isLoading,
   isLoggedIn: user.isLoggedIn,
   isMemberOfOrg: !!user.currentUser?.user_organization,
   isPersonalAccount: user.isPersonalAccount,
@@ -23,22 +39,19 @@ const mapState = ({ user }) => ({
 const LoginContainer = () => {
   const dispatch = useDispatch();
 
-  const { isLoggedIn, isMemberOfOrg, isPersonalAccount } =
+  const { isLoading, isLoggedIn, isMemberOfOrg, isPersonalAccount } =
     useSelector(mapState);
 
-  const [formData, setFormData] = useState(initialFormData);
-
-  // update state when login form field changes
-  const handleOnChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevState) => ({ ...prevState, [name]: value }));
-  };
-
-  // on submit login form
-  const handleOnSubmit = (e) => {
-    e.preventDefault();
-    dispatch(signInRequest(formData));
-  };
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema: validationSchema,
+    onSubmit: (values) => {
+      dispatch(signInRequest(values));
+    },
+  });
 
   // if user is loggedin with organization account type and none of
   // the organization assign to user then navigate to setup organization page
@@ -54,11 +67,37 @@ const LoginContainer = () => {
   return (
     <AuthLayout>
       <h5 className="fw-bold">Login</h5>
-      <Login
-        data={formData}
-        onChange={handleOnChange}
-        onSubmit={handleOnSubmit}
-      />
+      <Form onSubmit={formik.handleSubmit}>
+        <Input
+          label="Email"
+          name="email"
+          placeholder="Enter Email"
+          value={formik.values.email}
+          onChange={formik.handleChange}
+          isInvalid={formik.touched.email && Boolean(formik.errors.email)}
+          errorText={formik.touched.email && formik.errors.email}
+          required
+        />
+        <Input
+          label="Password"
+          name="password"
+          type="password"
+          placeholder="Enter Password"
+          value={formik.values.password}
+          onChange={formik.handleChange}
+          isInvalid={formik.touched.password && Boolean(formik.errors.password)}
+          errorText={formik.touched.password && formik.errors.password}
+          required
+        />
+        <Button
+          type="submit"
+          iconType="save"
+          className="w-100"
+          isLoading={isLoading}
+        >
+          Login
+        </Button>
+      </Form>
       <div className="d-flex flex-column align-items-center">
         <span className="pt-3">
           New User?
