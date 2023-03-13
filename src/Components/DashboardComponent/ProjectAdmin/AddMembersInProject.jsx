@@ -1,44 +1,46 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import { CustomModal } from 'Components/CustomComponents';
-import { SaveButton } from 'Components/forms/Buttons';
-import FormSelect from 'Components/forms/Inputs/FormSelect';
+import { CustomModal } from "Components/CustomComponents";
+import FormSelect from "Components/forms/Inputs/FormSelect";
+import { SaveButton } from "Components/forms/Buttons";
 
-
-const AddMembersInProject = (props) => {
-    const { show, handleClose, usersOptions, onchange, handleSubmit, value } = props;
-    
-    return (
-        <CustomModal 
-            show={show}
-            onClose={handleClose}
-            title="Add Members"
-        >
-            <CustomModal.Body>
-                <FormSelect 
-                    name="members"
-                    options={usersOptions}
-                    handlechange={onchange}
-                    className="py-2"
-                    value={value}
-                    isMulti
-                />
-                <SaveButton 
-                    handleClick={handleSubmit}
-                />
-            </CustomModal.Body>
-        </CustomModal>
-    )
-}
-
-export default AddMembersInProject;
+const AddMembersInProject = ({
+  show,
+  handleClose,
+  usersOptions,
+  onChange,
+  onSubmit,
+  value,
+  isLoading,
+  isDisabled,
+}) => (
+  <CustomModal show={show} onClose={handleClose} title="Add Members">
+    <CustomModal.Body>
+      <FormSelect
+        name="members"
+        options={usersOptions}
+        onChange={onChange}
+        className="py-2"
+        value={value}
+        isMulti
+        isLoading={isLoading}
+        isDisabled={isDisabled}
+      />
+      <SaveButton handleClick={onSubmit} disabled={!value?.length} />
+    </CustomModal.Body>
+  </CustomModal>
+);
 
 AddMembersInProject.propTypes = {
-    show: PropTypes.bool, 
-    handleClose: PropTypes.func, 
-    usersOptions: PropTypes.array,
-    onchange: PropTypes.func,
-    handleSubmit: PropTypes.func,
-    value: PropTypes.array
-}
+  show: PropTypes.bool,
+  handleClose: PropTypes.func.isRequired,
+  usersOptions: PropTypes.array.isRequired,
+  onChange: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  value: PropTypes.array.isRequired,
+  isLoading: PropTypes.bool,
+  isDisabled: PropTypes.bool,
+};
+
+export default AddMembersInProject;

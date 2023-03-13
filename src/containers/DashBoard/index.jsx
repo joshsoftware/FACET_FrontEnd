@@ -1,76 +1,99 @@
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useMemo, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-import { 
-    AddProjectModal, 
-    DashboardSubHeader, 
-    ProjectsComponent
-} from 'Components/DashboardComponent';
-import { DashboardLayout } from 'Layout';
-import { addProject, fetchProjects } from 'store/Projects/actions';
+import {
+  AddProjectModal,
+  DashboardSubHeader,
+  ProjectsComponent,
+} from "Components/DashboardComponent";
+import { DashboardLayout } from "Layout";
 
-const INITIAL_PROJECT_FORM_DATA = {
-    name: "", 
-    description: ""
-}
+import { addProjectRequest, getProjectsRequest } from "store/Projects/actions";
+
+const initialProjectFormData = { name: "", description: "" };
 
 const mapState = ({ user, projects }) => ({
-    currentUser: user.currentUser,
-    isLoggedIn: user.isLoggedIn,
-    projects: projects.projects,
-    isProjectsLoading: projects.isLoading
-})
+  isLoggedIn: user.isLoggedIn,
+  projects: projects.projects,
+  isProjectsLoading: projects.isLoading,
+  isAbleToAddProject: user.isOrgOwner || user.isAdmin,
+});
 
 const DashBoard = () => {
-    let dispatch = useDispatch();
-    const { currentUser, isLoggedIn, isProjectsLoading, projects } = useSelector(mapState);
+  const dispatch = useDispatch();
 
-    const [showAddProjectModal, setShowAddProjectModal] = useState(false);
-    const [addProjectFormData, setAddProjectFormData] = useState(INITIAL_PROJECT_FORM_DATA)
+  const { isAbleToAddProject, isLoggedIn, isProjectsLoading, projects } =
+    useSelector(mapState);
 
-    const toggleModal = () => {
-        setShowAddProjectModal(!showAddProjectModal);
-    }
+  const [showAddProjectModal, setShowAddProjectModal] = useState(false);
+  const [addProjectFormData, setAddProjectFormData] = useState(
+    initialProjectFormData
+  );
+  const [searchQuery, setSearchQuery] = useState("");
 
-    const onchangeProjectFormData = (e) => {
-        setAddProjectFormData(p => ({
-            ...p,
-            [e.target.name]: e.target.value
-        }))
-    }
+  useEffect(() => {
+    dispatch(getProjectsRequest());
+  }, []);
 
-    const handleSubmitAddProjectForm = (e) => {
-        e.preventDefault();
-        dispatch(addProject(addProjectFormData));
-        toggleModal();
-        setAddProjectFormData(INITIAL_PROJECT_FORM_DATA);
-    }
+  // toggles the modal
+  const toggleModal = () => {
+    setShowAddProjectModal(!showAddProjectModal);
+  };
 
-    useEffect(() => {
-        dispatch(fetchProjects())
-    }, [])
-    
+  // handles when project form data changes
+  const onChangeProjectFormData = (e) => {
+    setAddProjectFormData((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
 
-    return (
-        <DashboardLayout>
-            <AddProjectModal 
-                show={showAddProjectModal} 
-                handleClose={toggleModal} 
-                data={addProjectFormData}
-                onChange={onchangeProjectFormData}
-                onSubmit={handleSubmitAddProjectForm}
-            />
-            <DashboardSubHeader 
-                setShowAddProjectModal={toggleModal} 
-                user={currentUser}    
-                isLoggedIn={isLoggedIn}
-            />
-            <ProjectsComponent 
-                data={projects}
-                isLoading={isProjectsLoading}
-            />
-        </DashboardLayout>
-    )
-}
+  // handles submit create project form
+  const handleSubmitAddProjectForm = (e) => {
+    e.preventDefault();
+    dispatch(addProjectRequest(addProjectFormData));
+    toggleModal();
+    setAddProjectFormData(initialProjectFormData);
+  };
+
+  // handles change search query input field
+  const onChangeSearchQuery = (e) =>
+    setSearchQuery(e.target.value?.toLowerCase());
+
+  // filters projects on basis of searchQuery
+  const filteredProjects = useMemo(
+    () =>
+      searchQuery
+        ? projects.filter((project) => project.name?.includes(searchQuery))
+        : projects,
+    [searchQuery, projects]
+  );
+
+  return (
+    <DashboardLayout>
+      <AddProjectModal
+        show={showAddProjectModal}
+        handleClose={toggleModal}
+        data={addProjectFormData}
+        onChange={onChangeProjectFormData}
+        onSubmit={handleSubmitAddProjectForm}
+      />
+      <DashboardSubHeader
+        setShowAddProjectModal={toggleModal}
+        onChangeSearchQuery={onChangeSearchQuery}
+        searchQuery={searchQuery}
+        isAbleToAddProject={isAbleToAddProject}
+        isLoggedIn={isLoggedIn}
+      />
+      <ProjectsComponent
+        data={filteredProjects}
+        searchQuery={searchQuery}
+        onAddProjectModalOpens={toggleModal}
+        isLoading={isProjectsLoading}
+        isAbleToAddProject={isAbleToAddProject}
+      />
+    </DashboardLayout>
+  );
+};
 
 export default DashBoard;

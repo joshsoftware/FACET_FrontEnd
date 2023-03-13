@@ -1,31 +1,32 @@
 import scheduleConstants from "./constants";
 
-export const getAllSchedulesRequest = (data) => ({
-    type: scheduleConstants.GET_SCHEDULE_TESTCASE_REQUEST,
-    payload: data
-})
+export const getSchedulesRequest = (data) => ({
+  type: scheduleConstants.GET_SCHEDULES_REQUEST,
+  payload: data,
+});
 
-export const getAllSchedulesSuccess = (data) => ({
-    type: scheduleConstants.GET_SCHEDULE_TESTCASE_SUCCESS,
-    payload: data
-})
+export const getSchedulesSuccess = (data) => ({
+  type: scheduleConstants.GET_SCHEDULES_SUCCESS,
+  payload: data,
+});
 
-export const getAllSchedulesFailure = (data) => ({
-    type: scheduleConstants.GET_SCHEDULE_TESTCASE_FAILURE,
-    payload: data
-})
+export const getSchedulesFailure = () => ({
+  type: scheduleConstants.GET_SCHEDULES_FAILURE,
+});
 
 export const addScheduleRequest = (data) => ({
-    type: scheduleConstants.ADD_SCHEDULE_REQUEST,
-    payload: data
-})
+  type: scheduleConstants.ADD_SCHEDULE_REQUEST,
+  payload: data,
+});
 
-export const addScheduleSuccess = (data) => ({
-    type: scheduleConstants.ADD_SCHEDULE_SUCCESS,
-    payload: data
-})
+export const addScheduleSuccess = () => ({
+  type: scheduleConstants.ADD_SCHEDULE_SUCCESS,
+});
 
-export const addScheduleFailure = (data) => ({
-    type: scheduleConstants.ADD_SCHEDULE_FAILURE,
-    payload: data
-})
+export const addScheduleFailure = () => ({
+  type: scheduleConstants.ADD_SCHEDULE_FAILURE,
+});
+
+export const resetScheduleSuccess = () => ({
+  type: scheduleConstants.RESET_SCHEDULE_SUCCESS,
+});

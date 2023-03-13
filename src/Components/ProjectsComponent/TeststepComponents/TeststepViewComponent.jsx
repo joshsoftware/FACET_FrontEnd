@@ -1,180 +1,134 @@
-import React from 'react'
-import PropTypes from 'prop-types';
-import { Accordion, Col, Row } from 'react-bootstrap';
+import React from "react";
+import { Accordion, Col, Row } from "react-bootstrap";
+import PropTypes from "prop-types";
 
-import { ViewComponent } from 'Components/CustomComponents';
-import { AddButton } from 'Components/forms/Buttons';
-import JSONView from 'Components/JSONView';
-import AddNewTestdata from './AddNewTestdata';
-import TableComponent from 'Components/CustomComponents/TableComponent/index';
+import { AddButton } from "Components/forms/Buttons";
+import TestdataAccordionItem from "./TestdataAccordionItem";
+import { ViewComponent } from "Components/CustomComponents";
 
-const TeststepViewComponent = (props) => {
-    const { 
-        isLoading, 
-        data, 
-        projectName, 
-        testdata, 
-        showAddTestdataForm,
-        toggleAddTestdataForm,
-        testdataFormData, 
-        onTestdataFormChange, 
-        onTestdataFormSubmit 
-    } = props;
+import { convertToLocalDate } from "utils/convertToLocalDate";
 
-    return !isLoading && typeof(data)==='object' && Object.entries(data).length &&(
-        <div className='w-100'>
-            <ViewComponent 
-                title={data.name}
-                onEditLink={`/project/${projectName}/teststeps/edit/${data.id}`}
-            >
-                <Row>
-                    <Col md={6} className='pb-4'>
-                        <small><b>Name</b></small>
-                        <div>{data.name}</div>
-                    </Col>
-                    <Col md={6} className='pb-4'>
-                        <small><b>Method</b></small>
-                        <div>{data.method}</div>
-                    </Col>
-                    <Col md={6} className='pb-4'>
-                        <small><b>Endpoint</b></small>
-                        <div>{data.endpoint.name}</div>
-                    </Col>
-                    <Col md={6} className='pb-4'>
-                        <small><b>Header</b></small>
-                        <div>{data.header.name}</div>
-                    </Col>
-                    <Col md={6} className='pb-4'>
-                        <small><b>Payload</b></small>
-                        <div>{data.payload.name}</div>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col md={6} className='pb-4'>
-                        <small><b>Created At</b></small>
-                        <div>{new Date(data.created_at).toLocaleString()}</div>
-                    </Col>
-                    <Col md={6} className='pb-4'>
-                        <small><b>Created By</b></small>
-                        <div>{data.created_by}</div>
-                    </Col>
-                    <Col md={6} className='pb-4'>
-                        <small><b>Modified At</b></small>
-                        <div>{new Date(data.modified_at).toLocaleString()}</div>
-                    </Col>
-                    <Col md={6} className='pb-4'>
-                        <small><b>Modified By</b></small>
-                        <div>{data.modified_by}</div>
-                    </Col>
-                </Row>
-            </ViewComponent>
+const TeststepViewComponent = ({
+  data,
+  testdata,
+  onOpenTestdataForm,
+  onEditButtonClick,
+}) => {
+  const {
+    name,
+    method,
+    endpoint,
+    header,
+    payload,
+    created_at: createdAt,
+    created_by: createdBy,
+    modified_at: modifiedAt,
+    modified_by: modifiedBy,
+  } = data;
 
-            <ViewComponent
-                disabledHeader
-            >
-                <small><b>TestData</b></small>
-                <Accordion>
-                    {testdata?.map((item, index) => {
-                        return (
-                            <Accordion.Item key={index} eventKey={index}>
-                                <Accordion.Header>
-                                    {item.name}
-                                </Accordion.Header>
-                                <Accordion.Body>
-                                    <Row>
-                                        <Col md={6}>
-                                            <div><small>Parameters</small></div>
-                                            <TableComponent 
-                                                striped 
-                                                bordered 
-                                                size='sm' 
-                                                headings={["Key", "Value"]}
-                                            >
-                                                {Object.entries(item?.parameters).map(([key, val], ind) => {
-                                                    return (
-                                                        <tr key={ind}>
-                                                            <td>{key}</td>
-                                                            <td>{val}</td>
-                                                        </tr>
-                                                    )
-                                                })}
-                                            </TableComponent>
-                                        </Col>
-                                        <Col md={6}>
-                                            <div><small>Payload</small></div>
-                                            <JSONView 
-                                                data={item.payload}
-                                            />
-                                        </Col>
-                                        <Col md={12}>
-                                            <div><small>Expected Outcome</small></div>
-                                            <TableComponent
-                                                striped
-                                                bordered
-                                                headings={[
-                                                    "#", 
-                                                    "Name", 
-                                                    "Type",
-                                                    "isExact",
-                                                    "Value",
-                                                    "Validations"
-                                                ]}
-                                            >
-                                                {item?.expected_outcome?.map((itemData, index) => {
-                                                    return (
-                                                        <tr key={index}>
-                                                            <td>{index+1}</td>
-                                                            <td>{itemData.name}</td>
-                                                            <td>{itemData.type}</td>
-                                                            <td>{itemData.isExact?"Yes":"No"}</td>
-                                                            <td>{itemData.value || "-"}</td>
-                                                            <td>
-                                                                <pre className='mb-0'>
-                                                                    {JSON.stringify(itemData.validations, null, 2) || "-"}
-                                                                </pre>
-                                                            </td>
-                                                        </tr>
-                                                    )
-                                                })}
+  const onAddTestdata = () => onOpenTestdataForm();
 
-                                            </TableComponent>
-                                        </Col>
-                                    </Row>
-                                </Accordion.Body>
-                            </Accordion.Item>
-                        )
-                    })}
-                </Accordion>
-                {showAddTestdataForm?(   
-                    <AddNewTestdata 
-                        data={testdataFormData} 
-                        onChange={onTestdataFormChange}
-                        onSubmit={onTestdataFormSubmit}
-                        handleClose={toggleAddTestdataForm}
-                    />
-                ):(
-                    <div className="d-flex justify-content-center py-2">
-                        <AddButton 
-                            size='sm' 
-                            handleClick={toggleAddTestdataForm}
-                        />
-                    </div>
-                )}
-            </ViewComponent>
+  return (
+    <div className="w-100">
+      <ViewComponent title={name} onEdit={onEditButtonClick}>
+        <Row>
+          <Col md={6} className="pb-4">
+            <small>
+              <b>Name</b>
+            </small>
+            <div>{name}</div>
+          </Col>
+          <Col md={6} className="pb-4">
+            <small>
+              <b>Method</b>
+            </small>
+            <div>{method}</div>
+          </Col>
+          <Col md={6} className="pb-4">
+            <small>
+              <b>Endpoint</b>
+            </small>
+            <div>{endpoint?.name}</div>
+          </Col>
+          <Col md={6} className="pb-4">
+            <small>
+              <b>Header</b>
+            </small>
+            <div>{header?.name}</div>
+          </Col>
+          <Col md={6} className="pb-4">
+            <small>
+              <b>Payload</b>
+            </small>
+            <div>{payload?.name}</div>
+          </Col>
+        </Row>
+        <Row>
+          <Col md={6} className="pb-4">
+            <small>
+              <b>Created At</b>
+            </small>
+            <div>{convertToLocalDate(createdAt)}</div>
+          </Col>
+          <Col md={6} className="pb-4">
+            <small>
+              <b>Created By</b>
+            </small>
+            <div>{createdBy}</div>
+          </Col>
+          <Col md={6} className="pb-4">
+            <small>
+              <b>Modified At</b>
+            </small>
+            <div>{convertToLocalDate(modifiedAt)}</div>
+          </Col>
+          <Col md={6} className="pb-4">
+            <small>
+              <b>Modified By</b>
+            </small>
+            <div>{modifiedBy}</div>
+          </Col>
+        </Row>
+      </ViewComponent>
+
+      <ViewComponent hideHeader>
+        <div className="d-flex justify-content-between algn-items-center pb-3">
+          <b>Testdata</b>
+          <AddButton size="sm" handleClick={onAddTestdata} label="Add New" />
         </div>
-    )
-}
-
-export default TeststepViewComponent;
+        <Accordion>
+          {testdata?.map((item, index) => (
+            <TestdataAccordionItem
+              eventKey={index}
+              key={index}
+              data={item}
+              onEditButtonClick={onOpenTestdataForm}
+            />
+          ))}
+        </Accordion>
+      </ViewComponent>
+    </div>
+  );
+};
 
 TeststepViewComponent.propTypes = {
-    isLoading: PropTypes.bool,
-    data: PropTypes.object,
-    projectName: PropTypes.string,
-    testdata: PropTypes.array,
-    showAddTestdataForm: PropTypes.bool,
-    toggleAddTestdataForm: PropTypes.func,
-    testdataFormData: PropTypes.object, 
-    onTestdataFormChange: PropTypes.func, 
-    onTestdataFormSubmit: PropTypes.func
-}
+  isLoading: PropTypes.bool,
+  data: PropTypes.shape({
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    name: PropTypes.string.isRequired,
+    method: PropTypes.string.isRequired,
+    endpoint: PropTypes.shape({ name: PropTypes.string }).isRequired,
+    header: PropTypes.shape({ name: PropTypes.string }).isRequired,
+    payload: PropTypes.shape({ name: PropTypes.string }).isRequired,
+    created_at: PropTypes.string,
+    created_by: PropTypes.string,
+    modified_at: PropTypes.string,
+    modified_by: PropTypes.string,
+  }).isRequired,
+  projectName: PropTypes.string.isRequired,
+  testdata: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onOpenTestdataForm: PropTypes.func.isRequired,
+  onEditButtonClick: PropTypes.func.isRequired,
+};
+
+export default TeststepViewComponent;

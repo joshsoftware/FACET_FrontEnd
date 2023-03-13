@@ -3,7 +3,7 @@
   height: 100%;
 }
 .jsoneditor {
-  border: 1px solid #ced4da ;
+  border: 1px solid #ced4da;
   border-radius: 0.25rem;
 }
 .jsoneditor-menu {
@@ -13,4 +13,7 @@
 }
 .jsoneditor-menu > button {
   opacity: 1 !important;
+}
+.ace-jsoneditor.ace_editor {
+  font-size: 15px !important;
 }

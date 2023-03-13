@@ -1,10 +1,9 @@
-import { GET, POST, SERVER_URL } from "../../constants/appConstants";
-import { Api } from "../apiHelper";
+import { apiClient } from "store/apiHelper";
 
-export const getAllSchesuledTestcasesApi = (data) => {
-    return Api(`${SERVER_URL}/api/schedule/`, GET, null, data)
-}
+import { GET, POST, SERVER_URL } from "constants/appConstants";
 
-export const addScheduleTestcaseApi = (data) => {
-    return Api(`${SERVER_URL}/api/schedule/new`, POST, data)
-}
+export const getSchedulesApi = (data) =>
+  apiClient(`${SERVER_URL}/api/schedule`, GET, null, data);
+
+export const addScheduleApi = (data) =>
+  apiClient(`${SERVER_URL}/api/schedule`, POST, data);

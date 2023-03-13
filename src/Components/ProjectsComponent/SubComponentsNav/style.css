@@ -1,11 +1,10 @@
-
 .subnav .sidebar-item {
-    margin: 5px 10px !important;
+  margin: 5px 10px !important;
 }
-.subnav .nav-link{
-    color: #333 !important;
+.subnav .nav-link {
+  color: #333 !important;
 }
 .subnav-child {
-    overflow-y: scroll;
-    height: calc(100vh - 127px);
+  overflow-y: scroll;
+  height: calc(100% - 65px);
 }

@@ -1,7 +1,4 @@
 import EnvironmentViewComponent from "./EnvironmentViewComponent";
-import AddNewEnvironment from './AddNewEnvironment';
+import AddNewEnvironment from "./AddNewEnvironment";
 
-export {
-    AddNewEnvironment,
-    EnvironmentViewComponent
-}
+export { AddNewEnvironment, EnvironmentViewComponent };

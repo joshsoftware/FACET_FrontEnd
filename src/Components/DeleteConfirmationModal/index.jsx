@@ -1,46 +1,36 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import { CustomModal } from 'Components/CustomComponents';
-import { CloseButton, DeleteButton } from 'Components/forms/Buttons';
+import { CustomModal } from "Components/CustomComponents";
+import { CloseButton, DeleteButton } from "Components/forms/Buttons";
 
-const DeleteConfirmationModal = (props) => {
-    const {
-        handleClose,
-        onDelete,
-        show,
-        title,
-        text
-    } = props;
-    
-    return (
-        <CustomModal
-            show={show}
-            title={title?title:"Are You Sure?"}
-            onClose={handleClose}
-        >
-            <CustomModal.Body>
-                {text?text:"Are you sure you want to DELETE this item?"}
-            </CustomModal.Body>
-            <CustomModal.Footer>
-                <CloseButton 
-                    label="Cancel"
-                    handleClick={handleClose}
-                />
-                <DeleteButton 
-                    handleClick={onDelete}
-                />
-            </CustomModal.Footer>
-        </CustomModal>
-    )
-}
-
-export default DeleteConfirmationModal;
+const DeleteConfirmationModal = ({
+  show,
+  title,
+  text,
+  handleClose,
+  onDelete,
+}) => (
+  <CustomModal show={show} title={title} onClose={handleClose}>
+    <CustomModal.Body>{text}</CustomModal.Body>
+    <CustomModal.Footer>
+      <CloseButton label="Cancel" handleClick={handleClose} />
+      <DeleteButton handleClick={onDelete} />
+    </CustomModal.Footer>
+  </CustomModal>
+);
 
 DeleteConfirmationModal.propTypes = {
-    show: PropTypes.bool,
-    title: PropTypes.string,
-    handleClose: PropTypes.func,
-    onDelete: PropTypes.func,
-    text: PropTypes.string
-}
+  show: PropTypes.bool,
+  title: PropTypes.string,
+  handleClose: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  text: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+};
+
+DeleteConfirmationModal.defaultProps = {
+  title: "Are You Sure?",
+  text: "Are you sure you want to DELETE this item?",
+};
+
+export default DeleteConfirmationModal;

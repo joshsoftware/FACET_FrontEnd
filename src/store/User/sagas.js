@@ -1,52 +1,119 @@
-import { toast } from 'react-toastify';
-import { takeLatest, call, put } from 'redux-saga/effects';
-import { getAllUsersSuccess, signInSuccess, signOutSuccess } from './actions';
-import { signInApi, signUpApi, getAllUsersApi } from './apis';
-import userConstants from "./constants";
+import { takeLatest, call, put } from "redux-saga/effects";
 
-export function* signIn({payload}) {
-    try {
-        const response = yield call(signInApi, payload);
-        toast.success("Login Successfully!");
-        yield put(signInSuccess(response));
-    } catch (error) {
-        toast.error(error.data.error);
-    }
+import axiosInstance from "../../axios";
+
+import {
+  changePasswordApi,
+  getUserProfileApi,
+  signInApi,
+  signUpApi,
+  updateUserProfileApi,
+} from "./apis";
+import {
+  changePasswordFailure,
+  changePasswordSuccess,
+  getUserProfileFailure,
+  getUserProfileSuccess,
+  signInFailure,
+  signInSuccess,
+  signOutSuccess,
+  signUpFailure,
+  signUpSuccess,
+  updateUserProfileFailure,
+  updateUserProfileSuccess,
+} from "./actions";
+import { clearLocalStorage } from "utils/localStorage";
+import { apisErrorMessage } from "utils/apisErrorMessage";
+import { toastMessage } from "utils/toastMessage";
+
+import userConstants from "./constants";
+import {
+  LOGOUT_SUCCESS,
+  USERS,
+  USER_AUTH,
+} from "constants/userMessagesConstants";
+
+export function* signIn({ payload }) {
+  try {
+    const response = yield call(signInApi, payload);
+    toastMessage(USER_AUTH.LOGIN_SUCCESS);
+    yield put(signInSuccess(response));
+  } catch (error) {
+    const errorMessage = apisErrorMessage(error);
+    toastMessage(errorMessage, "error");
+    yield put(signInFailure());
+  }
 }
 
-export function* signUp({payload: {name, email, password, cpassword}}) {
-    if(password!==cpassword){
-        toast.error("Password Not Matched!");
-        return
-    }
-
-    try {
-        yield call(signUpApi, {name, email, password});
-        toast.success("SignUp Successfully!");
-    } catch (error) {
-        toast.error(error.data.error)
-    }
+export function* signUp({ payload }) {
+  try {
+    yield call(signUpApi, payload);
+    toastMessage(USER_AUTH.SIGNUP_SUCCESS);
+    yield put(signUpSuccess());
+  } catch (error) {
+    const errorMessage = apisErrorMessage(error);
+    toastMessage(errorMessage, "error");
+    yield put(signUpFailure());
+  }
 }
 
 export function* signOut() {
-    localStorage.removeItem('user');
-    yield put(signOutSuccess());
-    toast.success("Log out successfully!");
+  clearLocalStorage();
+  // following line remove authorization token from axios instance
+  axiosInstance.defaults.headers = {};
+  yield put(signOutSuccess());
+  toastMessage(LOGOUT_SUCCESS);
+  // TODO: This is temporary solution to avoid redirection of user, need to find out stable solution
+  window.location.reload();
 }
 
-export function* getAllUsers({payload}) {
-    try {
-        const response = yield call(getAllUsersApi, payload);
-        yield put(getAllUsersSuccess(response.users));
-    } catch (error) {
-        toast.error(error.data.errors)
-    }
+export function* getuserProfile({ payload }) {
+  try {
+    const response = yield call(getUserProfileApi, payload);
+    yield put(getUserProfileSuccess(response.user));
+  } catch (error) {
+    const errorMessage = apisErrorMessage(error);
+    toastMessage(errorMessage, "error");
+    yield put(getUserProfileFailure());
+  }
 }
 
+export function* updateUserProfile({ payload }) {
+  try {
+    const response = yield call(updateUserProfileApi, payload);
+    toastMessage(USERS.UPDATE_PROFILE_SUCCESS);
+    yield put(updateUserProfileSuccess(response.user));
+  } catch (error) {
+    const errorMessage = apisErrorMessage(error);
+    toastMessage(errorMessage, "error");
+    yield put(updateUserProfileFailure(error.data));
+  }
+}
 
+export function* changeUserPassword({ payload }) {
+  try {
+    yield call(changePasswordApi, payload);
+    toastMessage(USERS.CHANGE_PASSWORD_SUCCESS);
+    yield put(changePasswordSuccess());
+  } catch (error) {
+    const errorMessage = apisErrorMessage(error);
+    toastMessage(errorMessage, "error");
+    yield put(changePasswordFailure());
+  }
+}
+
+// Watcher saga
 export default function* userSagas() {
-    yield takeLatest(userConstants.SIGN_UP_START, signUp);
-    yield takeLatest(userConstants.SIGN_IN_START, signIn);
-    yield takeLatest(userConstants.SIGN_OUT_START, signOut);
-    yield takeLatest(userConstants.GET_ALL_USERS_REQUEST, getAllUsers);
+  yield takeLatest(userConstants.SIGN_UP_REQUEST, signUp);
+  yield takeLatest(userConstants.SIGN_IN_REQUEST, signIn);
+  yield takeLatest(userConstants.SIGN_OUT_REQUEST, signOut);
+  yield takeLatest(userConstants.GET_CURRENT_USER_INFO_REQUEST, getuserProfile);
+  yield takeLatest(
+    userConstants.UPDATE_USER_PROFILE_REQUEST,
+    updateUserProfile
+  );
+  yield takeLatest(
+    userConstants.CHANGE_USER_PASSWORD_REQUEST,
+    changeUserPassword
+  );
 }

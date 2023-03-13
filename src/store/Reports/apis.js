@@ -1,10 +1,14 @@
-import { GET, POST, SERVER_URL } from '../../constants/appConstants';
-import { Api } from '../apiHelper';
+import { GET, PATCH, SERVER_URL } from "constants/appConstants";
+import { apiClient } from "store/apiHelper";
 
 export const getAllReportsApi = (data) => {
-    return Api(`${SERVER_URL}/api/results/`, GET, null, data)
-}
+  return apiClient(`${SERVER_URL}/api/results`, GET, null, data);
+};
+
+export const getSingleReportsApi = (data) => {
+  return apiClient(`${SERVER_URL}/api/results/${data}`, GET, null);
+};
 
 export const addCommentApi = (data) => {
-    return Api(`${SERVER_URL}/api/results/addcomment`, POST, data)
-}
+  return apiClient(`${SERVER_URL}/api/results/comment`, PATCH, data);
+};

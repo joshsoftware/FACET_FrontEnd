@@ -1,64 +1,102 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Form } from 'react-bootstrap';
+import React from "react";
+import { Form } from "react-bootstrap";
+import PropTypes from "prop-types";
 
-import { SubmitButton } from 'Components/forms/Buttons';
-import { FormInput } from 'Components/forms/Inputs';
+import FormInput from "Components/forms/Inputs/FormInput";
+import { SubmitButton } from "Components/forms/Buttons";
 
-const Signup = (props) => {
-    const { data, onchange, handleSubmit } = props;
+import { USER_AUTH } from "constants/userMessagesConstants";
 
-    return (
-        <Form className='py-2' onSubmit={handleSubmit}>
-            <FormInput
-                label="Name" 
-                isRequired
-                type='text'
-                name='name'
-                value={data.name}
-                onChange={onchange}
-                placeholder='Enter Name'
-            />
-            <FormInput
-                label="Email" 
-                isRequired
-                type='email'
-                name='email'
-                value={data.email}
-                onChange={onchange}
-                placeholder='Enter Email'
-            />
-            <FormInput 
-                label='Password'
-                isRequired
-                type='password'
-                name='password'
-                value={data.password}
-                onChange={onchange}
-                placeholder='Enter Password'
-            />
-            <FormInput 
-                label='Confirm Password'
-                isRequired
-                type='password'
-                name='cpassword'
-                value={data.cpassword}
-                onChange={onchange}
-                placeholder='Enter Password'
-            />
-            <SubmitButton
-                label='SignUp'
-                className='w-100'
-                disabled={data.email.length===0 || data.password.length===0}
-            />
-        </Form>
-    )
-}
+const Signup = ({
+  data,
+  onChange,
+  onSubmit,
+  isEmailFieldDisabled,
+  buttonText,
+}) => {
+  const { name, email, username, password, confirmPassword } = data;
 
-export default Signup;
+  // check whether if password and confirm password fields are matched or not
+  const isPasswordMatched = password === confirmPassword;
+  const isButtonDisabled =
+    !name || !email || !password || !confirmPassword || !isPasswordMatched;
+
+  return (
+    <Form className="py-2" onSubmit={onSubmit}>
+      <FormInput
+        label="Name"
+        type="text"
+        name="name"
+        value={name}
+        onChange={onChange}
+        placeholder="Enter Name"
+        isRequired
+      />
+      <FormInput
+        label="Username"
+        type="text"
+        name="username"
+        value={username}
+        onChange={onChange}
+        placeholder="Enter Username"
+        isRequired
+      />
+      <FormInput
+        label="Email"
+        type="email"
+        name="email"
+        value={email}
+        onChange={onChange}
+        placeholder="Enter Email"
+        disabled={isEmailFieldDisabled}
+        isRequired
+      />
+      <FormInput
+        label="Password"
+        type="password"
+        name="password"
+        value={password}
+        onChange={onChange}
+        placeholder="Enter Password"
+        isRequired
+      />
+      <FormInput
+        label="Confirm Password"
+        type="password"
+        name="confirmPassword"
+        value={confirmPassword}
+        onChange={onChange}
+        placeholder="Enter Password"
+        className={!isPasswordMatched ? "border-danger error" : ""}
+        errorMessage={USER_AUTH.PASSWORD_NOT_MATCHED}
+        error={!isPasswordMatched}
+        isRequired
+      />
+      <SubmitButton
+        label={buttonText}
+        className="w-100"
+        disabled={isButtonDisabled}
+      />
+    </Form>
+  );
+};
+
+Signup.defaultProps = {
+  buttonText: "Sign Up",
+};
 
 Signup.propTypes = {
-    data: PropTypes.object,
-    onchange: PropTypes.func,
-    handleSubmit: PropTypes.func
-}
+  data: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
+    username: PropTypes.string.isRequired,
+    password: PropTypes.string.isRequired,
+    confirmPassword: PropTypes.string.isRequired,
+  }).isRequired,
+  onChange: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  isEmailFieldDisabled: PropTypes.bool,
+  buttonText: PropTypes.string,
+};
+
+export default Signup;

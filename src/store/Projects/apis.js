@@ -1,40 +1,18 @@
-import { 
-    DELETE,
-    GET,
-    POST,
-    SERVER_URL
-} from "../../constants/appConstants";
-import { Api } from "../apiHelper";
+import { apiClient } from "store/apiHelper";
 
+import { DELETE, GET, POST, PUT, SERVER_URL } from "constants/appConstants";
 
-export const getProjectsApi = () => {
-    return Api(`${SERVER_URL}/api/projects/`, GET)
-}
+export const getProjectsApi = () =>
+  apiClient(`${SERVER_URL}/api/projects`, GET);
 
-export const addNewProjectApi = (data) => {
-    return Api(`${SERVER_URL}/api/projects/new`, POST, data)
-}
+export const addNewProjectApi = (data) =>
+  apiClient(`${SERVER_URL}/api/projects`, POST, data);
 
-export const getProjectMembersApi = (data) => {
-    return Api(`${SERVER_URL}/api/projects/members`, GET, null, data)
-}
+export const getProjectApi = (data) =>
+  apiClient(`${SERVER_URL}/api/projects`, GET, null, data);
 
-export const addMembersInProjectApi = (data) => {
-    return Api(`${SERVER_URL}/api/projects/members/add`, POST, data)
-}
+export const updateProjectNameApi = (data) =>
+  apiClient(`${SERVER_URL}/api/projects`, PUT, data);
 
-export const removeMembersInProjectApi = (data) => {
-    return Api(`${SERVER_URL}/api/projects/members/remove`, DELETE, data)
-}
-
-export const getOneProjectApi = (data) => {
-    return Api(`${SERVER_URL}/api/projects/`, GET, null, data)
-}
-
-export const updateProjectNameApi = (data) => {
-    return Api(`${SERVER_URL}/api/projects/update-name`, POST, data)
-}
-
-export const deleteProjectApi = (data) => {
-    return Api(`${SERVER_URL}/api/projects/delete/`, DELETE, data)
-}
+export const deleteProjectApi = (data) =>
+  apiClient(`${SERVER_URL}/api/projects`, DELETE, data);

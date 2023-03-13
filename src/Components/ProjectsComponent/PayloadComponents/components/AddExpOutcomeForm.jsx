@@ -1,69 +1,97 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { Form } from 'react-bootstrap';
+import React, { useState } from "react";
+import { Form } from "react-bootstrap";
+import PropTypes from "prop-types";
 
-import { DeleteButton, SaveButton } from 'Components/forms/Buttons/index';
-import FormInput from 'Components/forms/Inputs/FormInput';
-import ExpectedOutcomeTable from 'Components/ProjectsComponent/ExpectedOutcomeTable/index';
-import { EXPECTED_OUTCOME_TEMPLATE } from 'constants/appConstants';
+import { DeleteButton, SaveButton } from "Components/forms/Buttons/index";
+import FormInput from "Components/forms/Inputs/FormInput";
+import ExpectedOutcomeTable from "Components/ProjectsComponent/ExpectedOutcomeTable/index";
 
-const AddExpOutcomeForm = ({ onSave, onClose }) => {
-    const [formData, setFormData] = useState({ name: "", expected_outcome: [EXPECTED_OUTCOME_TEMPLATE] });
+import { convertToSlug } from "utils";
 
-    const handleChange = (name, value) => {
-        setFormData(p => ({
-            ...p,
-            [name]: value
-        }))
-    }
+import {
+  EXPECTED_OUTCOME_TEMPLATE,
+  NAME_FIELD_MAX_LENGTH,
+} from "constants/appConstants";
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        onSave(formData);
-        onClose();
-    }
+const AddExpOutcomeForm = ({ onSave, onClose, isDisabledDeleteButton }) => {
+  const [formData, setFormData] = useState({
+    name: "",
+    expectedOutcome: [EXPECTED_OUTCOME_TEMPLATE],
+  });
 
-    return (
-        <div className='bg-light border rounded p-3'>
-            <Form onSubmit={handleSubmit}>
-                <FormInput 
-                    label={'Name'}
-                    name='name'
-                    value={formData.name}
-                    onChange={e => handleChange(e.target.name, e.target.value)}
-                    placeholder='Name'
-                    isRequired
-                />
-                <FormInput 
-                    label={'Expected Outcome'}
-                    element={
-                        <ExpectedOutcomeTable 
-                            data={formData?.expected_outcome}
-                            onchange={res => handleChange('expected_outcome', res)}
-                        />
-                    }
-                />
-                <div className='d-flex justify-content-end'>
-                    <DeleteButton 
-                        size={'sm'}
-                        className='mx-1'
-                        handleClick={onClose}
-                    />
-                    <SaveButton 
-                        size={'sm'}
-                        handleClick={handleSubmit}
-                        type="button"
-                        disabled={formData.name.length===0}
-                    />
-                </div>
-            </Form>
+  const nameInputBottomTextMsg =
+    !!formData.name.length &&
+    `Your expected outcome will be created as ${convertToSlug(formData.name)}`;
+
+  const handleChange = (name, value) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const updatedFormData = {
+      name: convertToSlug(formData.name),
+      expected_outcome: formData.expectedOutcome,
+    };
+    onSave(updatedFormData);
+  };
+
+  const onInputFieldsChange = (e) => {
+    const { name, value } = e.target;
+    handleChange(name, value);
+  };
+
+  const handleChangeExpectedOutcome = (res) =>
+    handleChange("expectedOutcome", res);
+
+  return (
+    <div className="bg-light border rounded p-3">
+      <Form onSubmit={handleSubmit}>
+        <FormInput
+          label={"Name"}
+          name="name"
+          value={formData.name}
+          onChange={onInputFieldsChange}
+          placeholder="Name"
+          text={nameInputBottomTextMsg}
+          maxLength={NAME_FIELD_MAX_LENGTH}
+          isRequired
+        />
+        <FormInput
+          label={"Expected Outcome"}
+          element={
+            <ExpectedOutcomeTable
+              data={formData?.expectedOutcome}
+              onchange={handleChangeExpectedOutcome}
+            />
+          }
+        />
+        <div className="d-flex justify-content-end">
+          <DeleteButton
+            size="sm"
+            className="mx-1"
+            handleClick={onClose}
+            disabled={isDisabledDeleteButton}
+          />
+          <SaveButton
+            size="sm"
+            handleClick={handleSubmit}
+            type="button"
+            disabled={!formData.name.length}
+          />
         </div>
-    )
-}
-
-export default AddExpOutcomeForm;
+      </Form>
+    </div>
+  );
+};
 
 AddExpOutcomeForm.propTypes = {
-    onSave: PropTypes.func,
-    onClose: PropTypes.func
-}
+  onSave: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
+  isDisabledDeleteButton: PropTypes.bool,
+};
+
+export default AddExpOutcomeForm;
