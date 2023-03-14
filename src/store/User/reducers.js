@@ -86,6 +86,24 @@ const userReducer = (state = initialState, action) => {
     case userConstants.CHANGE_USER_PASSWORD_FAILURE:
       return { ...state, isLoading: false };
 
+    case userConstants.FORGOT_PASSWORD_REQUEST:
+      return { ...state, isLoading: true };
+
+    case userConstants.FORGOT_PASSWORD_SUCCESS:
+      return { ...state, isLoading: false };
+
+    case userConstants.FORGOT_PASSWORD_FAILURE:
+      return { ...state, isLoading: false };
+
+    case userConstants.RESET_PASSWORD_REQUEST:
+      return { ...state, isLoading: true };
+
+    case userConstants.RESET_PASSWORD_SUCCESS:
+      return { ...state, isLoading: false, isSuccess: true };
+
+    case userConstants.RESET_PASSWORD_FAILURE:
+      return { ...state, isLoading: false };
+
     case userConstants.CLEAR_USER_STATE:
       return initialState;
 

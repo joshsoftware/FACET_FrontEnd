@@ -4,7 +4,9 @@ import axiosInstance from "../../axios";
 
 import {
   changePasswordApi,
+  forgotPasswordRequestApi,
   getUserProfileApi,
+  resetPasswordApi,
   signInApi,
   signUpApi,
   updateUserProfileApi,
@@ -12,8 +14,12 @@ import {
 import {
   changePasswordFailure,
   changePasswordSuccess,
+  forgotPasswordFailure,
+  forgotPasswordSuccess,
   getUserProfileFailure,
   getUserProfileSuccess,
+  resetPasswordFailure,
+  resetPasswordSuccess,
   signInFailure,
   signInSuccess,
   signOutSuccess,
@@ -102,6 +108,30 @@ export function* changeUserPassword({ payload }) {
   }
 }
 
+export function* forgotPassword({ payload }) {
+  try {
+    yield call(forgotPasswordRequestApi, payload);
+    toastMessage(USERS.FORGOT_PASSWORD_SUCCESS);
+    yield put(forgotPasswordSuccess());
+  } catch (error) {
+    const errorMessage = apisErrorMessage(error);
+    toastMessage(errorMessage, "error");
+    yield put(forgotPasswordFailure());
+  }
+}
+
+export function* resetPassword({ payload }) {
+  try {
+    yield call(resetPasswordApi, payload);
+    toastMessage(USERS.RESET_PASSWORD_SUCCESS);
+    yield put(resetPasswordSuccess());
+  } catch (error) {
+    const errorMessage = apisErrorMessage(error);
+    toastMessage(errorMessage, "error");
+    yield put(resetPasswordFailure());
+  }
+}
+
 // Watcher saga
 export default function* userSagas() {
   yield takeLatest(userConstants.SIGN_UP_REQUEST, signUp);
@@ -116,4 +146,6 @@ export default function* userSagas() {
     userConstants.CHANGE_USER_PASSWORD_REQUEST,
     changeUserPassword
   );
+  yield takeLatest(userConstants.FORGOT_PASSWORD_REQUEST, forgotPassword);
+  yield takeLatest(userConstants.RESET_PASSWORD_REQUEST, resetPassword);
 }

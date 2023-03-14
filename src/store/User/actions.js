@@ -79,6 +79,32 @@ export const changePasswordFailure = () => ({
   type: userConstants.CHANGE_USER_PASSWORD_FAILURE,
 });
 
+export const forgotPasswordRequest = (data) => ({
+  type: userConstants.FORGOT_PASSWORD_REQUEST,
+  payload: data,
+});
+
+export const forgotPasswordSuccess = () => ({
+  type: userConstants.FORGOT_PASSWORD_SUCCESS,
+});
+
+export const forgotPasswordFailure = () => ({
+  type: userConstants.FORGOT_PASSWORD_FAILURE,
+});
+
+export const resetPasswordRequest = (data) => ({
+  type: userConstants.RESET_PASSWORD_REQUEST,
+  payload: data,
+});
+
+export const resetPasswordSuccess = () => ({
+  type: userConstants.RESET_PASSWORD_SUCCESS,
+});
+
+export const resetPasswordFailure = () => ({
+  type: userConstants.RESET_PASSWORD_FAILURE,
+});
+
 export const clearUserState = () => ({
   type: userConstants.CLEAR_USER_STATE,
 });

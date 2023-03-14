@@ -1,9 +1,9 @@
-import { apiClient } from "store/apiHelper";
-
 import axiosInstance from "../../axios";
 
-import { GET, PATCH, POST, PUT, SERVER_URL } from "constants/appConstants";
+import { apiClient } from "store/apiHelper";
 import { setLocalStorage } from "utils/localStorage";
+
+import { GET, PATCH, POST, PUT, SERVER_URL } from "constants/appConstants";
 
 export const signInApi = async (data) => {
   const res = await apiClient(`${SERVER_URL}/api/auth/login`, POST, data);
@@ -30,3 +30,9 @@ export const updateUserProfileApi = (data) => {
 export const changePasswordApi = (data) => {
   return apiClient(`${SERVER_URL}/api/user/password`, PUT, data);
 };
+
+export const forgotPasswordRequestApi = (data) =>
+  apiClient(`${SERVER_URL}/api/user/password/forgot`, POST, data);
+
+export const resetPasswordApi = (data) =>
+  apiClient(`${SERVER_URL}/api/user/password/reset`, PATCH, data);
