@@ -1,9 +1,12 @@
 import React from "react";
 import { Form } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
 import FormInput from "Components/forms/Inputs/FormInput";
 import { SubmitButton } from "Components/forms/Buttons";
+
+import { FORGOT_PASSWORD_ROUTE } from "constants/routeConstants";
 
 const Login = ({ data, onChange, onSubmit }) => {
   const { email, password } = data;
@@ -30,10 +33,9 @@ const Login = ({ data, onChange, onSubmit }) => {
         onChange={onChange}
         isRequired
       />
-      {/* As APIs for this not available, it disabled for now */}
-      {/* <div className="mb-3 w-100 text-end fs-6 fst-italic">
-        <Link to="">Forgot Password?</Link>
-      </div> */}
+      <div className="mb-3 w-100 text-end fs-6 fst-italic">
+        <Link to={FORGOT_PASSWORD_ROUTE}>Forgot Password?</Link>
+      </div>
       <SubmitButton
         label="Login"
         className="w-100"
