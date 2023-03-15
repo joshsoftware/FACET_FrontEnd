@@ -68,11 +68,11 @@ const ResetPasswordForm = ({ token }) => {
       toastMessage(USER_AUTH.PASSWORD_NOT_MATCHED, "error");
       return;
     }
-    const resetPasswordBodyData = {
+    const requestData = {
       new_password: formData.newPassword,
       user_token: token,
     };
-    dispatch(resetPasswordRequest(resetPasswordBodyData));
+    dispatch(resetPasswordRequest(requestData));
   };
 
   return (
