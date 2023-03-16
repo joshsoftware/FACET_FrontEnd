@@ -3,6 +3,7 @@ export const ROOT_ROUTE = "/";
 
 // public routes constants
 export const LOGIN_ROUTE = "/login";
+export const FORGOT_PASSWORD_ROUTE = "/forgot-password";
 export const SIGNUP_ROUTE = "/signup";
 
 // private route constants

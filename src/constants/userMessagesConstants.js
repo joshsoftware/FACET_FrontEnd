@@ -16,6 +16,9 @@ export const ADMINS_ADD_SUCCESS = "Admins added successfully!";
 export const COMMENT_ADD_SUCCESS = "Comment added successfully!";
 export const TESTCASE_SCHEDULE_ADD_SUCCESS = "Testcase scheduled successfully!";
 
+export const RESET_PASSWORD_INVALID_TOKEN =
+  "Please follow the correct URL to reset your password.";
+
 export const USER_AUTH = {
   LOGIN_SUCCESS: "Login successfully!",
   SIGNUP_SUCCESS: "Signup successfully!",
@@ -24,6 +27,10 @@ export const USER_AUTH = {
 
 export const USERS = {
   CHANGE_PASSWORD_SUCCESS: "Password updated successfully!",
+  FORGOT_PASSWORD_SUCCESS:
+    "A password reset email has been sent to the provided email address.",
+  RESET_PASSWORD_SUCCESS:
+    "Your password has been updated successfully. Kindly login to your account.",
   UPDATE_PROFILE_SUCCESS: "Profile updated successfully!",
 };
 
