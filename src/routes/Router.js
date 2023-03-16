@@ -5,6 +5,7 @@ import * as routes from "constants/routeConstants";
 // public routes containers
 const LoginContainer = lazy(() => import("containers/LoginContainer"));
 const SignUpContainer = lazy(() => import("containers/SignUpContainer"));
+const ForgotPassword = lazy(() => import("containers/forgotPassword"));
 
 // private routes containers
 const DashBoard = lazy(() => import("containers/DashBoard"));
@@ -95,6 +96,11 @@ export const publicRoutesConfig = [
     key: "login",
     path: routes.LOGIN_ROUTE,
     component: LoginContainer,
+  },
+  {
+    key: "forgot-password",
+    path: routes.FORGOT_PASSWORD_ROUTE,
+    component: ForgotPassword,
   },
   {
     key: "accept-join-org-invitation",
