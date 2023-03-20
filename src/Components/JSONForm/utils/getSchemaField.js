@@ -2,7 +2,7 @@ import { Controller } from "react-hook-form";
 
 import Input from "Components/forms/Inputs/Input";
 
-const getSchemaField = (name, type, control, errors, props) => {
+const getSchemaField = (name, type, control, errors = {}, props) => {
   const error = errors[name];
 
   switch (type) {
