@@ -1,16 +1,21 @@
 import React, { memo } from "react";
 import { Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import PropTypes from "prop-types";
 
 import SchemaField from "./SchemaField";
+
+import buildYup from "./utils/buildYup";
 
 const JSONForm = ({ schema, onSubmit }) => {
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    resolver: yupResolver(buildYup(schema)),
+  });
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
