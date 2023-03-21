@@ -32,7 +32,15 @@ const getYupSchemaForField = (output, schema) => {
       return;
     }
 
-    // If the value is not an array then creates the new array so we can pass args into the function
+    /* If the value is not an array then creates the new array so we can pass args into the function
+    
+     * E.g. If need to pass passed multiple arguments to validator, need to pass in array in schema
+     * min: [2, "Error message here"]
+    
+     * If need to passed single value, so need to pass single value in schema
+     * min: 2
+    
+     */
     const args = Array.isArray(value) ? value : [value];
 
     validator = validator[key](...args);
