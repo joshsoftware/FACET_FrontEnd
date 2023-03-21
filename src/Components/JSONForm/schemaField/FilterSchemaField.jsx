@@ -1,8 +1,11 @@
+import React from "react";
 import { Controller } from "react-hook-form";
+import PropTypes from "prop-types";
 
 import Input from "Components/forms/Inputs/Input";
 
-const getSchemaField = (name, type, control, errors = {}, props) => {
+const FilterSchemaField = ({ control, errors = {}, ...props }) => {
+  const { name, type, component, ...properties } = props || {};
   const error = errors[name];
 
   switch (type) {
@@ -17,7 +20,7 @@ const getSchemaField = (name, type, control, errors = {}, props) => {
           isInvalid={Boolean(error)}
           errorText={error?.message}
           {...control.register(name)}
-          {...props}
+          {...properties}
         />
       );
 
@@ -30,7 +33,7 @@ const getSchemaField = (name, type, control, errors = {}, props) => {
           isInvalid={Boolean(error)}
           errorText={error?.message}
           {...control.register(name)}
-          {...props}
+          {...properties}
         />
       );
 
@@ -40,14 +43,22 @@ const getSchemaField = (name, type, control, errors = {}, props) => {
           name={name}
           control={control}
           render={({ field: { value, onChange, onBlur } }) =>
-            props?.component(value, onChange, onBlur)
+            component(value, onChange, onBlur)
           }
         />
       );
 
     default:
-      return <>{props?.component}</>;
+      return <>{component}</>;
   }
 };
 
-export default getSchemaField;
+FilterSchemaField.propTypes = {
+  name: PropTypes.string,
+  type: PropTypes.string,
+  control: PropTypes.any,
+  errors: PropTypes.object,
+  component: PropTypes.any,
+};
+
+export default FilterSchemaField;

@@ -3,7 +3,7 @@ import { Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import PropTypes from "prop-types";
 
-import SchemaField from "./SchemaField";
+import SchemaField from "./schemaField";
 
 const JSONForm = ({ schema, onSubmit }) => {
   const {
@@ -14,24 +14,14 @@ const JSONForm = ({ schema, onSubmit }) => {
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
-      {schema?.map(
-        (
-          { name, wrapper, wrapperClass, wrapperProps, type, ...properties },
-          index
-        ) => (
-          <SchemaField
-            key={index}
-            name={name}
-            type={type}
-            control={control}
-            errors={errors}
-            wrapper={wrapper}
-            wrapperProps={wrapperProps}
-            wrapperClass={wrapperClass}
-            {...properties}
-          />
-        )
-      )}
+      {schema?.map((schemaItem, index) => (
+        <SchemaField
+          key={index}
+          control={control}
+          errors={errors}
+          properties={schemaItem}
+        />
+      ))}
     </Form>
   );
 };
