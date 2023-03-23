@@ -2,20 +2,37 @@ import React, { forwardRef, memo } from "react";
 import RSelect from "react-select";
 import PropTypes from "prop-types";
 
+import {
+  ERROR_BORDER,
+  ERROR_FOCUSED,
+  INPUT_BORDER,
+  INPUT_FOCUSED,
+} from "constants/colors";
+
 const Select = ({ label, isInvalid, errorText, required, ...props }, ref) => {
   const customStyles = {
-    control: (base) => ({
+    control: (base, state) => ({
       ...base,
-      borderColor: isInvalid ? "#dc3545" : base.borderColor,
-      boxShadow: !!isInvalid,
+      borderColor: isInvalid
+        ? ERROR_BORDER
+        : state.isFocused
+        ? INPUT_BORDER
+        : base.borderColor,
+      boxShadow:
+        state.isFocused &&
+        `0 0 0 0.25rem ${isInvalid ? ERROR_FOCUSED : INPUT_FOCUSED}`,
       "&:hover": {
-        borderColor: isInvalid ? "#dc3545" : base.borderColor,
+        borderColor: isInvalid
+          ? ERROR_BORDER
+          : state.isFocused
+          ? INPUT_BORDER
+          : base.borderColor,
       },
     }),
   };
 
   return (
-    <div>
+    <div className="mb-3">
       <label>
         {label} {required && <span className="text-danger">*</span>}
       </label>
