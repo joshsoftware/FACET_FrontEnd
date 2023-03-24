@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import Input from "Components/forms/Inputs/Input";
 import Check from "Components/forms/Inputs/Check";
 import Select from "Components/forms/Inputs/Select";
+import PasswordInput from "Components/forms/Inputs/Input/PasswordInput";
 
 const FilterSchemaField = ({ control, errors = {}, ...props }) => {
   const { name, type, component, ...properties } = props || {};
@@ -16,9 +17,20 @@ const FilterSchemaField = ({ control, errors = {}, ...props }) => {
     case "date":
     case "time":
     case "number":
-    case "password":
       return (
         <Input
+          name={name}
+          type={type}
+          isInvalid={Boolean(error)}
+          errorText={error?.message}
+          {...control.register(name)}
+          {...properties}
+        />
+      );
+
+    case "password":
+      return (
+        <PasswordInput
           name={name}
           type={type}
           isInvalid={Boolean(error)}
