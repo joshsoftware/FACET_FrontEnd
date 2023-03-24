@@ -89,3 +89,6 @@ export const EXPECTED_OUTCOME_TABLE_HEADINGS = [
 export const NAME_FIELD_MAX_LENGTH = 50;
 
 export const DATE_TIME_FORMAT = "DD/MM/YYYY hh:mm A";
+
+export const EMAIL_REGEX =
+  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

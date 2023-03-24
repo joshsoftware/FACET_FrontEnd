@@ -1,20 +1,25 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { AuthLayout } from "Layout";
-import Login from "Components/Auth/Login";
+import Button from "Components/forms/Button";
+import JSONForm from "Components/JSONForm";
 
 import { signInRequest } from "store/User/actions";
 
+import { EMAIL_REGEX } from "constants/appConstants";
 import {
   ADD_ORGANIZATION_ROUTE,
   DASHBOARD_ROUTE,
+  FORGOT_PASSWORD_ROUTE,
 } from "constants/routeConstants";
+import { EMAIL_NOT_VALID } from "constants/userMessagesConstants";
 
-const initialFormData = { email: "", password: "" };
+const initialValues = { email: "", password: "" };
 
 const mapState = ({ user }) => ({
+  isLoading: user.isLoading,
   isLoggedIn: user.isLoggedIn,
   isMemberOfOrg: !!user.currentUser?.user_organization,
   isPersonalAccount: user.isPersonalAccount,
@@ -23,21 +28,12 @@ const mapState = ({ user }) => ({
 const LoginContainer = () => {
   const dispatch = useDispatch();
 
-  const { isLoggedIn, isMemberOfOrg, isPersonalAccount } =
+  const { isLoggedIn, isMemberOfOrg, isPersonalAccount, isLoading } =
     useSelector(mapState);
 
-  const [formData, setFormData] = useState(initialFormData);
-
-  // update state when login form field changes
-  const handleOnChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevState) => ({ ...prevState, [name]: value }));
-  };
-
   // on submit login form
-  const handleOnSubmit = (e) => {
-    e.preventDefault();
-    dispatch(signInRequest(formData));
+  const handleOnSubmit = (value) => {
+    dispatch(signInRequest(value));
   };
 
   // if user is loggedin with organization account type and none of
@@ -51,13 +47,54 @@ const LoginContainer = () => {
     return <Navigate to={DASHBOARD_ROUTE} />;
   }
 
+  const loginFormSchema = [
+    {
+      label: "Email",
+      type: "text",
+      name: "email",
+      required: true,
+      placeholder: "Enter email",
+      validations: {
+        family: "string",
+        matches: [EMAIL_REGEX, EMAIL_NOT_VALID],
+      },
+    },
+    {
+      label: "Password",
+      type: "password",
+      name: "password",
+      required: true,
+      placeholder: "Enter password",
+      validations: {
+        family: "string",
+        min: 4,
+      },
+    },
+    {
+      wrapperClass: "mb-3 w-100 text-end fs-6 fst-italic",
+      component: <Link to={FORGOT_PASSWORD_ROUTE}>Forgot Password?</Link>,
+    },
+    {
+      component: (
+        <Button
+          type="submit"
+          iconType="save"
+          className="w-100"
+          isLoading={isLoading}
+        >
+          Login
+        </Button>
+      ),
+    },
+  ];
+
   return (
     <AuthLayout>
       <h5 className="fw-bold">Login</h5>
-      <Login
-        data={formData}
-        onChange={handleOnChange}
+      <JSONForm
+        schema={loginFormSchema}
         onSubmit={handleOnSubmit}
+        defaultValues={initialValues}
       />
       <div className="d-flex flex-column align-items-center">
         <span className="pt-3">

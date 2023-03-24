@@ -8,12 +8,13 @@ import SchemaField from "./schemaField";
 
 import buildYup from "./utils/buildYup";
 
-const JSONForm = ({ schema, onSubmit }) => {
+const JSONForm = ({ schema, onSubmit, defaultValues }) => {
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm({
+    defaultValues,
     resolver: yupResolver(buildYup(schema)),
   });
 
@@ -34,6 +35,7 @@ const JSONForm = ({ schema, onSubmit }) => {
 JSONForm.propTypes = {
   schema: PropTypes.arrayOf(PropTypes.object).isRequired,
   onSubmit: PropTypes.func.isRequired,
+  defaultValues: PropTypes.object,
 };
 
 export default memo(JSONForm);
