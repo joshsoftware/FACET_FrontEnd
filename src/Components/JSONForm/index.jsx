@@ -8,7 +8,7 @@ import SchemaField from "./schemaField";
 
 import buildYup from "./utils/buildYup";
 
-const JSONForm = ({ schema, onSubmit, defaultValues }) => {
+const JSONForm = ({ schema, onSubmit, defaultValues, isLoading }) => {
   const {
     control,
     handleSubmit,
@@ -26,6 +26,7 @@ const JSONForm = ({ schema, onSubmit, defaultValues }) => {
           control={control}
           errors={errors}
           properties={schemaItem}
+          isLoading={isLoading}
         />
       ))}
     </Form>
@@ -36,6 +37,7 @@ JSONForm.propTypes = {
   schema: PropTypes.arrayOf(PropTypes.object).isRequired,
   onSubmit: PropTypes.func.isRequired,
   defaultValues: PropTypes.object,
+  isLoading: PropTypes.bool,
 };
 
 export default memo(JSONForm);

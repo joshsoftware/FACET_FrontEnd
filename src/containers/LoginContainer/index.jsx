@@ -3,7 +3,6 @@ import { Link, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { AuthLayout } from "Layout";
-import Button from "Components/forms/Button";
 import JSONForm from "Components/JSONForm";
 
 import { signInRequest } from "store/User/actions";
@@ -17,6 +16,43 @@ import {
 import { EMAIL_NOT_VALID } from "constants/userMessagesConstants";
 
 const initialValues = { email: "", password: "" };
+
+const loginFormSchema = [
+  {
+    label: "Email",
+    type: "text",
+    name: "email",
+    required: true,
+    placeholder: "Enter email",
+    validations: {
+      family: "string",
+      matches: [EMAIL_REGEX, EMAIL_NOT_VALID],
+    },
+  },
+  {
+    label: "Password",
+    type: "password",
+    name: "password",
+    required: true,
+    placeholder: "Enter password",
+    validations: {
+      family: "string",
+      min: 4,
+    },
+  },
+  {
+    wrapperClass: "mb-3 w-100 text-end fs-6 fst-italic",
+    component: <Link to={FORGOT_PASSWORD_ROUTE}>Forgot Password?</Link>,
+  },
+  {
+    type: "button",
+    label: "login",
+    name: "login",
+    buttonType: "submit",
+    iconType: "save",
+    className: "w-100",
+  },
+];
 
 const mapState = ({ user }) => ({
   isLoading: user.isLoading,
@@ -47,47 +83,6 @@ const LoginContainer = () => {
     return <Navigate to={DASHBOARD_ROUTE} />;
   }
 
-  const loginFormSchema = [
-    {
-      label: "Email",
-      type: "text",
-      name: "email",
-      required: true,
-      placeholder: "Enter email",
-      validations: {
-        family: "string",
-        matches: [EMAIL_REGEX, EMAIL_NOT_VALID],
-      },
-    },
-    {
-      label: "Password",
-      type: "password",
-      name: "password",
-      required: true,
-      placeholder: "Enter password",
-      validations: {
-        family: "string",
-        min: 4,
-      },
-    },
-    {
-      wrapperClass: "mb-3 w-100 text-end fs-6 fst-italic",
-      component: <Link to={FORGOT_PASSWORD_ROUTE}>Forgot Password?</Link>,
-    },
-    {
-      component: (
-        <Button
-          type="submit"
-          iconType="save"
-          className="w-100"
-          isLoading={isLoading}
-        >
-          Login
-        </Button>
-      ),
-    },
-  ];
-
   return (
     <AuthLayout>
       <h5 className="fw-bold">Login</h5>
@@ -95,6 +90,7 @@ const LoginContainer = () => {
         schema={loginFormSchema}
         onSubmit={handleOnSubmit}
         defaultValues={initialValues}
+        isLoading={isLoading}
       />
       <div className="d-flex flex-column align-items-center">
         <span className="pt-3">

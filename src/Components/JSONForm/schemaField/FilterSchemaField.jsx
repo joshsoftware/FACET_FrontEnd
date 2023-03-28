@@ -6,9 +6,10 @@ import Input from "Components/forms/Inputs/Input";
 import Check from "Components/forms/Inputs/Check";
 import Select from "Components/forms/Inputs/Select";
 import PasswordInput from "Components/forms/Inputs/Input/PasswordInput";
+import Button from "Components/forms/Button";
 
-const FilterSchemaField = ({ control, errors = {}, ...props }) => {
-  const { name, type, component, ...properties } = props || {};
+const FilterSchemaField = ({ control, errors = {}, isLoading, ...props }) => {
+  const { name, type, component, buttonType, ...properties } = props || {};
   const error = errors[name];
 
   switch (type) {
@@ -118,6 +119,13 @@ const FilterSchemaField = ({ control, errors = {}, ...props }) => {
         />
       );
 
+    case "button":
+      return (
+        <Button type={buttonType} isLoading={isLoading} {...properties}>
+          {properties.label}
+        </Button>
+      );
+
     default:
       return <>{component}</>;
   }
@@ -129,6 +137,7 @@ FilterSchemaField.propTypes = {
   control: PropTypes.any,
   errors: PropTypes.object,
   component: PropTypes.any,
+  isLoading: PropTypes.bool,
 };
 
 export default FilterSchemaField;

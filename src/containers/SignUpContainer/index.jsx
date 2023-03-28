@@ -6,13 +6,12 @@ import { useDispatch, useSelector } from "react-redux";
 import AccountTypeCard from "Components/Auth/Signup/AccountTypeCard";
 import AuthLayout from "Layout/AuthLayout";
 import JSONForm from "Components/JSONForm";
-import Button from "Components/forms/Button";
 
 import { clearUserState, signUpRequest } from "store/User/actions";
 
 import { ACCOUNT_TYPES } from "constants/authConstants";
 import { DASHBOARD_ROUTE, LOGIN_ROUTE } from "constants/routeConstants";
-import { EMAIL_NOT_VALID } from "constants/userMessagesConstants";
+import { EMAIL_NOT_VALID, USER_AUTH } from "constants/userMessagesConstants";
 import { EMAIL_REGEX } from "constants/appConstants";
 
 const mapState = ({ user }) => ({
@@ -28,6 +27,73 @@ const initialValues = {
   password: "",
   confirmPassword: "",
 };
+
+const signupSchema = [
+  {
+    label: "Name",
+    type: "text",
+    name: "name",
+    required: true,
+    placeholder: "Enter name",
+    validations: {
+      family: "string",
+      min: 2,
+    },
+  },
+  {
+    label: "Username",
+    type: "text",
+    name: "username",
+    required: true,
+    placeholder: "Enter username",
+    validations: {
+      family: "string",
+      min: 4,
+    },
+  },
+  {
+    label: "Email",
+    type: "email",
+    name: "email",
+    required: true,
+    placeholder: "Enter email",
+    validations: {
+      family: "string",
+      matches: [EMAIL_REGEX, EMAIL_NOT_VALID],
+    },
+  },
+  {
+    label: "Password",
+    type: "password",
+    name: "password",
+    required: true,
+    placeholder: "Enter password",
+    validations: {
+      family: "string",
+      min: 4,
+    },
+  },
+  {
+    label: "Confirm Password",
+    type: "password",
+    name: "confirmPassword",
+    required: true,
+    placeholder: "Re-enter password",
+    validations: {
+      family: "string",
+      min: 4,
+      oneOf: [["schema.password"], USER_AUTH.PASSWORD_NOT_MATCHED],
+    },
+  },
+  {
+    type: "button",
+    label: "Signup",
+    name: "login",
+    buttonType: "submit",
+    iconType: "save",
+    className: "w-100",
+  },
+];
 
 const SignUpContainer = () => {
   const dispatch = useDispatch();
@@ -74,77 +140,6 @@ const SignUpContainer = () => {
       ? "Create an enterprise account"
       : "Create an individual account";
 
-  const signupSchema = [
-    {
-      label: "Name",
-      type: "text",
-      name: "name",
-      required: true,
-      placeholder: "Enter name",
-      validations: {
-        family: "string",
-        min: 2,
-      },
-    },
-    {
-      label: "Username",
-      type: "text",
-      name: "username",
-      required: true,
-      placeholder: "Enter username",
-      validations: {
-        family: "string",
-        min: 4,
-      },
-    },
-    {
-      label: "Email",
-      type: "email",
-      name: "email",
-      required: true,
-      placeholder: "Enter email",
-      validations: {
-        family: "string",
-        matches: [EMAIL_REGEX, EMAIL_NOT_VALID],
-      },
-    },
-    {
-      label: "Password",
-      type: "password",
-      name: "password",
-      required: true,
-      placeholder: "Enter password",
-      validations: {
-        family: "string",
-        min: 4,
-      },
-    },
-    {
-      label: "Confirm Password",
-      type: "password",
-      name: "confirmPassword",
-      required: true,
-      placeholder: "Re-enter password",
-      validations: {
-        family: "string",
-        min: 4,
-        oneOf: [["schema.password"], "Password not matched"],
-      },
-    },
-    {
-      component: (
-        <Button
-          type="submit"
-          iconType="save"
-          className="w-100"
-          isLoading={isLoading}
-        >
-          Signup
-        </Button>
-      ),
-    },
-  ];
-
   return (
     <AuthLayout>
       {!accountType ? (
@@ -169,6 +164,7 @@ const SignUpContainer = () => {
             schema={signupSchema}
             onSubmit={handleOnSubmit}
             defaultValues={initialValues}
+            isLoading={isLoading}
           />
         </>
       )}

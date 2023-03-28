@@ -3,7 +3,6 @@ import { Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import PropTypes from "prop-types";
 
-import Button from "Components/forms/Button";
 import JSONForm from "Components/JSONForm";
 
 import { decodeToken } from "utils/helper";
@@ -22,6 +21,40 @@ const mapState = ({ user }) => ({
   isLoading: user.isLoading,
   isSuccess: user.isSuccess,
 });
+
+const formSchema = [
+  {
+    name: "newPassword",
+    type: "password",
+    label: "New Password",
+    placeholder: "Enter New Password",
+    required: true,
+    validations: {
+      family: "string",
+      min: 4,
+    },
+  },
+  {
+    name: "confirmNewPassword",
+    type: "password",
+    label: "Confirm New Password",
+    placeholder: "Re-enter New Password",
+    required: true,
+    validations: {
+      family: "string",
+      oneOf: [["schema.newPassword"], USER_AUTH.PASSWORD_NOT_MATCHED],
+    },
+  },
+  {
+    type: "button",
+    label: "Reset password",
+    name: "login",
+    buttonType: "submit",
+    variant: "success",
+    iconType: "save",
+    className: "w-100",
+  },
+];
 
 const ResetPasswordForm = ({ token }) => {
   const dispatch = useDispatch();
@@ -51,44 +84,6 @@ const ResetPasswordForm = ({ token }) => {
     dispatch(resetPasswordRequest(requestData));
   };
 
-  const formSchema = [
-    {
-      name: "newPassword",
-      type: "password",
-      label: "New Password",
-      placeholder: "Enter New Password",
-      required: true,
-      validations: {
-        family: "string",
-        min: 4,
-      },
-    },
-    {
-      name: "confirmNewPassword",
-      type: "password",
-      label: "Confirm New Password",
-      placeholder: "Re-enter New Password",
-      required: true,
-      validations: {
-        family: "string",
-        oneOf: [["schema.newPassword"], USER_AUTH.PASSWORD_NOT_MATCHED],
-      },
-    },
-    {
-      component: (
-        <Button
-          type="submit"
-          iconType="save"
-          isLoading={isLoading}
-          variant="success"
-          className="w-100"
-        >
-          Reset password
-        </Button>
-      ),
-    },
-  ];
-
   return (
     <div>
       <h5 className="fw-bold">Reset Password</h5>
@@ -96,6 +91,7 @@ const ResetPasswordForm = ({ token }) => {
         schema={formSchema}
         onSubmit={handleSubmit}
         defaultValues={initialValues}
+        isLoading={isLoading}
       />
     </div>
   );
