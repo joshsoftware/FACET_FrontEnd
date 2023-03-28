@@ -1,11 +1,10 @@
-import React, { useState } from "react";
-import { Form } from "react-bootstrap";
+import React from "react";
 import { Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import PropTypes from "prop-types";
 
-import { FormInput } from "Components/forms/Inputs";
-import { SaveButton } from "Components/forms/Buttons";
+import Button from "Components/forms/Button";
+import JSONForm from "Components/JSONForm";
 
 import { decodeToken } from "utils/helper";
 import { resetPasswordRequest } from "store/User/actions";
@@ -17,6 +16,8 @@ import {
   USER_AUTH,
 } from "constants/userMessagesConstants";
 
+const initialValues = { newPassword: "", confirmNewPassword: "" };
+
 const mapState = ({ user }) => ({
   isLoading: user.isLoading,
   isSuccess: user.isSuccess,
@@ -26,11 +27,6 @@ const ResetPasswordForm = ({ token }) => {
   const dispatch = useDispatch();
 
   const { isLoading, isSuccess } = useSelector(mapState);
-
-  const [formData, setFormData] = useState({
-    newPassword: "",
-    confirmNewPassword: "",
-  });
 
   // check whether the token is valid or not and user_id is present in token
   const isValidToken = token && decodeToken(token)?.sub?.user_id;
@@ -46,66 +42,61 @@ const ResetPasswordForm = ({ token }) => {
     return <Navigate to={LOGIN_ROUTE} />;
   }
 
-  const isPasswordMatched =
-    formData.newPassword === formData.confirmNewPassword;
-
-  const isSaveButtonDisabled =
-    isLoading ||
-    !isPasswordMatched ||
-    !formData.newPassword ||
-    !formData.confirmNewPassword;
-
-  // change action
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevState) => ({ ...prevState, [name]: value }));
-  };
-
   // submit action
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!isPasswordMatched) {
-      toastMessage(USER_AUTH.PASSWORD_NOT_MATCHED, "error");
-      return;
-    }
+  const handleSubmit = (value) => {
     const requestData = {
-      new_password: formData.newPassword,
+      new_password: value.newPassword,
       user_token: token,
     };
     dispatch(resetPasswordRequest(requestData));
   };
 
+  const formSchema = [
+    {
+      name: "newPassword",
+      type: "password",
+      label: "New Password",
+      placeholder: "Enter New Password",
+      required: true,
+      validations: {
+        family: "string",
+        min: 4,
+      },
+    },
+    {
+      name: "confirmNewPassword",
+      type: "password",
+      label: "Confirm New Password",
+      placeholder: "Re-enter New Password",
+      required: true,
+      validations: {
+        family: "string",
+        oneOf: [["schema.newPassword"], USER_AUTH.PASSWORD_NOT_MATCHED],
+      },
+    },
+    {
+      component: (
+        <Button
+          type="submit"
+          iconType="save"
+          isLoading={isLoading}
+          variant="success"
+          className="w-100"
+        >
+          Reset password
+        </Button>
+      ),
+    },
+  ];
+
   return (
     <div>
       <h5 className="fw-bold">Reset Password</h5>
-      <Form className="mt-3" onSubmit={handleSubmit}>
-        <FormInput
-          label="New Password"
-          name="newPassword"
-          type="password"
-          value={formData.newPassword}
-          onChange={handleChange}
-          placeholder="Enter New Password"
-          isRequired
-        />
-        <FormInput
-          label="Confirm New Password"
-          name="confirmNewPassword"
-          type="password"
-          value={formData.confirmNewPassword}
-          onChange={handleChange}
-          placeholder="Re-enter New Password"
-          error={!isPasswordMatched}
-          errorMessage={USER_AUTH.PASSWORD_NOT_MATCHED}
-          isRequired
-        />
-        <SaveButton
-          type="submit"
-          label="Reset password"
-          className="w-100"
-          disabled={isSaveButtonDisabled}
-        />
-      </Form>
+      <JSONForm
+        schema={formSchema}
+        onSubmit={handleSubmit}
+        defaultValues={initialValues}
+      />
     </div>
   );
 };
