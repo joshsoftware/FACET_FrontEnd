@@ -1,41 +1,50 @@
-import React, { useState } from "react";
-import { Form } from "react-bootstrap";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { FormInput } from "Components/forms/Inputs";
-import { SaveButton } from "Components/forms/Buttons";
+import JSONForm from "Components/JSONForm";
 
 import { forgotPasswordRequest } from "store/User/actions";
-import { isValidEmail } from "utils/helper";
-import { toastMessage } from "utils/toastMessage";
 
 import { EMAIL, EMAIL_NOT_VALID } from "constants/userMessagesConstants";
+import { EMAIL_REGEX } from "constants/appConstants";
 
 const mapState = ({ user }) => ({
   isLoading: user.isLoading,
 });
+
+const initialValues = { email: "" };
+
+const formSchema = [
+  {
+    name: "email",
+    type: "email",
+    label: "Email",
+    placeholder: EMAIL,
+    required: true,
+    validations: {
+      family: "string",
+      matches: [EMAIL_REGEX, EMAIL_NOT_VALID],
+    },
+  },
+  {
+    type: "button",
+    label: "Send reset password email",
+    name: "forgotPasswordButton",
+    buttonType: "submit",
+    variant: "success",
+    iconType: "save",
+    className: "w-100",
+  },
+];
 
 const ForgotPasswordRequest = () => {
   const dispatch = useDispatch();
 
   const { isLoading } = useSelector(mapState);
 
-  const [email, setEmail] = useState("");
-
-  const handleChange = (e) => {
-    setEmail(e.target.value);
+  const handleSubmit = (value) => {
+    dispatch(forgotPasswordRequest({ email_id: value.email }));
   };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!isValidEmail(email)) {
-      toastMessage(EMAIL_NOT_VALID, "error");
-      return;
-    }
-    dispatch(forgotPasswordRequest({ email_id: email }));
-  };
-
-  const isSaveDisabled = isLoading || !email;
 
   return (
     <div>
@@ -43,23 +52,12 @@ const ForgotPasswordRequest = () => {
       <p>
         Enter your email address and we will send you a password reset link.
       </p>
-      <Form onSubmit={handleSubmit}>
-        <FormInput
-          label="Email"
-          name="email"
-          type="email"
-          value={email}
-          onChange={handleChange}
-          placeholder={EMAIL}
-          isRequired
-        />
-        <SaveButton
-          type="submit"
-          label="Send reset password email"
-          className="w-100"
-          disabled={isSaveDisabled}
-        />
-      </Form>
+      <JSONForm
+        schema={formSchema}
+        onSubmit={handleSubmit}
+        defaultValues={initialValues}
+        isLoading={isLoading}
+      />
     </div>
   );
 };

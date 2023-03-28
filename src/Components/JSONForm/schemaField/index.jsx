@@ -3,13 +3,18 @@ import PropTypes from "prop-types";
 
 import FilterSchemaField from "./FilterSchemaField";
 
-const SchemaField = ({ control, errors, properties }) => {
+const SchemaField = ({ control, errors, isLoading, properties }) => {
   const { wrapper, wrapperClass, wrapperProps, ...props } = properties || {};
   const Wrapper = wrapper ?? "div";
 
   return (
     <Wrapper className={wrapperClass} {...wrapperProps}>
-      <FilterSchemaField control={control} errors={errors} {...props} />
+      <FilterSchemaField
+        control={control}
+        errors={errors}
+        isLoading={isLoading}
+        {...props}
+      />
     </Wrapper>
   );
 };
@@ -24,6 +29,7 @@ SchemaField.propTypes = {
     wrapperClass: PropTypes.string,
     wrapperProps: PropTypes.object,
   }).isRequired,
+  isLoading: PropTypes.bool,
 };
 
 export default SchemaField;

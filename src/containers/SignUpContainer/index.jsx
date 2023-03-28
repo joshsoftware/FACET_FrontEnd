@@ -5,39 +5,110 @@ import { useDispatch, useSelector } from "react-redux";
 
 import AccountTypeCard from "Components/Auth/Signup/AccountTypeCard";
 import AuthLayout from "Layout/AuthLayout";
-import Signup from "Components/Auth/Signup";
+import JSONForm from "Components/JSONForm";
 
 import { clearUserState, signUpRequest } from "store/User/actions";
 
-import { ACCOUNT_TYPES, SIGNUP_INITIAL_DATA } from "constants/authConstants";
+import { ACCOUNT_TYPES } from "constants/authConstants";
 import { DASHBOARD_ROUTE, LOGIN_ROUTE } from "constants/routeConstants";
+import { EMAIL_NOT_VALID, USER_AUTH } from "constants/userMessagesConstants";
+import { EMAIL_REGEX } from "constants/appConstants";
 
 const mapState = ({ user }) => ({
   isLoggedIn: user.isLoggedIn,
   isSignUpSuccess: user.isSignUpSuccess,
+  isLoading: user.isLoading,
 });
+
+const initialValues = {
+  name: "",
+  email: "",
+  username: "",
+  password: "",
+  confirmPassword: "",
+};
+
+const signupSchema = [
+  {
+    label: "Name",
+    type: "text",
+    name: "name",
+    required: true,
+    placeholder: "Enter name",
+    validations: {
+      family: "string",
+      min: 2,
+    },
+  },
+  {
+    label: "Username",
+    type: "text",
+    name: "username",
+    required: true,
+    placeholder: "Enter username",
+    validations: {
+      family: "string",
+      min: 4,
+    },
+  },
+  {
+    label: "Email",
+    type: "email",
+    name: "email",
+    required: true,
+    placeholder: "Enter email",
+    validations: {
+      family: "string",
+      matches: [EMAIL_REGEX, EMAIL_NOT_VALID],
+    },
+  },
+  {
+    label: "Password",
+    type: "password",
+    name: "password",
+    required: true,
+    placeholder: "Enter password",
+    validations: {
+      family: "string",
+      min: 4,
+    },
+  },
+  {
+    label: "Confirm Password",
+    type: "password",
+    name: "confirmPassword",
+    required: true,
+    placeholder: "Re-enter password",
+    validations: {
+      family: "string",
+      min: 4,
+      oneOf: [["schema.password"], USER_AUTH.PASSWORD_NOT_MATCHED],
+    },
+  },
+  {
+    type: "button",
+    label: "Signup",
+    name: "signup",
+    buttonType: "submit",
+    iconType: "save",
+    className: "w-100",
+  },
+];
 
 const SignUpContainer = () => {
   const dispatch = useDispatch();
 
-  const { isLoggedIn, isSignUpSuccess } = useSelector(mapState);
+  const { isLoggedIn, isSignUpSuccess, isLoading } = useSelector(mapState);
 
-  const [formData, setFormData] = useState(SIGNUP_INITIAL_DATA);
+  const [accountType, setAccountType] = useState("");
 
   useEffect(() => {
     return () => dispatch(clearUserState());
   }, []);
 
-  // handle formdata change
-  const handleOnChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevState) => ({ ...prevState, [name]: value }));
-  };
-
   // on submit sign up form
-  const handleOnSubmit = (e) => {
-    e.preventDefault();
-    const { name, username, email, password, accountType } = formData;
+  const handleOnSubmit = (values) => {
+    const { name, username, email, password } = values;
     const payload = {
       name,
       username,
@@ -49,9 +120,8 @@ const SignUpContainer = () => {
   };
 
   // set account type when user click on accountTypeCard
-  const setAccountType = useCallback(
-    (newValue) =>
-      setFormData((prevState) => ({ ...prevState, accountType: newValue })),
+  const handleSelectAccountType = useCallback(
+    (newValue) => setAccountType(newValue),
     []
   );
 
@@ -66,13 +136,13 @@ const SignUpContainer = () => {
   }
 
   const signupTitle =
-    formData.accountType === "organization"
+    accountType === "organization"
       ? "Create an enterprise account"
       : "Create an individual account";
 
   return (
     <AuthLayout>
-      {!formData.accountType ? (
+      {!accountType ? (
         <>
           <h5 className="fw-bold">Select Account Type</h5>
           <Row className="py-4">
@@ -80,8 +150,8 @@ const SignUpContainer = () => {
               <Col key={index}>
                 <AccountTypeCard
                   data={item}
-                  accountType={formData.accountType}
-                  setAccountType={setAccountType}
+                  accountType={accountType}
+                  setAccountType={handleSelectAccountType}
                 />
               </Col>
             ))}
@@ -90,10 +160,11 @@ const SignUpContainer = () => {
       ) : (
         <>
           <h5 className="fw-bold">{signupTitle}</h5>
-          <Signup
-            data={formData}
-            onChange={handleOnChange}
+          <JSONForm
+            schema={signupSchema}
             onSubmit={handleOnSubmit}
+            defaultValues={initialValues}
+            isLoading={isLoading}
           />
         </>
       )}
