@@ -41,7 +41,40 @@ const getYupSchemaForField = (output, schema) => {
      * min: 2
     
      */
-    const args = Array.isArray(value) ? value : [value];
+    const args = Array.isArray(value) ? [...value] : [value];
+
+    /*
+     * The "oneOf" key allows you to validate that a field's value is one of a set of values.
+        Ex. fruits: yup.string().oneOf(["apple", "mango"], "Message")
+
+     * If you want to validate a field against another field in the form, you can use yup.ref.
+        Ex. yup.ref('fieldName')
+    
+     * In this schema, the "oneOf" key accepts an array with two elements: an array of values and a message. 
+        The array of values can contain references to other fields in the schema by using the prefix "schema." 
+        For example: 
+          oneOf: [
+            [schema.fieldName, "otherValue", "thirdValue"],
+            "Message"
+          ]
+
+     * For fields that are referenced using the "schema." prefix, the prefix is split at the dot, 
+        and a yup ref is created for the referenced field. 
+        Other fields are remains same.
+     */
+    if (key === "oneOf") {
+      let enums = args[0] || [];
+
+      enums = enums.map((value) => {
+        if (value && value?.includes("schema.")) {
+          let field = value.split(".")[1];
+          return yup.ref(field);
+        }
+        return value;
+      });
+
+      args[0] = enums;
+    }
 
     validator = validator[key](...args);
   });
