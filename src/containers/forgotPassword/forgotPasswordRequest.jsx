@@ -29,7 +29,7 @@ const formSchema = [
   {
     type: "button",
     label: "Send reset password email",
-    name: "login",
+    name: "forgotPasswordButton",
     buttonType: "submit",
     variant: "success",
     iconType: "save",

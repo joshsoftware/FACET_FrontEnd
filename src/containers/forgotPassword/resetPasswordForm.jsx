@@ -48,7 +48,7 @@ const formSchema = [
   {
     type: "button",
     label: "Reset password",
-    name: "login",
+    name: "resetPasswordButton",
     buttonType: "submit",
     variant: "success",
     iconType: "save",

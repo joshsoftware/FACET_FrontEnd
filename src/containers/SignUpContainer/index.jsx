@@ -88,7 +88,7 @@ const signupSchema = [
   {
     type: "button",
     label: "Signup",
-    name: "login",
+    name: "signup",
     buttonType: "submit",
     iconType: "save",
     className: "w-100",
